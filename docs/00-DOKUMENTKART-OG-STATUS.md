@@ -87,4 +87,6 @@ Ordinær p24-release inneholder ikke komplette historiske dokumentsett. `../refe
 
 ## Videreføring til ny chat
 
+Følg [Onboarding av en ny chat](ONBOARDING-NY-CHAT.md) for konkret leserekkefølge, undersøkelse av strukturerte kilder og statuskvittering.
+
 `../OVERLEVERING.md` er leveransens daterte overleveringssnapshot med leserekkefølge, prinsipper og installasjons-/teststatus. Det er et inngangspunkt, ikke en parallell normativ kilde. Nye observasjoner kontrolleres mot aktuell versjon.

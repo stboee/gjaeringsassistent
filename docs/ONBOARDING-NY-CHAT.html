@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Onboarding av en ny chat</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Onboarding av en ny chat</h1>
+</header>
+<h1 id="onboarding-av-en-ny-chat">Onboarding av en ny chat</h1>
+<p>Dette er den faste inngangen for en ny chat som skal videreføre
+Gjæringsassistent. Instruksjonen beskriver hvordan prosjektforståelsen
+etableres og kontrolleres. Krav, beslutninger og strukturerte registre
+beholder sine egne autoritative kilder; denne siden er et lesekart.</p>
+<p>Repository: <a
+href="https://github.com/stboee/gjaeringsassistent">https://github.com/stboee/gjaeringsassistent</a>.
+Bruk gjeldende main og siste relevante release, ikke en gammel kopi av
+dette dokumentet som udatert statusfasit.</p>
+<p>Råtekst ved behov: <a
+href="https://raw.githubusercontent.com/stboee/gjaeringsassistent/main/docs/ONBOARDING-NY-CHAT.html">https://raw.githubusercontent.com/stboee/gjaeringsassistent/main/docs/ONBOARDING-NY-CHAT.md</a>.</p>
+<h2 id="1-tekst-prosjekteier-kan-gi-en-ny-chat">1. Tekst prosjekteier
+kan gi en ny chat</h2>
+<blockquote>
+<p>Vi viderefører Gjæringsassistent. Les <a
+href="https://github.com/stboee/gjaeringsassistent/blob/main/docs/ONBOARDING-NY-CHAT.html">https://github.com/stboee/gjaeringsassistent/blob/main/docs/ONBOARDING-NY-CHAT.md</a>
+og gjennomfør onboardingen som beskrives der. Etabler først forståelse
+av gjeldende kilder, leveranse, installasjonsstatus, arkitektur og åpent
+arbeid. Oppsummer hva du faktisk har lest, hvilke bindende prinsipper
+som gjelder og hva som gjenstår. Vi diskuterer videre arbeid før jeg
+sier «start». Ikke endre kode, bygg en ny utgave eller kjør installasjon
+som del av onboardingen.</p>
+</blockquote>
+<p>Oppgi gjerne faktisk installert versjon og en fersk
+Teknisk-/Systemkontrollrapport hvis den finnes. Manglende rapport
+hindrer ikke lesing og prosjektforståelse; det betyr at målmiljøstatus
+må stå som ukjent der bevis mangler.</p>
+<h2 id="2-fastslå-hvilket-grunnlag-du-har">2. Fastslå hvilket grunnlag
+du har</h2>
+<ol type="1">
+<li>Bekreft hvilke repositoryfiler, releases, vedlegg og tidligere
+samtaler du faktisk har tilgang til. Ikke påstå at en gammel chat eller
+rapport er lest uten å ha åpnet den.</li>
+<li>Registrer full commit-SHA for main, VERSION, nyeste relevante
+release/tag og taggens kildecommit. Les releasebeskrivelsen og
+identiteten i BUILD-INFO.json.</li>
+<li>Skill main fra publisert release. Dokumentasjon kan være nyere på
+main uten at en ny installasjonspakke er gitt ut. En GitHub-generert
+kilde-ZIP og prosjektets bygde installasjonspakke er forskjellige
+artefakter.</li>
+<li>Hvis en leveransepakke brukes som teknisk grunnlag: kontroller den
+mot medfølgende SHA-256 og kontroller versjon/kildecommit. Ikke bruk den
+lokale forberedelsespakkens hash som hash for en senere CI-bygget
+release.</li>
+<li>Fastslå faktisk installert versjon fra nyere brukerbekreftelse eller
+rapport. Siste release er ikke automatisk installert. Ikke anta at det
+finnes en aktiv gjæring, eller at historiske logger viser en aktuell
+feil.</li>
+</ol>
+<p>Onboarding er lesing og inspeksjon. Den starter ikke containere,
+database-reset, tester som skriver data, migrering eller
+installasjon.</p>
+<h2 id="3-les-i-denne-rekkefølgen">3. Les i denne rekkefølgen</h2>
+<p>Les først kjernen. Bruk deretter fagområdene nedenfor til målrettet
+fordypning. Ikke fyll konteksten med komplette SQL-dumper, millioner av
+katalogtegn eller gjentatte kopier av de samme dataene.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Trinn</th>
+<th>Kilder</th>
+<th>Hva du skal forstå</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arbeidsregler og orientering</td>
+<td><a href="../AGENTS.html">AGENTS.md</a>, <a
+href="../README.html">README.md</a>, <a
+href="../OVERLEVERING.html">OVERLEVERING.md</a></td>
+<td>Arbeidsmåte, aktuell leveranse, siste bekreftelser og
+avgrensninger.</td>
+</tr>
+<tr class="even">
+<td>Identitet og bevis</td>
+<td>VERSION, BUILD-INFO.json, RELEASE-MANIFEST.json, RELEASE-NOTES.md,
+TEST-RESULTS.md i repo-roten; GitHub Release og relevant
+Actions-kjøring</td>
+<td>Hvilken kode/pakke bevisene gjelder, og hva som faktisk er levert og
+testet.</td>
+</tr>
+<tr class="odd">
+<td>Dokumenthierarki og beslutninger</td>
+<td><a href="00-DOKUMENTKART-OG-STATUS.html">Dokumentkart 00</a>, <a
+href="14-AKTIVE-BESLUTNINGER.html">aktive beslutninger 14</a></td>
+<td>Hvem som eier ulike informasjonstyper, gjeldende beslutninger og
+forlatte løsninger.</td>
+</tr>
+<tr class="even">
+<td>Produkt og arkitektur</td>
+<td><a href="01-KRAV-FELLES.html">Felles krav 01</a>, <a
+href="07-SYSTEMARKITEKTUR-OG-DATAFLYT.html">arkitektur 07</a></td>
+<td>Produktgrenser, ansvar, livsløp og dataflyt.</td>
+</tr>
+<tr class="odd">
+<td>Kontrakter og datamodell</td>
+<td><a href="05-FRONTEND-OG-INTEGRASJONSKONTRAKT.html">Integrasjon 05</a>,
+<a href="06-DATAMODELL-OG-PERSISTENS.html">persistens 06</a>, <a
+href="12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.html">operasjoner 12</a></td>
+<td>HA ↔︎ Node-RED ↔︎ MariaDB, normalisering, transaksjoner, revisjoner og
+fravær.</td>
+</tr>
+<tr class="even">
+<td>Gjeldende status</td>
+<td><a href="15-AAPENT-ARBEID.html">Åpent arbeid 15</a>, <a
+href="18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.html">implementasjonsstatus
+18</a>, <a href="09-AKSEPTANSETEST.html">akseptanse 09</a></td>
+<td>Reelt gjenstående arbeid og skillet mellom implementert, lokalt
+verifisert og målmiljøbekreftet.</td>
+</tr>
+<tr class="odd">
+<td>Strukturerte kilder</td>
+<td>Avsnitt 4 nedenfor</td>
+<td>Faktiske registrerte kontrakter, regler, schema- og
+verifikasjonsmetadata.</td>
+</tr>
+</tbody>
+</table>
+<p>Før arbeid på et område leses også de relevante detaljene:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Område</th>
+<th>Fordypning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motor og frontend</td>
+<td><a href="02-KRAV-MOTOR-OG-INTEGRASJON.html">Krav 02</a>, <a
+href="03-KRAV-DASHBOARD.html">krav 03</a>, berørte Node-RED-noder og
+dashboardkode.</td>
+</tr>
+<tr class="even">
+<td>Installer og produksjonsoppgradering</td>
+<td><a href="04-KRAV-INSTALLER.html">Krav 04</a>, <a
+href="08-DRIFTSVEILEDNING.html">drift 08</a>, installer/install.sh og
+compose-referansen.</td>
+</tr>
+<tr class="odd">
+<td>Kriterier, templates og gjærprofiler</td>
+<td><a href="10-REGEL-OG-EVALUERINGSMODELL.html">Regelmodell 10</a>, <a
+href="11-TEMPLATE-OG-EDITOR-MODELL.html">template/editor 11</a>, <a
+href="16-W3470-FAGGRUNNLAG-OG-PROSESSMODELL.html">W-34/70 16</a>, <a
+href="17-ALE-TEMPLATER-OG-FAKTA.html">ale-profiler 17</a> og relevante
+SQL-seeder.</td>
+</tr>
+<tr class="even">
+<td>Livsløp, etterregistrering og arkiver</td>
+<td><a href="13-LIVSLOP-OBSERVASJONER-RAPPORT-OG-HISTORIKK.html">Dokument
+13</a>, berørte rutiner/views og arkivkontrakten.</td>
+</tr>
+<tr class="odd">
+<td>Systemkontroll og feil</td>
+<td><a href="19-TEKNISK-FANE-OG-DRIFTSMELDINGER.html">Teknisk diagnostikk
+19</a>, fersk Teknisk-/Systemkontrollrapport og de konkrete
+DB-/transportbanene.</td>
+</tr>
+<tr class="even">
+<td>Grafer og ytelse</td>
+<td>Dokument 03/07/10/13, SQL-read-models og leseplan,
+tools/graph_renderer.js og relevante testbevis.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-undersøk-strukturerte-data-ikke-bare-forklaringene">4.
+Undersøk strukturerte data, ikke bare forklaringene</h2>
+<p>Å ha lest README eller et generert JSON-uttrekk er ikke
+tilstrekkelig. Finn de faktiske definisjonene og bindingene i
+SQL-/registry-kildene. Bruk målrettede søk, tabell-/kolonnedefinisjoner
+og konkrete relasjoner; ikke anta at et navn alene beskriver
+regelen.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Informasjon</th>
+<th>Kilder som skal undersøkes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fysisk datamodell og integritet</td>
+<td>sql/00-template-schema.sql, sql/10-runtime-schema.sql, relevante
+rutiner i sql/11-runtime-routines.sql og views i sql/20-views.sql.
+Installerrekkefølgen er også del av kontrakten.</td>
+</tr>
+<tr class="even">
+<td>HA-identitet, input og valg</td>
+<td>ha_entity_registry, ha_event_registry, ha_entity_input_bindings,
+ha_entity_input_value_mappings og constraint-/valgregistre; særlig
+sql/21-system-metadata-seed.sql.</td>
+</tr>
+<tr class="odd">
+<td>Ferdig HA-output</td>
+<td>ha_projection_routes, ha_projection_fields,
+ha_draft_output_bindings, tilhørende DB-projeksjoner og faktiske fysiske
+flowkoblinger.</td>
+</tr>
+<tr class="even">
+<td>Funksjon–informasjon-avhengigheter</td>
+<td>system_functions, information_objects og
+function_information_dependencies.</td>
+</tr>
+<tr class="odd">
+<td>Schema- og fraværssemantikk</td>
+<td>schema_relation_semantics og schema_absence_semantics; fysisk DDL
+og, hvis autorisert tilgjengelig, MariaDB INFORMATION_SCHEMA.</td>
+</tr>
+<tr class="even">
+<td>Regler og frosset sesjonsgrunnlag</td>
+<td>sql/01-template-registry-seed.sql, sql/02-runtime-registry-seed.sql,
+sql/03-w3470-template-seed.sql, sql/04-ale-templates-seed.sql,
+sql/23-measurement-source-seed.sql og berørte session-relasjoner.</td>
+</tr>
+<tr class="odd">
+<td>Verifikasjon og faktiske resultater</td>
+<td>verification/test-catalog.json,
+verification/verification-model.json,
+sql/24-verification-metadata-seed.sql,
+sql/25-release-verification-results-seed.sql og
+verification_test_runs/verification_test_results. Les relevante
+resultatfiler og kildeavtrykk.</td>
+</tr>
+</tbody>
+</table>
+<p>contracts/ha-node-red-contract.json, den fysiske schemakatalogen og
+docs/generated er avledet inspeksjon. De erstatter ikke eierregistrene.
+HTML genereres fra Markdown. Katalogdekning er ikke alene et bevis på
+full normalisering eller korrekt domenesemantikk.</p>
+<p>Du trenger ikke et kjørende målmiljø for å gjennomføre
+kildeonboarding. Skill kildeinspeksjon fra faktisk kontroll av
+installert MariaDB/HA/Node-RED.</p>
+<h2 id="5-vis-at-arkitektursperrene-er-forstått">5. Vis at
+arkitektursperrene er forstått</h2>
+<p>Kontroller prinsippene mot gjeldende beslutninger og relevante
+kilder:</p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente domenekilde.
+Node-RED utfører generiske, DB-valgte modeller og transport; HA/frontend
+viser ferdige domenefelt og formidler handlinger.</li>
+<li>Feil eller mangler rettes i datamodell, registry, frozen session
+eller read-model. Ingen lokale defaults, oppdiktede verdier,
+reserveberegninger eller frontend-workarounds.</li>
+<li>Registry definerer vokabular/modeller; template velger; Start fryser
+en normalisert sesjonskopi. Senere korreksjoner bruker eksplisitte,
+sporbare mekanismer.</li>
+<li>Påkrevde kontraktfelt skal leveres. Reelt fravær må modelleres og
+forklares og skal ikke erstattes med 0.</li>
+<li>Normaliserte relasjoner, constraints og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen
+generell writer-kø eller applikasjonslocking som standard.</li>
+<li>Append-only gjelder fakta/revisjoner innenfor hver beholdt sesjon.
+Hele historiske sesjoner og ubrukte importerte templates kan slettes
+eksplisitt og atomisk. Drafts er egne mutable arbeidsflater.</li>
+<li>SG-only, separate biologiske faser og prosesstrinn, én operativ
+sesjon og ingen automatisk fysisk utstyrsstyring.</li>
+<li>B/P-start, slutt og varighet følger DB-eide tidsrevisjoner og
+nabogrenser. Frontend skal ikke korrigere varigheten ved visning.</li>
+<li>Felles graftegner og autoritativt seriegrunnlag i dashboard og
+rapport. Manglende måleverdier estimeres ikke. HA-timesstatistikk er
+separat historisk grafgrunnlag uten oppdiktet heartbeat eller ordinært
+B/P-grunnlag.</li>
+<li>SQLite-par er arkiv-/utvekslingsformat. Operativ sammenligning skjer
+i MariaDB etter import. Importert template har egen unik identitet og
+opprinnelse.</li>
+</ul>
+<p>Forklar kort hvordan en manglende påkrevd visningsverdi skal spores
+fra HA/Node-RED til den autoritative kilden. Forklar også forskjellen
+mellom en append-only sesjonskorreksjon og eksplisitt sletting av en hel
+gammel sesjon. Dette gjør forståelsen kontrollerbar.</p>
+<p>Flyktig transport-/UI-state og pixelkoordinater for tegning er
+tekniske mekanismer. De skal ikke forveksles med nødvendig
+domenepersistens eller brukes til alternative fagberegninger.</p>
+<h2 id="6-første-svar-etter-onboardingen">6. Første svar etter
+onboardingen</h2>
+<p>Gi en kort, kildebasert kvittering med:</p>
+<ol type="1">
+<li>Kilder du faktisk har åpnet, samt vesentlige mangler i
+tilgangen.</li>
+<li>Main-SHA, relevant release/tag, teknisk utgangspunkt og faktisk
+installasjonsstatus. Merk det som er ukjent.</li>
+<li>De bindende prinsippene, med filreferanser og gjerne relevante
+beslutnings-ID-er.</li>
+<li>Siste endringer, utførte tester og hva bevisene ikke dekker. Skill
+syntaks/statisk kontroll, native DB/plugin-integrasjon og faktisk
+HA-/nettleser-UAT.</li>
+<li>Reelle åpne feil/måltester, dokumentasjonsmotstrid og pågående,
+allerede avklart arbeid.</li>
+<li>Foreslått neste avgrensede arbeid og eventuelle spørsmål som faktisk
+blokkerer det.</li>
+</ol>
+<p>Ikke erklær et krav oppfylt bare fordi kode finnes eller en test sier
+PASS. Ikke merk alle UAT bestått på grunnlag av en generell positiv
+brukermelding. Nye observasjoner må knyttes til riktig versjon og
+tidspunkt.</p>
+<p>Onboarding alene er ikke bestilling av en ny programvareversjon. Nye
+arbeidsomfang avklares før «start». Ved uttrykkelig videreføring av
+allerede godkjent arbeid skal eksisterende autorisasjon og siste styring
+bevares; ikke krev gjentatte godkjenninger av samme oppgave.</p>
+<h2 id="7-arbeidsmåte-og-produksjonsgrense">7. Arbeidsmåte og
+produksjonsgrense</h2>
+<p>Arbeid direkte på main etter avtalt bestilling. Issues, PR og den
+tidligere Chat→Work/handoff-prosessen inngår ikke i prosjektprosessen.
+Versjoner bruker ÅÅÅÅ.MM.DD-N med v-prefiks på tag og kort beskrivelse i
+release-tittelen. Eldre testfilnavn er referanser, ikke gjeldende
+versjonsnummerering.</p>
+<p>Rene dokumentoppdateringer kan ligge på main etter siste tag. Ikke
+påstå at de dermed inngår i en allerede publisert ZIP. En eksisterende
+release/tag skal ikke omskrives for å få dokumenthistorikken til å
+stemme.</p>
+<p><strong>Nåværende installer resetter databasen.</strong> Et
+databevarende oppgraderingsløp er åpent arbeid. Kontroller alltid siste
+status før installasjons-/oppgraderingsforslag; ikke bruk en
+prototypebestilling om reset som varig produksjonsautorisasjon.
+Onboarding gir ikke adgang til å kjøre installasjon, restart eller
+datamigrering.</p>
+<p>Historiske pakker brukes bare når dagens dokumentasjon uttrykkelig
+gir dem en rolle. P17r12/p18r5 er funksjonelle/designmessige referanser,
+ikke teknisk baseline. Forlatt SQLite-runtime, separat backend eller
+writer-kø skal ikke gjeninnføres som løsning på et nytt problem.</p>
+<h2 id="8-hold-videreføringen-oppdatert">8. Hold videreføringen
+oppdatert</h2>
+<p>Etter en leveranse eller vesentlig statusendring oppdateres
+OVERLEVERING.md, relevante statusdokumenter og faktisk
+verifikasjonsgrunnlag. Bevar skillet mellom foreslått, besluttet,
+implementert, testet, publisert og installert.</p>
+<p>Noter kort: gjeldende kode/pakke, siste brukerbekreftelse, åpne
+konkrete feil, avtalt neste omfang og om arbeidet er startet. Ikke
+dupliser hele historikken i normative dokumenter.</p>
+<p>Prosjekteier skal kunne gi en ny chat lenken til denne siden og
+eventuell fersk målmiljøstatus. Prosjektet skal kunne gjenopptas fra
+repositoryets kilder uten at den gamle chatten er tilgjengelig.</p>
+</body>
+</html>

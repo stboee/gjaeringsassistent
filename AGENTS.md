@@ -1,5 +1,7 @@
 # Gjæringsassistent – arbeidsregler
 
+Ved ny chat: følg [onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md) og gi en kildebasert statuskvittering før nytt arbeid avgrenses.
+
 Les `docs/00-DOKUMENTKART-OG-STATUS.md`, aktive beslutninger i dokument 14 og relevante krav/kontrakter før endringer. Undersøk også de strukturerte SQL-/registry-kildene; genererte kataloger erstatter dem ikke.
 
 ## Arbeidsmåte

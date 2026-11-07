@@ -70,7 +70,9 @@
     "verification/release-gate.log",
     "AGENTS.md",
     "LICENSE",
-    "tools/package_files.py"
+    "tools/package_files.py",
+    "docs/ONBOARDING-NY-CHAT.md",
+    "docs/ONBOARDING-NY-CHAT.html"
   ],
   "component_groups": {
     "runtime": [

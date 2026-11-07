@@ -24,6 +24,8 @@ Eksisterende containeroppsett, Node-RED-konfigurasjonsnoder og sensorbindinger m
 
 ## Dokumentasjon og kilder
 
+**Ny chat:** Følg [onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md). Den beskriver leserekkefølge, strukturerte kilder og kvitteringen som skal gis før videre arbeid.
+
 Start i [dokumentkartet](docs/00-DOKUMENTKART-OG-STATUS.md), [aktive beslutninger](docs/14-AKTIVE-BESLUTNINGER.md) og [arkitekturen](docs/07-SYSTEMARKITEKTUR-OG-DATAFLYT.md). Eksakte regler, HA-bindinger og schema-/funksjonsmetadata eies også av strukturerte SQL-/registry-kilder. HTML og genererte JSON-kataloger er avledet inspeksjon.
 
 [TEST-RESULTS.md](TEST-RESULTS.md) beskriver faktisk testomfang. [Åpent arbeid](docs/15-AAPENT-ARBEID.md) omfatter blant annet produksjonsoppgradering og faglig kalibrering. Brukeren har bekreftet at p24r16 fungerer fint; dette lukker ikke automatisk alle UAT for datoversjonen.

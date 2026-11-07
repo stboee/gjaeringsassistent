@@ -162,6 +162,14 @@
       "title": "19 – Teknisk diagnostikk og Systemkontroll"
     },
     {
+      "file": "ONBOARDING-NY-CHAT.md",
+      "doc_id": "DOC-ONBOARDING",
+      "role": "governance",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "Onboarding av en ny chat"
+    },
+    {
       "file": "index.md",
       "doc_id": "DOC-INDEX",
       "role": "entrypoint",

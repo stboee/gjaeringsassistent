@@ -2,9 +2,13 @@
 
 Oppdatert 7. november 2026 for **2026.11.07-1 – Første GitHub-utgave**. Teknisk utgangspunkt er p24r16, original ZIP-SHA-256 884b2dea0e42cfbf5efabc8a32ff3c0ab464c18c4ab206ec0d38a6c8ba6c26d4.
 
+## Ny chat
+
+Start med [den faste onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md). Den bruker dette notatet som datert status og peker videre til autoritative krav og strukturerte kilder. Les aktuell main og release; ikke anta at siste release er installert.
+
 ## Status
 
-Brukeren har bekreftet at p24r16 er installert og fungerer fint og ønsker å forsøke løsningen i produksjon. Datoversjonen er første publisering i nytt repository. Tidligere brukerbekreftelse er ikke en samlet UAT-kvittering for datoversjonen.
+Brukeren har bekreftet at p24r16 er installert og fungerer fint og ønsker å forsøke løsningen i produksjon. Datoversjonen er første publisering i nytt repository. [Release v2026.11.07-1](https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.07-1) er publisert fra commit a1919e64d6a9db5aec9ae3cc2fd0b18314d9caca med ZIP og SHA-256. Dokumentoppdateringer på main etter taggen er ikke en ny programvareleveranse. Tidligere brukerbekreftelse er ikke en samlet UAT-kvittering for datoversjonen.
 
 Gjeldende repository er https://github.com/stboee/gjaeringsassistent. Det gamle er omdøpt til gjaeringsassistent-old. En separat videreføringspakke er sikret med 200 gamle filer, p24r16 og kontrollsummer. Gamle styringsfiler og historiske løsninger skal ikke overstyre dagens dokumentasjon.
 
