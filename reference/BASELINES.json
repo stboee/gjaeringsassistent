@@ -1,0 +1,12 @@
+{
+  "p17r12_zip": {
+    "file": "gjaeringsassistent-0.1.0-prototype17-r12.zip",
+    "sha256": "188a6a7af90e95554dec174dce20d50f9bdce7a9af8b729eb679ef06a7400156",
+    "role": "GUI/functional regression reference"
+  },
+  "p18r5_zip": {
+    "file": "gjaeringsassistent-0.1.0-prototype18-r5.zip",
+    "sha256": "0c2f733d1f8f93319cc9ae62fb51b3e68798de5e656f65feb88725df4c0f0532",
+    "role": "primary functional/domain/history reference"
+  }
+}

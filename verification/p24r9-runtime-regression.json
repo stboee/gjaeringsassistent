@@ -1,0 +1,67 @@
+{
+  "application_version": "2026.11.07-1",
+  "server_version": "/workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
+  "status": "pass",
+  "graph_selection": {
+    "source_kind": "reference",
+    "reference_profile_id": "gyllen-pils-20260925",
+    "interval_seconds": 1800,
+    "window_hours": null,
+    "operation_id": "r9-choice-3",
+    "selection_seq": 10
+  },
+  "comparison_points": 2924,
+  "comparison_example": [
+    {
+      "bucket_at": "2026-10-01 00:00:00.000",
+      "sg_median": 1.0463,
+      "temperature_mean_c": 18.454,
+      "source_display": "2026-09-25 Gyllen pils"
+    },
+    {
+      "bucket_at": "2026-10-01 00:05:00.000",
+      "sg_median": 1.0463,
+      "temperature_mean_c": 18.352,
+      "source_display": "2026-09-25 Gyllen pils"
+    },
+    {
+      "bucket_at": "2026-10-01 00:10:00.000",
+      "sg_median": 1.0463,
+      "temperature_mean_c": 18.303,
+      "source_display": "2026-09-25 Gyllen pils"
+    }
+  ],
+  "corrected_requirements": [
+    {
+      "graph_id": "sg-rate",
+      "owner_type": "biology",
+      "owner_id": "B3",
+      "criterion_id": "b3-sg-rate",
+      "minimum_value": 1.75,
+      "maximum_value": 6.75,
+      "met_at": "2026-10-10 01:00:01.000",
+      "owner_display": "B3",
+      "requirement_display": "1,75–6,75 SG-poeng/d"
+    },
+    {
+      "graph_id": "sg-rate",
+      "owner_type": "process",
+      "owner_id": "P3",
+      "criterion_id": "p3-biological-phase",
+      "minimum_value": 3.25,
+      "maximum_value": 8.25,
+      "met_at": "2026-10-10 01:00:01.000",
+      "owner_display": "P3",
+      "requirement_display": "3,25–8,25 SG-poeng/d"
+    }
+  ],
+  "checks": [
+    "four command envelopes through actual SQL",
+    "initial/live/catchup decisions from actual DB query",
+    "failure retry and one real recovery",
+    "bio/process override/add optional bound/unset/reset",
+    "current revision met markers",
+    "unchanged frozen parameters",
+    "24/48-hour association follows override and reset"
+  ]
+}

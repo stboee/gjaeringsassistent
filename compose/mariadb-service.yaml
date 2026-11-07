@@ -1,0 +1,22 @@
+# Referansefragment – flettes inn i eksisterende compose
+services:
+  gjaeringsassistent-mariadb:
+    image: mariadb:12.3.3
+    container_name: gjaeringsassistent-mariadb
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Oslo
+      MARIADB_AUTO_UPGRADE: "1"
+      MARIADB_DATABASE: gjaeringsassistent
+      MARIADB_USER: gjaeringsassistent
+      MARIADB_PASSWORD: <SETT_I_EKSISTERENDE_COMPOSE>
+      MARIADB_ROOT_PASSWORD: <SETT_I_EKSISTERENDE_COMPOSE>
+    volumes:
+      - /mnt/docker/gjaeringsassistent/mariadb:/var/lib/mysql
+    networks:
+      - gjaeringsassistent-net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

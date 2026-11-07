@@ -1,0 +1,24 @@
+[
+  {
+    "profile_id": "tilt-pro-blue-20260925",
+    "measurements": 691,
+    "analysis_values": 881,
+    "by_graph": {
+      "attenuation": 691,
+      "sg-rate": 95,
+      "sg-stability": 95
+    },
+    "model": "actual p22_analysis_result and frozen w3470-standard@3.0 policy"
+  },
+  {
+    "profile_id": "gyllen-pils-20260925",
+    "measurements": 2924,
+    "analysis_values": 6187,
+    "by_graph": {
+      "attenuation": 2924,
+      "sg-rate": 1287,
+      "sg-stability": 1976
+    },
+    "model": "actual p22_analysis_result and frozen w3470-standard@3.0 policy"
+  }
+]

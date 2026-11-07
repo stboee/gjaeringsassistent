@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>07 – Systemarkitektur og dataflyt</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">07 – Systemarkitektur og dataflyt</h1>
+</header>
+<h1 id="07--systemarkitektur-og-dataflyt">07 – Systemarkitektur og
+dataflyt</h1>
+<p><strong>Rolle:</strong> Hovedinngang til gjeldende arkitektur, ansvar
+og dataflyt.</p>
+<p><img src="figures/FIG-01-SYSTEMARKITEKTUR.svg"
+alt="Systemarkitektur" /></p>
+<h2 id="1-ansvarsdeling">1. Ansvarsdeling</h2>
+<pre class="text"><code>MariaDB = data, regler, read-model og ferdig presentasjonsinnhold
+Node-RED = generisk motor, orchestrering, integrasjon og transport
+Home Assistant/frontend = operatørinteraksjon og visning</code></pre>
+<ul>
+<li>MariaDB/InnoDB er eneste persistente authority.</li>
+<li>Det finnes ingen separat applikasjonsbackend mellom Node-RED og
+MariaDB.</li>
+<li><code>flow.*</code>, skrivbar <code>global.*</code>, browser-state,
+HA-state og runtimefiler skal ikke være nødvendig domenepersistens.</li>
+<li>Node-RED kan implementere generiske algoritmer/modelltyper, men
+fagregelvalg/terskler/vinduer/policy ligger i registry/template/frozen
+session.</li>
+<li>Frontend viser ferdige DB/read-model-felt og utfører bare
+UI-/renderingmekanikk.</li>
+<li>Rene reads kan kjøres parallelt. Faglige mutasjoner er korte
+atomiske transaksjoner. InnoDB håndterer concurrency; ingen global
+writer-kø eller normal eksplisitt locking.</li>
+<li>Runtimehistorikk er append-only når ny tilstand kan uttrykkes som
+nye fakta/revisions. Current-state utledes i views.</li>
+</ul>
+<h2 id="2-registry--template--frozen-session--motor">2. Registry →
+template → frozen session → motor</h2>
+<p><img src="figures/FIG-04-TEMPLATE-START-SNAPSHOT.svg"
+alt="Regel- og sessionflyt" /></p>
+<pre class="text"><code>MariaDB registry
+  ↓ tillatte generiske modeller, inputs og typed parametere
+Publisert template
+  ↓ konkret regelvalg, B/P, targets, validering og analysemetadata
+Start
+  ↓ atomisk freeze
+Normalisert session-plan
+  ↓
+Node-RED generisk evaluator/ingest/analyse
+  ↓
+Persistente facts, evaluations, transitions og analysis_series
+  ↓
+MariaDB read-models
+  ↓
+HA/frontend</code></pre>
+<p>Ugyldig eller manglende frozen regelgrunnlag er
+konfigurasjons-/datagrunnlagsfeil. Motoren skal ikke reparere dette med
+skjulte defaults.</p>
+<h2 id="3-måleflyt-og-datakvalitet">3. Måleflyt og datakvalitet</h2>
+<p><img src="figures/FIG-05-MAALINGSFLYT.svg" alt="Måleflyt" /></p>
+<pre class="text"><code>HA Recorder-history / live history
+   ↓
+source/session-frozen validation rules
+   ↓ forkast ugyldige prøver; ingen clamp
+robust 5-min aggregat
+   ↓
+measurements_5m + measurement_ingest_quality_events
+   ↘ measurement_data_gaps
+   ↓
+B/P evaluator + Analyse</code></pre>
+<p>Heartbeat avgjør kildekontinuitet. Datagap persisteres eksplisitt og
+bryter persistens, grafer og andre regler som krever sammenhengende
+datadekning.
+<code>session_measurement_sources.last_import_cutoff_at</code> er
+persistent importcursor; omstart leser cursor fra MariaDB og henter
+manglende periode fra HA Recorder.</p>
+<p>Uten aktiv reell session startes ingen periodisk
+HA-history-import.</p>
+<h2 id="4-historisk-replay-og-live">4. Historisk replay og live</h2>
+<p><img src="figures/FIG-06-EVALUERING-REPLAY.svg"
+alt="Evaluering og replay" /></p>
+<p>Historisk catch-up sekvenseres:</p>
+<pre class="text"><code>persistér 5-min chunk
+→ evaluer neste B-kandidat
+→ evaluer neste P-kandidat
+→ persister result/evidence/evt. tillatt transition
+→ neste chunk</code></pre>
+<p>Historisk evalueringshorizon er persistert importcutoff. Live-horizon
+er MariaDB UTC-klokke.</p>
+<p>B-progresjon er sekvensiell. P-kriterier kan vurderes historisk, men
+overgang persisteres automatisk bare når frozen
+<code>historical_replay_auto_transition_allowed</code> er sann for
+akkurat neste steg. Ordinære/live P-overganger er operatørbekreftet.</p>
+<p>En persistert transition peker på eksakt <code>evaluation_id</code>.
+Historisk overgangsbevis og current candidate-evaluering er derfor
+separate read-model-fakta.</p>
+<h2 id="5-analyse">5. Analyse</h2>
+<p>Om en beregnet verdi skal ha graf, og hvordan den
+behandles/presenteres, ligger i template/sessionmetadata. Motor og
+frontend skal ikke ha graph-ID-spesifikke branches.</p>
+<p>P24r7 persisterer kun ordinære analysepunkter når frozen
+minstegrunnlag, gapkrav, inputdomene og outputdomene er gyldige. Gyldige
+punkter persisteres append-only i <code>analysis_series_values</code>;
+manglende grunnlag skaper ikke syntetiske nullverdier.</p>
+<h2 id="6-read-model-og-frontendgrense">6. Read-model og
+frontendgrense</h2>
+<pre class="text"><code>persistente fakta + frozen regler
+  ↓
+generisk motor persisterer resultat/provenance
+  ↓
+MariaDB views lager ferdige value/status/display-felt
+  ↓
+Node-RED transport
+  ↓
+HA/custom card</code></pre>
+<p>Frontend kan escape tekst, styre layout, holde ekspandert UI-state og
+beregne pixelkoordinater for tegning. Frontend skal ikke beregne
+FG-fremdrift, kriteriestatus, datavindu, alder, targets, gap, anbefaling
+eller annen domenesemantikk.</p>
+<h2 id="7-ha--og-systemmetadata">7. HA- og systemmetadata</h2>
+<p>HA entity/event-kontrakten ligger i MariaDB-registre og fysisk
+Node-RED-flow. Bootstrap, HA-avstemming, Systemkontroll og generert
+kontrakt leser samme metadata. Inputbindinger og select-mappings ligger
+i DB; manglende mapping er konfigurasjonsfeil, ikke anledning til lokal
+fallback.</p>
+<p><code>system_functions</code>, <code>information_objects</code> og
+<code>function_information_dependencies</code> eier maskinlesbar
+funksjon↔︎informasjon-lineage. Produsent→objekt→konsument er avledet
+view, ikke separat sannhet.</p>
+<h2 id="8-teknisk-observability">8. Teknisk observability</h2>
+<p>Uncaught Gjæringsassistent-feil går gjennom en generell
+catch/safety-net til <code>technical_events</code> når persistensbanen
+er tilgjengelig. Spesifikke feilbaner kan supplere dette. Systemkontroll
+og Teknisk-fane leser persistert teknisk grunnlag; de skal ikke opprette
+en alternativ sensor-/runtimeautoritet.</p>
+<h2 id="9-tid-og-konsistens">9. Tid og konsistens</h2>
+<p>Persistent maskintid er UTC. Operative displaytider forberedes i
+read-model når de er del av domenepresentasjonen.
+MariaDB-/Node-RED-klokkesammenligning skal ikke avhenge av tvetydig
+lokal <code>DATETIME</code>-parsing.</p>
+<p>Konsistens håndheves i denne rekkefølgen: normalisert datamodell →
+PK/FK/UNIQUE/CHECK → atomisk transaksjon → append-only fakta/revisions →
+views/read-model → applikasjonsvalidering/presentasjon.</p>
+<h2 id="10-verifikasjonsflyt">10. Verifikasjonsflyt</h2>
+<pre class="text"><code>REQ / DEC / VER / TEST metadata
+            +
+append-only TECH/FUNC/UAT-resultater
+            ↓
+MariaDB verification views
+            ↓
+Node-RED transport/kommando
+            ↓
+HA Verifikasjon / Teknisk sammendrag
+            ↓
+JSON + HTML-eksport fra samme DB-grunnlag</code></pre>
+<p>UAT er en ordinær stateful operasjon: HA-event → validering mot
+registrert UAT-test → kort DB-transaksjon → append-only run/result → ny
+read-model. Feil i verifikasjonsmetadata/status rettes i
+databasen/kilden; frontend eller Node-RED skal ikke fylle inn antatte
+relasjoner eller status.</p>
+<h2 id="asynkron-oppstart-og-reconnect">asynkron oppstart og
+reconnect</h2>
+<p>MariaDB, Node-RED og Home Assistant må behandles som uavhengige
+moduler som kan starte, stoppe og koble seg til igjen i vilkårlig
+rekkefølge. MariaDB er fortsatt eneste persistente domenekilde.</p>
+<p>Node-RED kjører en idempotent, read-only restore/reconcile mot
+MariaDB med periodisk retry. Reconcile republiserer gjeldende DB-state,
+men oppretter ikke nye biologiske evalueringer eller
+prosesstransisjoner. Home Assistant-historikkimport har egen retry ved
+utilgjengelig HA og fortsetter fra den persistente MariaDB-cursoren.
+Identiske infrastruktursvikt dedupliseres i
+<code>technical_events</code> slik at en frakoblet modul ikke genererer
+en feilstorm i databasen.</p>
+<p>Pitchtemperatur er ikke et separat startfelt; første manuelt målte
+temperatur er temperaturgrunnlaget ved pitch. Pre-start-kladd skal ikke
+republiseres periodisk til redigerbare HA-felt mens operatøren skriver;
+restore retries ved faktisk MariaDB-utilgjengelighet i stedet for
+periodisk overskriving.</p>
+<h2 id="p24r12-autoritet-ved-presentasjon-og-operasjon">P24r12:
+autoritet ved presentasjon og operasjon</h2>
+<p>MariaDB utleder effektiv beredskap, kriterietellinger, fasevarighet,
+valgbare handlinger og status-/anbefalingstekst. Den generiske
+evalueringsmotoren bruker frozen DB-policy og persisterer evalueringen
+før presentasjon. Node-RED transporterer den ferdige read-modelen,
+validerer kontrakt og utfører forespurte DB-operasjoner. Ingen egen
+tabell med HA-valg/defaults eller alternativ beredskapsberegning skal
+overstyre DB-projeksjonen.</p>
+<p>Fysiske HA-koblinger kontrolleres mot
+<code>ha_projection_routes</code>; felt kontrolleres mot
+<code>ha_projection_fields</code>. Avvik skal bli synlige og rettes ved
+sin autoritative kilde.</p>
+<h2 id="p24r13-én-tegner-for-alle-grafer">P24r13: én tegner for alle
+grafer</h2>
+<p>MariaDB projiserer en felles grafkontrakt gjennom
+<code>v_graph_definitions</code>, <code>v_graph_series</code>,
+<code>v_graph_axes</code>, <code>v_graph_axis_ticks</code>,
+<code>v_graph_time_markers</code>, <code>v_graph_latest</code> og
+<code>v_graph_reference_bands</code>. SQL-adaptere kobler de
+normaliserte måle-, sammenlignings-, observasjons- og planfakta til
+metadataenes kildetyper. Den eksisterende metrikkevaluatoren utfører kun
+DB-valgte beregningsmodeller og lagrer resultatene i MariaDB.</p>
+<p><code>tools/graph_renderer.js</code> er eneste SVG-tegner.
+Byggverktøyet inkluderer identisk kilde i dashboard og begge
+rapportprodusenter; rapportmodulen bruker samme kildefil. Ingen separat
+tegner for målegrafer eller rapporter beholdes. Node-RED transporterer
+DB-kontrakten uten egne standarddata. Eldre arkivkontrakter konverteres
+ved import før commit, uten å påvirke aktiv gjæring.</p>
+</body>
+</html>

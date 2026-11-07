@@ -1,0 +1,8 @@
+<script type="text/javascript">
+RED.nodes.registerType('ga-archive-transfer',{category:'storage',color:'#d9e8d5',defaults:{name:{value:''},mydb:{value:'',type:'MySQLdatabase',required:true}},inputs:1,outputs:2,icon:'db.svg',label:function(){return this.name||'Gjæringsassistent arkiv';}});
+</script>
+<script type="text/html" data-template-name="ga-archive-transfer">
+<div class="form-row"><label for="node-input-name">Navn</label><input id="node-input-name"></div>
+<div class="form-row"><label for="node-input-mydb">MariaDB</label><input id="node-input-mydb"></div>
+</script>
+<script type="text/html" data-help-name="ga-archive-transfer"><p>SQLite filoverføring. Bruker MariaDB-konfigurasjonen og en egen arbeider for filarbeid og atomisk import.</p></script>

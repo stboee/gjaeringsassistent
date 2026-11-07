@@ -1,0 +1,26 @@
+SELECT 'clock' AS _set,@ga_report_now AS database_now,DATE_FORMAT(CONVERT_TZ(@ga_report_now,'+00:00','Europe/Oslo'),'%d.%m.%Y %H:%i') AS generated_display,DATE_FORMAT(@ga_report_now,'%Y%m%dT%H%i%sZ') AS file_stamp;
+SELECT 'summary' AS _set,r.* FROM v_session_report_summary r WHERE r.session_id=@ga_report_session;
+SELECT 'session' AS _set,r.* FROM v_session_report_session r WHERE r.session_id=@ga_report_session;
+SELECT 'analysis_graphs' AS _set,g.* FROM v_graph_definitions g WHERE g.session_id=@ga_report_session AND g.render_scope='report' ORDER BY g.sort_order;
+SELECT 'analysis_series' AS _set,s.* FROM v_graph_series s WHERE s.session_id=@ga_report_session ORDER BY s.graph_id,s.series_id,s.sample_at;
+SELECT 'analysis_latest' AS _set,s.* FROM v_graph_latest s WHERE s.session_id=@ga_report_session ORDER BY s.graph_id,s.series_id,s.sort_order;
+SELECT 'analysis_requirements' AS _set,r.* FROM v_session_analysis_requirements r WHERE r.session_id=@ga_report_session ORDER BY r.graph_id,r.owner_type,r.owner_id,r.criterion_id;
+SELECT 'analysis_bio_markers' AS _set,m.* FROM v_active_analysis_biological_markers m WHERE m.session_id=@ga_report_session ORDER BY m.graph_id,m.started_at;
+SELECT 'analysis_process_markers' AS _set,m.* FROM v_active_analysis_process_markers m WHERE m.session_id=@ga_report_session ORDER BY m.graph_id,m.started_at;
+SELECT 'analysis_time_markers' AS _set,m.* FROM v_graph_time_markers m WHERE m.session_id=@ga_report_session AND m.render_scope='report' ORDER BY m.graph_id,m.marker_at;
+SELECT 'biology' AS _set,r.* FROM v_session_report_biology r WHERE r.session_id=@ga_report_session ORDER BY r.started_ms;
+SELECT 'process' AS _set,r.* FROM v_session_report_process r WHERE r.session_id=@ga_report_session ORDER BY r.started_ms;
+SELECT 'observations' AS _set,r.* FROM v_session_report_observations r WHERE r.session_id=@ga_report_session ORDER BY r.at_ms;
+SELECT 'gaps' AS _set,r.* FROM v_session_report_gaps r WHERE r.session_id=@ga_report_session ORDER BY r.gap_started_at;
+SELECT 'bio_criteria' AS _set,r.* FROM v_session_report_biological_criteria r WHERE r.session_id=@ga_report_session ORDER BY r.evaluated_at,r.criterion_order;
+SELECT 'process_criteria' AS _set,r.* FROM v_session_report_process_criteria r WHERE r.session_id=@ga_report_session ORDER BY r.evaluated_at,r.criterion_order;
+SELECT 'criterion_corrections' AS _set,r.* FROM v_session_report_criterion_corrections r WHERE r.session_id=@ga_report_session ORDER BY r.created_at;
+SELECT 'process_exceptions' AS _set,r.* FROM v_session_report_process_exceptions r WHERE r.session_id=@ga_report_session ORDER BY r.created_at;
+SELECT 'process_transitions' AS _set,r.* FROM v_session_report_process_transitions r WHERE r.session_id=@ga_report_session ORDER BY r.transitioned_at;
+SELECT 'notes' AS _set,r.* FROM v_session_report_notes r WHERE r.session_id=@ga_report_session ORDER BY r.noted_at;
+SELECT 'timeline' AS _set,r.* FROM v_session_report_timeline r WHERE r.session_id=@ga_report_session ORDER BY r.happened_at;
+SELECT 'actions' AS _set,r.* FROM v_session_report_actions r WHERE r.session_id=@ga_report_session ORDER BY r.completed_at;SELECT 'analysis_axis_ticks' AS _set,t.* FROM v_graph_axis_ticks t WHERE t.session_id=@ga_report_session;
+SELECT 'bio_exceptions' AS _set,x.* FROM v_session_biological_exception_read_model x WHERE x.session_id=@ga_report_session ORDER BY x.created_at;
+SELECT 'analysis_reference_bands' AS _set,r.* FROM v_graph_reference_bands r WHERE r.session_id=@ga_report_session;
+
+SELECT 'import_coverage' AS _set,c.* FROM v_session_import_coverage c WHERE c.session_id=@ga_report_session;

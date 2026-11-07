@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>15 – Åpent arbeid</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">15 – Åpent arbeid</h1>
+</header>
+<h1 id="15--åpent-arbeid">15 – Åpent arbeid</h1>
+<p><strong>Rolle:</strong> Register over reelle, fortsatt åpne forhold.
+Historiske lukkede prototypefeil føres i releasehistorikk, ikke her.</p>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Type</th>
+<th>Status</th>
+<th>Område</th>
+<th>Exit-kriterium</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OPEN-001</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Reell HA-history/live</td>
+<td>Clean install fullfører; Start fra historisk tidspunkt
+importerer/validerer 5-minuttersdata, registrerer gap, replay-er B/P
+sekvensielt, går til LIVE og fortsetter etter restart fra persistert
+cursor.</td>
+</tr>
+<tr class="even">
+<td>OPEN-002</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Målekilde/Tilt-projeksjon</td>
+<td>Teknisk/Systemkontroll viser fersk DB-eid Tilt-status før
+Start/under catch-up/i LIVE uten nullable HA-attributtfeil eller
+konkurrerende produsent.</td>
+</tr>
+<tr class="odd">
+<td>OPEN-003</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Datakvalitet</td>
+<td>Reelt Tilt-grunnlag demonstrerer at åpenbare outliers forkastes før
+<code>measurements_5m</code>, robust median brukes og kvalitetsutfall er
+sporbare uten clamp.</td>
+</tr>
+<tr class="even">
+<td>OPEN-004</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Analyse</td>
+<td>Tre aktive analysegrafer viser kun ordinære målebaserte verdier og
+datagrunnlag etter frozen policy; ingen oppdiktede oppstartsnuller,
+SG-stabilitetsbånd eller linjer gjennom datagap.</td>
+</tr>
+<tr class="odd">
+<td>OPEN-005</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Graf/rapport</td>
+<td>Gjæring- og rapportgrafer oppdateres med nye committed
+5-minuttersdata og bryter linjer ved de samme persisterte
+<code>measurement_data_gaps</code>.</td>
+</tr>
+<tr class="even">
+<td>OPEN-006</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Tidskorrigering</td>
+<td>Pitch-/B-/P-/observation-korreksjon verifiseres mot reelle data;
+effektive referanser endres uten å omskrive absolutte
+måletimestamps.</td>
+</tr>
+<tr class="odd">
+<td>OPEN-007</td>
+<td>Faglig kalibrering</td>
+<td>Åpen</td>
+<td>W-34/70 kriterier</td>
+<td>Hver aktiv terskel/regel er klassifisert som kildebelagt, empirisk
+kalibrert eller prototypegrense og vurdert mot minst representative
+reelle gjæringer.</td>
+</tr>
+<tr class="even">
+<td>OPEN-008</td>
+<td>Avklaring</td>
+<td>Åpen</td>
+<td>Målevalideringsgrenser</td>
+<td>SG/temperatur/RSSI hard range, MAD-multiplikator, max-jump og
+minimum acceptance er faglig/teknisk begrunnet og justert dersom reell
+datadistribusjon tilsier det.</td>
+</tr>
+<tr class="odd">
+<td>OPEN-009</td>
+<td>Måltest</td>
+<td>Åpen</td>
+<td>Historisk sammenligning</td>
+<td>Pitch-justert sammenligning er implementert; valg av begge datasett
+og avsluttet session samt persistens skal måltestes.</td>
+</tr>
+<tr class="even">
+<td>OPEN-011</td>
+<td>Arkitektur</td>
+<td>Åpen</td>
+<td>Lineage</td>
+<td>Required grensesnitt og aktive systemfunksjoner har komplett
+registrert lineage; beslutning om eventuell bredere fysisk DB-dekning er
+dokumentert eksplisitt.</td>
+</tr>
+<tr class="odd">
+<td>OPEN-012</td>
+<td>UX</td>
+<td>Åpen</td>
+<td>Operatørflate</td>
+<td>Gjenstående hensiktsmessige notatplasseringer/handlingskvitteringer
+fra funksjonelle referanser er enten implementert eller eksplisitt
+avvist uten å endre domenemodellen.</td>
+</tr>
+</tbody>
+</table>
+<p>| OPEN-013 | Verifikasjon | Åpen | Verifikasjonsmodell | Eksisterende
+krav/tester kobles gradvis til strukturerte VER/TEST-relasjoner;
+manglende koblinger er synlige i Verifikasjon-fanen og skal ikke skjules
+med kunstig coverage-score. |</p>
+<p>| OPEN-014 | Måltest/diagnostikk | Åpen | Gjeldende
+installasjon/arkiv | Installer/schema samsvarer med release-metadata;
+SQLite-par/sluttrapport, ny start, sammenligning og HA-gjenoppkobling
+verifiseres i faktisk Docker/HA/Node-RED. TEST-UAT-012/013/014 er åpne.
+|</p>
+<p>Nye forhold legges inn når de er observerte eller eksplisitt
+besluttede arbeidsoppgaver. Spekulasjoner uten konkret exit-kriterium
+hører ikke hjemme i registeret.</p>
+<h2 id="neste-brygg">Neste brygg</h2>
+<p>Bevar rå HA-historikk lenger og hold HA/Raspberry Pi i drift under
+oppstart. Test støygulv, spranggrenser og biologiske terskler mot
+rådata. HA-timesstatistikk supplerer eldre grafer uten
+MQTT-verifikasjon; råd og B/P-overganger krever fortsatt ordinært
+målegrunnlag. Faglig tuning av terskler er åpen.</p>
+<h2 id="gjeldende-målmiljøstatus">Gjeldende målmiljøstatus</h2>
+<p>Brukeren har bekreftet at p24r16 er installert og fungerer fint.
+Første GitHub-utgave 2026.11.07-1 bygger på dette grunnlaget.
+Bekreftelsen lukker ikke automatisk hver enkelt av de 14 UAT-testene;
+faktisk installasjon av datoversjonen og konkrete målresultater må
+registreres separat.</p>
+<p>Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning.
+Lokal native integrasjon dokumenterer leseavgrensning og samtidighet,
+ikke garantert responstid på gangpc. Reell HA Recorder/time-statistikk,
+nettverksfeil, nettleser/tidssoner, B/P-korreksjoner, faste akser,
+arkiv/ny start og HA-gjenoppkobling er fortsatt måltester der konkrete
+bevis mangler.</p>
+<h2 id="produksjonsoppgraderinger">Produksjonsoppgraderinger</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Type</th>
+<th>Status</th>
+<th>Område</th>
+<th>Exit-kriterium</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OPEN-015</td>
+<td>Avklaring/implementering</td>
+<td>Åpen</td>
+<td>Oppgradering med databevaring</td>
+<td>Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner,
+templates og nødvendig historikk; reset er en særskilt tilsiktet
+handling.</td>
+</tr>
+</tbody>
+</table>
+<p>Dagens installer resetter fortsatt databasen. GitHub-publisering er
+ikke en databevarende migrering. Issues/PR inngår ikke i
+prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og
+føres direkte på main.</p>
+</body>
+</html>

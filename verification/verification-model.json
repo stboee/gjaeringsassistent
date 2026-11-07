@@ -1,0 +1,604 @@
+{
+  "schema_version": "1.0",
+  "verifications": [
+    {
+      "verification_id": "VER-TECH-001",
+      "verification_type": "technical",
+      "title": "Autoritativ MariaDB-arkitektur",
+      "acceptance_criterion": "Releasekilden har én MariaDB-authority og ingen persistent domenestate/fallback i flow/global/frontend.",
+      "requirements": [
+        "REQ-COM-002",
+        "REQ-COM-074"
+      ],
+      "tests": [
+        "TEST-TECH-005",
+        "TEST-TECH-006",
+        "TEST-TECH-012"
+      ]
+    },
+    {
+      "verification_id": "VER-TECH-002",
+      "verification_type": "technical",
+      "title": "HA-kontrakt og metadata-lineage",
+      "acceptance_criterion": "HA entity/event-register, systemfunksjoner og required lineage er konsistente med fysisk flow/dashboard.",
+      "requirements": [
+        "REQ-COM-063",
+        "REQ-MOTOR-046"
+      ],
+      "tests": [
+        "TEST-TECH-003",
+        "TEST-TECH-004",
+        "TEST-TECH-012",
+        "TEST-FUNC-020"
+      ]
+    },
+    {
+      "verification_id": "VER-TECH-003",
+      "verification_type": "technical",
+      "title": "Read-model authority",
+      "acceptance_criterion": "Aktive runtime views eksisterer og Node-RED leser felter som viewkontrakten faktisk leverer.",
+      "requirements": [
+        "REQ-MOTOR-035",
+        "REQ-MOTOR-049"
+      ],
+      "tests": [
+        "TEST-TECH-007",
+        "TEST-TECH-010",
+        "TEST-TECH-012"
+      ]
+    },
+    {
+      "verification_id": "VER-TECH-004",
+      "verification_type": "technical",
+      "title": "Release/dokumentasjon",
+      "acceptance_criterion": "Releasepakke, dokumentkilder og genererte artefakter er versjonskonsistente og reproducerbare uten historisk p19-dokumentkrav.",
+      "requirements": [
+        "REQ-INST-001",
+        "REQ-INST-002",
+        "REQ-INST-003",
+        "REQ-INST-005"
+      ],
+      "tests": [
+        "TEST-TECH-001",
+        "TEST-TECH-002",
+        "TEST-TECH-009",
+        "TEST-TECH-011"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-001",
+      "verification_type": "functional",
+      "title": "Start og frozen session",
+      "acceptance_criterion": "Start bruker DB-draft, fryser normalisert grunnlag og bruker SG-only uten HA/frontend-fallback.",
+      "requirements": [
+        "REQ-COM-013",
+        "REQ-COM-040",
+        "REQ-MOTOR-027"
+      ],
+      "tests": [
+        "TEST-FUNC-001",
+        "TEST-FUNC-020"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-002",
+      "verification_type": "functional",
+      "title": "Template lifecycle",
+      "acceptance_criterion": "Templateadministrasjon støtter draft/published/retired/reactivate og påvirker ikke aktiv frozen session eller Start-valg utilsiktet.",
+      "requirements": [
+        "REQ-COM-040",
+        "REQ-HA-062"
+      ],
+      "tests": [
+        "TEST-FUNC-002",
+        "TEST-UAT-002"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-003",
+      "verification_type": "functional",
+      "title": "Sekvensiell B/P evaluering",
+      "acceptance_criterion": "B/P evalueres kronologisk; W-34/70 history replay kan etablere P1/P2, men P3+ krever operatør.",
+      "requirements": [
+        "REQ-COM-016",
+        "REQ-MOTOR-022",
+        "REQ-MOTOR-026",
+        "REQ-MOTOR-037"
+      ],
+      "tests": [
+        "TEST-FUNC-004",
+        "TEST-FUNC-005",
+        "TEST-UAT-004"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-004",
+      "verification_type": "functional",
+      "title": "Måle- og analysedatakvalitet",
+      "acceptance_criterion": "Ugyldige rå-/derived verdier forkastes uten clamp, og analyse mangler verdi når warm-up/coverage/outputdomene ikke er gyldig.",
+      "requirements": [
+        "REQ-COM-072",
+        "REQ-COM-073",
+        "REQ-MOTOR-041",
+        "REQ-MOTOR-044",
+        "REQ-MOTOR-047"
+      ],
+      "tests": [
+        "TEST-FUNC-007",
+        "TEST-FUNC-008",
+        "TEST-UAT-008"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-005",
+      "verification_type": "functional",
+      "title": "HA history/live",
+      "acceptance_criterion": "History catch-up, cursor, gap og live 5-minuttersimport følger aktiv session og persistert DB-grunnlag.",
+      "requirements": [
+        "REQ-COM-020",
+        "REQ-MOTOR-038",
+        "REQ-MOTOR-039"
+      ],
+      "tests": [
+        "TEST-FUNC-009",
+        "TEST-UAT-003"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-006",
+      "verification_type": "functional",
+      "title": "Lifecycle og rapport",
+      "acceptance_criterion": "Completed/release og aktiv/historisk rapport bruker DB/read-model og bevarer append-only historikk.",
+      "requirements": [
+        "REQ-COM-039",
+        "REQ-COM-045",
+        "REQ-COM-046",
+        "REQ-MOTOR-034",
+        "REQ-COM-080",
+        "REQ-HA-079"
+      ],
+      "tests": [
+        "TEST-FUNC-006",
+        "TEST-UAT-006",
+        "TEST-FUNC-013",
+        "TEST-UAT-012",
+        "TEST-FUNC-020"
+      ]
+    },
+    {
+      "verification_id": "VER-UAT-001",
+      "verification_type": "uat",
+      "title": "UAT-resultat registreres append-only",
+      "acceptance_criterion": "Et UAT-resultat registrert fra dashboardet gir ny verifikasjonsrun/result i MariaDB og blir synlig i read-model uten å overskrive eldre resultater.",
+      "requirements": [
+        "REQ-COM-075",
+        "REQ-COM-076",
+        "REQ-MOTOR-048",
+        "REQ-HA-064"
+      ],
+      "tests": [
+        "TEST-FUNC-010",
+        "TEST-UAT-009"
+      ]
+    },
+    {
+      "verification_id": "VER-UAT-002",
+      "verification_type": "uat",
+      "title": "Verifikasjonsinnsyn",
+      "acceptance_criterion": "Dashboardet viser DB-eid TECH/FUNC/UAT-status og krav→verifikasjon→test uten lokal coverageberegning.",
+      "requirements": [
+        "REQ-COM-077",
+        "REQ-MOTOR-049",
+        "REQ-HA-062",
+        "REQ-HA-063"
+      ],
+      "tests": [
+        "TEST-FUNC-010",
+        "TEST-UAT-009"
+      ]
+    },
+    {
+      "verification_id": "VER-UAT-003",
+      "verification_type": "uat",
+      "title": "Verifikasjonseksport og HTML-rapport",
+      "acceptance_criterion": "JSON og HTML kan genereres fra samme DB-grunnlag og inneholder metadata, relasjoner, kjøringer og resultater uten alternativ statuslogikk.",
+      "requirements": [
+        "REQ-COM-078",
+        "REQ-MOTOR-051",
+        "REQ-HA-065"
+      ],
+      "tests": [
+        "TEST-FUNC-010",
+        "TEST-UAT-010"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-007",
+      "verification_type": "functional",
+      "title": "Restart/reconnect rekonstruerer fra MariaDB",
+      "acceptance_criterion": "Aktiv eller konfigurert session rekonstrueres etter asynkron MariaDB/Node-RED/HA-oppstart; HA repopuleres etter reconnect og live-import fortsetter fra persistert cursor uten ny Start eller duplisert domenhistorikk.",
+      "requirements": [
+        "REQ-COM-043",
+        "REQ-COM-059",
+        "REQ-COM-079",
+        "REQ-MOTOR-003",
+        "REQ-MOTOR-017"
+      ],
+      "tests": [
+        "TEST-UAT-011"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-009",
+      "verification_type": "functional",
+      "title": "P24 analyse og kriteriepolicy",
+      "acceptance_criterion": "Robust foreløpig/ordinær analyse har felles beregning og DB-policy; pitch-baseline er kvalifisert/persistert, gjeldende status er fersk, korreksjoner beholder unset-semantikk og stabilitet har 24/48-kurver uten bånd.",
+      "requirements": [
+        "REQ-MOTOR-044",
+        "REQ-HA-069",
+        "REQ-HA-070",
+        "REQ-HA-071",
+        "REQ-HA-072",
+        "REQ-HA-074",
+        "REQ-HA-075",
+        "REQ-MOTOR-056",
+        "REQ-MOTOR-057",
+        "REQ-MOTOR-058",
+        "REQ-MOTOR-059",
+        "REQ-HA-076",
+        "REQ-HA-077",
+        "REQ-COM-081",
+        "REQ-MOTOR-060",
+        "REQ-HA-078"
+      ],
+      "tests": [
+        "TEST-FUNC-011",
+        "TEST-TECH-006",
+        "TEST-UAT-008",
+        "TEST-FUNC-012",
+        "TEST-UAT-013"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-010",
+      "verification_type": "functional",
+      "title": "Timeshistorikk og sammenligning",
+      "acceptance_criterion": "Ingen konstruerte historikkverdier; persistent datasettvalg og én rapportgenerator.",
+      "requirements": [
+        "REQ-MOTOR-061",
+        "REQ-MOTOR-062",
+        "REQ-MOTOR-063",
+        "REQ-MOTOR-064",
+        "REQ-HA-080",
+        "REQ-HA-081",
+        "REQ-HA-082"
+      ],
+      "tests": [
+        "TEST-FUNC-014",
+        "TEST-TECH-007"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-011",
+      "verification_type": "functional",
+      "title": "Slank og korrekt grafvisning",
+      "acceptance_criterion": "Reelt oversiktsgrunnlag tegnes uten kontraktfeil; alle punktverdier, stiler og segmenter overlever metadata-projeksjonen; valg bekreftes med riktig operation_id; komprimert publisering leses tilbake tapsfritt.",
+      "requirements": [
+        "REQ-MOTOR-065",
+        "REQ-HA-083",
+        "REQ-HA-084",
+        "REQ-HA-085",
+        "REQ-HA-086"
+      ],
+      "tests": [
+        "TEST-FUNC-015",
+        "TEST-TECH-007",
+        "TEST-FUNC-021"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-012",
+      "verification_type": "functional",
+      "title": "Gjeldende grafvalg/import og kriteriekrav",
+      "acceptance_criterion": "Kommandoformat bevarer operation_id, vanlig live-import hopper over timesstatistikk, og graf/rapport viser gjeldende B/P-krav med riktig revisjonsmarkør.",
+      "requirements": [
+        "REQ-HA-087",
+        "REQ-HA-088",
+        "REQ-MOTOR-066"
+      ],
+      "tests": [
+        "TEST-FUNC-016",
+        "TEST-UAT-012",
+        "TEST-UAT-013"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-015",
+      "verification_type": "functional",
+      "title": "SQLite filoverføring og historikk",
+      "acceptance_criterion": "Sammenhørende arkivpar importeres atomisk som historikk, med separat template-identitet og fungerende aktiv drift.",
+      "requirements": [
+        "REQ-COM-082",
+        "REQ-COM-083",
+        "REQ-MOTOR-067",
+        "REQ-MOTOR-068",
+        "REQ-HA-089",
+        "REQ-MOTOR-069",
+        "REQ-MOTOR-070",
+        "REQ-MOTOR-071",
+        "REQ-MOTOR-072",
+        "REQ-HA-090",
+        "REQ-HA-091"
+      ],
+      "tests": [
+        "TEST-FUNC-017",
+        "TEST-FUNC-018",
+        "TEST-FUNC-019",
+        "TEST-UAT-014"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-016",
+      "verification_type": "functional",
+      "title": "Avgrenset historisk gjæring og fasetid",
+      "acceptance_criterion": "HA-import, grafakser, vurderinger og eksport bruker eksplisitt historisk vindu. Begge B/P-varigheter følger korrigert nabogrense.",
+      "requirements": [
+        "REQ-MOTOR-073",
+        "REQ-MOTOR-074",
+        "REQ-MOTOR-075",
+        "REQ-HA-092"
+      ],
+      "tests": [
+        "TEST-FUNC-022",
+        "TEST-UAT-014"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-017",
+      "verification_type": "functional",
+      "title": "Datadekning og kvittert HA-publisering",
+      "acceptance_criterion": "Historisk import har DB-eid status og datadekning. Forbigående HA-brudd lager ikke feilsirkel og lukkes først etter vellykket utgang med ferske DB-data.",
+      "requirements": [
+        "REQ-MOTOR-076",
+        "REQ-MOTOR-077",
+        "REQ-MOTOR-078"
+      ],
+      "tests": [
+        "TEST-FUNC-023",
+        "TEST-UAT-014"
+      ]
+    }
+  ],
+  "decision_requirement_links": [
+    {
+      "decision_id": "DEC-GA-001",
+      "requirements": [
+        "REQ-COM-002"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-030",
+      "requirements": [
+        "REQ-COM-074",
+        "REQ-MOTOR-049"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-032",
+      "requirements": [
+        "REQ-COM-074"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-044",
+      "requirements": [
+        "REQ-COM-075",
+        "REQ-COM-076"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-045",
+      "requirements": [
+        "REQ-COM-077"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-046",
+      "requirements": [
+        "REQ-COM-077",
+        "REQ-INST-003"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-047",
+      "requirements": [
+        "REQ-COM-076",
+        "REQ-HA-064"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-048",
+      "requirements": [
+        "REQ-COM-078",
+        "REQ-MOTOR-051",
+        "REQ-HA-065"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-049",
+      "requirements": [
+        "REQ-INST-002"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-051",
+      "requirements": [
+        "REQ-MOTOR-044",
+        "REQ-HA-074",
+        "REQ-MOTOR-056",
+        "REQ-MOTOR-057",
+        "REQ-MOTOR-058",
+        "REQ-MOTOR-059"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-052",
+      "requirements": [
+        "REQ-HA-069",
+        "REQ-HA-076",
+        "REQ-HA-077"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-053",
+      "requirements": [
+        "REQ-HA-071"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-054",
+      "requirements": [
+        "REQ-HA-072"
+      ]
+    },
+    {
+      "decision_id": "DEC-GA-055",
+      "requirements": [
+        "REQ-HA-075"
+      ]
+    },
+    {
+      "decision_id": "DEC-P24R9-CURRENT",
+      "requirements": [
+        "REQ-HA-087",
+        "REQ-HA-088",
+        "REQ-MOTOR-066"
+      ]
+    },
+    {
+      "decision_id": "DEC-P24R10-ARCHIVES",
+      "requirements": [
+        "REQ-COM-082",
+        "REQ-COM-083"
+      ]
+    },
+    {
+      "decision_id": "DEC-P24R10-IMPORT",
+      "requirements": [
+        "REQ-MOTOR-067",
+        "REQ-MOTOR-068",
+        "REQ-HA-089"
+      ]
+    },
+    {
+      "decision_id": "DEC-P24R11-DELETE",
+      "requirements": [
+        "REQ-MOTOR-070",
+        "REQ-HA-090"
+      ]
+    },
+    {
+      "decision_id": "DEC-P24R11-SNAPSHOT",
+      "requirements": [
+        "REQ-MOTOR-071"
+      ]
+    },
+    {
+      "decision_id": "DEC-P24R11-SHA",
+      "requirements": [
+        "REQ-MOTOR-072",
+        "REQ-HA-091"
+      ]
+    }
+  ],
+  "uat_steps": {
+    "TEST-UAT-009": [
+      {
+        "step_order": 1,
+        "instruction": "Åpne Verifikasjon-fanen og velg en aktiv UAT-test.",
+        "expected_result": "Testen viser DB-eid gjeldende status og tilknyttede krav/verifikasjonskrav."
+      },
+      {
+        "step_order": 2,
+        "instruction": "Registrer resultat med operatørnavn og notat.",
+        "expected_result": "Ny DB-kvittert run/result opprettes og tidligere resultat beholdes i historikken."
+      }
+    ],
+    "TEST-UAT-010": [
+      {
+        "step_order": 1,
+        "instruction": "Velg Generer verifikasjonseksport.",
+        "expected_result": "Både JSON- og HTML-fil publiseres under HA-public exports."
+      },
+      {
+        "step_order": 2,
+        "instruction": "Åpne begge filer.",
+        "expected_result": "Versjon, tidspunkt, krav, verifikasjoner, tester og resultater beskriver samme DB-snapshot."
+      }
+    ],
+    "TEST-UAT-011": [
+      {
+        "step_order": 1,
+        "instruction": "Ha en aktiv reell gjæring og noter session-ID, biologisk fase, prosesstrinn, siste importcursor og målekildestatus fra MariaDB/read-model.",
+        "expected_result": "Referansetilstanden er DB-kvittert før restart."
+      },
+      {
+        "step_order": 2,
+        "instruction": "Restart vertsmaskinen eller de tre modulene slik at MariaDB, Node-RED og Home Assistant ikke er tilgjengelige samtidig i oppstartsøyeblikket. Ikke trykk Start eller restart Node-RED manuelt etterpå.",
+        "expected_result": "Systemet tåler vilkårlig oppstartsrekkefølge og retry/reconcile fortsetter til avhengighetene er tilgjengelige."
+      },
+      {
+        "step_order": 3,
+        "instruction": "Når alle moduler er oppe, kontroller Gjæring, Biologi, Prosesstrinn, målekilde og MariaDB.",
+        "expected_result": "Samme session, B-fase og P-trinn er rekonstruert fra MariaDB; HA-projeksjonene er repopulert uten ny Start eller dupliserte overgangsfakta."
+      },
+      {
+        "step_order": 4,
+        "instruction": "Kontroller live-import etter reconnect.",
+        "expected_result": "Import fortsetter fra persistert last_import_cutoff_at og går tilbake til LIVE uten dupliserte 5-minuttersbøtter eller domenhistorikk."
+      }
+    ],
+    "TEST-UAT-014": [
+      {
+        "step_order": 1,
+        "instruction": "Eksporter et avsluttet brygg og importer det sammenhørende SQLite-paret mens en annen gjæring pågår.",
+        "expected_result": "Filvalg/forhåndsvisning/import fungerer i faktisk HA, målingene fortsetter og importert gjæring kan velges i sammenligning."
+      },
+      {
+        "step_order": 2,
+        "instruction": "Kontroller template-kategorier, kopier importert original til ny egen ID, og skjul/vis importert historikk.",
+        "expected_result": "Originalen forblir separat og skrivebeskyttet. Egen kopi kan redigeres; sammenligningslisten følger DB-kvittert synlighet."
+      },
+      {
+        "step_order": 3,
+        "instruction": "Demo → Avslutt → Gjør klar → velg template → Start ordinær gjæring. Restart Node-RED.",
+        "expected_result": "Start er tilgjengelig igjen; status rekonstrueres fra MariaDB."
+      },
+      {
+        "step_order": 4,
+        "instruction": "Eksporter aktivt øyeblikksbilde med SHA/HTML. Velg filene samlet og prøv feil/manglende SHA før import.",
+        "expected_result": "Aktiv drift fortsetter; advarsel vises uten importblokkering; valgene beholdes."
+      },
+      {
+        "step_order": 5,
+        "instruction": "Slett historisk sesjon fra MariaDB, deretter ubrukt importert template; prøv sletting med brukt template.",
+        "expected_result": "Komplett sletting, nullstilt sammenligning, beholdte eksportfiler og avvisning av brukte templates."
+      },
+      {
+        "step_order": 6,
+        "instruction": "Velg template og historisk Start fra med første måleserie. Angi sluttid og importer avsluttet gjæring fra faktisk HA.",
+        "expected_result": "Kun valgt fra–til behandles, siste deltime bruker bare tilgjengelig detaljgrunnlag, og kilden viser HISTORISK etter fullføring."
+      },
+      {
+        "step_order": 7,
+        "instruction": "Etterregistrer en manglende B- og P-start, og flytt en eksisterende start. Registrer målerunde med faktisk historisk måletid og et kriterieavvik.",
+        "expected_result": "Begge nabovarigheter og grensene oppdateres fra DB; vurderingen bruker historisk horisont, og avvik/registreringstid bevares."
+      },
+      {
+        "step_order": 8,
+        "instruction": "Start Node-RED på nytt etter ferdig import, kontroller tidslinjen neste dag og eksporter SQLite/SHA/HTML.",
+        "expected_result": "Ingen videre Tilt-henting, uendret historisk slutt og korrekt rapport/arkiv med etterregistreringene."
+      }
+    ]
+  }
+}

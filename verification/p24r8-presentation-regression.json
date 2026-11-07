@@ -1,0 +1,22 @@
+{
+  "application_version": "2026.11.07-1",
+  "status": "pass",
+  "source_fixture": "tests/fixtures/p24r15-overview-regression.json.gz",
+  "original_bytes": 19898199,
+  "compact_bytes": 511457,
+  "gzip_bytes": 35813,
+  "original_points": 947,
+  "preserved_points": 947,
+  "presentation_definitions": 17,
+  "tests": [
+    "original overview rendering",
+    "dictionary field round-trip",
+    "larger shared graphs and measurement charts",
+    "direct/wrapped HA event inputs",
+    "exact operation acknowledgement, pending refresh and late HTTP reply",
+    "shell argument round-trip",
+    "concurrent JSON/gzip publication and obsolete snapshot rejection",
+    "summary and full diagnostics",
+    "visible rendering failure"
+  ]
+}

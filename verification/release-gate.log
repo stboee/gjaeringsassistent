@@ -1,0 +1,653 @@
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+RESULT: PASS – dokumentasjon: 21 aktive kilder, 257 REQ, 65 DEC/ADR, 14 OPEN; HTML/maskinmetadata reproduserbare
+RESULT: PASS – komplett p24-releasepakke uten historisk p19-dokumentsett; versjon/SHA/artefakter konsistente
+RESULT: PASS – MariaDB HA-metadata: 75 aktive entiteter, 22 events, 64 bootstrap-states; JSON/flow/dashboard konsistente
+PASS all HA entity registry statuses satisfy DDL CHECK constraint
+PASS all HA event registry statuses satisfy DDL CHECK constraint
+PASS all system function registry statuses satisfy DDL CHECK constraint
+PASS 75 active HA entities in MariaDB metadata seed
+PASS 21 active HA events in MariaDB metadata seed
+PASS 15 DB-defined Systemkontroll checks include Frontendpublisering, Målekilde and Aktive driftsfeil
+PASS Systemkontroll expectations are DB-seeded for schema and frontend release
+PASS HA entity/config identities are unique
+PASS HA registry separates 11 registration-only buttons and 64 state-bearing entities
+PASS buttons are registration-only
+PASS all state-bearing entities have DB bootstrap values and stable slots
+PASS all seeded dependency object IDs resolve to physical/registered information objects
+PASS every active system function has an information dependency
+PASS reference demo lineage covers fixture reads and runtime measurement/gap writes
+PASS Home Assistant live-ingestion lineage covers source config, cursor, measurements and gaps
+PASS active report lineage declares all MariaDB report read-models
+PASS completed report lineage declares shared MariaDB graph read-models
+PASS Systemkontroll lineage reads are declared in function_information_dependencies
+PASS all HA entities are connected to the expected producer/consumer function chain
+PASS all active HA events have a functional consumer
+PASS metadata lineage read-models exist
+PASS Systemkontroll/bootstrap consume MariaDB metadata read paths
+PASS system_functions metadata seed uses physical label column, not obsolete name
+RESULT: PASS (23 system-metadata/lineage checks)
+PASS release uses the agreed calendar version
+PASS measurement_5m schema verification count matches its five canonical required columns
+PASS all Node-RED node ids are unique
+PASS all Node-RED wires resolve
+PASS exactly one runtime mysql node
+PASS no SQLite nodes
+PASS no persistent domain writes to flow/global context
+PASS Start validates only persisted DB draft; no HA SG fallback
+PASS Technical/Systemkontroll pipeline exists
+PASS Technical HA entities exist
+PASS manual Systemkontroll button uses real DB check path
+PASS Systemkontroll writer declares all 24 wired outputs
+PASS Technical Event result declares all 8 wired outputs including archive issue acknowledgement
+PASS Systemkontroll projects up to 50 technical events
+PASS Technical Event writer projects up to 50 events
+PASS Systemkontroll publishes rich Technical read-model attributes with local timestamps
+PASS Technical Event refresh publishes rich event-list attribute with local timestamps
+PASS Systemkontroll runs automatically after Node-RED startup
+PASS p23r2 authoritative MariaDB startup restore retries idempotently on actual DB unavailability without periodic editable-field overwrite
+PASS periodic restore/reconcile does not create evaluator/systemcheck domain side effects
+PASS p23r2 HA-history failure retries through the active-session ingest delay
+PASS p23r2 identical technical events are storage-deduplicated during infrastructure outages
+PASS p23r2 keeps a periodic DB-generated technical-status snapshot independent of manual HA event ingress
+PASS legacy HA IDs are informational when contracted entities are present
+PASS p18 Technical Notes path exists on p20 runtime
+PASS Technical Notes listens to the p18-compatible HA event
+PASS DB router has explicit Notes, Template, Technical export, demo, overview, measurement, evaluator, correction and HA-ingestion routes
+PASS Technical Notes are persisted transactionally in session_notes
+PASS Technical Notes are restored from MariaDB
+PASS HA status publisher omits null completed_at and guarantees a valid template label
+PASS full agreed Technical HA config set exists
+PASS documented template entity display name is stable
+PASS MariaDB-driven HA registry/bootstrap pipeline exists
+PASS old hard-coded HA reconciliation pipeline is removed
+PASS HA bootstrap reads entity and alias metadata from MariaDB
+PASS all 64 state-bearing HA entities have physical bootstrap outputs
+PASS generic HA registry reconcile API is message-driven
+PASS complete p18 first-measurement HA entity set remains present
+PASS Måleresultater has contracted save button and corrected-SG sensor without duplicate validation state
+PASS Lagre målinger has one contracted ha-button ingress
+PASS measurement save/status/time-revision pipeline exists
+PASS manual measurement saves normalized observation + revision
+PASS measurement activation/deactivation is revision-based
+PASS timeline correction reuses one parameterized event for biological/process/pitch/observation revisions
+PASS separate duplicate OG operator entity remains removed
+PASS Node-RED Start uses packaged start-session.sql verbatim
+PASS Start derives expected FG in MariaDB from corrected OG and expected attenuation range
+PASS Start SQL parameter count is 44 including optional historical cutoff; expected FG is derived in MariaDB from corrected OG + frozen attenuation target
+PASS Start persists initial measurement as normalized observation/revision
+PASS Start mutation has a MariaDB-side atomic rollback boundary
+PASS runtime schema has no JSON domain columns
+PASS dashboard recreates p17r12 Måleresultater surface
+PASS Måleresultater includes p17r12 operator sections
+PASS measurement custom-card functions are present
+PASS dashboard recreates p18 Technical system + conditional Notes cards
+PASS Technical card contains p18 system and Notes operator functions
+PASS Technical card invokes the contracted HA button entity
+PASS Systemkontroll has exactly one Node-RED command ingress: contracted ha-button
+PASS Technical card provides local timestamp-prefixed structured JSON export
+PASS Technical export pipeline exists
+PASS Technical export writes through HA-public mount
+PASS Technical export derives the HA runtime entity set from MariaDB registry
+PASS dashboard contains p18-style Template tab/read-model
+PASS Template library/editor/admin pipeline exists
+PASS Template card contains full library, lifecycle and editor workflow
+PASS Template admin UI emits DB-backed selection/lifecycle/new-identity commands
+PASS Template read-model is published to HA-public
+PASS Template read-model reads admin selection, Start selection and active-session source as separate DB facts
+PASS Template draft save is a normalized MariaDB transaction
+PASS Template administration is not blocked by an active session
+PASS Publishing a template does not change Start selection
+PASS Draft/new-template clone accepts immutable source and preserves analysis metadata
+PASS Template lifecycle supports retire/reactivate and clears retired Start selection
+PASS Template select is restored from authoritative DB state after option refresh
+PASS Template publish makes the draft immutable/published
+PASS frontend loader resolves the published card through runtime manifest and SHA cache busting
+PASS p18-style Node-RED frontend publication pipeline exists
+PASS frontend publisher runs automatically at Node-RED startup
+PASS frontend publisher executes staged runtime publisher
+PASS publisher uses p18 mount-safe atomic publication model
+PASS installer stages frontend sources and publisher for Node-RED
+PASS installer does not bypass the HA-public mount by publishing frontend directly
+PASS installer does not run runtime/negative DB tests
+PASS installer does not drive synthetic Node-RED test nodes
+PASS installer does not perform repeated restart cycles
+PASS installer does not perform HA function tests
+PASS all Function nodes and frontend JavaScript pass syntax check
+PASS W-34/70 seed has 15 process slots
+PASS W-34/70 seed has 6 biological phases
+PASS release schema verification expects exactly the same 6 W-34/70 biological phases as the canonical seed
+PASS custom card explicitly supports overview, biology, process, timecorrection and measurement views
+PASS Template B/P details preserve expanded state across legitimate rerenders
+PASS Template does not rerender on unrelated HA state ticks
+PASS Technical tables explicitly render local Europe/Oslo timestamps
+PASS Systemkontroll read-model includes local timestamps
+PASS HA contract includes explicit demo button
+PASS Gjæring overview and explicit demo pipelines exist
+PASS Gjæring tab contains full-width p17r12-style overview card
+PASS Gjæring tab exposes explicit demo button before Start
+PASS demo enters the ordinary Start chain
+PASS demo seeds deterministic MariaDB history after normal Start
+PASS session schema records explicit demo provenance
+PASS overview uses compiled read and DB polling decision
+PASS Gjæring overview read-model is sourced from current MariaDB history/targets
+PASS Gjæring overview is published through HA-public mount
+PASS Gjæring overview renders p17r12-style KPI/timeline/SG/temperature/pressure/observation surfaces
+PASS dashboard contains p17r12-style Biologi tab with biological view and time correction
+PASS redundant Gjæring Status and SG-only information cards are removed
+PASS Biologi custom-card surface includes p17r12 evaluation/history and time-correction operator functions
+PASS biological timeline correction pipeline exists
+PASS Biologi correction listens to timeline-correction HA event
+PASS Biological start-time correction creates a new current revision instead of overwriting historical timing
+PASS Biological time correction never mutates historical started_at in place
+PASS Biologi read-model is sourced from frozen criteria and authoritative transition/current evaluation evidence
+PASS Biologi read-model exposes persisted evidence without fabricating missing evaluator output
+PASS Template read query uses MariaDB-valid qualified wildcards
+PASS MariaDB mysql2 connection uses unambiguous UTC timezone token Z
+PASS MariaDB runtime connection declares the schema collation
+PASS SQL object creation and seed connections declare the schema collation
+PASS lineage gap constants have explicit collation when filtered by Systemkontroll
+PASS Systemkontroll uses freshly retrieved HA get_states API evidence
+PASS legacy HA aliases come from DB metadata and do not keep Systemkontroll in warning state
+PASS Systemkontroll reads complete DB payload and field contracts
+PASS dashboard renders operational timestamps explicitly in Europe/Oslo
+PASS installer stamps database metadata from VERSION
+PASS schema verification no longer hardcodes stale release metadata
+PASS Systemkontroll reads current UNIX epoch without interpreting UTC as local time
+PASS Systemkontroll evaluator uses epoch clock source
+PASS Systemkontroll projection tolerates Date/SQL timestamps and publishes local checked time
+PASS obsolete observation-validation sensor is absent from restore
+PASS Systemkontroll last-run timestamp uses valid Oslo-offset ISO state
+PASS Notes use exact MariaDB acknowledgement and publish operation status
+PASS Measurement save writes DB-backed acknowledgement event and triggers biology evaluator
+PASS B evaluator reads frozen criteria, revisions and persisted measurement history
+PASS B evaluator persists criteria evidence and biological transitions in MariaDB
+PASS automatic B transition is revision-based and history preserving
+PASS demo runs the same generic analysis pipeline before B evaluation after ordinary Start and seed
+PASS notes accept demo sessions through the ordinary active-session path
+PASS manual measurement save does not special-case or reject demo sessions
+PASS frontend waits for backend/DB acknowledgement for Systemkontroll, notes and measurements
+PASS generated HA contract mirrors 75 active MariaDB entities and is explicitly non-normative
+PASS measured SG uses clean contracted entity/config ID
+PASS legacy raw-SG and observation-validation entities are removed
+PASS temporary deviations list is empty in revised19 prototype contract
+PASS system metadata tables are part of MariaDB schema
+PASS system metadata seed contains 75 HA entities and 22 events including deprecated event
+PASS table/view information objects are discovered from MariaDB INFORMATION_SCHEMA
+PASS function-information lineage metadata is seeded
+PASS published template owns complete persisted start defaults including OG/SG
+PASS W-34/70 has a valid persisted OG default
+PASS Start has no HA-value fallback or SG workaround
+PASS Systemkontroll evaluates persisted draft SG only
+PASS B evaluator rejects missing required configuration instead of guessing fallbacks
+PASS restore has no dead observation-validation output
+PASS overview read-model carries DB-backed measurement feedback and correction state
+PASS Biologi GUI keeps criterion correction but removes independent FG-target correction
+PASS Biologi correction backend pipelines exist
+PASS Biology criterion correction remains active while obsolete FG-target correction listener is disconnected
+PASS B evaluator normalizes measured_at to MariaDB DATETIME format
+PASS Notes card remains focus-safe
+PASS active measurement input has a MariaDB draft table
+PASS template biology calculation parent exposes composite key required by child foreign keys
+PASS HA input mapping is normalized in MariaDB metadata tables
+PASS schema verification exposes expected base-table count
+PASS schema verification base-table count matches DDL (202)
+PASS schema verification exposes expected view count
+PASS schema verification view count matches DDL (178)
+PASS Systemkontroll metadata exposes expected view count
+PASS Systemkontroll/schema-verification view counts match DDL (178)
+PASS schema verification exposes expected HA entity count
+PASS schema verification HA entity count matches generated contract (75)
+PASS schema verification explicitly checks active measurement draft table
+PASS measurement save reads persisted MariaDB draft, never HA global state
+PASS HA input binding is read from MariaDB metadata, not a local entity map
+PASS DB-owned input binding drives pre-Start/active draft persistence and select conversion
+PASS draft ingress contains no hard-coded HA→domain mapping
+PASS active measurement draft round-trips MariaDB → HA through restore/sync
+PASS dashboard restores dedicated Prosesstrinn tab
+PASS Prosesstrinn evaluator/correction/exception/guidance/transition pipelines exist
+PASS P evaluator reads frozen process criteria, revisions, exceptions and persisted measurements
+PASS P evaluator persists evidence and recommendation without guessed required configuration
+PASS process criterion exception has one explicit parameterized event ingress
+PASS Next/Back each have one contracted ha-button ingress
+PASS Prosesstrinn GUI exposes correction/exception as first-class visible handling controls
+PASS p21r4 process actions give immediate validation and poll for persisted read-model acknowledgement
+PASS interactive Biology/Process details preserve open/edit state across 15 s read-model refresh
+PASS Gjæring recommendation card is driven by restored process recommendation motor
+PASS shared overview read-model carries current/transition process evidence, corrections, exceptions and recommendation
+PASS runtime revision schema has no mutable current flags
+PASS revision chains enforce one direct successor with UNIQUE predecessor constraints
+PASS current runtime state is derived from append-only leaf revisions
+PASS runtime uses no application-directed MariaDB locking
+PASS visit sequencing is database-generated, not read-modify-write MAX()+1
+PASS append-only runtime never UPDATEs biological_visit_revisions
+PASS append-only runtime never UPDATEs process_visit_revisions
+PASS append-only runtime never UPDATEs observation_round_revisions
+PASS append-only runtime never UPDATEs session_biological_criterion_revisions
+PASS append-only runtime never UPDATEs session_process_criterion_revisions
+PASS append-only runtime never UPDATEs session_fermentation_target_revisions
+PASS append-only runtime never UPDATEs session_fermentation_targets
+PASS append-only runtime never UPDATEs recommendations
+PASS session activity/demo facts are appended or fixed at Start, not rewritten
+PASS measurement temperatures remain complete persisted facts regardless of correction method
+PASS session lifecycle is append-only and removed from mutable session identity
+PASS active session is derived from append-only lifecycle events
+PASS recommendation resolution and process-exception lineage are constrained in MariaDB
+PASS recommendation supersession is derived from newer append-only guidance
+PASS recommendation resolution stores only operator outcomes; superseded is derived
+PASS new recommendations do not mutate lifecycle through synthetic supersede-resolution writes
+PASS runtime never mutates immutable session identity/lifecycle rows
+PASS all runtime SQL result sets use MariaDB-valid qualified wildcards
+PASS runtime does not delete persisted session history
+PASS p21 release fact table exists
+PASS current operational session excludes released sessions
+PASS p21 current session summary view exists
+PASS p21 session lifecycle HA/Node-RED pipeline exists
+PASS Avslutt/Gjør klar have one HA-button ingress each
+PASS Avslutt appends completed lifecycle and closes open B/P visits by revision
+PASS Gjør klar appends release fact, enforces export gate and preserves session history
+PASS Start/template configuration are blocked by unreleased completed session
+PASS dashboard exposes active End and DB-gated completed Prepare-new surfaces
+PASS Systemkontroll follows append-only lifecycle view instead of removed sessions.status
+PASS fermentation-target view exposes immutable attenuation-derived target fields consumed by overview
+PASS Node-RED flow has visual section headers for the six operator/runtime areas plus shared DB boundary
+PASS Systemkontroll HA sensors are untangled into the main readable flow area
+PASS shared MariaDB boundary is named without single-writer semantics
+PASS p22r5 Datavindu is produced by MariaDB read-model and only transported by overview
+PASS p21r6 Datavindu never substitutes raw criterion timestamp
+PASS p21r6 B evaluator persists explicit criterion status semantics
+PASS p21r6 P evaluator persists explicit criterion status semantics
+PASS p21r6 demo uses normalized real-reference measurements and preserves data gaps
+PASS p21r6 GUI exposes criterion handling and expanded measurement history
+PASS Biologi and Prosesstrinn label compact evidence column Datavindu
+PASS state-changing custom-card commands use simple 8 s global repeat guard
+PASS read-only/technical actions are excluded from state-changing command guard
+PASS Start/Demo/Avslutt/Gjør klar use matching 8 s backend repeat guard
+PASS p21r8 pitch correction appends session_timing_revisions
+PASS p21r8 process-start correction appends visit revision with timeline bounds
+PASS p21r8 dashboard exposes pitch and process-start correction cards
+PASS p21r8 custom card supports pitch/process time correction
+PASS p21r8 report metadata seed uses valid system_functions label column
+PASS p21r8 reference demo remains in B3/P2 and does not hardcode B4/P3
+PASS p21r8 overview charts render day-offset/date markers
+PASS p21r8 completed archive and history pipelines exist
+PASS p21r8 completed archive is SHA-256 registered in session_exports
+PASS p21r8 dashboard exposes active report and historical report list
+PASS p21r13 schema persists measurement-source configuration, RSSI and per-session ingestion cursor
+PASS p21r13 DB seed defines configurable SG, temperature, heartbeat and RSSI source entities
+PASS p21r13 HA history/live ingestion pipeline exists
+PASS p21r13 has one startup resume check and active-session-driven five-minute scheduling, not blind polling
+PASS p21r10 ingestion uses existing Home Assistant Get History connection
+PASS p21r13 history request is DB-driven, includes RSSI and resumes from persisted cutoff
+PASS p21r13 heartbeat drives gaps while healthy buckets persist SG/temp/RSSI and leave generic pressure nullable
+PASS p21r10 ordinary Start binds session to DB-configured HA measurement source
+PASS p21r10 dashboard presents Start via dedicated datetime picker plus separate demo
+PASS p21r10 Start fra reuses datetime-local control and persists through existing pitch-time HA text entity
+PASS p21r10 removes free-text Start fra entity row from ordinary Start UI
+PASS p21r10 hides obsolete pitch-time mode selector from ordinary Start UI
+PASS p21r13 persists system-check catalog and frontend publication evidence
+PASS p21r13 replaces generated_files placeholder with real frontend publication check
+PASS p21r13 removes obsolete tilt_mqtt check id
+PASS p21r13 Gjæring start surface shows import progress around Start
+PASS p21r13 initial history import is chunked with time-based progress
+PASS p22r5 Teknisk renders only DB read-model measurement-source display fields
+PASS p22r5 technical export uses DB-owned measurement-source status and DB release clock without local import-mode derivation
+PASS p22r5 measurement-source Systemkontroll consumes the same MariaDB read-model as Technical without external Tilt fallback
+PASS p21r13 template schema owns concrete metric calculation model, inputs and typed parameters
+PASS p21r13 Start freezes concrete template metric rules without registry fallback
+PASS p21r13 does not invent a hidden minimum-duration rule from legacy freshness
+PASS W-34/70 biological-phase process gates have no maximum-age freshness constraint
+PASS biological criterion correction policy contains no ghost maximum-age parameter
+PASS biological replay evaluates only the next sequential B phase
+PASS biological stability windows reset across persisted measurement gaps
+PASS process stability windows reset across persisted measurement gaps
+PASS activity timing reason does not claim an undeclared persistence duration
+PASS B evaluator has no metric-ID-specific domain rule branches
+PASS measurement-source HA projection has only bootstrap plus the dedicated MariaDB read-model producer
+PASS Process view places active process summary above next-process readiness
+PASS normative requirements document DB-owned rules, freshness semantics, validation and sequential backfill
+PASS Start ingress is audited before DB validation and refreshes the DB start projection
+PASS p22r7 central Technical catch is tab-wide uncaught safety net, not a manually maintained node list
+PASS Start MariaDB errors reach Technical and trigger DB status reconstruction
+PASS p22r3 process evaluator receives biological timeline and historical-import reason
+PASS p22r3 historical replay advances sequentially through all eligible P steps
+PASS p22r3 historical P evaluation uses only biological/observation facts available at each evaluation time
+PASS p22r3 HA ingest explicitly separates historical catch-up from ordinary live evaluation
+PASS p22r3 sequential P backfill cannot run during ordinary live five-minute ingest
+PASS startup restore has no periodic editable-field refresh
+PASS startup restore retries MariaDB readiness through transient delay
+PASS pitch temperature removed as separate Start input
+PASS Start derives pitch-temperature snapshot from manual temperature
+PASS obsolete FG-progress/absolute-rate/rate-to-peak calculation models are removed from executable flow
+PASS installer does not run detailed schema regression as an installation-critical gate
+PASS installer installs transactional runtime routines
+PASS finished-ABV calculation model registry matches attenuation-based runtime
+PASS current-session read-model exposes attenuation and derived-FG display values
+PASS Systemkontroll does not equate active HA registry count with mandatory HA entity count
+PASS Systemkontroll configuration uses MariaDB expectations for HA registry and published-template counts
+PASS MariaDB Systemkontroll metadata declares 75 active and 74 mandatory HA entities plus one published template minimum
+PASS active-session Pitch display converts stored UTC to Europe/Oslo
+PASS active-session report/display timestamps do not format stored UTC directly
+PASS 5-minute runtime schema persists min/max envelopes for temperature, pressure and RSSI
+PASS demo reference 5-minute table is present in runtime schema
+PASS demo reference CHECK expressions do not reference undeclared measurement-range columns
+PASS analysis runtime values persist explicit min/max range values
+PASS MariaDB exposes generic and active dynamic graph-axis/read-range models
+PASS dynamic graph axes use only a small tick-relative drawing margin
+PASS overview axes include process targets only for visited/current process steps, not distant future targets
+PASS pressure overview axis is not artificially forced to zero when zero is outside displayed data
+PASS analysis graph metadata uses DB-computed axes and does not force attenuation to zero
+PASS legacy graph-specific drawing implementations are absent
+PASS overview graph membership comes from DB metadata and uses the same renderer
+PASS one renderer consumes DB axes, measured envelopes, reference bands and typography
+PASS analysis graphs render min/max envelopes on DB-owned dynamic Y axes
+PASS active report reads the same MariaDB graph axes, analysis series and requirements as dashboard
+PASS active report renders all analysis graphs with min/max envelopes
+PASS completed report reads generic session graph axes, analysis series and requirements
+PASS completed report renders all analysis graphs with min/max envelopes
+PASS direct biological phase setter is absent
+PASS biological criterion exception requires confirmation and accepts optional note
+PASS correction/deviation UI uses optional notes and no mandatory-justification label
+PASS Technical surface exposes a separate MariaDB measurement-export action
+PASS measurement export reads session metadata, 5-minute ranges and gaps directly from MariaDB
+PASS measurement export CSV contains complete observed range columns
+RESULT: PASS (324 static checks)
+PASS no flow/global/context domain writes
+PASS global.get confined to technical/integration allowlist: ['p20_test_tech_state', 'p20_technical_export_result', 'p21_ha_registry_result', 'p24r16_ha_publication_retry_result']
+PASS p20_bio_eval_result has explicit DB-backed evaluation horizon
+PASS p20_bio_eval_result identifies p22r5 declarative engine
+PASS p20_bio_eval_result has no Node.js wall-clock fallback
+PASS p20_process_eval_result has explicit DB-backed evaluation horizon
+PASS p20_process_eval_result identifies p22r5 declarative engine
+PASS p20_process_eval_result has no Node.js wall-clock fallback
+PASS historical P replay only traverses enabled session steps
+PASS measurement-source HA projection reads finished MariaDB read-model
+PASS measurement-source result only normalizes mysql result shape and transports DB fields
+PASS measurement-source display content is not constructed in Node-RED
+PASS ingest context uses DB time/configuration
+PASS ingest context has no guessed source/timing defaults
+PASS ingest write only triggers DB read-model refresh
+PASS Systemkontroll refreshes the same DB measurement-source read-model
+PASS Systemkontroll reads the same measurement-source DB view
+PASS overview routes to DB compiled reader
+PASS overview reads persisted current metric values
+PASS overview requests authoritative attenuation and SG-rate metrics
+PASS overview has no local FG formula: (s0.og-
+PASS overview has no local FG formula: /(s0.og-
+PASS overview has no local FG formula: expected_fg_min)*100
+PASS overview has no local FG formula: expected_fg_min) * 100
+PASS overview transports DB metric display values
+PASS v_biological_evaluation_criterion_read_model exists as MariaDB read-model
+PASS v_process_evaluation_criterion_read_model exists as MariaDB read-model
+PASS v_current_metric_value exists as MariaDB read-model
+PASS v_measurement_source_status exists as MariaDB read-model
+PASS v_active_session_report_summary exists as MariaDB read-model
+PASS criterion read-model owns finished display fields
+PASS overview transports criterion display fields from DB
+PASS overview has no criterion display fallback builders
+PASS overview reads v_biological_transition_evidence
+PASS overview reads v_current_biological_candidate_evaluation
+PASS overview reads v_process_transition_evidence
+PASS overview reads v_current_process_candidate_evaluation
+PASS overview exposes transition evidence/current evaluation separately
+PASS active report routes to the same DB reader
+PASS active report reads DB-owned snapshot/display time
+PASS active report HTML builder does not calculate registered/domain metrics
+PASS active report text/domain content is selected from MariaDB report read-models
+PASS active report renderer contains no domain fallback or status mapping
+PASS active report query reads DB report views without Node-RED-owned domain CASE mappings
+PASS MariaDB report read-models own report status/display mappings
+PASS current process candidate ID is explicitly converted to utf8mb4 in DB display views
+PASS report next-process ID is explicitly converted to utf8mb4 in DB display views
+PASS report biological phase ID is explicitly converted to utf8mb4 in DB display views
+PASS report process ID is explicitly converted to utf8mb4 in DB display views
+PASS report parameter ID is explicitly converted to utf8mb4 in DB display views
+PASS report transition target ID is explicitly converted to utf8mb4 in DB display views
+PASS report timeline biological ID is explicitly converted to utf8mb4 in DB display views
+PASS report timeline process ID is explicitly converted to utf8mb4 in DB display views
+PASS release schema verification executes current_process_candidate_display_queryable read-model smoke
+PASS release schema verification executes active_report_summary_display_queryable read-model smoke
+PASS release schema verification executes active_report_session_display_queryable read-model smoke
+PASS release schema verification executes active_report_corrections_display_queryable read-model smoke
+PASS release schema verification executes active_report_transitions_display_queryable read-model smoke
+PASS release schema verification executes active_report_timeline_display_queryable read-model smoke
+PASS active report registers export metadata atomically without lifecycle mutation
+PASS active report card only renders DB report_summary fields
+PASS Technical/Tilt renders DB supplied display fields
+PASS Technical/Tilt does not recalculate measurement-source domain values
+PASS Systemkontroll publishes DB-prepared measurement display states
+PASS Systemkontroll has no measurement-state fallback values
+PASS frontend contains no FG-progress calculation
+PASS historical replay auto-transition policy is normalized and frozen to session
+PASS W-34/70 permits historical automatic establishment of P1/P2
+PASS W-34/70 P3-P15 require manual transition during replay
+PASS process evaluator enforces frozen replay policy generically
+PASS process evaluator has no W-34/70/P3 hardcoded replay cutoff
+PASS ingest acknowledgement carries persisted continuation token
+PASS biology acknowledgement propagates historical continuation to process evaluator
+PASS next history chunk starts only after process evaluation acknowledgement
+PASS ingest write routes through generic analysis and does not directly start next history chunk
+PASS p20_bio_eval_query obtains operation identity from MariaDB UUID
+PASS p20_process_eval_query obtains operation identity from MariaDB UUID
+PASS p20_process_guidance_query obtains operation identity from MariaDB UUID
+PASS p20_bio_eval_result does not invent evaluation/recommendation identity locally
+PASS p20_process_eval_result does not invent evaluation/recommendation identity locally
+PASS p20_process_guidance_result does not invent evaluation/recommendation identity locally
+PASS session_measurement_sources does not cache open gap state
+PASS measurement-source status derives gap state only from measurement_data_gaps
+PASS finished HA measurement-source projection exists in MariaDB
+PASS active report confirmation recursively locates DB acknowledgement in mysql multi-results
+PASS active report action uses half-column grid width
+PASS process transition controls are immediately upstream of candidate criteria assessment
+PASS p20_bio_eval_query reads DB-owned measurement freshness for evaluation readiness
+PASS p20_process_eval_query reads DB-owned measurement freshness for evaluation readiness
+PASS p20_bio_eval_result blocks live decisions when source data are stale without adding freshness criteria
+PASS p20_process_eval_result blocks live decisions when source data are stale without adding freshness criteria
+PASS p22r7 normalized schema contains measurement_validation_models
+PASS p22r7 normalized schema contains measurement_validation_model_parameters
+PASS p22r7 normalized schema contains template_analysis_graphs
+PASS p22r7 normalized schema contains template_analysis_graph_series
+PASS p22r7 normalized schema contains measurement_source_validation_rules
+PASS p22r7 normalized schema contains measurement_source_validation_rule_parameter_values
+PASS p22r7 normalized schema contains session_measurement_validation_rules
+PASS p22r7 normalized schema contains session_measurement_validation_rule_parameter_values
+PASS p22r7 normalized schema contains measurement_ingest_quality_events
+PASS p22r7 normalized schema contains session_analysis_graphs
+PASS p22r7 normalized schema contains session_analysis_graph_series
+PASS p22r7 normalized schema contains analysis_series_values
+PASS p22r7 normalized schema contains analysis_validation_events
+PASS Start freezes graph and measurement-validation metadata into the session
+PASS Tilt source validation is declared through generic DB models
+PASS ingest executes generic DB-selected validation models and persists quality facts
+PASS invalid measurement values are rejected rather than clamped into invented values
+PASS max-jump validation is applied only across contiguous measurement intervals
+PASS analysis series enforce generic warm-up, coverage and output validation metadata
+PASS analysis history is append-only from the engine
+PASS apparent attenuation is an explicit registry-selected metric model
+PASS p23r2 registry removes legacy FG-progress/rate-ratio/absolute-rate metrics
+PASS p23r2 W-34/70 template has no legacy percentage/rate-ratio criteria
+PASS metric output validity is normalized and frozen from registry through template/session
+PASS Start freezes authoritative metric output bounds into session rules
+PASS p20_bio_eval_query reads frozen metric output validity
+PASS p20_process_eval_query reads frozen metric output validity
+PASS p20_bio_eval_result rejects out-of-range metric output before criterion decisions
+PASS p20_bio_eval_result executes registry-selected apparent-attenuation model
+PASS p20_process_eval_result rejects out-of-range metric output before criterion decisions
+PASS p20_process_eval_result executes registry-selected apparent-attenuation model
+PASS relative SG-drop model no longer declares unused OG input
+PASS generic analysis engine has no graph-ID-specific branch for attenuation
+PASS generic analysis engine has no graph-ID-specific branch for sg-rate
+PASS generic analysis engine has no graph-ID-specific branch for sg-stability
+PASS generic analysis engine has no metric-ID-specific branch for relative_sg_drop_points
+PASS generic analysis engine has no metric-ID-specific branch for apparent_attenuation_percent
+PASS generic analysis engine has no metric-ID-specific branch for sg_rate_points_per_day
+PASS Analyse header/axis presentation is driven by DB graph metadata
+PASS Analyse frontend has no per-graph/domain special case for relative-sg-drop
+PASS Analyse frontend has no per-graph/domain special case for fg-progress
+PASS Analyse frontend has no per-graph/domain special case for rate-to-peak
+PASS Analyse frontend has no per-graph/domain special case for absolute-sg-rate
+PASS Analyse frontend has no per-graph/domain special case for fg_progress_min_percent
+PASS Analyse frontend has no per-graph/domain special case for current_to_peak_rate_ratio
+PASS Analyse frontend has no per-graph/domain special case for absolute_sg_rate_points_per_day
+PASS overview reads generic analysis read-model v_graph_definitions
+PASS overview reads generic analysis read-model v_graph_series
+PASS overview reads generic analysis read-model v_graph_time_markers
+PASS overview reads generic analysis read-model v_active_analysis_requirements
+PASS overview reads generic analysis read-model v_active_analysis_biological_markers
+PASS overview reads generic analysis read-model v_active_analysis_process_markers
+PASS HA measurement-source projection excludes nullable raw attribute session_id
+PASS HA measurement-source projection excludes nullable raw attribute last_success_at
+PASS HA measurement-source projection excludes nullable raw attribute last_error
+PASS HA measurement-source projection excludes nullable raw attribute open_gap_id
+PASS HA measurement-source projection excludes nullable raw attribute open_gap_started_at
+PASS HA measurement-source projection excludes nullable raw attribute latest_bucket_at
+PASS HA measurement-source projection exposes non-null prepared display attributes
+PASS Technical error sink is tab-wide uncaught catch rather than a finite node list
+PASS successful Start triggers a fresh Systemkontroll snapshot
+PASS transition from history catch-up to LIVE triggers a fresh Systemkontroll snapshot
+PASS analysis biological markers join biological_visits
+PASS analysis process markers join process_visits
+PASS analysis marker views do not read owner ids from revision alias
+PASS measurement-source display converts m.bucket_at from UTC to Europe/Oslo before DATE_FORMAT
+PASS measurement-source display converts sm.last_import_cutoff_at from UTC to Europe/Oslo before DATE_FORMAT
+PASS measurement-source display converts sm.last_success_at from UTC to Europe/Oslo before DATE_FORMAT
+PASS measurement-source display converts g.gap_started_at from UTC to Europe/Oslo before DATE_FORMAT
+PASS HA measurement-source projection owns local source/update display times
+PASS every committed live-ingest result triggers measurement-source HA projection refresh
+PASS MariaDB views do not use non-existent FROM_UTC_TIMESTAMP function
+PASS DB-owned local display timestamps use MariaDB CONVERT_TZ with Europe/Oslo
+PASS Technical measurement-source panel exposes DB projection refresh timestamp
+PASS analysis requirements read-model owns owner/role/met presentation fields
+PASS Analyse requirement table renders only DB-owned requirement presentation fields
+PASS same Analyse requirements collection drives table, threshold lines and met-at markers
+PASS template matrices collect unused registry criteria in a dropdown
+PASS deleting last criterion occurrence returns metric to unused dropdown
+PASS template reload clears transient revealed-unused criterion rows
+PASS template schema defines draft/published/retired lifecycle and persistent editor selection
+PASS template read path separates active-session source, Start selection and admin selection
+PASS template read-model uses DB admin selection and actual lifecycle status rather than runtime lock mode
+PASS active session is exposed as informational template-library metadata only
+PASS template draft/lifecycle administration remains available during active fermentation
+PASS template publishing cannot silently change Start selection
+PASS immutable published/retired versions can seed drafts and all analysis metadata is cloned
+PASS new-template clone cannot fall through to an existing unrelated draft when identity is already occupied
+PASS template clone persists editor selection inside the same transaction
+PASS template lifecycle implements retire and reactivation as explicit DB transitions
+PASS retiring a Start-selected version clears that pre-start selection instead of leaving an invalid Start reference
+PASS Start template selection accepts only published versions
+PASS Template UI exposes library, new identity, reversible retirement, comparison and runtime-separation cues
+PASS Template UI commands admin selection/lifecycle through HA events rather than local domain state
+PASS template admin events and editor-state lineage are registered in MariaDB metadata
+RESULT: PASS (186 architecture-conformance checks)
+PASS read-model contract covers every active runtime view
+PASS v_current_fermentation_target projects expected_attenuation_min_percent
+PASS v_current_fermentation_target projects expected_attenuation_max_percent
+PASS v_current_fermentation_target projects expected_fg_min
+PASS v_current_fermentation_target projects expected_fg_max
+PASS v_current_fermentation_target projects operation_id
+PASS v_current_fermentation_target projects created_at
+PASS qualified runtime SELECT references match active view contracts (212 alias checks)
+PASS Systemkontroll reads derived active-session view, not removed sessions.status
+RESULT: PASS (9 read-model/schema contract checks)
+Compiled 78 bounded physical sources and 100 derived stages
+PASS physical types, columns, keys, all relation annotations and exact nullable-column coverage
+PASS DB projection sources, required field contracts, physical HA wires and DB draft mappings
+PASS current native MariaDB/plugin/archive evidence; target HA UAT remains explicitly open
+PASS measured read amplification, cheap unchanged polling, historical growth, typed SQL schema and reproducible DB read compiler
+PASS bounded historical import, DB phase boundaries, later exceptions and SQLite round-trip native evidence
+RESULT: PASS – p24r15 schema and integration release contract
+PASS current native system-check, historical coverage and plugin publication acknowledgment evidence
+RESULT: PASS – strukturert verifikasjonsmodell: 269 kontroller, 49 TEST, 21 VER
+RESULT: PASS – tested config-node IDs are preserved and all references are patched
+RESULT: PASS – pinned MariaDB version and stopped Node-RED; actual installer rejects before database or flow mutation
+RESULT: PASS – Start/SG contract, late-template regression, Systemkontroll and Technical Event SQL
+RESULT: PASS – Technical rich read-model and local-time output regression
+RESULT: PASS – p18 Technical Notes path persisted/read-model contract
+RESULT: PASS – Template editor read-model and normalized draft-save validation
+RESULT: PASS – p23r1 Template library lifecycle/admin separation
+RESULT: PASS – Technical structured export contract
+RESULT: PASS – Gjæring overview read-model and reference demo contract
+RESULT: PASS – p21r6 Datavindu uses compact window/coverage semantics
+RESULT: PASS – Biologi p17r12 read-model and revision-based timeline correction
+RESULT: PASS – p22r7 frozen metric-output validity prevents impossible derived values from driving B transitions
+RESULT: PASS – revised16 Prosesstrinn evaluator, correction, exception, recommendation and transitions
+RESULT: PASS – Måleresultater normalized save and revision operations
+RESULT: PASS – p21r4 append-only session completion/release and export gate
+RESULT: PASS – p21r8 completed archive/report and history read-model
+RESULT: PASS – p22r5 active-session report snapshot uses DB display values and leaves lifecycle unchanged
+RESULT: PASS – p22r7 generic input validation rejects impossible Tilt values before 5-minute persistence
+RESULT: PASS – p22r7 analysis output validation rejects impossible derived values instead of clamping/persisting them
+RESULT: PASS – p23r2 revised7/revised8 criterion-derived B and MariaDB measurement export
+RESULT: PASS – p23 structured UAT registration and shared JSON/HTML verification export
+RESULT: PASS – p21r13 active-session-driven Home Assistant ingestion, persisted RSSI/5-minute diagnostics and heartbeat gap lifecycle
+RESULT: PASS – p24r6 measured endpoints and raw/manual sources, gaps, stability without band, single point, shared renderer
+RESULT: PASS – >19 MB SQLite pair verification, both hashes, compact SQL, missing/tampered/short files and retry contract
+RESULT: PASS – input before blur, refresh races, focus, auxiliary forms and timestamp download names
+RESULT: PASS – shared measured endpoint rate, zero trend, insufficient short windows, outliers, gaps, pitch baseline, MAD=0 and correction semantics
+RESULT: PASS – HA hourly/no heartbeat, missing hour, actual ISO heartbeat, lifecycle result shape, shared chronological report, demo and archive UI
+RESULT: PASS – r8 actual overview, lossless presentation projection, graph selection/refresh, larger graphs, gzip and diagnostics
+RESULT: PASS – r9 four event envelopes, live/statistics routing, real DB selection/comparison, corrected card/shared-report requirements
+RESULT: PASS – r9 optional B/P inputs, exact criterion/demo command acknowledgements and pending refresh
+RESULT: PASS – SQLite UI transport, HTTP checksum, persistent file/preview selection, DB prepare gating, original synthetic source and native concurrency evidence
+RESULT: PASS – complete automated release gate

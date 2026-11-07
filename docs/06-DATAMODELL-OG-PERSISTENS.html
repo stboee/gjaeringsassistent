@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>06 – Datamodell og persistens</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">06 – Datamodell og persistens</h1>
+</header>
+<h1 id="06--datamodell-og-persistens">06 – Datamodell og persistens</h1>
+<p><strong>Rolle:</strong> Normativ logisk modell. Fysisk detaljfasit er
+SQL-filene under <code>../sql/</code> og installert MariaDB
+<code>INFORMATION_SCHEMA</code>.</p>
+<h2 id="1-autoritet">1. Autoritet</h2>
+<p>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde.
+Fysiske tabell-/viewtall er release-/schemafakta og verifiseres fra
+SQL/<code>INFORMATION_SCHEMA</code>, ikke vedlikeholdes som parallell
+tekstfasit. Node-RED utfører generiske motor-/integrasjonsoperasjoner
+mot disse dataene; Home Assistant og frontend er
+operatør-/presentasjonslag.</p>
+<p>Domenefakta skal være eksplisitt normalisert med definert nøkkel,
+relasjoner og gyldighetskrav. Fravær og frozen faktumomfang skal
+dokumenteres i strukturerte metadata. JSON/read-model-filer er
+transport/presentasjon og skal ikke være alternativ runtime-store.</p>
+<h2 id="2-registry-template-og-frozen-session">2. Registry, template og
+frozen session</h2>
+<p>Registry beskriver motorens vokabular: metrics, calculation models,
+inputs, typed parametere, kriteriemodeller/-roller, targets, actions,
+målemetoder, gjærprofiler og valideringsmodeller.</p>
+<p>En template er et versjonert normalisert aggregat. Publisert versjon
+er immutable; redigering skjer i draft. Ved Start fryses valgt publisert
+versjon til normaliserte <code>session_*</code>-tabeller med
+snapshotmetadata/SHA-256. Frozen session omfatter blant annet:</p>
+<ul>
+<li>biologiske faser og prosesstrinn;</li>
+<li>kriterier, typed kriterieparametere, targets og actions;</li>
+<li>metric-runtime-regler, inputs, parametere og outputdomene;</li>
+<li>biological calculations;</li>
+<li>historical replay-policy per prosesstrinn;</li>
+<li>analysegraph/series-metadata;</li>
+<li>målekilde-/valideringsregler som gjelder sessionen.</li>
+</ul>
+<p>Aktiv session skal ikke lese senere registry/templateendringer som
+domenegrunnlag.</p>
+<h2 id="3-session-livsløp-og-revisions">3. Session, livsløp og
+revisions</h2>
+<p><code>sessions</code> inneholder immutable identitets-/startfakta.
+Livsløp uttrykkes append-only i <code>session_lifecycle_events</code>;
+<code>session_release_events</code> frigjør completed session operativt
+uten å slette historikken. Views utleder current/active state.</p>
+<p>Biologiske og prosessuelle forløp modelleres som visits + append-only
+revisions. Timingkorrigering lager ny revision; tidligere revision
+overskrives ikke. Current revision er leaf-revision uten
+etterfølger.</p>
+<h2 id="4-manuelle-observasjoner">4. Manuelle observasjoner</h2>
+<p><code>measurement_input_draft</code> er mutable arbeidskladd.
+<code>record_observation</code> oppretter et atomisk
+<code>observation_round</code> med revision. Korrigering/deaktivering
+uttrykkes med ny revision.</p>
+<p>Tetthet er SG-only. Manuelle målesett kan inneholde
+SG/metode/prøvetemperatur/kalibreringstemperatur, manuell temperatur,
+trykk, kjølemål/-offset, gjærlås, notat og templatevalgte sensoriske
+0–5-felt.</p>
+<h2 id="5-kontinuerlige-målinger-og-datakvalitet">5. Kontinuerlige
+målinger og datakvalitet</h2>
+<p>Ekstern Home Assistant Recorder-history er kildebuffer, ikke
+domenestore. <code>measurement_source_profiles</code> beskriver kilden.
+Ved Start fryses kilde-/valideringspolicy til session.</p>
+<p>Råprøver valideres før autoritativ 5-minutterslagring. Ugyldige
+prøver forkastes; de clampes ikke til plausible verdier. Kvalitetsutfall
+lagres separat i <code>measurement_ingest_quality_events</code>.</p>
+<p><code>measurements_5m</code> inneholder godkjent 5-minuttersgrunnlag.
+For Tilt-SG er autoritativ verdi robust median av godkjente samples;
+min/middel/maks er diagnostiske aggregater fra samme godkjente
+prøvesett. <code>measurement_data_gaps</code> er eneste autoritative
+gaprepresentasjon. <code>session_measurement_sources</code> eier
+binding/importcursor/sist-OK, men cacher ikke åpent gap.</p>
+<h2 id="6-evaluering-og-analyse">6. Evaluering og analyse</h2>
+<p>Biologiske/prosessuelle evalueringer og kriteriebevis persisteres med
+<code>evaluation_status</code>, actual value, effektivt
+parametergrunnlag og provenance for datavindu/sample count/dekning/siste
+sample der relevant. Historisk overgang peker på eksakt
+<code>evaluation_id</code>; current candidate er et separat faktum.</p>
+<p>Avledede Analyse-serier persisteres append-only i
+<code>analysis_series_values</code>. Ordinær status krever frozen minste
+tid, antall, dekning og modellgrunnlag samt gyldig input/outputdomene og
+gapregler. P24r7 publiserer ikke foreløpige verdier. Ugyldig/manglende
+grunnlag er fravær av autoritativ verdi, aldri syntetisk <code>0</code>.
+Avviste beregnede outputs registreres separat i
+<code>analysis_validation_events</code>.</p>
+<h2 id="7-recommendations-korreksjoner-og-fravik">7. Recommendations,
+korreksjoner og fravik</h2>
+<p>Recommendations, operator resolutions, kriteriekorreksjoner og
+prosesskriteriefravik er egne historiske fakta. Superseded/current
+status utledes fra nyere fakta; eldre rader omskrives ikke.</p>
+<h2 id="8-teknisk-historikk-og-systemmetadata">8. Teknisk historikk og
+systemmetadata</h2>
+<p><code>technical_events</code> lagrer tekniske hendelser og issue
+raise/clear. <code>v_active_technical_issues</code> utleder åpne
+problemer. <code>system_check_definitions</code>,
+<code>system_check_expectations</code>, <code>system_check_runs</code>
+og <code>system_check_results</code> eier
+Systemkontrollkatalog/forventning/historikk.</p>
+<p>HA-kontrakten og funksjon↔︎informasjon-lineage eies av normaliserte
+registre som <code>ha_entity_registry</code>,
+<code>ha_event_registry</code>, <code>system_functions</code>,
+<code>information_objects</code> og
+<code>function_information_dependencies</code>. Fysiske tabeller/views
+katalogiseres fra <code>INFORMATION_SCHEMA</code>; det skal ikke finnes
+en separat manuelt vedlikeholdt liste over alle DB-objekter.</p>
+<p>P23-verifikasjon skiller mellom metadata og faktiske resultater.
+Krav, beslutninger, VER-definisjoner, TEST-katalog og
+mange-til-mange-relasjoner ligger i normaliserte
+<code>verification_*</code>-metadataobjekter.
+<code>verification_test_runs</code> og
+<code>verification_test_results</code> er append-only historiske fakta
+for faktiske TECH/FUNC/UAT-gjennomføringer. DB-views utleder gjeldende
+status og ufullstendige koblinger; dashboard/Node-RED skal ikke
+rekonstruere statusen.</p>
+<h2 id="9-current-state-og-read-models">9. Current-state og
+read-models</h2>
+<p>Current state er avledet fra persistente fakta. Viktige grupper
+er:</p>
+<ul>
+<li>session/lifecycle/current visits og revisions;</li>
+<li>overgangsbevis og current candidate-evaluering;</li>
+<li>criterion read-models med ferdige <code>actual_display</code>,
+<code>requirement_display</code>, <code>status_display</code>,
+<code>data_window_display</code>;</li>
+<li>measurement-source status/HA-projection;</li>
+<li>active report read-models;</li>
+<li>Analyse graph/series/requirement/marker read-models;</li>
+<li>metadata-lineage og systemkontroll-read-models.</li>
+</ul>
+<p>Frontend skal vise disse uten å etablere alternative domeneregler
+eller fallback.</p>
+<h2 id="10-concurrency">10. Concurrency</h2>
+<p>InnoDB håndterer normal samtidighet med MVCC, constraints og korte
+transaksjoner. Systemet skal ikke bruke global writer-kø,
+applikasjonsstyrt serialisering eller
+<code>SELECT ... FOR UPDATE</code>/<code>GET_LOCK</code> som
+normalmekanisme.</p>
+<h2 id="11-mutable-unntak">11. Mutable unntak</h2>
+<p>Mutable arbeidsflater er eksplisitte:
+<code>session_setup_draft</code>, <code>measurement_input_draft</code>
+og upublisert template-draft. De er editor-/inputflater, ikke
+journal/historikk.</p>
+<h2 id="templateadministrasjon">Templateadministrasjon</h2>
+<p><code>template_editor_state</code> er den delte, persistente
+UI-/arbeidsflytpekeren for hvilken templateversjon Template-fanen
+administrerer. Den er eksplisitt adskilt fra
+<code>session_setup_draft</code>, som eier Start-valget.
+<code>template_versions.status</code> bruker <code>draft</code>,
+<code>published</code> og <code>retired</code>; retired versjoner
+beholdes og kan reaktiveres.</p>
+<h2 id="analyse--og-operatørmetadata">Analyse- og operatørmetadata</h2>
+<p><code>template_analysis_graph_series</code> og frozen
+<code>session_analysis_graph_series</code> eier
+<code>provisional_allowed</code>, minste antall/tidsutstrekning,
+<code>band_model</code>, båndbeskrivelse/opasitet, standard-/foreløpig
+farge og linjestil. <code>analysis_series_values</code> lagrer
+<code>value_status=provisional|standard</code>, modenhetsflagget, antall
+punkter, forespurt vindu og faktisk dekning sammen med hovedverdi og
+eventuelt meningsfullt spenn. Disse radene er append-only. Legacy-felter
+for foreløpig stil og bånd er beholdt i skjemaet; alle operative
+p24r7-analyser har provisional_allowed=0 og band_model=none.</p>
+<p><code>template_overview_graph_policy</code> fryses til
+<code>session_overview_graph_policy</code> og bestemmer om
+SG-/temperatur-/trykkspenn tegnes.
+<code>v_session_analysis_series</code> leverer statuslabel, basislabel
+og faktisk stil, mens felles tidsakse og akseticks leveres som
+read-model-felt.</p>
+<p><code>biological_criterion_exceptions</code> journalfører bekreftede
+biologiske kriteriefravik; evalueringen peker med
+<code>applied_exception_id</code> på håndteringen og beholder det
+opprinnelige råresultatet. Biologiske og prosesskriterier har frozen
+<code>exception_allowed</code> og eksplisitte korrektable
+parameterrelasjoner.</p>
+<h2 id="kvalifisert-kalibrering-og-analysegrunnlag">Kvalifisert
+kalibrering og analysegrunnlag</h2>
+<p><code>session_calculation_baselines</code> lagrer baselineverdi,
+kvalifiserende målevindu, antall punkter, måletid og kilde. Nøkkelen er
+session, beregning og effektiv pitch. Dette er
+kompatibilitets-/diagnostikkfakta. Operativ p24r7-AA og SG-fall bruker
+faktisk OG og faktisk SG uten baselinekalibrering; rate bruker målte
+endepunkter. Korrigert pitch lager eget append-only analysegrunnlag.</p>
+<p>Analyseverdier og avvisningsfakta har <code>basis_pitched_at</code> i
+sin identitet. Gjeldende read-model filtrerer på effektiv pitch, mens
+tidligere beregninger beholdes. Gjentatt evaluering av samme grunnlag er
+idempotent. <code>v_current_metric_value</code> leser analyseserier og
+viser manglende grunnlag når verdien er foreldet eller en nyere
+hovedverdi er avvist.</p>
+<p>Kriterierevisjonenes parameterverdier har <code>is_unset</code>. Ved
+<code>is_unset=1</code> er alle typed value-kolonner NULL; ellers kreves
+akkurat én typed verdi. Dette lar en valgfri grense fjernes uttrykkelig
+uten å tolkes som 0. Evaluerings- og rapportmodellene bevarer denne
+forskjellen.</p>
+<p>Manuelle analysepunkter peker med FK på
+source_observation_revision_id; basis_revision_key inngår i den
+append-only identiteten. Read-modelen viser bare aktive gjeldende
+observasjonsrevisjoner. Ny SG/tidsrevisjon endrer aktuell graf og
+sisteverdi uten å omskrive tidligere beregninger.</p>
+<h2 id="ha-statistikk-og-datasettvalg">HA-statistikk og
+datasettvalg</h2>
+<p><code>measurement_statistics_hourly</code> beholder start/slutt og HA
+sine faktiske min/gjennomsnitt/maks-verdier. Identiske importer
+dedupliseres; endrede HA-verdier blir en ny append-only revisjon. Ingen
+prøveantall eller median konstrueres.
+<code>measurement_gap_closures</code> lukker rådata-gap append-only.
+<code>graph_display_selection_events</code> og
+<code>demo_profile_selection_events</code> lagrer valg i MariaDB;
+demoens kilde fryses i <code>session_demo_sources</code> ved Start.</p>
+<p>Tekniske hendelser har en DB-sekvens som avgjør rekkefølgen når to
+meldinger har likt millisekundstempel. Hver Systemkontroll får en UUID
+og alle 15 resultater lagres i én transaksjon med rollback-handler.
+HA-entiteter kontrolleres med en fersk
+<code>get_states</code>-forespørsel.</p>
+<h2 id="sqlite-arkiver-fra-p24r10">SQLite-arkiver fra p24r10</h2>
+<p>Fanen <strong>Template og arkiv</strong> har et eget arkivkort. Velg
+<code>-template.sqlite</code> og, ved gjæringsimport, tilhørende
+<code>-gjaering.sqlite</code>. Kontroller forhåndsvisningen før import.
+Filenes format, skjema, integritet, transportkontrollsum og
+sammenhørende manifest kontrolleres. Domene-FK-er og CHECK-er håndheves
+under selve importtransaksjonen. Feil vises i arkivkortet og ruller
+tilbake både template og sesjon.</p>
+<p>Filene navngis
+<code>session-&lt;sessionid&gt;-export-&lt;exportid&gt;-gjaering.sqlite</code>
+og
+<code>session-&lt;sessionid&gt;-export-&lt;exportid&gt;-template.sqlite</code>.
+Template-filen inneholder én original publisert versjon, med nødvendig
+registergrunnlag. Gjæringsfilen har normaliserte målinger, timedata,
+frozen grunnlag, vurderinger, korreksjoner, observasjoner,
+overgangshistorikk og beregnede fakta. Den inneholder ikke mutable
+UI-valg eller globale systemfeil. Kildeversionens ID bevares som
+kildeproveniens; andre templates i en versjonskjede importeres ikke.</p>
+<p>Importert original er skrivebeskyttet i sin egen kategori. Bruk
+<strong>Opprett ny template fra eksisterende versjon</strong> med ny ID
+og navn for å lage en egen redigerbar kopi. Samme importoperasjon
+gjenbruker sin kvittering; samme gjæringsarkivpar importeres én gang.
+Separate template-importer får egne unike IDs også når navn og
+kildeversjon er like.</p>
+<p>Import er tillatt mens gjæring pågår. Filkontroll og SQLite kjører i
+en worker thread; en egen forbindelse til den samme MariaDB-instansen
+eier hele importtransaksjonen. Den ordinære motorens mysql-node og
+autoritative dataflyt beholdes. Dette er en avgrenset
+filoverføringsadapter, ikke en ny beregnings- eller rapportmotor. Ingen
+manuell kø, fil-lås eller lokal domenestate innføres.</p>
+<p>Midlertidig filopplasting går som autentiserte HA-hendelser med 64
+KiB deler og DB-kvittering. Disse byte-delene er transport, ikke
+domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir
+tilgjengelig i sammenligningslisten etter import; <strong>Skjul fra
+sammenligning</strong> legger til en synlighetshendelse og sletter ingen
+data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater
+avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.</p>
+<p>Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen
+bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn,
+men gir ingen garanti om en bestemt komprimeringsfaktor. Alle
+eksisterende målepunkter beholdes i arkivet.</p>
+<h2 id="p24r11-sletting-og-startstatus">P24r11 sletting og
+startstatus</h2>
+<p>Append-only gjelder faglige fakta og revisjoner <strong>innenfor en
+sesjon som beholdes</strong>. Hele historiske lokale eller importerte
+sesjoner kan fjernes fra MariaDB i én transaksjon. Tilhørende målinger,
+forløp, korreksjoner, notater og operasjonsspor slettes samlet.
+Gjeldende sammenligningsvalg byttes til Ingen. Aktive sesjoner kan ikke
+slettes. Importert template kan slettes separat når den er ubrukt, eller
+sammen med sesjonen dersom andre sesjoner/egne templates ikke refererer
+til den. Eksportfiler utenfor databasen beholdes.</p>
+<p><code>v_session_start_status</code> utleder startstatus fra gjeldende
+sesjon, demomålinger og historikkimportens DB-markører. Home Assistant
+får denne projeksjonen etter livsløpsendringer og hvert tiende sekund.
+En gammel HA-status som starting etter klargjøring oppdages også av
+Systemkontroll. Ingen domenestatus lagres i Node-RED-minne.</p>
+<p><code>archive_import_candidates</code> er midlertidige
+fil-/manifestvalg; <code>archive_checksum_warnings</code> er synlige
+transportadvarsler. De er ikke runtime authority for gjæringen.</p>
+<h2 id="p24r12-fravær-normalisering-og-fysisk-katalog">P24r12: fravær,
+normalisering og fysisk katalog</h2>
+<p><code>sessions</code> lagrer felles pitchfakta.
+<code>session_dry_pitches</code> lagrer påkrevd tørrgjærmengde;
+<code>session_slurry_pitches</code> lagrer påkrevd slurryvolum, kilde og
+generasjon. Sammensatt FK til sesjon/pitchmodus og livsløpstrigger
+sikrer korrekt subtype før aktiv gjæring.</p>
+<p>SQL-NULL er tillatt når et faktum faktisk ikke finnes: arbeidskladd
+ikke fullført, måling ikke tilgjengelig, hendelse ikke inntruffet,
+første revisjon uten forgjenger, valgfri opplysning eller irrelevant
+alternativ i en typevelger. Det betyr aldri tallet 0. Påkrevde input
+avvises før bruk. HA får obligatoriske status-/tilgjengelighetsfelter og
+utelater valgfrie utilgjengelige råfelt etter den registrerte
+kontrakten.</p>
+<p><code>schema_relation_semantics</code> beskriver faktumets nøkkel,
+omfang og normaliseringsbegrunnelse.
+<code>schema_absence_semantics</code> beskriver hvert nullable
+tabellfelt. <code>v_schema_column_catalog</code> leser faktisk type,
+nullbarhet og default fra INFORMATION_SCHEMA. Den fysiske katalogen og
+viewkolonnene eksporteres ved native releasekontroll; de er genererte
+inspeksjonsartefakter, ikke en ny runtime-authority.</p>
+<p>Frozen template-/sesjonsfakta beskriver en historisk definisjon med
+eget nøkkelomfang. De skal bevares selv om dagens register endres. Typed
+parameterrelasjoner bruker en eksplisitt typevelger og én relevant
+verdikolonne, kontrollert med CHECK/FK. Dette er dokumenterte
+representasjonsvalg. En komplett katalog er ikke i seg selv et formelt
+normalformbevis.</p>
+<p>Begge application_version-markører oppdateres fra VERSION av
+installeren. Nye arkiver bruker SQLite format 2; v1-pitchkolonner
+konverteres til subtypefakta ved import uten å fylle inn ukjente
+verdier.</p>
+<h2 id="p24r13-seks-grafer-og-eksplisitt-vurderingsfravær">P24r13: seks
+grafer og eksplisitt vurderingsfravær</h2>
+<p><code>template_analysis_graphs</code>/<code>template_analysis_graph_series</code>
+og de frosne <code>session_</code>-relasjonene beskriver nå også SG,
+temperatur og trykk. Kildetype angir metric, kriterium, measurement,
+comparison, observation, process_target eller fermentation_target;
+renderer trenger ingen graf-ID-regler. Planpunkter kommer fra
+DB-planfakta, mens measurement/observation bare bruker faktisk lagrede
+målinger. <code>graph_render_policy</code> er ett globalt register for
+presentasjon, med obligatoriske dimensjoner og skriftstørrelser.</p>
+<p>B/P-vurderingenes parameterrelasjoner har eksplisitt
+<code>is_unset</code>. En angitt verdi har nøyaktig én typet verdi; en
+ikke angitt verdi har ingen. Fravær lagres aldri som numerisk 0.
+<code>legacy_measurement_graph_models</code> og
+<code>legacy_measurement_graph_series_models</code> er et
+formatkonverteringsregister for eldre arkiver, brukt av
+<code>ga_convert_legacy_archive_graphs</code> i importtransaksjonen,
+ikke en runtime-fallback. Eksisterende arkivpolicy bevares ved
+konvertering.</p>
+<p>Lesepolicy og publiseringskvitteringer er tekniske fakta:
+policyverdier tilhører policy-ID, og
+kildehash/genereringstid/publiseringstid tilhører den unike
+publiseringsoperasjonen. Kvitteringene inneholder ingen domeneverdier
+eller kopier av grafer.</p>
+<h2 id="p24r15-historisk-vindu-og-fasetid">P24r15: historisk vindu og
+fasetid</h2>
+<p>Runtime-schema er 9, template-schema er 4. session_history_windows er
+et valgfritt sesjonssubtypefaktum med obligatorisk ended_at,
+operation_id og created_at. Start finnes bare som sessionens
+pitchfaktum/revisjon. En ordinær sesjon har ingen historisk subtype,
+ikke en oppdiktet sluttdato. 202 basetabeller, 178 views og full
+relasjons-/fraværsmetadata følger leveransen.</p>
+<p>v_all_session.domain_now er historisk slutt, faktisk ferdigstilling
+for avsluttet ordinær sesjon, ellers DB-klokken. Importcursor bestemmer
+hvor langt en uferdig historisk import kan vurderes.
+v_process_visit_timing og v_biological_visit_timing bruker gjeldende
+startrevisjoner og neste start som slutt. ended_at i rå visitrevisjoner
+er det registrerte lukkefaktumet på revisjonstidspunktet; effektiv
+tidslinje leses fra timing-views og kan derfor endres uten omskriving av
+gamle lukkefakta. DB-korreksjonen avviser kryssing av naboer og
+sesjonsgrenser. v_phase_duration_presentation summerer visits per
+B/P-eier, også gjentatte prosesstrinn.</p>
+<p>Historisk etterregistrering er et datert operatørfaktum. Det hevder
+ikke at kriterier var oppfylt eller at automatisk overgang fant sted.
+Opprinnelige evalueringer og overgangsbevis beholdes. Forbindelsens
+midlertidige lesetabeller og publiseringskontroll fra r14 videreføres;
+ingen domenecache legges i Node-RED.</p>
+<p><code>measurement_source_check_policy</code> er normalisert
+klassifiseringsmetadata med nøkkel source_state og obligatorisk
+kontrollstatus/alvorlighet. <code>v_session_import_coverage</code> er en
+avledet opptelling, ikke en ny persistent målekopi.
+<code>v_measurement_source_system_check</code> kobler registrert policy
+med faktiske datagrunnlag. HA-publiseringsfeil/-kvitteringer er ordinære
+append-only Technical Events, ikke et alternativt
+session-state-lager.</p>
+</body>
+</html>

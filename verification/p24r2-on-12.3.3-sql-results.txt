@@ -1,0 +1,21 @@
+SERVER /workspace/scratch/1ddb593c676d/mariadb-12.3.3-test/extracted/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)
+PASS clean schema, routines, views and all seeds
+PASS actual p20_restore_query SQL before Start
+PASS actual p20_systemcheck_query SQL before Start
+PASS actual p20_template_editor_query SQL before Start
+PASS actual p20_technical_export_query SQL before Start
+PASS actual p20_overview_query SQL before Start
+PASS actual p23_verification_read_query SQL before Start
+PASS actual template selection SQL creates the pre-start draft
+PASS Start freezes session through real transaction routine
+PASS actual p20_restore_query SQL with active session
+PASS actual p20_systemcheck_query SQL with active session
+PASS actual p20_template_editor_query SQL with active session
+PASS actual p20_technical_export_query SQL with active session
+PASS actual p20_overview_query SQL with active session
+PASS actual p23_verification_read_query SQL with active session
+PASS clone full fields, injected rollback, policy freeze, counts, lineage and all view queries
+PASS lineage filters with declared, legacy client and MariaDB 11.8 default collations
+PASS actual Systemkontroll write SQL, all 14 results and technical issue inserts
+PASS persisted status/style, shared effective-pitch axes and biological handling across evaluations
+RESULT: PASS – actual MariaDB SQL integration; target HA/Node-RED UAT remains separate

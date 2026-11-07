@@ -1,0 +1,47 @@
+{
+  "version": "2026.11.07-1",
+  "built_at_utc": "2026-11-07T11:07:51Z",
+  "architecture": "Node-RED motor + MariaDB/InnoDB authority; append-only history within retained sessions, explicit atomic archive deletion; HA operator presentation",
+  "baseline": "0.1.0-prototype24-r16",
+  "baselines": {
+    "p17r12_zip": {
+      "file": "gjaeringsassistent-0.1.0-prototype17-r12.zip",
+      "sha256": "188a6a7af90e95554dec174dce20d50f9bdce7a9af8b729eb679ef06a7400156",
+      "role": "GUI/functional regression reference"
+    },
+    "p18r5_zip": {
+      "file": "gjaeringsassistent-0.1.0-prototype18-r5.zip",
+      "sha256": "0c2f733d1f8f93319cc9ae62fb51b3e68798de5e656f65feb88725df4c0f0532",
+      "role": "functional/domain/history reference only; not technical baseline"
+    }
+  },
+  "runtime_dependencies": {
+    "node_red": "5.0.7",
+    "home_assistant_websocket_nodes": "0.80.3",
+    "node_red_node_mysql": "3.0.4",
+    "mariadb": "12.3.3",
+    "node_js_minimum": "24"
+  },
+  "scope": "Første offentlige GitHub-utgave: datoversjon, gjeldende arbeidsregler, faglige kildelenker og Git-basert pakking",
+  "verification_model": {
+    "requirements": 257,
+    "decisions": 65,
+    "verifications": 21,
+    "tests_total": 49,
+    "tests_tech": 12,
+    "tests_func": 23,
+    "tests_uat": 14
+  },
+  "package_policy": "current source/runtime/test/docs/release metadata; explicit file selection excludes Git, local data and build output",
+  "documentation": "current Markdown/SQL/registry/verification sources + generated HTML and machine-readable registries from the same build",
+  "local_sql_test": "New isolated native MariaDB 12.3.3 integration and actual plugin 0.80.3; HA transport simulated; target UAT not run",
+  "release_name": "Første GitHub-utgave",
+  "baseline_package_sha256": "884b2dea0e42cfbf5efabc8a32ff3c0ab464c18c4ab206ec0d38a6c8ba6c26d4",
+  "repository": "https://github.com/stboee/gjaeringsassistent",
+  "versioning": {
+    "scheme": "YYYY.MM.DD-N",
+    "tag_prefix": "v",
+    "description": "Kort beskrivelse i release-tittelen; løpenummer starter på 1 hver publiseringsdag",
+    "npm_version": "2026.11.7-1"
+  }
+}

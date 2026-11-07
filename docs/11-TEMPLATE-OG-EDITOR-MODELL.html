@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>11 – Template-livsløp og editormodell</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">11 – Template-livsløp og editormodell</h1>
+</header>
+<h1 id="11--template-livsløp-og-editormodell">11 – Template-livsløp og
+editormodell</h1>
+<p><strong>Rolle:</strong> Normativ domene-/operatørmodell for
+template-livsløp og editor.</p>
+<h2 id="1-hva-en-template-er">1. Hva en template er</h2>
+<p>En template er <strong>ikke en <code>.json</code>-fil</strong>. Den
+er et versjonert, normalisert domeneaggregat i MariaDB. JSON som
+<code>template-editor.json</code> er kun
+frontend-read-model/transport.</p>
+<p>Den fysiske persistensen beskrives i dokument 06/SQL.
+Regelsemantikken for metric calculation, kriterier, targets og actions
+beskrives i dokument 10. Dette dokumentet beskriver livsløpet og
+operatørarbeidsflyten. En template skal inneholde nok deklarativ
+informasjon til at motoren ikke trenger å finne opp egne fagregler.</p>
+<h2 id="2-livsløp">2. Livsløp</h2>
+<p><code>templatebibliotek → draft → valider → publiser immutable versjon ↔︎ retired → Start velger published → Start/freeze</code></p>
+<ul>
+<li><code>templates</code> er den stabile templateidentiteten.</li>
+<li><code>template_versions</code> er versjonene og har lifecycle
+<code>draft</code>, <code>published</code> eller
+<code>retired</code>.</li>
+<li>Maksimalt én draft per templateidentitet er arbeidsflate.</li>
+<li>Publisert eller retired versjon er immutable som faglig innhold;
+lifecyclemetadata kan endres mellom <code>published</code> og
+<code>retired</code>.</li>
+<li><code>retired</code> betyr at versjonen ikke kan velges for nye
+gjæringer. Den kan aktiveres igjen uten å opprette ny faglig
+versjon.</li>
+<li>Templateadministrasjon har et eget, MariaDB-persistet valg i
+<code>template_editor_state</code>. Dette valget er uavhengig av
+<code>session_setup_draft</code> og påvirker ikke Start.</li>
+<li>Ved Start fryses valgt publisert versjon til normaliserte
+<code>session_*</code>-tabeller med snapshotmetadata/SHA-256.</li>
+<li>Templatebibliotek og drafts kan administreres også mens en session
+er aktiv; frozen sessiondata endres aldri av senere
+templateadministrasjon.</li>
+</ul>
+<h2 id="3-templatebibliotek-og-administrasjon">3. Templatebibliotek og
+administrasjon</h2>
+<p>Template-fanen skal først vise et samlet
+<strong>Templatebibliotek</strong> uavhengig av runtime. Biblioteket
+viser alle templateidentiteter og versjoner med status, kildeversjon og
+relevante markører for Start-valg eller bruk i aktiv session.</p>
+<p>Følgende operasjoner er del av administrasjonen:</p>
+<ul>
+<li>åpne/velge publisert, draft eller retired versjon i Template-fanen
+uten å endre Start-valget;</li>
+<li>lage eller åpne draft fra en publisert eller retired versjon av
+samme templateidentitet;</li>
+<li>opprette en ny templateidentitet ved normalisert kopiering fra en
+eksisterende immutable versjon;</li>
+<li>lagre, validere, publisere eller forkaste draft;</li>
+<li>sette publisert versjon <code>retired</code> og senere aktivere den
+igjen;</li>
+<li>sammenligne draft mot <code>based_on_version_id</code> gjennom en
+generert read-model;</li>
+<li>filtrere biblioteket på status som ren presentasjonsfunksjon.</li>
+</ul>
+<p>Publisering av en ny versjon skal <strong>ikke</strong> automatisk
+endre templatevalget på Start. Operatøren velger eksplisitt hvilken
+publisert versjon som skal brukes for neste gjæring. Dersom en versjon
+som er valgt på Start settes <code>retired</code>, skal pre-start-valget
+fjernes fordi retired versjon ikke er startbar.</p>
+<p>Ny template opprettes fra en eksisterende publisert/retired
+kildeversjon. Dette sikrer at registry-eide og templateeide deklarative
+data kopieres normalisert uten å introdusere en alternativ
+JSON-sannhetskilde.</p>
+<h2 id="4-grafisk-editor">4. Grafisk editor</h2>
+<p>Template-fanen er domenespesifikk og grafisk. Registry bestemmer
+gyldige metrics, modeller, parametere og operasjoner. Operatøren kan
+arbeide med:</p>
+<ul>
+<li>templateinformasjon og komplette batch-/startdefaults;</li>
+<li>gjærprofil, pitchmodus og målemetode;</li>
+<li>biology calculations med registrert modell, deklarerte input og
+typed parametere;</li>
+<li>metric-/calculation-semantikk fra registry, inkludert
+freshness-policy;</li>
+<li>B1–B6 med kriterier;</li>
+<li>P1–P15 med enabled/navn/beskrivelse, kriterier, targets, actions og
+eksplisitt policy for om historisk replay kan etablere overgang
+automatisk;</li>
+<li>modelldetaljer, korrigerbare parametere og biological/process
+exception-policy.</li>
+<li>analysegraph/series-metadata: label, forklaring, enhet, series
+source, warm-up, coverage, minste ordinære målegrunnlag,
+punkt-/linjestil uten estimeringsbånd, outputdomene, gap- og
+markørpolicy;</li>
+<li>valg av kilde-/målevalideringspolicy der dette er templateeiet;
+kildespesifikke standardregler ligger i source profile og fryses til
+session.</li>
+</ul>
+<p>B1–B6 og P1–P15 er stabile slots; innholdet kan endres gjennom ny
+templateversjon.</p>
+<p>Kriteriematrisene skal være kompakte: bare kriterietyper som faktisk
+brukes i minst én B-fase/P-slot, eller som operatøren midlertidig har
+valgt å vise, skal være synlige som rader. Ubrukte registry-metrics
+samles i en nedtrekksboks <strong>Ubrukte kriterietyper</strong> under
+henholdsvis B- og P-matrisen. <code>Vis kriterietype</code> gjør raden
+synlig uten å endre templaten; <code>+</code> i en celle oppretter
+kriteriet i akkurat den fasen/trinnet fra registryets
+defaultmodell/-parametere. Når siste faktiske bruk av kriterietypen
+slettes, skal raden igjen kunne forsvinne og typen returnere til listen
+over ubrukte kriterietyper. Deaktivert kriterium er fortsatt en faktisk
+templateforekomst og skal derfor forbli synlig.</p>
+<h2 id="5-read-model-og-kommandoer">5. Read-model og kommandoer</h2>
+<p>Node-RED genererer
+<code>/data/gjaeringsassistent/ha-public/template-editor.json</code>.
+Dashboardet leser denne read-modelen, men endringer sendes tilbake som
+eksplisitte HA-eventkanaler til Node-RED. Node-RED validerer og skriver
+normaliserte MariaDB-rader.</p>
+<p>Inntasting skal registreres i flyktig lokal UI-kladd ved
+<code>input</code>, før feltet mister fokus. Automatisk refresh skal
+ikke erstatte fokuserte redigeringsfelt eller ulagrede
+dokumentendringer. Et request-svar som kommer etter at redigering har
+begynt skal heller ikke overskrive teksten. Ny template-ID/navn/kilde og
+publiseringsetikett skal bevares ved rerender. <strong>Oppdater</strong>
+leser read-model og skal ikke forkaste ulagrede endringer.</p>
+<p>Frontendvalidering er operatørhjelp. Node-RED/MariaDB er den faktiske
+validerings- og integritetsgrensen.</p>
+<h2 id="6-publiseringsvalidering">6. Publiseringsvalidering</h2>
+<p>Publisering er domenets kompileringstrinn. Før en draft kan bli
+immutable skal motoren/DB validere minst:</p>
+<ul>
+<li>at alle metrics finnes i registry og har registrert
+beregningsmodell;</li>
+<li>at calculation model har alle obligatoriske input og typed
+parametere;</li>
+<li>at kriteriemodellen er tillatt for metrikken;</li>
+<li>at modellparametere er gyldige og komplette;</li>
+<li>at <code>maximum_age_minutes</code> bare brukes når metrikkens
+freshness-semantikk tillater kildealder;</li>
+<li>at operator-policy bare refererer til støttede/korrigerbare
+parametere;</li>
+<li>at B1–B6/P1–P15 og relasjonene er strukturelt konsistente;</li>
+<li>at historisk autoovergang er eksplisitt deklarert per prosesstrinn
+og ikke utledes/hardkodes i motoren.</li>
+<li>at analysegraph/series peker på gyldige registrerte
+metrics/kriterier og har konsistente
+warm-up/coverage/outputgrenser;</li>
+<li>at målevalideringspolicy som inngår i templaten bare bruker
+registrerte generiske valideringsmodeller og typed parametere.</li>
+</ul>
+<p>Ugyldig eller manglende regelgrunnlag skal stoppe publisering.
+Motoren skal ikke gjøre en ugyldig template kjørbar med hardkodede
+terskler eller fallbackverdier.</p>
+<h2 id="7-startgrense">7. Startgrense</h2>
+<ol type="1">
+<li>Operatør velger publisert template.</li>
+<li>Valget lagres i <code>session_setup_draft</code>.</li>
+<li>Templateadministrasjon/redigering er uavhengig av Start-valget og
+kan fortsette under aktiv session.</li>
+<li>Start validerer den eksplisitt valgte
+<code>published</code>-versjonen og oppretter frozen session-kopi.</li>
+<li>Sessionmotoren bruker frozen <code>session_*</code>-data.</li>
+<li>Senere draft-, publish-, retire- eller reactivate-operasjoner
+påvirker ikke frozen sessiondata.</li>
+</ol>
+<h2 id="8-importeksport">8. Import/eksport</h2>
+<p>JSON-templatefiler er ikke persistent autoritativ modell. Eventuell
+senere import/eksport kan innføres som transportfunksjon, men skal mappe
+til/fra normalisert template og skal ikke bli alternativ
+runtime-store.</p>
+<h2 id="forventet-utgjæring-er-templateinput">forventet utgjæring er
+templateinput</h2>
+<p>Template angir <code>expected_attenuation_min_percent</code> og
+<code>expected_attenuation_max_percent</code>. Forventet FG er avledet
+og skal ikke redigeres manuelt. Ved Start kombineres faktisk korrigert
+OG med templateens forventede utgjæringsområde; sessionen lagrer både
+det normative utgjæringsområdet og den beregnede FG-projeksjonen som
+frosne fakta.</p>
+<p>For W-34/70-standard er forventet utgjæring 80–84 %.
+Template-editoren viser beregnet FG for template-OG som read-only
+informasjon. Startflaten skal ikke be operatøren regne ut eller skrive
+inn FG-mål.</p>
+<p>Pitchtemperatur er ikke et separat startfelt; første manuelt målte
+temperatur er temperaturgrunnlaget ved pitch. Pre-start-kladd skal ikke
+republiseres periodisk til redigerbare HA-felt mens operatøren skriver;
+restore retries ved faktisk MariaDB-utilgjengelighet i stedet for
+periodisk overskriving.</p>
+<p>Kloning kjøres atomisk i <code>ga_clone_template_tx</code>, med
+eksplisitte kolonnelister som utelater genererte kolonner. Forventet
+utgjæringsgrad, analyse-/båndpolicy og kriterierettigheter følger med.
+En feil ruller tilbake både ny templateidentitet, draftinnhold og
+administrasjonsvalg. Eksisterende draft kan gjenåpnes; en opptatt ny
+template-ID avvises.</p>
+</body>
+</html>

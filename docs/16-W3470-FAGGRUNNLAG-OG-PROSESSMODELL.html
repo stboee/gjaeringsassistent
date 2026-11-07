@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>16 – W-34/70 faggrunnlag og prosessmodell</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">16 – W-34/70 faggrunnlag og prosessmodell</h1>
+</header>
+<h1 id="16--w-3470-faggrunnlag-og-prosessmodell">16 – W-34/70
+faggrunnlag og prosessmodell</h1>
+<p><strong>Rolle:</strong> Profilspesifikk forklaring av intensjon og
+faglig klassifikasjon for den publiserte W-34/70-templaten. Eksakte
+aktive kriterier, parametere, replay-flagg, analysemetadata og
+målekildevalidering skal ikke vedlikeholdes manuelt her; de genereres
+fra SQL til <code>generated/w3470-rule-reference.json</code>.</p>
+<h2 id="1-avgrensning">1. Avgrensning</h2>
+<p>Modellen gjelder ren tankgjæring med
+<code>Saccharomyces</code>/W-34/70-lignende lagerforløp. Brettanomyces,
+surøl, blandingskultur og flaskekarbonering ligger utenfor denne
+profilen.</p>
+<p>Templateverdier er ikke automatisk universelle bryggefaglige
+sannheter. Hver regel skal kunne klassifiseres som:</p>
+<ul>
+<li><strong>kildebelagt</strong> – direkte støttet av dokumentert
+ekstern kilde;</li>
+<li><strong>empirisk kalibrert</strong> – valgt på grunnlag av egne
+batchdata/operativ erfaring;</li>
+<li><strong>prototypegrense</strong> – teknisk/faglig startverdi som
+fortsatt krever målmiljøkalibrering.</li>
+</ul>
+<p>Status for faglig kalibrering føres i dokument 15.</p>
+<h2 id="2-biologisk-referanseforløp">2. Biologisk referanseforløp</h2>
+<p>B1–B6 beskriver et ordnet biologisk referanseforløp:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Fase</th>
+<th>Hensikt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B1 – Inokulert og tilpasning</td>
+<td>Etter pitch; målbar aktivitet er ennå ikke sikkert etablert.</td>
+</tr>
+<tr class="even">
+<td>B2 – Aktivitetsstart og tidlig vekst</td>
+<td>Målbar gjæringsaktivitet er etablert.</td>
+</tr>
+<tr class="odd">
+<td>B3 – Aktiv hovedgjæring</td>
+<td>Høy, tydelig hovedaktivitet.</td>
+</tr>
+<tr class="even">
+<td>B4 – Sen gjæring</td>
+<td>Utgjæringen er langt kommet og rate avtar fra batchens topp.</td>
+</tr>
+<tr class="odd">
+<td>B5 – Modning og metabolsk opprydding</td>
+<td>Nær slutt; gjæren er fortsatt metabolsk aktiv.</td>
+</tr>
+<tr class="even">
+<td>B6 – Stabil utgjæring</td>
+<td>Forventet utgjæring er nådd og SG er stabil innen definert
+vindu.</td>
+</tr>
+</tbody>
+</table>
+<p>Fasene har ikke skjult kalenderlogikk. Den publiserte templaten eier
+kriteriene.</p>
+<h2 id="3-prosesstrinn">3. Prosesstrinn</h2>
+<p>Gjeldende template bruker P1–P10 og reserverer P11–P15:</p>
+<table>
+<thead>
+<tr class="header">
+<th>P</th>
+<th>Prosesstrinn</th>
+<th>Hovedhensikt</th>
+<th>Historisk autoetablering</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P1</td>
+<td>Klargjøring, pitch og temperaturstabilisering</td>
+<td>Registrere pitch og kjøle kontrollert mot første mål.</td>
+<td>Tillatt</td>
+</tr>
+<tr class="even">
+<td>P2</td>
+<td>Kald hovedgjæring</td>
+<td>La aktivitet etableres og hovedgjæring gå kaldt.</td>
+<td>Tillatt</td>
+</tr>
+<tr class="odd">
+<td>P3</td>
+<td>Første temperaturøkning mot 10 °C</td>
+<td>Temperaturøkning først når hovedgjæringen er solid etablert.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="even">
+<td>P4</td>
+<td>Videre temperaturøkning mot 12 °C</td>
+<td>Videre ramp styres av biologisk fremdrift.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="odd">
+<td>P5</td>
+<td>Varm sluttfase mot 14 °C</td>
+<td>Holde gjæren aktiv mot slutten av hovedutgjæringen.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="even">
+<td>P6</td>
+<td>Modning og metabolsk opprydding</td>
+<td>Holde varm sluttfase til SG/sensorikk tilsier videre steg.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="odd">
+<td>P7</td>
+<td>Tørrhumling</td>
+<td>Sen varm tørrhumling etter tilstrekkelig utgjæring/opprydding.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="even">
+<td>P8</td>
+<td>Kaldkrasj mot 4 °C</td>
+<td>Ny stabilitets-/sensorikkvurdering før nedkjøling.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="odd">
+<td>P9</td>
+<td>Bunnfallsdump</td>
+<td>Fjerne utfelt bunnfall etter kaldkrasj.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="even">
+<td>P10</td>
+<td>Kaldkondisjonering ved 2–3 °C</td>
+<td>Kondisjonere kaldt og følge klarhet/utfelling.</td>
+<td>Ikke tillatt</td>
+</tr>
+<tr class="odd">
+<td>P11–P15</td>
+<td>Reservert</td>
+<td>Ledige generiske templateplasser.</td>
+<td>Ikke tillatt</td>
+</tr>
+</tbody>
+</table>
+<p>P3 og senere kan være <strong>kriteriemessig klare</strong> uten å
+være implementert/aktivert. Operatørens <code>Neste</code> er
+nødvendig.</p>
+<h2 id="4-tilt-som-trendgrunnlag">4. Tilt som trendgrunnlag</h2>
+<p>Manuell OG/SG er absolutt observasjonsgrunnlag der den brukes. P24r7
+viser rå Tilt-AA fra faktisk OG og godkjent Tilt-median, og separat
+manuell AA fra faktisk OG og korrigert manuell SG. Det er ingen
+kalibrering, offsetestimat eller automatisk kildebytte. Tiltens
+absolutte måleavvik kan derfor gi ulikt tall fra manuell kontroll;
+målegrunnlaget vises uttrykkelig.</p>
+<p><code>relative_sg_drop_points</code> beholder den etablerte tekniske
+identiteten, men bruker nå faktisk OG minus rå Tilt-median i SG-poeng.
+Videre biologisk fremdrift bruker tilsynelatende utgjæringsgrad fra
+templatekriteriets valgte kilde. SG-rate er faktisk SG-forskjell mellom
+vinduets endepunkter / faktisk tid: positiv betyr fallende SG, null
+ingen endepunktendring og negativ stigende SG. Rategrafen starter ved 0;
+en negativ faktisk rate bevares og vises i siste-verdi-feltet.</p>
+<h2 id="5-analyse">5. Analyse</h2>
+<p>W-34/70-templaten deklarerer tre operatørgrafer:</p>
+<ol type="1">
+<li><strong>Tilsynelatende utgjæringsgrad</strong> – hvor stor del av
+den opprinnelige gravityen som er gjæret ut. Forventet templateområde er
+80–84 %, og forventet FG beregnes fra faktisk OG og dette
+intervallet.</li>
+<li><strong>SG-rate</strong> – signert trend i SG-poeng per døgn. Den
+viser både aktivitetsnivå og retning uten egen graf for absoluttverdi
+eller rate relativt til historisk maksimum.</li>
+<li><strong>SG-stabilitet</strong> – spenn mellom høyeste og laveste
+godkjente SG i deklarert stabilitetsvindu; lav verdi betyr stabil
+SG.</li>
+</ol>
+<p>Vertikal minimum, maksimum, tick-intervall, null-policy, warm-up,
+coverage, outputdomene, serieopphav, B/P-markører og kriterieterskler er
+template/sessionmetadata. Horisontal akse bruker DB-eide
+<code>+dag · dato</code>-markører. Frontend tegner verdiene og aksene
+den får fra read-model og skal ikke utlede egne domenebetingede
+grenser.</p>
+<h2 id="6-målevalidering">6. Målevalidering</h2>
+<p>Tilt-kilden bruker deklarative validatorer for SG, temperatur og
+RSSI. Gjeldende parametere er <strong>prototype-/tekniske
+grenser</strong> inntil de er kalibrert mot reell datadistribusjon. De
+skal ikke presenteres som bryggefaglige universallover.</p>
+<p>Valideringsprinsippet er likevel normativt:</p>
+<ul>
+<li>hard plausibilitetsrange før domenelagring;</li>
+<li>robust outlierdeteksjon (MAD) når datagrunnlaget er stort nok;</li>
+<li>max-jump bare mot tidsmessig sammenhengende forrige godkjente
+bøtte;</li>
+<li>minimum sample count/accepted fraction;</li>
+<li>forkast ugyldig sample/bøtte fremfor clamp;</li>
+<li>kvalitetsutfall lagres separat.</li>
+</ul>
+<p>Eksakte aktive tall genereres fra
+<code>../sql/23-measurement-source-seed.sql</code>.</p>
+<h2 id="7-empirisk-grunnlag">7. Empirisk grunnlag</h2>
+<p>P2–P8 er delvis videreført/kalibrert mot en vellykket IPL-batch.
+Dokumentert historikk beskriver blant annet pitch rundt 12 °C med videre
+nedkjøling mot 8 °C og senere controller-offsetjusteringer. Tidlige
+controller-settpunkter som ikke ble eksplisitt registrert skal ikke
+rekonstrueres som fakta.</p>
+<p>Denne empirien er kalibreringsgrunnlag, ikke i seg selv bevis for at
+alle terskler er optimale.</p>
+<h2 id="8-eksternt-startgrunnlag">8. Eksternt startgrunnlag</h2>
+<p>Følgende kilder er tidligere identifisert som startgrunnlag og skal
+vurderes konkret før en regel klassifiseres som kildebelagt:</p>
+<ul>
+<li>Fermentis – <em>SafLager W-34/70</em> produkt-/teknisk
+informasjon;</li>
+<li>Fermentis – materiale om pitching, oksygen og temperatur;</li>
+<li>Fermentis – karakterisering av W-34/70;</li>
+<li>White Labs – <em>The Life of Brewers Yeast</em>;</li>
+<li>Powell mfl. 2003 – <em>Impact of brewing yeast cell age on
+fermentation performance</em>;</li>
+<li>Zamudio Lara mfl. 2022 – <em>Parameter Estimation of Dynamic Beer
+Fermentation Models</em>;</li>
+<li>Gibson mfl. 2018 – diacetylkontroll under brewery fermentation;</li>
+<li>Krogerus &amp; Gibson 2013 – valin/diacetyl;</li>
+<li>Brewers Association – hop creep-materiale;</li>
+<li>Murphy &amp; Son – Protafloc/kjelfining der dette er relevant for
+bryggeprosessen, ikke som direkte gjæringskriterium.</li>
+</ul>
+<p>Listen er kildekandidater, ikke automatisk regelbelegg. Dokument 15
+krever eksplisitt regel-for-regel-kalibrering.</p>
+<h3 id="konkrete-bevarte-kildehenvisninger">Konkrete bevarte
+kildehenvisninger</h3>
+<ul>
+<li>Fermentis: <a
+href="https://fermentis.com/en/product/saflager-w-34-70/">SafLager
+W-34/70</a></li>
+<li>Fermentis: <a
+href="https://fermentis.com/en/news/fermentation/what-are-the-best-5-ways-to-improve-fermentation/">Pitching,
+oksygen og temperatur</a></li>
+<li>Fermentis: <a
+href="https://fermentis.com/en/news/fermentation/rediscover-saflager-w-34-70/">Karakterisering
+av W-34/70</a></li>
+<li>White Labs: <a
+href="https://blog.whitelabs.com/the-life-of-brewers-yeast">The Life of
+Brewers Yeast</a></li>
+<li>Powell mfl. 2003: <a
+href="https://academic.oup.com/femsyr/article/3/2/149/590373">Impact of
+brewing yeast cell age on fermentation performance</a></li>
+<li>Zamudio Lara mfl. 2022: <a
+href="https://www.mdpi.com/2304-8158/11/22/3602">Parameter Estimation of
+Dynamic Beer Fermentation Models</a></li>
+<li>Gibson mfl. 2018: <a
+href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6267509/">Diacetyl
+control during brewery fermentation</a></li>
+<li>Krogerus og Gibson 2013: <a
+href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3708283/">Influence of
+valine on diacetyl</a></li>
+<li>Murphy &amp; Son: <a
+href="https://www.murphyandson.co.uk/our-carrageenan-kettle-finings-product-range/">Protafloc
+som kjelfining</a></li>
+</ul>
+<p>Lenkene er videreført fra tidligere prosjektgrunnlag og er ikke
+revalidert ved GitHub-etableringen. Regel-for-regel-vurdering og
+kildeklassifikasjon må fortsatt utføres. Protafloc er
+bryggeprosessbakgrunn, ikke automatisk et gjæringskriterium.</p>
+<h2 id="9-maskinlesbar-detaljfasit">9. Maskinlesbar detaljfasit</h2>
+<p><code>tools/build_docs.py</code> genererer
+<code>generated/w3470-rule-reference.json</code> direkte fra:</p>
+<ul>
+<li><code>../sql/03-w3470-template-seed.sql</code>;</li>
+<li><code>../sql/23-measurement-source-seed.sql</code>.</li>
+</ul>
+<p>Der finnes de eksakte publiserte B/P-kriteriene, parametrene,
+replay-flaggene, analysegraph/series-reglene og valideringsparametrene.
+Ved avvik mellom denne forklaringen og generert SQL-uttrekk er
+SQL/installert MariaDB detaljfasit, og dokumentforklaringen skal
+revideres.</p>
+<h2 id="operativ-prosent--og-kriteriemodell">operativ prosent- og
+kriteriemodell</h2>
+<p>W-34/70-standard bruker 80–84 % forventet tilsynelatende utgjæring
+som normativt templateområde. Forventet FG beregnes fra faktisk OG for
+den enkelte batch. Dette erstatter den tidligere uavhengige
+FG-fremdriftsprosenten og hindrer at et legitimt sluttpunkt innenfor
+gjærens forventede utgjæringsområde blokkeres av en separat
+prosentmodell.</p>
+<p>Biologisk standardmodell i gjeldende modell:</p>
+<ul>
+<li>B2: SG-fall siden etablert startnivå ≥ 1,5 SG-poeng.</li>
+<li>B3: SG-rate ≥ 1,5 SG-poeng/døgn.</li>
+<li>B4: utgjæringsgrad ≥ 60 % og SG-rate ≤ 1,5 SG-poeng/døgn.</li>
+<li>B5: utgjæringsgrad ≥ 75 %.</li>
+<li>B6: utgjæringsgrad ≥ 80 % og SG-spenn ≤ 1,0 SG-poeng i
+24-timersvinduet med minimumskrav til prøver og dekning.</li>
+</ul>
+<p>Prosessmodellen bruker biologisk fase som ferdig vurdering og
+kombinerer den med operative temperaturkrav. P3 og senere krever
+fortsatt operatørbekreftelse; historisk import kan ikke automatisk
+passere P3. P8 vurderer SG-stabilitet på nytt etter tørrhumling for å
+fange mulig hop creep.</p>
+</body>
+</html>

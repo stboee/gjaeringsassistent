@@ -1,0 +1,20 @@
+{
+  "application_version": "2026.11.07-1",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "status": "pass",
+  "checks": [
+    "ordinary start fields and first observation create a finite historical DB window",
+    "five bounded chunks, exact partial final bucket, hour boundary, late HA record rejection, failed-write retry basis and restart without live polling",
+    "manual missing B/P phases, shared neighboring boundary, both duration changes, chronological rejection, reset and append-only revisions",
+    "frozen evaluation clock, distinct after-registered observations with historical measured_at and current audit time",
+    "real overview and both cards render DB durations; all graph ends stay fixed when the DB wall clock advances",
+    "actual post-import analyses and B/P assessments use the frozen horizon; a later recorded biological exception is applied",
+    "completion uses historical end; SQLite pair, both SHA files, common report and reimport preserve the fixed window"
+  ],
+  "chunks": 5,
+  "measurement_count": 578,
+  "from": "2026-09-25T20:00:00.000Z",
+  "until": "2026-09-27T20:07:00.000Z",
+  "target_ha_uat": "not_run",
+  "test_sha256": "4e599a8534e5973acafb9d5cc5e23650474aaf9b5b2b6a5edcff0cf8804fd136"
+}

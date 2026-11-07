@@ -1,0 +1,58 @@
+{
+  "capability": {
+    "checked_at_utc": "2026-10-08T19:19:18.798345+00:00",
+    "server_version_from_sql": "12.3.3-MariaDB-ubu2404",
+    "sql_query_result": "12.3.3-MariaDB-ubu2404\tmariadb.org binary distribution\tutf8mb4\tutf8mb4_uca1400_ai_ci",
+    "sql_transport": "native MariaDB bootstrap; no socket",
+    "normal_tcp_server_startup": "ready for connections observed in server-tcp.log",
+    "normal_client_connection": "not verified: sandbox TCP client unavailable",
+    "p24r2_sql_integration": "pass"
+  },
+  "mariadb_packages": [
+    {
+      "package": "mariadb-client-core",
+      "version": "1:12.3.3+maria~ubu2404",
+      "sha256": "d893c673392e1d2d4a7a95f9f70bee3de247ffe4cfd64710fc9e6a1becd62b24",
+      "filename": "pool/main/m/mariadb/mariadb-client-core_12.3.3+maria~ubu2404_amd64.deb"
+    },
+    {
+      "package": "mariadb-server",
+      "version": "1:12.3.3+maria~ubu2404",
+      "sha256": "e437134641a4a1af8649b07141184e9e04b57157e49e81cf4ec9a714f16f315c",
+      "filename": "pool/main/m/mariadb/mariadb-server_12.3.3+maria~ubu2404_amd64.deb"
+    },
+    {
+      "package": "mariadb-server-core",
+      "version": "1:12.3.3+maria~ubu2404",
+      "sha256": "21e5f314fec146ab93ae3046dcf8a151168a0e87650972c0139a4dd88125f9c3",
+      "filename": "pool/main/m/mariadb/mariadb-server-core_12.3.3+maria~ubu2404_amd64.deb"
+    }
+  ],
+  "system_dependencies": [
+    {
+      "package": "libaio1t64",
+      "version": "0.3.113-6build1",
+      "sha256": "b1c4ebee35cfc85481443171e6e09943f3b0b530901fdf4fd6a864e242c2a1a5"
+    },
+    {
+      "package": "liburing2",
+      "version": "2.5-1build1",
+      "sha256": "c2aef62accee92a06263c3ad4ef46132c13e409b54296c44792a20491830a7b0"
+    }
+  ],
+  "package_index": "https://archive.mariadb.org/mariadb-12.3.3/repo/ubuntu/dists/noble/main/binary-amd64/Packages.gz",
+  "test_scope": "Actual native server bootstrap integration; local TCP server readiness observed; TCP client and HA/Node-RED target UAT not verified.",
+  "latest_release_integration": {
+    "application_version": "0.1.0-prototype24-r13",
+    "completed_at_utc": "2026-10-10T11:14:43.000248Z",
+    "result": "pass",
+    "transport": "native isolated bootstrap; no TCP client",
+    "log_ref": "verification/p24-sql-test-results.txt",
+    "test_only_innodb_options": {
+      "use_native_aio": false,
+      "flush_method": "fsync"
+    },
+    "target_uat": "pending",
+    "regression_ref": "verification/p24r9-runtime-regression.json"
+  }
+}

@@ -1,0 +1,446 @@
+{
+  "schema_version": "1.0",
+  "tests": [
+    {
+      "test_id": "TEST-TECH-001",
+      "test_type": "TECH",
+      "title": "Dokumentkilder og genererte artefakter",
+      "description": "Kontrollerer dokument-ID-er, lenker og reproducerbare genererte dokumentartefakter.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-docs-current.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-002",
+      "test_type": "TECH",
+      "title": "Releasepakke og versjonskonsistens",
+      "description": "Kontrollerer obligatoriske releaseartefakter, versjon og pakkestruktur.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-package.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-003",
+      "test_type": "TECH",
+      "title": "HA-kontrakt",
+      "description": "Kontrollerer MariaDB-eid HA entity/event-kontrakt mot flow og dashboard.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-ha-contract.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-004",
+      "test_type": "TECH",
+      "title": "Systemmetadata og lineage",
+      "description": "Kontrollerer systemfunksjoner, informasjonsobjekter og produsent-/konsumentrelasjoner.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-system-metadata.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-005",
+      "test_type": "TECH",
+      "title": "Statiske kontrakter",
+      "description": "Kontrollerer schema, SQL, flow, frontend og sentrale kontraktinvarianter uten målmiljø.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-static.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-006",
+      "test_type": "TECH",
+      "title": "Arkitekturkonformitet",
+      "description": "Kontrollerer DB-only authority, ingen frontend-fallback, frozen regler og andre arkitektursperrer.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-architecture-conformance.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-007",
+      "test_type": "TECH",
+      "title": "Read-model-kontrakt",
+      "description": "Kontrollerer views og runtime SELECT-kontrakter.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-read-model-contract.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-008",
+      "test_type": "TECH",
+      "title": "Installert flow-konfigurasjon",
+      "description": "Kontrollerer bevaring og patching av Node-RED config-node-identiteter.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/test-build-flow.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-009",
+      "test_type": "TECH",
+      "title": "Release syntax gate",
+      "description": "Kontrollerer shell- og JavaScript-syntaks for installer/runtimeverktøy.",
+      "method_type": "shell_syntax",
+      "implementation_ref": "tools/run-tests.sh",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-010",
+      "test_type": "TECH",
+      "title": "Strukturert verifikasjonsmodell",
+      "description": "Kontrollerer normalisert VER/TEST-schema, read-models, metadatarelasjoner, HA-events og frontendgrense.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-verification-model.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-TECH-011",
+      "test_type": "TECH",
+      "title": "MariaDB-versjon og kjørende Node-RED før installasjonsmutasjon",
+      "description": "Kjører releaseversjonskontrollen og installerens reelle preflight med Docker-fixture; annen MariaDB-versjon eller stoppet/restarting Node-RED avvises med presis diagnose før database-reset eller flowendring.",
+      "method_type": "python_integration",
+      "implementation_ref": "tests/test-installer-db-version.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-001",
+      "test_type": "FUNC",
+      "title": "Start og SG-kontrakt",
+      "description": "Regresjon av Start, DB-draft og SG-only grunnkontrakt.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: Start/SG contract",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-002",
+      "test_type": "FUNC",
+      "title": "Templatebibliotek og lifecycle",
+      "description": "Regresjon av draft/published/retired, separat Start/adminvalg og reaktivering. Inntasting og flyktig UI-kladd bevares gjennom fokus, asynkrone refresh-racer og rerender.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: Template lifecycle/admin separation; tests/test-p24-editor.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-003",
+      "test_type": "FUNC",
+      "title": "Manuelle målinger og revisions",
+      "description": "Regresjon av normalisert målesett, status og tidsrevisjoner.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: measurements",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-004",
+      "test_type": "FUNC",
+      "title": "Biologisk evaluator",
+      "description": "Regresjon av frozen kriterier, sekvensiell B-evaluering og transition evidence.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: biology evaluator",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-005",
+      "test_type": "FUNC",
+      "title": "Prosessevaluator og P-replay",
+      "description": "Regresjon av P-evaluator, P1/P2 auto-policy, P3+ manuell overgang og recommendations.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: process evaluator",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-006",
+      "test_type": "FUNC",
+      "title": "Session lifecycle og rapport",
+      "description": "Regresjon av completed/release, aktiv rapport og historisk eksport.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: lifecycle/report",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-007",
+      "test_type": "FUNC",
+      "title": "Målekildevalidering",
+      "description": "Regresjon av metadata-styrt rådatavalidering før 5-minutters persistens.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: measurement validation",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-008",
+      "test_type": "FUNC",
+      "title": "Analyse output-validering",
+      "description": "Regresjon av warm-up/coverage/outputdomene uten clamp eller syntetisk null.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: analysis validation",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-009",
+      "test_type": "FUNC",
+      "title": "HA history/live ingest",
+      "description": "Regresjon av aktiv-session-drevet HA-history, cursor, gap og live 5-minuttersimport.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: Home Assistant ingestion",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-010",
+      "test_type": "FUNC",
+      "title": "UAT-registrering og verifikasjonseksport",
+      "description": "Regresjon av UAT-ingress, append-only run/result SQL og felles JSON/HTML-eksportgrunnlag.",
+      "method_type": "javascript_scenario",
+      "implementation_ref": "tests/test-runtime-functions.js :: verification/UAT/export",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-UAT-001",
+      "test_type": "UAT",
+      "title": "Clean install og oppstart",
+      "description": "Installer gjeldende utgave på målmiljø og kontroller normal oppstart uten syntetisk session.",
+      "method_type": "target_environment",
+      "implementation_ref": "DOC-09 §1",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-002",
+      "test_type": "UAT",
+      "title": "Templateadministrasjon",
+      "description": "Verifiser bibliotek, draft/publish/retire/reactivate og uavhengighet fra aktiv session.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §2/§13",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-003",
+      "test_type": "UAT",
+      "title": "HA-history til LIVE",
+      "description": "Start fra historisk tidspunkt og verifiser import, gap, catch-up og overgang til LIVE.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §3",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-004",
+      "test_type": "UAT",
+      "title": "Sekvensiell B/P replay",
+      "description": "Verifiser kronologisk B/P replay og at W-34/70 stopper P-auto ved P2 før manuell P3.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §5",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-005",
+      "test_type": "UAT",
+      "title": "Målinger og korrigeringer",
+      "description": "Verifiser målesett, revisions, kriteriekorreksjon og append-only operatørhandlinger.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §6",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-006",
+      "test_type": "UAT",
+      "title": "Lifecycle og rapport",
+      "description": "Verifiser avslutning, aktiv rapport, completed eksport og Gjør klar-gate.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §7",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-007",
+      "test_type": "UAT",
+      "title": "Teknisk og målekilde",
+      "description": "Verifiser Systemkontroll, Technical Events og DB-eid Tilt/målekildestatus i målmiljø.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §8/§10/§13",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-008",
+      "test_type": "UAT",
+      "title": "Analyse og datakvalitet",
+      "description": "Verifiser foreløpige/modne analysepunkter, kriteriefravik, felles pitchakse, båndsemantikk, datagap og ugyldig output mot reelle data.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §10 og §12",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-009",
+      "test_type": "UAT",
+      "title": "Verifikasjonsfane og UAT-lagring",
+      "description": "Registrer et UAT-resultat i dashboardet og kontroller DB-kvittering og historikk.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §11",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-010",
+      "test_type": "UAT",
+      "title": "Verifikasjonseksport",
+      "description": "Generer JSON og HTML for samme verifikasjonsgrunnlag og kontroller at begge kan åpnes eksternt.",
+      "method_type": "operator_scenario",
+      "implementation_ref": "DOC-09 §11",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-011",
+      "test_type": "UAT",
+      "title": "Asynkron restart og HA-reconnect",
+      "description": "Med aktiv reell session: restart vert/containere slik at MariaDB, Node-RED og HA blir tilgjengelige asynkront; verifiser DB-basert restore, HA-republisering og cursor-basert live-resume uten ny Start eller duplisert domenhistorikk.",
+      "method_type": "target_environment",
+      "implementation_ref": "DOC-09 §11",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-FUNC-011",
+      "test_type": "FUNC",
+      "title": "Målebasert analyse og grafsemantikk",
+      "description": "Separate rå/manuelle AA-punkter, endepunktrate, ordinære 24/48-vinduer, datagap, siste-verdi-felt og delt renderer.",
+      "method_type": "node_vm",
+      "implementation_ref": "tests/test-p24-analysis.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-012",
+      "test_type": "FUNC",
+      "title": "Delt målt endepunktrate og råvalidering",
+      "description": "Samme faktiske SG-forskjell/tidsavstand i B/P og Analyse, null/negativ rate, kortvindu-avvisning, MAD=0 og korrigering.",
+      "method_type": "node_vm",
+      "implementation_ref": "tests/test-p24-methodology.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-013",
+      "test_type": "FUNC",
+      "title": "Stor filverifisert sluttarkiveksport",
+      "description": "Eksport over 19 MB, UTF-8 SHA-256, lesing tilbake, kompakt SQL, korte/manglende filer og retrykontrakt.",
+      "method_type": "automated",
+      "implementation_ref": "tests/test-archive-export.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-UAT-012",
+      "test_type": "UAT",
+      "title": "Sluttarkiv, feilstatus og nytt forsøk i Docker/HA",
+      "description": "Avslutt, kontroller faktiske lenker og filkontroll; fremprovosert filfeil gir vedvarende status og retry uten ny Avslutt.",
+      "method_type": "manual",
+      "implementation_ref": "docs/09-AKSEPTANSETEST.md :: P24r6 målmiljøkontroll",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-UAT-013",
+      "test_type": "UAT",
+      "title": "Kjølige S-04/M42-profiler og målebasert Analyse",
+      "description": "Kontroller templatevalg/targets/sluttkriterier, separate AA-kilder, siste måletid, negative rater og ingen foreløpige verdier.",
+      "method_type": "manual",
+      "implementation_ref": "docs/09-AKSEPTANSETEST.md :: P24r6 målmiljøkontroll",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-FUNC-014",
+      "test_type": "FUNC",
+      "title": "Timeshistorikk, datasett, rapport og livsløpsvisning",
+      "description": "Faktiske hourly-data uten heartbeat, manglende time, ISO-heartbeat, samme rapportgenerator og demo/arkiveringsvisning.",
+      "method_type": "node_runtime",
+      "implementation_ref": "tests/test-p24r7.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-015",
+      "test_type": "FUNC",
+      "title": "R8 graftransport, reelt oversiktsgrunnlag og diagnostikk",
+      "description": "Prøver DB-genererte seks-grafdata, tapsfri presentasjonsprojeksjon, HA-valg/refresh, JSON/gzip-publisering og kompakt/full diagnostikk.",
+      "method_type": "node_unit",
+      "implementation_ref": "tests/test-p24r8.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-016",
+      "test_type": "FUNC",
+      "title": "R9 grafvalg, importpolicy og kriterierevisjoner",
+      "description": "Prøver fire HA-hendelsesformater, faktisk SQL for DB-valg/importpolicy og feil/gjenoppretting, B/P override/unset/reset, gjeldende markører og DB-grunnlag i kort/felles rapport.",
+      "method_type": "node_function_native_sql",
+      "implementation_ref": "tests/test-p24r9.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-017",
+      "test_type": "FUNC",
+      "title": "SQLite eksport/import og aktiv drift",
+      "description": "Normalisert par, atomisk rollback og måleskriving under import på MariaDB 12.3.3. P24r11: aktivt snapshot med SHA/rapport, kontrollsumadvarsler, permanent sletting, aktivbeskyttelse og rollback.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-sqlite-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-018",
+      "test_type": "FUNC",
+      "title": "Samtidige rapporter og replay",
+      "description": "12 parallelle rapportforespørsler, unik DB-sekvens og samme kvittering ved replay.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-sqlite-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-019",
+      "test_type": "FUNC",
+      "title": "Original IPL og arkivgrensesnitt",
+      "description": "209 originale timepunkter med trykk og forløp; UI-transport, HTTP-hashing og gating. P24r11: samlet importvelger, bevarte valg, sletting og MariaDB-startstatus med stale-HA-kontroll.",
+      "method_type": "node_function_dom",
+      "implementation_ref": "tests/test-p24r10.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-UAT-014",
+      "test_type": "UAT",
+      "title": "SQLite arkivflyt i faktisk HA/Node-RED",
+      "description": "Filvalg, import under aktiv gjæring, kategorier og sammenligning i målmiljøet. P24r11: demo→avslutt→gjør klar→ordinær start; aktiv eksport/SHA; samlet import og fysisk sletting.",
+      "method_type": "manual",
+      "implementation_ref": "docs/09-AKSEPTANSETEST.md",
+      "automated": false
+    },
+    {
+      "test_id": "TEST-TECH-012",
+      "test_type": "TECH",
+      "title": "Fysisk schema, fravær og HA-projeksjonskontrakter",
+      "description": "Kontrollerer DDL mot generert type/nøkkelkatalog, nullable-semantikk, HA-felt og faktiske koblinger samt gjeldende native bevis.",
+      "method_type": "python_static",
+      "implementation_ref": "tests/verify-p24r15.py",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-020",
+      "test_type": "FUNC",
+      "title": "Faktisk SQL til HA-plugin: Start og livsløp",
+      "description": "MariaDB 12.3.3 gjennom faktisk NR-funksjon og plugin 0.80.3: start, pitchsubtyper, fravik, teknisk status, notater, sluttarkivkrav og klargjøring. Kildesjekket bevis inngår i releaseport.",
+      "method_type": "automated",
+      "implementation_ref": "tests/test-p24r15-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-021",
+      "test_type": "FUNC",
+      "title": "Felles graftegner og B/P-korreksjon gjennom faktisk SQL",
+      "description": "MariaDB 12.3.3 → NR → dashboard og rapport: seks grafdefinisjoner, typografi, sammenligning, plan, målepunkter, FG-bånd, B/P override/unset/reset og korrekt historikk. Kildesjekket bevis inngår i releaseport.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-p24r15-graphs-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-022",
+      "test_type": "FUNC",
+      "title": "Historisk HA-import og sammenhengende DB-fasetid",
+      "description": "Fast fra–til, stopp etter import/restart, etterregistrering, B/P-nabogrenser, historisk klokke og SQLite-eksport. Native bevis kontrolleres i releaseport.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-p24r15-historical-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-023",
+      "test_type": "FUNC",
+      "title": "DB-eid Systemkontroll, datadekning og HA-gjenoppkobling",
+      "description": "Rapporttilfelle med kun timehistorikk, DB-policy/manglende kontrakt, deduplisering uten feilsirkel, ferske DB-retries og faktisk plugin-controllerutgang som kvittering. Simulert HA-transport, ikke målmiljø-UAT.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-p24r16-system-live.js",
+      "automated": true
+    }
+  ]
+}

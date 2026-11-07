@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>18 – Implementasjons- og verifikasjonsstatus</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">18 – Implementasjons- og verifikasjonsstatus</h1>
+</header>
+<h1 id="18--implementasjons--og-verifikasjonsstatus">18 –
+Implementasjons- og verifikasjonsstatus</h1>
+<p><strong>Gjeldende release:</strong> <code>2026.11.07-1</code>.
+Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i
+RELEASE-NOTES.md.</p>
+<p>Implementert, lokalt release-verifisert og målmiljø-verifisert er
+forskjellige statusnivåer. TEST-RESULTS.md og faktiske
+verification_test_runs/verification_test_results viser testbevis;
+dokument 15/09 viser åpne måltester. Ingen grønn releaseport er alene
+bevis på fungerende operatørflyt i Home Assistant.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Område</th>
+<th>Implementert</th>
+<th>Lokal verifikasjon</th>
+<th>Målmiljø</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MariaDB/InnoDB, normalisering, append-only revisjoner og eksplisitt
+sletting</td>
+<td>Ja</td>
+<td>Native SQL, constraints, rollback, samtidighet og fysisk
+katalog</td>
+<td>Delvis tidligere demonstrert; ny installasjon må kontrolleres</td>
+</tr>
+<tr class="even">
+<td>DB-eide HA-registre, payloadfelt og inputbindinger</td>
+<td>Ja</td>
+<td>Faktisk SQL/NR/plugin 0.80.3-validering</td>
+<td>Faktisk HA-brukertest åpen</td>
+</tr>
+<tr class="odd">
+<td>Start, frozen templates, livsløp og klargjøring</td>
+<td>Ja</td>
+<td>Native livsløpsregresjon</td>
+<td>Gjeldende brukertest åpen</td>
+</tr>
+<tr class="even">
+<td>Ordinær HA-history/live, heartbeat-gap og målevalidering</td>
+<td>Ja</td>
+<td>Native SQL/NR med kontrollerte responser</td>
+<td>Reell Recorder/import/kalibrering åpen</td>
+</tr>
+<tr class="odd">
+<td>Historisk fra–til, fast domenehorisont, etterregistrering og
+B/P-tid</td>
+<td>Ja</td>
+<td>Native tidsgrenser, klokke, eksport/reimport og kortvisning</td>
+<td>Reell HA/nettleser og tidsfelt åpen</td>
+</tr>
+<tr class="even">
+<td>Kriteriekorreksjon, fravik, vurderingsbevis og seks felles
+grafer</td>
+<td>Ja</td>
+<td>Samme SQL, dashboard- og rapporttegner</td>
+<td>Visuell kontroll og reelle data åpen</td>
+</tr>
+<tr class="odd">
+<td>Session-avgrenset lesing og billig uendret polling</td>
+<td>Ja</td>
+<td>Native vekst-/samtidighetstest</td>
+<td>CPU/slow-log på gangpc åpen</td>
+</tr>
+<tr class="even">
+<td>SQLite-par, egen importidentitet, SHA, aktiv eksport og
+arkivadministrasjon</td>
+<td>Ja</td>
+<td>Native eksport/import, rollback og samtidige rapporter</td>
+<td>TEST-UAT-014 åpen</td>
+</tr>
+<tr class="odd">
+<td>DB-klassifisert Systemkontroll og faktisk importdekning</td>
+<td>Ja</td>
+<td>TEST-FUNC-023: rapporttilfelle med 215 timepunkter/0 detaljbøtter,
+policyendring og manglende metadata</td>
+<td>Datoversjonens målmiljøtest åpen</td>
+</tr>
+<tr class="even">
+<td>HA-publisering uten feilsirkel, ferskt DB-retry og
+utgangskvittering</td>
+<td>Ja</td>
+<td>TEST-FUNC-023 med faktisk plugin-controller og simulert
+transport</td>
+<td>Reell HA-gjenoppkobling åpen</td>
+</tr>
+<tr class="odd">
+<td>Strukturert REQ/DEC/VER/TEST/UAT, registrering og rapport</td>
+<td>Ja</td>
+<td>Kildemodell, SQL-relasjoner og releaseport</td>
+<td>UAT-registrering i målmiljø åpen</td>
+</tr>
+</tbody>
+</table>
+<p>Runtime-schema er 9, template-schema 4. Eksakte tabell-/view-/HA-tall
+følger genererte fysiske kataloger og releaseforventninger.
+Katalogdekning alene er ikke et matematisk normalformbevis. Legacy-navn
+i regresjonsfiler beskriver funksjonens opprinnelse; bevisenes
+application_version og kildeavtrykk skal være gjeldende release.</p>
+<p>S-04/M42 er publiserte normaliserte gjærprofiler. Faktisk gjæring med
+profilene og faglig kalibrering er ikke utført av programvaretestene.
+HA-timesstatistikk er grafgrunnlag, ikke oppdiktet ordinært
+B/P-målegrunnlag.</p>
+<p>p24r15 er bekreftet installert ved brukerens rapport fra 17.10.2026.
+Brukeren har senere bekreftet at p24r16 er installert og fungerer fint.
+Datoversjonen er første GitHub-utgave; installasjon av selve
+datoversjonen og de enkelte UAT-resultatene må dokumenteres separat.</p>
+</body>
+</html>

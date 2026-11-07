@@ -1,0 +1,16 @@
+{
+  "application_version": "2026.11.07-1",
+  "completed_at_utc": "2026-11-07T11:25:49Z",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "server_binary_packages": "Official MariaDB/Ubuntu debs, SHA-256 matched original pinned environment",
+  "node_version": "v24.22.1",
+  "plugin_version": "0.80.3",
+  "test_transport": "localhost TCP, separate data directory",
+  "native_dateStrings_timezone": "UTC",
+  "performance_timezone": "Europe/Oslo",
+  "buffer_pool_bytes": 67108864,
+  "target_ha_transport": "simulated",
+  "target_ha_uat": "not_run",
+  "log": "verification/native-integration.log",
+  "status": "pass"
+}

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>09 – Akseptansetest</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">09 – Akseptansetest</h1>
+</header>
+<h1 id="09--akseptansetest">09 – Akseptansetest</h1>
+<p><strong>Rolle:</strong> Gjeldende normativ måltest for installert
+release og reelle integrasjoner.</p>
+<h2 id="1-installasjon-og-oppstart">1. Installasjon og oppstart</h2>
+<ol type="1">
+<li>Installer på ren prototypebase. Schema, seed, flow og frontend skal
+fullføre uten FK-/SQL-feil.</li>
+<li>Node-RED skal starte uten vedvarende Technical-feil.</li>
+<li>Automatisk Systemkontroll skal fullføre etter oppstart og vise
+eksplisitt resultat for database, schema, HA-kontrakt, konfigurasjon,
+lineage og frontendpublisering.</li>
+</ol>
+<h2 id="2-template-og-start-grunnlag">2. Template og Start-grunnlag</h2>
+<ol type="1">
+<li>Velg publisert W-34/70-template.</li>
+<li>Endre minst ett pre-Start-felt og verifiser at restart/refresh
+gjenskaper verdien fra MariaDB-draft, ikke fra lokal
+Node-RED-state.</li>
+<li><code>Start fra</code> skal være eksplisitt dato/tid og persisteres
+i MariaDB.</li>
+<li>DB-konfigurert målekilde skal være synlig i Teknisk.</li>
+</ol>
+<h2 id="3-start-gjæring">3. Start gjæring</h2>
+<ol type="1">
+<li>Trykk <code>Start gjæring</code> én gang.
+<code>sensor.gjaeringsassistent_startstatus</code> skal umiddelbart vise
+<code>starting</code> / fase <code>Mottatt</code>.</li>
+<li>Technical Event-historikken skal inneholde
+<code>START_REQUESTED</code> med korrelert
+<code>operation_id</code>.</li>
+<li>Hvis startgrunnlaget er ugyldig, skal Start vise konkret
+avvisningsårsak og <code>START_REJECTED</code> skal være sporbar.</li>
+<li>Hvis MariaDB-feil oppstår i startgrunnlag eller starttransaksjon,
+skal samme feil være synlig i startstatus og Technical; kommandoen skal
+ikke forsvinne taus.</li>
+<li>Vellykket Start skal opprette én aktiv session, frozen
+template/sessionplan og <code>session_measurement_sources</code> for
+reell session.</li>
+</ol>
+<h2 id="4-ha-history-datagap-og-live">4. HA-history, datagap og
+live</h2>
+<ol type="1">
+<li>Start reell session med <code>Start fra</code> i fortiden. SG,
+temperatur, heartbeat og RSSI skal hentes fra entity-ID-er i
+<code>measurement_source_profiles</code>.</li>
+<li>Komplette data skal normaliseres til 5-minuttersbøtter i
+<code>measurements_5m</code>.</li>
+<li>Heartbeat-fravær skal registreres i
+<code>measurement_data_gaps</code>; systemet skal ikke interpolere
+SG/temperatur over gapet.</li>
+<li><code>last_import_cutoff_at</code> skal flyttes frem for hver
+vellykket chunk.</li>
+<li>Etter historisk catch-up skal aktiv-session-styrt 5-minuttersimport
+fortsette fra samme persisterte cursor.</li>
+<li>Restart Node-RED under aktiv session og verifiser at importen
+fortsetter fra MariaDB-cursor uten duplisert domenestate.</li>
+</ol>
+<h2 id="5-sekvensiell-bp-replay">5. Sekvensiell B/P-replay</h2>
+<ol type="1">
+<li>Bruk en historisk serie som dekker flere biologiske/prosessuelle
+overganger.</li>
+<li>B-replay skal bare vurdere neste B-fase av gangen og persistere hver
+visit/transition ved første historiske kriteriekryssing.</li>
+<li>P-replay skal bare vurdere neste aktive P-trinn av gangen. Når
+required-kriteriene første gang er oppfylt, kan append-only
+<code>process_transitions</code> med <code>action='backfill'</code> bare
+opprettes dersom det aktuelle frosne session-trinnet har
+<code>historical_replay_auto_transition_allowed=1</code>.</li>
+<li>For W-34/70 skal historisk replay kunne etablere P1/P2, men ikke P3
+eller senere. P3 kan bli vurdert som klar, men aktivt prosesstrinn skal
+forbli P2 til operatøren trykker <code>Neste</code>.</li>
+<li>En historisk P-vurdering skal ikke bruke observasjon eller biologisk
+tilstand fra et senere tidspunkt.</li>
+<li>Dokumenterte datagap skal bryte stabilitets-/persistensvinduer slik
+frozen kriterier angir.</li>
+<li>Etter catch-up skal neste ordinære P-overgang fortsatt kreve
+operatørens <code>Neste</code>; live-motoren skal ikke automatisk hoppe
+videre.</li>
+</ol>
+<h2 id="6-målinger-og-operatørhandlinger">6. Målinger og
+operatørhandlinger</h2>
+<ol type="1">
+<li><code>Lagre målinger</code> skal lese
+<code>measurement_input_draft</code>, persistere ett komplett
+observation/revision-sett og gi eksplisitt
+saved/rejected/failed-kvittering.</li>
+<li>Korrigering av måletid, pitchtid, B-start og P-start skal opprette
+nye revisions uten å omskrive historiske timestamps.</li>
+<li>Kriteriekorreksjon og process-exception skal bevare frozen
+templateverdier og opprette session-eid revision/fakta.</li>
+<li><code>Neste</code> og <code>Tilbake</code> etter live/catch-up skal
+opprette append-only visit/transitions; Tilbake krever advarsel, ikke
+obligatorisk begrunnelse.</li>
+</ol>
+<h2 id="7-session-livsløp-og-historikk">7. Session-livsløp og
+historikk</h2>
+<ol type="1">
+<li><code>Avslutt gjæring</code> skal appendere completed lifecycle og
+lukke åpne visits via nye revisions.</li>
+<li>Completed session skal generere verifisert SQLite-par og lesbar
+HTML-rapport.</li>
+<li><code>Gjør klar</code> for reell session skal kreve verifisert
+completed-arkiv og appendere release-faktum uten å slette
+sessionhistorikken.</li>
+<li>Under aktiv gjæring skal <code>Generer rapport</code> lage et
+HTML-snapshot fra MariaDB/read-model uten lifecycle-endring. Rapporten
+skal minst dekke sammendrag, SG-/temperaturforløp, B/P-forløp,
+målinger/sensorikk, kriterievurderinger, kriteriekorreksjoner/-avvik,
+prosesstransisjoner, datagap, kronologi, notater og
+operatørhandlinger.</li>
+<li>Historisk rapport skal være read-only.</li>
+</ol>
+<h2 id="8-arkitekturkontroller">8. Arkitekturkontroller</h2>
+<ol type="1">
+<li>MariaDB skal være eneste persistent authority; måltesten skal ikke
+avhenge av <code>flow.*</code>, <code>global.*</code>, HA-state eller
+frontend-fallback som domenefasit.</li>
+<li>Manglende nødvendig frozen regel/input/parameter skal gi
+<code>invalid_configuration</code>, ikke oppdiktet verdi.</li>
+<li><code>v_metadata_lineage_gaps</code> skal ikke rapportere required
+producer/consumer-brudd.</li>
+<li><code>v_function_producer_consumer</code> skal være avledet fra
+<code>function_information_dependencies</code>; ingen separat
+producer/consumer-sannhet skal finnes.</li>
+</ol>
+<h2 id="9-evalueringshorizon-og-overgangsbevis">9. Evalueringshorizon og
+overgangsbevis</h2>
+<ol type="1">
+<li>Under delvis HA-history-import skal B/P-current evaluation bruke
+persistert <code>last_import_cutoff_at</code>, ikke faktisk
+veggklokke.</li>
+<li>En passert B/P-fase skal i GUI vise kriteriene fra akkurat
+<code>transition.evaluation_id</code>, selv om en annen vurdering av
+samme kandidat ble opprettet senere eller har et nyere
+<code>evaluated_at</code>.</li>
+<li>Når ingen evaluatorrad ennå finnes, kan neste ordnede kandidat
+utledes fra frozen sessionplan, men status skal være
+<code>not_evaluated</code>; ingen kriterieverdi kan diktes opp.</li>
+<li>Historisk P-replay skal hoppe over disabled/reserve-slots.</li>
+<li>Etter catch-up skal <code>live_ingest</code> ikke automatisk
+gjennomføre P-overgang.</li>
+<li>Målekildekortets <code>last_import_cutoff_at</code>,
+<code>last_success_at</code> og <code>updated_at</code> skal være
+DB-verdier, og samme DB-read-model skal brukes ved ingest-refresh og
+Systemkontroll-refresh.</li>
+</ol>
+<h2 id="10-datakvalitet-og-analyse">10. Datakvalitet og Analyse</h2>
+<ul>
+<li>Målekilde/Tilt-panelet skal endre siste bøtte/import/sist OK etter
+nye 5-minuttersimports selv om sensorens state fortsatt er
+<code>LIVE</code>; displaytid skal være <code>Europe/Oslo</code>.</li>
+<li>Hver Analyse-graf skal vise B/P-kriterier, krav/rolle og første
+oppfyllelsestid fra samme requirements-read-model som
+terskellinjer/markører.</li>
+<li>I redigerbar template-draft skal ubrukte registry-kriterietyper
+ligge i dropdown og ikke som permanente tomme matriserader;
+<code>Vis kriterietype</code> + <code>+</code> skal opprette kriterium i
+valgt celle, og sletting av siste forekomst skal gjøre typen ubrukt
+igjen.</li>
+</ul>
+<p>Akseptanse omfatter også at en avledet metric utenfor sitt frozen
+<code>valid_minimum_value</code>/<code>valid_maximum_value</code>
+avvises før både B/P-kriterievurdering og
+<code>analysis_series_values</code>. Testen skal dokumentere at ingen
+overgang kan utløses av den ugyldige verdien og at verdien ikke
+clampes.</p>
+<ul>
+<li>Injiser/observer en åpenbart ugyldig Tilt-prøve i testgrunnlaget:
+prøven skal ikke påvirke <code>measurements_5m</code>; kvalitetsutfallet
+skal være sporbart.</li>
+<li>Kontroller at et langt/registrert datagap ikke utløser
+max-jump-avvisning av første ellers gyldige bøtte etter gapet.</li>
+<li>Kontroller at analysekurver er tomme frem til deklarert
+warm-up/sample/coverage er oppfylt, fremfor å starte med
+<code>0</code>.</li>
+<li>Kontroller at derived output utenfor frozen gyldighetsdomene ikke
+persisteres i <code>analysis_series_values</code>.</li>
+<li>Kontroller at de tre W-34/70-grafene for tilsynelatende
+utgjæringsgrad, signert SG-rate og SG-stabilitet kommer fra frozen
+sessionmetadata, at y-akse/ticks og <code>+dag · dato</code> kommer fra
+DB-read-model, og at headerforklaring/krav/markører følger samme
+grunnlag.</li>
+<li>Kontroller at HA-målekildesensoren kan publiseres både før Start,
+under catch-up og i LIVE uten nullable-attributtfeil.</li>
+<li>Kontroller at Systemkontroll kjøres på nytt etter Start og overgang
+til LIVE, og at uncaught runtimefeil blir synlige som
+<code>runtime_issues</code>.</li>
+</ul>
+<h2 id="11-strukturert-verifikasjon-og-uat">11. Strukturert verifikasjon
+og UAT</h2>
+<p>Akseptansetestene representeres i p23 som stabile
+<code>TEST-UAT-*</code>-objekter koblet til relevante VER/REQ.
+UAT-resultater er append-only fakta med test, releaseversjon, tidspunkt,
+resultat (<code>pass/fail/blocked/not_run</code>), operatør og eventuelt
+notat/evidence.</p>
+<p>Minstekontroll for p23r2:</p>
+<ol type="1">
+<li><code>TEST-UAT-009</code>: Verifikasjon-fanen skal vise DB-eide
+REQ→VER→TEST-relasjoner og kunne registrere et UAT-resultat som et nytt
+run/result uten å overskrive tidligere historikk.</li>
+<li><code>TEST-UAT-010</code>: verifikasjonseksport skal produsere både
+JSON og selvstendig HTML fra samme DB-grunnlag; status skal samsvare med
+dashboardets DB-read-model.</li>
+<li><code>TEST-UAT-011</code>: med aktiv reell session skal full
+vertsmaskin-/containeroppstart i vilkårlig
+MariaDB/Node-RED/HA-rekkefølge rekonstruere samme session, B-fase,
+P-trinn og målekilde fra MariaDB uten ny Start. Etter HA-reconnect skal
+HA-projeksjoner repopuleres, og live-import skal fortsette fra
+persistert cursor uten duplisert domenhistorikk.</li>
+<li>Teknisk-fanen skal vise kompakt verifikasjonsstatus uten å beregne
+egen status/coverage.</li>
+<li>Manglende relasjon eller autoritativ status skal vises som
+manglende/ikke verifisert grunnlag, ikke fylles med
+frontend-/Node-RED-default.</li>
+</ol>
+<h2 id="12-p24-kriterier-oppstartsanalyse-og-grafsemantikk">12.
+P24-kriterier, oppstartsanalyse og grafsemantikk</h2>
+<ol type="1">
+<li>Klon W-34/70 til draft og ny template. Verifiser
+utgjæringsintervall, alle kriterier og analysemetadata. Endre
+rettigheter for ett B- og ett P-kriterium, publiser og Start; sessionen
+skal bruke det frosne valget.</li>
+<li>Korriger et tillatt biologisk kriterium. Registrer et bekreftet
+fravik med tomt notat. Direkte fasesetting skal være borte; original
+vurdering, faktisk <code>met/not_met</code> og håndteringen skal kunne
+spores hver for seg. Prøv tilbaketrekking før overgang og kontroller ny
+vurdering.</li>
+<li>Ved tidlig import skal rate/stabilitet mangle til frozen minste
+tid/dekning er oppfylt. Ingen foreløpig kurve eller estimert bånd skal
+tegnes.</li>
+<li>Kontroller at SG-stabilitet har to generelle 24/48-timerskurver og
+relevante kriterieterskler, ingen min–maks-envelope, og dynamisk Y-akse.
+SG-/temperatur-/utgjæringsbånd og rate-spenn skal følge datamodellens
+beskrivelse.</li>
+<li>Sammenlign alle grafer i dashboard, aktiv rapport og sluttrapport: X
+starter ved effektiv pitch, tom oppstart er synlig og persisterte gap
+bryter både linje og bånd. Korriger pitchtid og kontroller alle tre
+flater igjen.</li>
+</ol>
+<h2 id="13-inntasting-systemkontroll-og-teknisk-nedlasting">13.
+Inntasting, Systemkontroll og teknisk nedlasting</h2>
+<ol type="1">
+<li>Etter installasjon på MariaDB 12.3.3: kjør Systemkontroll og
+kontroller schema, templateantall og metadata/lineage. Kontroller at
+Gjæring har de publiserte templatealternativene før Start.</li>
+<li>Skriv i template-draft, ny template-ID/navn og publiseringsetikett
+over minst én refresh-periode. Tekst, fokus og markør skal beholdes.
+Prøv Oppdater med ulagrede draftendringer; teksten skal ikke
+forkastes.</li>
+<li>Last ned både manuell Teknisk-eksport og siste automatiske status to
+ganger. Alle nedlastingsnavn skal starte med lokalt timestamp og eldre
+nedlastinger skal bevares.</li>
+<li>Kontroller at den nye JSON-filen har aktuell eksporttid og viser
+samsvarende DB-/Node-RED-/frontend-release, faktisk MariaDB 12.3.3,
+<code>utf8mb4_unicode_ci</code>, publiserte templateversjoner og
+HA-valgets options. Aktive problemer og historiske oppklarte hendelser
+skal kunne skilles fra hverandre.</li>
+</ol>
+<h2 id="14-kalibrering-løpende-status-og-korreksjon">14. Kalibrering,
+løpende status og korreksjon</h2>
+<ol type="1">
+<li>Start med faktisk OG og senere Tilt-data uten målinger nær pitch. Rå
+Tilt-utgjæring skal være tilgjengelig, med eksplisitt ukalibrert
+kilde.</li>
+<li>Registrer korrigert manuell SG. Kontroller separat punkt og
+siste-verdi-tekst, med manuell måletid; ingen mellomliggende manuelle
+verdier.</li>
+<li>Ved flat SG skal dagens rate være nær 0 med fersk måletid; gamle
+B-overgangsvurderinger skal fortsatt ha sitt historiske tall. Foreldet
+import skal vise utilgjengelig aktuell rate.</li>
+<li>Kontroller én AA og estimert ABV nå, raw Tilt-SG, gjær/volum/OG,
+varigheter og neste prosesstrinns årsak/tid i Aktiv gjæring. Rapport og
+genereringsknapp skal ligge nederst. Pitch- og
+observasjonstidskorreksjon skal være to separate funksjoner under
+Måleresultater.</li>
+<li>Tøm valgfri maksimalgrense/alder: den skal lagres som ikke angitt.
+Ugyldig intervall, nulltall i positiv alder og manglende obligatorisk
+felt skal avvises før lagring; beregnbar faktisk verdi skal fortsatt
+kunne leses ved ugyldig kriteriekonfigurasjon.</li>
+<li>Korriger pitch og kontroller at aktuelt analysegrunnlag endres uten
+at de tidligere faktaene slettes. Kontroller Systemkontroll mot
+installert schema, templatevalg, inntasting under automatisk refresh og
+tidsstemplede tekniske nedlastingsnavn.</li>
+</ol>
+<h2 id="p24r7-målmiljøkontroll">P24r7 målmiljøkontroll</h2>
+<ol type="1">
+<li>Velg hver av de tre publiserte templatene før Start. Kontroller
+temperaturmål, utgjæringsområde, gjærmengde og P7 enabled-policy i
+templateeditoren.</li>
+<li>Start uten tilgjengelig femminuttersmåling. Startstatus skal ikke gi
+HA-valideringsfeil for null <code>latest_measurement_5m</code>.</li>
+<li>Kontroller begge AA-kilder og siste-verdi-feltet over alle tre
+Analyse-grafene. SG-rate har Y-min 0; negativ rate skal fortsatt stå som
+negativ i siste-verdi-feltet. Manuelle punkter forbindes ikke.</li>
+<li>Avslutt en reell session med stort arkiv. Begge SQLite-filer og HTML
+skal få verified-resultat med byteantall og SHA-256, og historikklenkene
+skal åpne de registrerte filene. DB-grensen skal ikke økes.</li>
+<li>Ved fil-/verktøyfeil skal gjæringen fortsatt være completed, med
+vedvarende arkivfeil i Systemkontroll. Forsøk arkivering på nytt skal gi
+nytt attempt/resultat og ikke en ny Avslutt-hendelse. Gjør klar skal
+lykkes etter verified. Registrer TEST-UAT-012/013.</li>
+</ol>
+<h2 id="p24r7-målmiljøkontroll-1">P24r7 målmiljøkontroll</h2>
+<ol type="1">
+<li>Installer rent, kjør Systemkontroll to ganger raskt og bekreft 186
+tabeller / 139 views / 186 InnoDB-tabeller og 15 resultater per kjøring.
+Fersk HA-entitetskontroll skal finne arkiveringsknappen.</li>
+<li>Start fra 25.09.2026 kl. 22:00. Bekreft at eldre timer fra
+HA-statistikk vises også uten tidsstempelsensorens gamle historie. Ingen
+kunstige femminuttspunkter skal oppstå. Fjern tilgang til statistikk
+midlertidig: rådata skal fortsette, og feilmeldingen skal lukkes når
+tilgangen kommer tilbake.</li>
+<li>Velg hver demo, kontroller navn og start. Sammenlign med det andre
+datasettet og en avsluttet gjæring. Bekreft dag-0-justering,
+kildemerking, egne analysetall, delte/persistente valg og 24/48 timer/7
+dager/hele gjæringen.</li>
+<li>Avslutt: visningen skal umiddelbart gå til Gjæring avsluttet. Ved
+verifisert eksport skal retry-knappen være skjult. Ved eksportfeil skal
+nytt forsøk være tilgjengelig og Gjør klar sperret. Etter verifisering
+skal Gjør klar fungere.</li>
+<li>Generer aktiv rapport og sluttrapport. Begge skal ha kronologisk
+oversikt og eldre timesdata; et kort dashboardvindu eller
+sammenligningsvalg skal ikke kutte rapporten.</li>
+</ol>
+<h2 id="p24r9-målmiljøprøver">P24r9 målmiljøprøver</h2>
+<ul>
+<li>Velg Gyllen pils under Sammenlign med. Kontroller at oransje
+sammenligningskurve vises og valget består etter flere automatiske
+oppdateringer. Prøv også demovalg og Ingen sammenligning.</li>
+<li>Etter første import: la normal live-innhenting gå minst tre
+femminuttersrunder. Det skal ikke komme nye «HA langtidsstatistikk er
+hentet»/RECOVERED-meldinger. Ved reell API-feil skal årsaken være synlig
+og én senere gjenoppretting lukke den.</li>
+<li>Korriger en terskel på Biologi og Prosess. Sjekk kravtekst/linje i
+Analyse og aktiv rapport. Fjern en valgfri grense og tilbakestill.
+Originalkravet skal da vises igjen; eldre oppfylt-markering fra annen
+revisjon skal ikke overføres.</li>
+<li>Korriger et stabilitetsvindu og kontroller at kravet vises ved
+riktig vindusserie. Historiske målinger/evalueringer skal være
+bevart.</li>
+</ul>
+<h2 id="p24r10-måltest">P24r10 måltest</h2>
+<ol type="1">
+<li>Åpne Template og arkiv. Kontroller system/egen/importert-kategorier
+og filvalg på den faktiske HA-adressen (også ved HTTP).</li>
+<li>Eksporter en avsluttet gjæring; last ned begge SQLite-filer og åpne
+den registrerte HTML-rapporten i Historikk. Importer paret mens en annen
+gjæring pågår; kontroller at målekilden og grafene fortsetter å
+oppdateres.</li>
+<li>Velg importert gjæring i sammenligningslisten; kontroller begge
+dataseriene. Skjul og vis den igjen.</li>
+<li>Importer en template og kopier den med ny egen ID. Kontroller at
+originalen forblir skrivebeskyttet og systemtemplates er uendret.</li>
+<li>Avslutt gjæringen. Kontroller at Gjør klar vises først når arkivet
+er verifisert, og at arkivering under behandling ikke fremstår som en
+systemfeil.</li>
+<li>Se IPL og Gyllen i sammenligning: ulike måleserier, datoer under
+grafene og datomarkører i HTML-rapport.</li>
+</ol>
+<h2 id="p24r11-tillegg-til-test-uat-014">P24r11 tillegg til
+TEST-UAT-014</h2>
+<ol type="1">
+<li>Start original IPL-demo, avslutt, gjør klar, velg template og
+kontroller at ordinær Start er tilgjengelig. Start en ordinær gjæring og
+kontroller startstatus etter omstart av Node-RED.</li>
+<li>Under aktiv gjæring: eksporter øyeblikksbilde fra øverste arkivkort.
+Last ned to SQLite-filer, to SHA-filer og HTML. Bekreft at aktiv gjæring
+og måleinnhenting fortsetter.</li>
+<li>Velg arkivfilene samlet. Kontroller liste etter template-navn, bytt
+mellom bare template og template med data, og vent flere automatiske
+oppdateringer. Valgene skal beholdes.</li>
+<li>Prøv manglende SHA, feil SHA og uleselig SHA. Advarsel skal vises
+før import, og import skal fungere. En skadet SQLite eller feil
+gjærings/template-par skal avvises.</li>
+<li>Importer for sammenligning. Velg den importerte sesjonen i Analyse.
+Slett sesjonen og kontroller at valget går tilbake til Ingen og at
+sesjonen forsvinner fra databasen. Slett ubrukt originaltemplate separat
+eller sammen med sesjonen. Kontrollér at en brukt template ikke kan
+slettes og at eksportfiler beholdes.</li>
+</ol>
+<p>Disse stegene krever målmiljøet Home Assistant/Node-RED. Lokale
+MariaDB- og VM-tester erstatter ikke denne UAT-en.</p>
+<h2 id="p24r12-måltest-etter-installasjon">P24r12 måltest etter
+installasjon</h2>
+<p>Lokal SQL/plugin-test erstatter ikke denne måltesten. Åpne Gjæring
+uten aktiv sesjon: velg en vanlig template og kontroller at normal Start
+vises. Start, vent på import, kontroller status og målegrafer. Prøv et
+notat og Systemkontroll uten valideringsfeil i Node-RED-loggen.</p>
+<p>Kjør demo, avslutt, vent på verifisert arkiv og velg Gjør klar. Velg
+vanlig template igjen: normal Start skal vises, og kortet skal ikke bli
+stående som «Starter gjæring». Gjenta etter Node-RED-omstart/reconnect.
+Kontroller tekniske hendelser og dato/tid i HA. Importer et tidligere
+SQLite v1-filpar og kontroller separat historisk sesjon, template og
+sammenligning. Registrer først UAT som bestått når disse prøvene er
+gjennomført i målmiljøet.</p>
+<h2 id="p24r13-måltest-etter-installasjon">P24r13 måltest etter
+installasjon</h2>
+<ol type="1">
+<li>Korriger B5-grense, la en valgfri grense stå «ikke angitt», lagre og
+kontroller ny vurdering og grafgrense. Gjenta for P og tilbakestill
+begge. Ingen DB-kontraktfeil skal oppstå.</li>
+<li>Kontroller at B og P har samme utseende for korreksjon og
+fravik.</li>
+<li>Åpne Analyse og sammenlign med begge demosett eller en tidligere
+sesjon. Alle seks grafer skal beholde valget og bruke samme datoformat
+og skriftstørrelse. Gjæring viser tre kompakte målegrafer.</li>
+<li>Generer rapport og sammenlign grafene med Analyse. Målinger,
+manuelle punkter, plan, markører, gap og kriteriegrenser skal samsvare
+ved samme DB-tid.</li>
+<li>Importer et eldre SQLite-par og en eldre template alene. Begge skal
+gi de seks grafdefinisjonene uten å påvirke aktiv gjæring.</li>
+</ol>
+<p>Denne måltesten er åpen til den er gjennomført i faktisk
+HA/Node-RED-miljø.</p>
+<p>P24r14 kontrollerer i tillegg avgrenset lesing, uendret poll,
+historisk datavekst og samtidige lesere/skrivere i
+<code>test-p24r15-performance-live.js</code>. Hele baseline-oversikten
+sammenlignes separat; se TEST-RESULTS.md. CPU og visuell HA-test på
+gangpc står åpne.</p>
+<h2 id="p24r15--historisk-forløp-og-bp-tid">P24r15 – historisk forløp og
+B/P-tid</h2>
+<p>TEST-FUNC-022 kjøres med tests/test-p24r15-historical-live.js mot
+isolert MariaDB 12.3.3. Den prøver ekte leverte NR-funksjoner, fem
+importbolker, minuttpresis slutt, manglende videre poll etter omstart,
+avvisning av overskridelse, manglende/fulle timer, B/P-etterregistrering
+og korrigering av begge tilstøtende varigheter. Senere målinger, fast
+vurderingsklokke, faktisk dashboard og SQLite-par med
+SHA/rapport/reimport prøves.</p>
+<p>Målmiljøet må i TEST-UAT-014 i tillegg prøves med faktiske HA
+Recorder-data: historisk fra–til med siste deltime, korrigert B/P-start,
+manuell målerunde med korrigert måletid, kriterieavvik og eksport.
+Kontroller at ingen tidsakse vokser neste dag og at Node-RED-omstart
+ikke starter ny HA-import. Disse måltestene registreres som not_run frem
+til faktisk utførelse.</p>
+<h2 id="måltest-av-diagnostikk-og-gjenoppkobling">Måltest av diagnostikk
+og gjenoppkobling</h2>
+<p>TEST-UAT-014 omfatter også: importer en eldre periode med bare
+timesstatistikk; forvent ferdig behandlet periode med synlig
+datagrunnlagsadvarsel og ingen falsk feil for HISTORISK. Kontroller at
+counts/tidsgrenser stemmer med DB-eksporten. Koble HA fra og til mens
+Node-RED kjører; forvent dedupliserte ventende publiseringer, gjenlesing
+fra DB og lukking først etter faktisk vellykket HA-utgang. Kontroller at
+redigerbare input ikke resettes av denne retry-banen. Dette krever
+faktisk Docker/HA og er ikke utført av native testen.</p>
+</body>
+</html>

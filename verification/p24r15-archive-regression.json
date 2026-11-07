@@ -1,0 +1,20 @@
+{
+  "application_version": "2026.11.07-1",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "status": "pass",
+  "checks": [
+    "209 original IPL values, pressure, hourly segments and P5/B4 history",
+    "normalized SQLite pair, manifest match and complete measurement history",
+    "legacy SQLite v1 layout converts and imports exact existing pitch facts; missing pitch facts reject",
+    "legacy raw graph policies convert through DB catalog for session and template-only imports; ambiguous IDs roll back",
+    "import during real measurement writes; active session unchanged; atomic historical release; own copy and idempotence",
+    "late rollback, wrong pair rejection, unique template imports and imported comparison/date labels",
+    "12 concurrent active reports and replay without duplicate primary keys",
+    "chunk upload checksum, actual Node-RED adapter, palette driver and worker preview",
+    "one archive catalogue from manifests; missing/mismatched SHA warnings; import still succeeds",
+    "active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection"
+  ],
+  "deleted_rows": 605,
+  "active_export_sha256": "2c89e072bf4935eca1d95d9e838b904a3dda3c387b830fdc6f1722368c290944",
+  "concurrent_snapshot_writes": 159
+}

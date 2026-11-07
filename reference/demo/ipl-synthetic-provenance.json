@@ -1,0 +1,240 @@
+{
+  "profile_id": "ipl-synthetic-p17r12",
+  "name": "2026-05-29 IPL",
+  "source_zip": "gjaeringsassistent-0.1.0-prototype17-r12.zip",
+  "source_sha256": "188a6a7af90e95554dec174dce20d50f9bdce7a9af8b729eb679ef06a7400156",
+  "fixture": "gjaeringsassistent-0.1.0-prototype17-r12/tests/fixtures/sample-active-session.json",
+  "measurement_count": 209,
+  "interval_seconds": 3600,
+  "span_seconds": 777600,
+  "original_session": {
+    "session_id": "demo-w3470-20260801",
+    "batch_name": "Demo – W-34/70 pils",
+    "status": "active",
+    "created_at": "2026-08-01T07:30:00Z",
+    "pitched_at": "2026-08-01T10:00:00Z",
+    "original_pitched_at": "2026-08-01T10:00:00Z",
+    "manual_pitched_at": null,
+    "activity_started_at": "2026-08-02T01:00:00Z",
+    "og": 1.049,
+    "expected_fg_min": 1.008,
+    "expected_fg_max": 1.011,
+    "volume_l": 150,
+    "yeast": "Fermentis SafLager W-34/70",
+    "pitch_mode": "dry",
+    "active_process_id": "P5",
+    "active_process_name": "Varm sluttfase mot 14 °C",
+    "active_process_order": 5,
+    "recommended_process_id": "P6",
+    "recommended_process_name": "Modning og metabolsk opprydding",
+    "data_quality": "good",
+    "attention": true,
+    "last_measurement_at": "2026-08-10T10:00:00Z"
+  },
+  "original_events": [
+    {
+      "at": "2026-08-01T10:00:00Z",
+      "type": "pitch",
+      "label": "200 g W-34/70 tilsatt",
+      "severity": "info"
+    },
+    {
+      "at": "2026-08-02T01:00:00Z",
+      "type": "activity",
+      "label": "Aktivitet registrert",
+      "severity": "info"
+    },
+    {
+      "at": "2026-08-03T09:00:00Z",
+      "type": "biological_phase",
+      "label": "Aktiv hovedgjæring automatisk registrert",
+      "severity": "info"
+    },
+    {
+      "at": "2026-08-05T16:00:00Z",
+      "type": "data_gap",
+      "label": "Datagap i Tilt-serien",
+      "severity": "warning"
+    },
+    {
+      "at": "2026-08-08T10:00:00Z",
+      "type": "action",
+      "label": "Temperaturheving registrert",
+      "severity": "info"
+    },
+    {
+      "at": "2026-08-10T09:00:00Z",
+      "type": "manual_sg",
+      "label": "Manuell SG 1.012",
+      "severity": "info"
+    }
+  ],
+  "process_timeline": [
+    {
+      "timeline_id": "P1|2026-08-01T10:00:00Z",
+      "process_id": "P1",
+      "process_order": 1,
+      "name": "Klargjøring, pitch og temperaturstabilisering",
+      "original_started_at": "2026-08-01T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-01T10:00:00Z",
+      "ended_at": "2026-08-02T10:00:00Z",
+      "duration_hours": 24.0,
+      "source": "manual"
+    },
+    {
+      "timeline_id": "P2|2026-08-02T10:00:00Z",
+      "process_id": "P2",
+      "process_order": 2,
+      "name": "Kald hovedgjæring",
+      "original_started_at": "2026-08-02T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-02T10:00:00Z",
+      "ended_at": "2026-08-07T10:00:00Z",
+      "duration_hours": 120.0,
+      "source": "manual"
+    },
+    {
+      "timeline_id": "P3|2026-08-07T10:00:00Z",
+      "process_id": "P3",
+      "process_order": 3,
+      "name": "Første temperaturøkning mot 10 °C",
+      "original_started_at": "2026-08-07T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-07T10:00:00Z",
+      "ended_at": "2026-08-08T10:00:00Z",
+      "duration_hours": 24.0,
+      "source": "manual"
+    },
+    {
+      "timeline_id": "P4|2026-08-08T10:00:00Z",
+      "process_id": "P4",
+      "process_order": 4,
+      "name": "Videre temperaturøkning mot 12 °C",
+      "original_started_at": "2026-08-08T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-08T10:00:00Z",
+      "ended_at": "2026-08-09T10:00:00Z",
+      "duration_hours": 24.0,
+      "source": "manual"
+    },
+    {
+      "timeline_id": "P5|2026-08-09T10:00:00Z",
+      "process_id": "P5",
+      "process_order": 5,
+      "name": "Varm sluttfase mot 14 °C",
+      "original_started_at": "2026-08-09T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-09T10:00:00Z",
+      "ended_at": null,
+      "duration_hours": null,
+      "source": "manual"
+    }
+  ],
+  "biological_timeline": [
+    {
+      "phase_id": "B1",
+      "phase_order": 1,
+      "name": "Inokulert og tilpasning",
+      "automatic_started_at": "2026-08-01T10:00:00Z",
+      "original_started_at": "2026-08-01T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-01T10:00:00Z",
+      "ended_at": "2026-08-02T01:00:00Z",
+      "source": "automatic",
+      "timing_source": "automatic"
+    },
+    {
+      "phase_id": "B2",
+      "phase_order": 2,
+      "name": "Aktivitetsstart og tidlig vekst",
+      "automatic_started_at": "2026-08-02T01:00:00Z",
+      "original_started_at": "2026-08-02T01:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-02T01:00:00Z",
+      "ended_at": "2026-08-03T09:00:00Z",
+      "source": "automatic",
+      "timing_source": "automatic"
+    },
+    {
+      "phase_id": "B3",
+      "phase_order": 3,
+      "name": "Aktiv hovedgjæring",
+      "automatic_started_at": "2026-08-03T09:00:00Z",
+      "original_started_at": "2026-08-03T09:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-03T09:00:00Z",
+      "ended_at": "2026-08-07T10:00:00Z",
+      "source": "automatic",
+      "timing_source": "automatic"
+    },
+    {
+      "phase_id": "B4",
+      "phase_order": 4,
+      "name": "Sen gjæring",
+      "automatic_started_at": "2026-08-07T10:00:00Z",
+      "original_started_at": "2026-08-07T10:00:00Z",
+      "manual_started_at": null,
+      "started_at": "2026-08-07T10:00:00Z",
+      "ended_at": null,
+      "source": "automatic",
+      "timing_source": "automatic"
+    }
+  ],
+  "original_observations": [
+    {
+      "observation_id": "observation-demo-ramp-10",
+      "recorded_at": "2026-08-07T10:00:00Z",
+      "original_recorded_at": "2026-08-07T10:00:00Z",
+      "manual_recorded_at": null,
+      "cooler_setpoint_c": 10.0,
+      "note": "Temperaturtiltak P3"
+    },
+    {
+      "observation_id": "observation-demo-ramp-12",
+      "recorded_at": "2026-08-08T10:00:00Z",
+      "original_recorded_at": "2026-08-08T10:00:00Z",
+      "manual_recorded_at": null,
+      "cooler_setpoint_c": 12.0,
+      "note": "Temperaturtiltak P4"
+    },
+    {
+      "observation_id": "observation-demo-ramp-14",
+      "recorded_at": "2026-08-09T10:00:00Z",
+      "original_recorded_at": "2026-08-09T10:00:00Z",
+      "manual_recorded_at": null,
+      "cooler_setpoint_c": 14.0,
+      "note": "Temperaturtiltak P5"
+    },
+    {
+      "observation_id": "observation-demo-001",
+      "recorded_at": "2026-08-10T09:00:00Z",
+      "original_recorded_at": "2026-08-10T09:00:00Z",
+      "manual_recorded_at": null,
+      "measurement_method": "refractometer",
+      "measured_sg": 1.026,
+      "sample_temperature_c": null,
+      "calibration_temperature_c": null,
+      "corrected_sg": 1.012,
+      "estimated_abv_percent": 4.94,
+      "estimated_finished_abv_percent": 5.26,
+      "manual_temperature_c": 14.1,
+      "pressure_bar": 0.0,
+      "cooler_setpoint_c": 14.0,
+      "cooler_calibration_offset_c": 0.2,
+      "acetaldehyde_level": 1,
+      "diacetyl_level": 1,
+      "wort_like_level": 1,
+      "sulfur_so2_level": 1,
+      "sulfur_h2s_level": 0,
+      "clarity_level": 2,
+      "settling_yeast_level": 2,
+      "settling_minutes": 30,
+      "user_conclusion": "uncertain",
+      "status": "active",
+      "status_changed_at": null,
+      "process_gate_status": "not_evaluated",
+      "note": "Syntetisk målesett – rediger og lagre for funksjonstest"
+    }
+  ]
+}

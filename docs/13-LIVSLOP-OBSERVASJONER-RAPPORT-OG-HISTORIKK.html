@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>13 – Livsløp, observasjoner, rapport og historikk</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">13 – Livsløp, observasjoner, rapport og historikk</h1>
+</header>
+<h1 id="13--livsløp-observasjoner-rapport-og-historikk">13 – Livsløp,
+observasjoner, rapport og historikk</h1>
+<p><strong>Rolle:</strong> Normativ funksjonell modell for
+session-livsløp, observasjoner, rapport/eksport og historikk.</p>
+<h2 id="1-operativt-livsløp">1. Operativt livsløp</h2>
+<p>Operatørflaten skiller mellom:</p>
+<ul>
+<li><code>idle</code> – ingen unreleased session;</li>
+<li><code>configured</code> – pre-Start draft er lagret, men ingen
+session er opprettet;</li>
+<li><code>active</code> – gjæring pågår;</li>
+<li><code>completed</code> – gjæringen er manuelt avsluttet, men session
+er ennå ikke operativt frigitt.</li>
+</ul>
+<p><code>draft</code> er ikke en persistent session-lifecycle.
+<code>Gjør klar for ny gjæring</code> append-er et release-faktum slik
+at historisk session beholdes samtidig som operativ current session
+forsvinner.</p>
+<h2 id="2-start-og-frozen-grunnlag">2. Start og frozen grunnlag</h2>
+<p>Start validerer valgt publisert template og persisted startdraft og
+oppretter session atomisk. Pitchtid og første observation er eksplisitte
+fakta. Template/regler, replay-policy, metric/outputdomener,
+analysemetadata og målekilde-/valideringsgrunnlag fryses til
+session.</p>
+<p>For reell session opprettes målekildebinding og historikkimport fra
+valgt <code>Start fra</code>. Startstatus skal vise
+mottatt/validering/import/fremdrift/sluttstatus som read-model, men
+MariaDB-session/importcursor er autoritet.</p>
+<h2 id="3-observasjoner">3. Observasjoner</h2>
+<p>Manuelle observation rounds er atomiske komplette målesett. Start
+lagrer første relevante observasjon. Senere målesett lagres med
+eksplisitt operatørhandling.</p>
+<p>Tidskorrigering/deaktivering oppretter ny revision og omskriver ikke
+historisk verdi. SG-only gjelder tetthet. Sensoriske 0–5-felt følger
+0=ønsket/ingen avvik, 5=størst avvik.</p>
+<h2 id="4-biologi-og-prosesstrinn">4. Biologi og prosesstrinn</h2>
+<p>Biologiske visits/transitions kan etableres automatisk fra
+sekvensielle kriterier. Operatøren kan korrigere tillatte
+kriterieparametere og registrere bekreftet kriteriefravik med valgfritt
+notat. Evaluatoren utleder faseovergang fra dette grunnlaget; tidligere
+rå vurdering beholdes. Prosesstrinn har separat
+visit-/transitionhistorikk. Ordinære P-overganger skjer ved operatørens
+<code>Neste</code>/<code>Tilbake</code>; historisk replay kan bare
+autoetablere steg som frozen policy eksplisitt tillater.</p>
+<p>Kriterium oppfylt/readiness og faktisk P-transition er separate
+fakta. P3 kan derfor være <code>ready</code> samtidig som P2 fortsatt er
+aktivt.</p>
+<h2 id="5-avslutt-gjæring">5. Avslutt gjæring</h2>
+<p><strong>Avslutt gjæring</strong> er en eksplisitt manuell handling.
+Åpne visits lukkes historikkbevarende, lifecycle går til
+<code>completed</code>, og nye aktive-session-målinger skal ikke
+aksepteres.</p>
+<p>Sluttnotat er ikke obligatorisk; notater er egne fakta.</p>
+<h2 id="6-aktiv-rapport">6. Aktiv rapport</h2>
+<p>Under aktiv session kan operatøren generere et HTML-snapshot uten
+lifecycle-endring. Rapporten registreres som <code>active_report</code>
+og bygges fra MariaDB/read-models.</p>
+<p>Rapporten skal dekke relevante sammendrag, hele operative grafsettet
+(SG, temperatur, trykk og deklarerte analysegrafer), B/P-forløp,
+manuelle målinger/sensorikk, kriteriebevis, korreksjoner/fravik,
+transitions, datagap, kronologi, notater og operatørhandlinger. Grafene
+bruker samme DB-eide serier, metadata-bestemte bånd der meningsfullt,
+dynamiske aksemetadata og relevante mål-/kriteriegrenser som
+dashboardet. Renderer kan tegne HTML/SVG-layout, men skal ikke beregne
+domenedata, etablere egne aksegrenser eller skjule gap med
+interpolasjon.</p>
+<p><code>p18-r5</code> er funksjonell referanse for rapportdekning, ikke
+teknisk implementasjonskilde.</p>
+<h2 id="7-completed-eksport-og-sluttrapport">7. Completed eksport og
+sluttrapport</h2>
+<p>Completed session kan eksporteres til integritetsverifisert arkiv med
+frozen template/sessiongrunnlag, normaliserte data, relevante logger og
+manifest. HTML-sluttrapport er lesbar presentasjon; SQLite-paret er
+filutveksling og arkiv; importert historikk ligger i MariaDB.</p>
+<p>For reell session krever <strong>Gjør klar</strong> verifisert
+completed-arkiv for samme session. Demo kan være eksplisitt unntatt
+denne sikkerhetsgaten.</p>
+<h2 id="8-gjør-klar-for-ny-gjæring">8. Gjør klar for ny gjæring</h2>
+<p>Handlingen append-er release-faktum. Historiske sessiondata,
+rapporter, eksport og teknisk historikk beholdes. Mutable inputdraft kan
+klargjøres/nullstilles for neste session.</p>
+<h2 id="9-historisk-rapport-og-sammenligning">9. Historisk rapport og
+sammenligning</h2>
+<p>Historiske rapporter er read-only og skal aldri aktivere/mutere
+historisk session. Analyse kan sammenligne gjæringer justert etter tid
+siden pitch. Importerte gjæringer er tilgjengelige etter innlesing til
+MariaDB; arkivfanen styrer synlighet i sammenligningslisten.</p>
+<h2 id="10-restart">10. Restart</h2>
+<p>Node-RED-/serverrestart rekonstruerer nødvendig nåtilstand fra
+MariaDB. Aktiv reell session gjenopptar import fra persisted
+<code>last_import_cutoff_at</code>; browser/HA-state/runtimefiler skal
+ikke være restoreautoritet.</p>
+<h2 id="11-historisk-catch-up--live">11. Historisk catch-up → LIVE</h2>
+<p>Catch-up bruker samme 5-minutters-, evaluator- og analysegrunnlag som
+live, men kjøres kronologisk mot persisted importhorizon. Når importen
+når LIVE, fortsetter inkrementell femminuttersimport og Systemkontroll
+refreshes slik at målekilde/sessionstatus viser gjeldende DB-fakta.</p>
+<h2 id="12-filverifisert-sluttarkiv-og-gjenopptak">12. Filverifisert
+sluttarkiv og gjenopptak</h2>
+<p>Runtime registrerer først <code>session_export_attempts</code> med
+DB-generert identitet, sekvens og tidspunkt. Et konsistent
+MariaDB-snapshot skrives som to normaliserte SQLite-filer med samme
+eksportprefix. Begge kontrolleres og leses tilbake; HTML bygges fra den
+felles rapportgeneratoren. Bare kontrollerte filer kan gi append-only
+<code>session_exports</code> med status <code>verified</code>.
+Registreringen inneholder filstier, byteantall og SHA-256; arkivinnhold
+sendes ikke som SQL-parameter.</p>
+<p>Hvert forsøk har egne filnavn, slik at tidligere arkiv ikke
+overskrives. Historikklenker kommer fra de registrerte faktiske
+filstiene. Fil-/byggfeil gir <code>failed</code> og konkret feiltekst.
+Et forsøk som avbrytes ved runtime-/DB-bortfall beholdes med manglende
+fullføringskvittering. <code>v_session_archive_status</code> er
+autoritet for status, og Systemkontroll skiller manglende/mislykket
+sluttarkiv fra normal pågående arkivering.</p>
+<p><strong>Forsøk arkivering på nytt</strong> lager et nytt forsøk for
+avsluttet gjæring som mangler verifisert arkiv. Det endrer ingen
+B/P-visits, målinger eller lifecycle-fakta. <strong>Gjør klar</strong>
+krever fortsatt verifisert arkiv for reell gjæring. Ved databasebortfall
+kan resultatet ikke registreres mens DB er utilgjengelig; startfaktumet
+gjør dette synlig etter gjenoppkobling.</p>
+<h2 id="felles-rapport-og-korrekt-avslutningsvisning">Felles rapport og
+korrekt avslutningsvisning</h2>
+<p>Aktiv rapport og sluttrapport bruker samme
+<code>tools/report_renderer.js</code> og samme sessionavgrensede
+SQL-read-model i <code>tools/report_queries.sql</code>. Rapporten følger
+hele sessionen; dashboardets tidsvindu eller sammenligningsvalg endrer
+ikke rapportens akser eller innhold. Begge inkluderer HA-timesdata,
+kildemerking og kronologisk oversikt over livsløp, B/P-overganger,
+målesett/revisjoner, tidskorrigeringer, kriterieendringer/fravik,
+notater, operatørhandlinger, eksporthendelser og driftsmeldinger.
+Avslutning starter eksporten, så bekreftelsen på akkurat denne eksporten
+registreres etter at rapporten er generert.</p>
+<p>Resultatdekoding godtar både vanlige SELECT-rader og
+CALL-resultatsett. Avsluttet session publiseres fortsatt som
+<code>completed</code> mens arkivering pågår; den skal ikke vises som
+nytt templatevalg. Arkiveringsstart svarer med allerede verifisert,
+pågår, startet eller ingen avsluttet session, ut fra MariaDB. Et pending
+forsøk kan gjenopptas etter restart uten at livsløpet avsluttes en gang
+til.</p>
+<h2 id="sqlite-arkiver-fra-p24r10">SQLite-arkiver fra p24r10</h2>
+<p>Fanen <strong>Template og arkiv</strong> har et eget arkivkort. Velg
+<code>-template.sqlite</code> og, ved gjæringsimport, tilhørende
+<code>-gjaering.sqlite</code>. Kontroller forhåndsvisningen før import.
+Filenes format, skjema, integritet, transportkontrollsum og
+sammenhørende manifest kontrolleres. Domene-FK-er og CHECK-er håndheves
+under selve importtransaksjonen. Feil vises i arkivkortet og ruller
+tilbake både template og sesjon.</p>
+<p>Filene navngis
+<code>session-&lt;sessionid&gt;-export-&lt;exportid&gt;-gjaering.sqlite</code>
+og
+<code>session-&lt;sessionid&gt;-export-&lt;exportid&gt;-template.sqlite</code>.
+Template-filen inneholder én original publisert versjon, med nødvendig
+registergrunnlag. Gjæringsfilen har normaliserte målinger, timedata,
+frozen grunnlag, vurderinger, korreksjoner, observasjoner,
+overgangshistorikk og beregnede fakta. Den inneholder ikke mutable
+UI-valg eller globale systemfeil. Kildeversionens ID bevares som
+kildeproveniens; andre templates i en versjonskjede importeres ikke.</p>
+<p>Importert original er skrivebeskyttet i sin egen kategori. Bruk
+<strong>Opprett ny template fra eksisterende versjon</strong> med ny ID
+og navn for å lage en egen redigerbar kopi. Samme importoperasjon
+gjenbruker sin kvittering; samme gjæringsarkivpar importeres én gang.
+Separate template-importer får egne unike IDs også når navn og
+kildeversjon er like.</p>
+<p>Import er tillatt mens gjæring pågår. Filkontroll og SQLite kjører i
+en worker thread; en egen forbindelse til den samme MariaDB-instansen
+eier hele importtransaksjonen. Den ordinære motorens mysql-node og
+autoritative dataflyt beholdes. Dette er en avgrenset
+filoverføringsadapter, ikke en ny beregnings- eller rapportmotor. Ingen
+manuell kø, fil-lås eller lokal domenestate innføres.</p>
+<p>Midlertidig filopplasting går som autentiserte HA-hendelser med 64
+KiB deler og DB-kvittering. Disse byte-delene er transport, ikke
+domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir
+tilgjengelig i sammenligningslisten etter import; <strong>Skjul fra
+sammenligning</strong> legger til en synlighetshendelse og sletter ingen
+data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater
+avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.</p>
+<p>Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen
+bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn,
+men gir ingen garanti om en bestemt komprimeringsfaktor. Alle
+eksisterende målepunkter beholdes i arkivet.</p>
+<h2 id="p24r11-samlet-import-og-aktiv-eksport">P24r11 samlet import og
+aktiv eksport</h2>
+<p>Øverst i Template og arkiv velges SQLite-filene og deres SHA-filer i
+ett filfelt. Backend leser template-navn og versjon fra filinnhold og
+parer etter eksport-ID/session-ID/version-ID. Velg arkivnavn, deretter
+<strong>kun template</strong> eller <strong>template og
+gjæringsdata</strong>. En manglende gjæringsfil gjør bare template
+tilgjengelig. Begge importtypene oppretter en unik importert
+original.</p>
+<p>Eksport av aktiv gjæring er tilgjengelig i samme kort. SQLite-par og
+HTML bygges fra samme konsistente database-snapshot, med tidspunkt og
+merking aktivt øyeblikksbilde. Gjæringen fortsetter. Import av et slikt
+sett blir separat frigitt historikk for sammenligning og overtar aldri
+aktiv drift.</p>
+<p>Hver SQLite-fil får en sidefil med navnet
+<code>&lt;fil&gt;.sqlite.sha</code>, SHA-256 og filnavn. Manglende,
+uleselig eller avvikende sidefil vises som advarsel i forhåndsvisning og
+arkivloggen, men import er tillatt. Skadde eller uvedkommende
+SQLite-filer, feil skjema og feil eksportpar avvises. Intern
+transportkontrollsum valideres uavhengig av sidefilen.</p>
+<p><strong>Slett gjæring fra MariaDB</strong> fjerner hele den
+historiske sesjonen etter bekreftelse. En ubrukt importert
+originaltemplate kan tas med via avkrysning. Importerte templates vises
+separat med bruksreferanser og egen sletteknapp når de er ubrukte.</p>
+</body>
+</html>

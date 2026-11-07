@@ -1,0 +1,23 @@
+{
+  "application_version": "2026.11.07-1",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "plugin_version": "0.80.3",
+  "status": "pass",
+  "target_ha_uat": "not_run",
+  "checks": [
+    "processed empty period remains explicit missing data rather than successful data coverage",
+    "reported historical-only case: ready import, 215 hourly records, zero detail and DB-owned coverage warning without false error",
+    "real system-check query/consumer obeys DB policy changes and fails visibly for unknown state policy or missing DB result",
+    "same coverage appears unchanged in the HA source and actual bounded overview",
+    "transport failures are deduplicated while open, cannot recurse, wait for plugin telemetry and reread current DB facts rather than queued domain payloads",
+    "actual plugin 0.80.3 controller rejects disconnected/unloaded integration and only successful node output clears the matching DB issue once",
+    "payload defects remain real errors and a failed technical writer does not recursively publish through the same broken path"
+  ],
+  "source_fingerprints": {
+    "sql/10-runtime-schema.sql": "b375a6b4be88b47ed5ec7a13917fc3a0907fde28d6397e1820d35f51f18ab013",
+    "sql/20-views.sql": "6ef02c7bf196f03d4f74811998dd3327a813393de87b0a2c80aef50f906a8a69",
+    "sql/21-system-metadata-seed.sql": "4f329573963c4dfb49df465c6dca5d7f85db7609dfbf95eecc6258557f47e362",
+    "nodered/flows.template.json": "22df1c27c29f77dbbea8396bb89ec211374aba0ec08ea1cac9fdae4302f88199",
+    "tests/test-p24r16-system-live.js": "d65cdb286c9abe70bc1ec9e1556ce95195250d3534213f9cc525e11cf5e28d3d"
+  }
+}

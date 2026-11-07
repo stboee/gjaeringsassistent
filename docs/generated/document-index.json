@@ -1,0 +1,173 @@
+{
+  "generated_from": "docs/*.md",
+  "documents": [
+    {
+      "file": "00-DOKUMENTKART-OG-STATUS.md",
+      "doc_id": "DOC-00",
+      "role": "governance",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "00 – Dokumentkart og status"
+    },
+    {
+      "file": "01-KRAV-FELLES.md",
+      "doc_id": "DOC-01",
+      "role": "requirements",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "01 – Krav: felles system"
+    },
+    {
+      "file": "02-KRAV-MOTOR-OG-INTEGRASJON.md",
+      "doc_id": "DOC-02",
+      "role": "requirements",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "02 – Krav: gjæringsmotor og integrasjon"
+    },
+    {
+      "file": "03-KRAV-DASHBOARD.md",
+      "doc_id": "DOC-03",
+      "role": "requirements",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "03 – Krav: Home Assistant-dashboard"
+    },
+    {
+      "file": "04-KRAV-INSTALLER.md",
+      "doc_id": "DOC-04",
+      "role": "requirements",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "04 – Krav: installer og release"
+    },
+    {
+      "file": "05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+      "doc_id": "DOC-05",
+      "role": "contract",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "05 – Frontend- og integrasjonskontrakt"
+    },
+    {
+      "file": "06-DATAMODELL-OG-PERSISTENS.md",
+      "doc_id": "DOC-06",
+      "role": "architecture",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "06 – Datamodell og persistens"
+    },
+    {
+      "file": "07-SYSTEMARKITEKTUR-OG-DATAFLYT.md",
+      "doc_id": "DOC-07",
+      "role": "architecture",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "07 – Systemarkitektur og dataflyt"
+    },
+    {
+      "file": "08-DRIFTSVEILEDNING.md",
+      "doc_id": "DOC-08",
+      "role": "operations-guide",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "08 – Driftsveiledning"
+    },
+    {
+      "file": "09-AKSEPTANSETEST.md",
+      "doc_id": "DOC-09",
+      "role": "verification",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "09 – Akseptansetest"
+    },
+    {
+      "file": "10-REGEL-OG-EVALUERINGSMODELL.md",
+      "doc_id": "DOC-10",
+      "role": "rule-model",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "10 – Regel- og evalueringsmodell"
+    },
+    {
+      "file": "11-TEMPLATE-OG-EDITOR-MODELL.md",
+      "doc_id": "DOC-11",
+      "role": "template-model",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "11 – Template-livsløp og editormodell"
+    },
+    {
+      "file": "12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md",
+      "doc_id": "DOC-12",
+      "role": "transaction-contract",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "12 – Node-RED–MariaDB operasjons- og transaksjonskontrakt"
+    },
+    {
+      "file": "13-LIVSLOP-OBSERVASJONER-RAPPORT-OG-HISTORIKK.md",
+      "doc_id": "DOC-13",
+      "role": "lifecycle",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "13 – Livsløp, observasjoner, rapport og historikk"
+    },
+    {
+      "file": "14-AKTIVE-BESLUTNINGER.md",
+      "doc_id": "DOC-14",
+      "role": "decisions",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "14 – Aktive beslutninger"
+    },
+    {
+      "file": "15-AAPENT-ARBEID.md",
+      "doc_id": "DOC-15",
+      "role": "open-work",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "15 – Åpent arbeid"
+    },
+    {
+      "file": "16-W3470-FAGGRUNNLAG-OG-PROSESSMODELL.md",
+      "doc_id": "DOC-16",
+      "role": "profile-model",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "16 – W-34/70 faggrunnlag og prosessmodell"
+    },
+    {
+      "file": "17-ALE-TEMPLATER-OG-FAKTA.md",
+      "doc_id": "DOC-17",
+      "role": "domain_reference",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "17 – Aletemplater og faggrunnlag"
+    },
+    {
+      "file": "18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.md",
+      "doc_id": "DOC-18",
+      "role": "implementation-status",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "18 – Implementasjons- og verifikasjonsstatus"
+    },
+    {
+      "file": "19-TEKNISK-FANE-OG-DRIFTSMELDINGER.md",
+      "doc_id": "DOC-19",
+      "role": "diagnostics",
+      "status": "normative",
+      "source_format": "markdown",
+      "title": "19 – Teknisk diagnostikk og Systemkontroll"
+    },
+    {
+      "file": "index.md",
+      "doc_id": "DOC-INDEX",
+      "role": "entrypoint",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "Gjæringsassistent – gjeldende dokumentasjon"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>17 – Aletemplater og faggrunnlag</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">17 – Aletemplater og faggrunnlag</h1>
+</header>
+<h1 id="17--aletemplater-og-faggrunnlag">17 – Aletemplater og
+faggrunnlag</h1>
+<p>P24r7 leverer egne publiserte profiler <code>s04-cool@1.0</code> og
+<code>m42-cool@1.0</code>. Temperatur, gjærmengde, forventet utgjæring
+og sluttkriterier er template-/sessiondata; motoren har ingen
+gjærsort-spesialkode.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Profil</th>
+<th>Produsentområde</th>
+<th>Hovedgjæring</th>
+<th>Ramp P3/P4/P5</th>
+<th>Forventet utgjæring</th>
+<th>Startgrunnlag ved 150 L, OG 1,050</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SafAle S-04</td>
+<td>18–26 °C</td>
+<td>18 °C</td>
+<td>19 → 20 → 20 °C</td>
+<td>74–82 %</td>
+<td>120 g fersk tørrgjær</td>
+</tr>
+<tr class="even">
+<td>M42 New World Strong Ale</td>
+<td>16–22 °C</td>
+<td>17 °C</td>
+<td>18 → 19 → 20 °C</td>
+<td>77–82 %</td>
+<td>70 g fersk tørrgjær</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Produsentfakta:</strong> Fermentis oppgir ideelt 18–26 °C og
+50–80 g/hL. Ved 150 L = 1,5 hL blir dette 75–120 g. Fermentis' egen Tips
+and Tricks-brosjyre oppgir S-04-utgjæring 74–82 %. M42-produktsiden
+oppgir 16–22 °C, 77–82 % og én 10 g-pose per opptil 23 L; 150/23 = 6,52
+poser, avrundet til 7 poser = 70 g. Produsentens håndbok angir minst to
+10 g-poser/23 L ved ale-OG over 1,050: 150/23 × 2 = 13,04 poser,
+avrundet til 14 poser = 140 g. For 250 g-pakninger følges etikettens
+dose, slik håndboken uttrykkelig presiserer. Mengden må justeres manuelt
+mot faktisk volum/OG/pakning; dette er ikke en automatisk
+doseberegner.</p>
+<p><strong>Prosjektets prosessvalg:</strong> Hold hovedgjæringen stabil
+på den kjølige siden og øk gradvis til 20 °C når B-fase og
+temperaturgrunnlag tillater det. Rampene, B-grensene, 75 % vindusdekning
+og 21-dagers planramme er prosjektvalg, ikke produsentgarantier.
+Forventet utgjæringsområde påvirkes også av vørterens gjærbarhet. Det er
+ikke en garanti om oppnådd FG eller et ferdigsignal.</p>
+<p>P1/P2 kan replayes ved historisk import; P3 og videre krever manuell
+bekreftelse. Trykkmål er 0 bar gjennom aktiv hoved-/sluttgjæring.
+Positivt trykk ved kaldkrasj er et eksplisitt operatørmål; programmet
+regulerer ingen ventil. Tørrhumling (P7) er deaktivert som standard og
+aktiveres i en draft når oppskriften krever det.</p>
+<p>Før kaldkrasj kreves B6, SG-stabilitet i et 48-timersvindu med minst
+36 timers sammenhengende data, fersk manuell utgjæringskontroll samt
+diacetyl og acetaldehyd på nivå 0. Høy flokkulering, synlig klaring
+eller 21 forløpte dager erstatter ingen av disse kontrollene. Ved avvik
+brukes den ordinære eksplisitte kriteriefraviksbanen, med bevart
+evidens. Ved tørrhumling tas ny stabilitets-/smakskontroll for mulig hop
+creep. M42-håndboken anbefaler fersk tørrgjær fremfor
+høsting/repitch.</p>
+<p>Kilder lest 08.10.2026:</p>
+<ul>
+<li><a
+href="https://fermentis.com/en/product/safale-s%E2%80%9104/">Fermentis
+S-04 produsentside</a>.</li>
+<li><a
+href="https://www.castlemalting.com/Presentations/Brochure_Fermentis_Tips_and_Tricks_EN.pdf">Fermentis
+Tips and Tricks, produsentens brosjyre hos Castle Malting, trykt s.
+32/38</a>.</li>
+<li><a
+href="https://mangrovejacks.com/products/new-world-strong-ale-m42-yeast-10g">Mangrove
+Jack’s M42 produsentside</a>.</li>
+<li><a
+href="https://help.mangrovejacks.com/hc/en-us/article_attachments/13551379984785">Mangrove
+Jack’s offisielle håndbok, s. 4–5 og M42-profil</a>.</li>
+</ul>
+</body>
+</html>

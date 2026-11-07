@@ -1,0 +1,65 @@
+name: Kontroller og publiser utgave
+
+on:
+  push:
+    branches: [main]
+    paths: [VERSION]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Installer dokumentbygger
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends pandoc
+      - name: Bygg og kontroller samme kilde
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          python3 tools/build-package.py --zip --source-commit "$GITHUB_SHA"
+          bash tools/run-tests.sh
+          python3 tools/build-package.py --zip --source-commit "$GITHUB_SHA"
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os, zipfile
+          version=Path('VERSION').read_text().strip()
+          archive=Path('dist')/f'gjaeringsassistent-{version}.zip'
+          assert archive.with_name(archive.name+'.sha256').read_text().split()[0]==hashlib.sha256(archive.read_bytes()).hexdigest()
+          with zipfile.ZipFile(archive) as z:
+              assert z.testzip() is None
+              build=json.loads(z.read(f'gjaeringsassistent-{version}/BUILD-INFO.json'))
+              assert build['version']==version and build['source_commit']==os.environ['GITHUB_SHA']
+          PY
+      - name: Publiser tag og GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="$(cat VERSION)"
+          title="$(python3 -c 'from pathlib import Path; v=Path("VERSION").read_text().strip(); t=Path("RELEASE-NOTES.md").read_text().splitlines()[0].removeprefix("# "); assert t.startswith(v+" – "); print(t)')"
+          gh release create "v$version" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "$title" \
+            --notes-file RELEASE-NOTES.md --latest \
+            "dist/gjaeringsassistent-$version.zip" \
+            "dist/gjaeringsassistent-$version.zip.sha256"

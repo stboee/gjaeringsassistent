@@ -1,0 +1,73 @@
+{
+  "application_version": "2026.11.07-1",
+  "server_version": "/workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
+  "sql_transport": "native isolated MariaDB bootstrap; actual query rows passed to shipping Function source",
+  "variable_query": "SELECT @@read_only AS read_only, @@global.read_only AS global_read_only, CASE WHEN @@global.read_only='OFF' THEN 1 ELSE 0 END AS database_writable, UNIX_TIMESTAMP() AS database_epoch",
+  "cases": [
+    {
+      "actual_database_row": {
+        "read_only": "ON",
+        "global_read_only": "ON",
+        "database_writable": 0,
+        "database_epoch": 1794049953.0
+      },
+      "function_result": {
+        "id": "writable",
+        "label": "writable",
+        "category": null,
+        "status": "error",
+        "severity": "error",
+        "summary": "MariaDB rapporterer read_only=ON"
+      }
+    },
+    {
+      "actual_database_row": {
+        "read_only": "NO_LOCK",
+        "global_read_only": "NO_LOCK",
+        "database_writable": 0,
+        "database_epoch": 1794049953.0
+      },
+      "function_result": {
+        "id": "writable",
+        "label": "writable",
+        "category": null,
+        "status": "error",
+        "severity": "error",
+        "summary": "MariaDB rapporterer read_only=NO_LOCK"
+      }
+    },
+    {
+      "actual_database_row": {
+        "read_only": "NO_LOCK_NO_ADMIN",
+        "global_read_only": "NO_LOCK_NO_ADMIN",
+        "database_writable": 0,
+        "database_epoch": 1794049954.0
+      },
+      "function_result": {
+        "id": "writable",
+        "label": "writable",
+        "category": null,
+        "status": "error",
+        "severity": "error",
+        "summary": "MariaDB rapporterer read_only=NO_LOCK_NO_ADMIN"
+      }
+    },
+    {
+      "actual_database_row": {
+        "read_only": "OFF",
+        "global_read_only": "OFF",
+        "database_writable": 1,
+        "database_epoch": 1794049955.0
+      },
+      "function_result": {
+        "id": "writable",
+        "label": "writable",
+        "category": null,
+        "status": "ok",
+        "severity": "info",
+        "summary": "MariaDB er skrivbar"
+      }
+    }
+  ],
+  "append_only_issue_recovery": "pass; error result retained, new OK result and issue_cleared event, no active writable issue"
+}

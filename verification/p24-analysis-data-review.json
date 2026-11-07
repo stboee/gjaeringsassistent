@@ -1,0 +1,84 @@
+{
+  "release": "0.1.0-prototype24-r3",
+  "kind": "retrospective aggregate review; not ground-truth tuning",
+  "limitations": [
+    "No raw samples available to reapply the raw MAD/jump filter.",
+    "TSV missing-bucket breaks are inferred retrospectively.",
+    "Coherent SG median drift cannot be identified as an erroneous signal by an outlier filter alone.",
+    "Baseline qualification and rate parameters require next-brew raw-data tuning."
+  ],
+  "cases": [
+    {
+      "source_file": "sg-temp(1).tsv",
+      "source_sha256": "5961f3a15f66bdce250728e34f01ea1791ba0a72873be87f3bbeec32609ff1ff",
+      "measurement_count": 2103,
+      "first_measurement_utc": "2026-09-25T20:00:00.000Z",
+      "last_measurement_utc": "2026-10-03T21:50:00.000Z",
+      "gap_basis": "TSV inferred missing-bucket breaks >15 min; retrospective inference",
+      "gaps": 13,
+      "qualified_pitch_baseline": {
+        "value": 1.0463,
+        "measuredAt": 1790367000000,
+        "windowStartedAt": 1790366400000,
+        "windowEndedAt": 1790367000000,
+        "sampleCount": 3,
+        "coverageSeconds": 600
+      },
+      "provisional": {
+        "points": 326,
+        "minimum_rate": -3.396354395493673,
+        "maximum_rate": 14.71764705882308,
+        "maximum_rate_at_utc": "2026-09-26T08:30:00.000Z",
+        "minimum_band": -6.143355871040061,
+        "maximum_band": 17.1877400470589
+      },
+      "standard": {
+        "points": 1545,
+        "minimum_rate": 0.21596345071431627,
+        "maximum_rate": 6.921327033337609,
+        "maximum_rate_at_utc": "2026-09-28T11:10:00.000Z",
+        "minimum_band": 0.050446209335005904,
+        "maximum_band": 8.31947090735364
+      },
+      "rejections": {
+        "regression_insufficient_span": 46,
+        "regression_uncertainty_too_large": 185,
+        "regression_excessive_outliers": 1
+      }
+    },
+    {
+      "source_file": "20261006T203845-gjaeringsassistent-maledata.csv",
+      "source_sha256": "bbb55d9df057e9cd7fef0530ee1f4315017964e959a34e47cf6f0458031f459e",
+      "measurement_count": 2920,
+      "first_measurement_utc": "2026-09-26T07:10:00.000Z",
+      "last_measurement_utc": "2026-10-06T18:30:00.000Z",
+      "gap_basis": "CSV registered gaps",
+      "gaps": 13,
+      "qualified_pitch_baseline": {
+        "value": null,
+        "validationError": "baseline_missing_near_pitch"
+      },
+      "provisional": {
+        "points": 326,
+        "minimum_rate": -3.396354395493673,
+        "maximum_rate": 14.71764705882308,
+        "maximum_rate_at_utc": "2026-09-26T08:30:00.000Z",
+        "minimum_band": -6.143355871040061,
+        "maximum_band": 17.1877400470589
+      },
+      "standard": {
+        "points": 2373,
+        "minimum_rate": -0.048224550509793004,
+        "maximum_rate": 6.921327033337609,
+        "maximum_rate_at_utc": "2026-09-28T11:10:00.000Z",
+        "minimum_band": -0.24400827739428932,
+        "maximum_band": 8.31947090735364
+      },
+      "rejections": {
+        "regression_insufficient_span": 35,
+        "regression_uncertainty_too_large": 185,
+        "regression_excessive_outliers": 1
+      }
+    }
+  ]
+}

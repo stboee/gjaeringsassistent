@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>04 – Krav: installer og release</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">04 – Krav: installer og release</h1>
+</header>
+<h1 id="04--krav-installer-og-release">04 – Krav: installer og
+release</h1>
+<p><strong>Rolle:</strong> Normative krav til installer og
+releasegrense.</p>
+<h2 id="ansvarsgrense">Ansvarsgrense</h2>
+<p>Installeren skal <strong>installere</strong> releasepakken. Den skal
+ikke være et alternativt test- eller driftsverktøy for
+applikasjonen.</p>
+<ol type="1">
+<li>Prototypeinstallasjon kan resette MariaDB uten backup/migrering av
+testdata.</li>
+<li>Før mutasjon skal installeren kontrollere kun nødvendige
+forutsetninger: obligatoriske containere/verktøy, kjørende Node-RED for
+pakkekontroll og faktisk UID/GID, Node-RED <code>/data</code>,
+eksisterende config/credentials som må bevares, release-SHA og
+syntaktisk lesbare kontrakt-/flowfiler.</li>
+<li>Installer skal gjenbruke eksisterende HA- og
+MariaDB-config-noder/credentials når de avtalte config-ID-ene
+finnes.</li>
+<li>Installer skal installere MariaDB-schema/seeds/views, Node-RED-flow
+og Home Assistant frontendfiler fra den aktuelle releasepakken.</li>
+<li>Node-RED skal stoppes bare når det er nødvendig for atomisk
+utskifting av flow, og startes én gang etter installasjonen. Unødvendige
+restart-/restore-runder er ikke tillatt.</li>
+<li>Etter DB-installasjon skal installeren bare kontrollere
+installasjonsmetadata som er nødvendig for å vite at riktig release og
+schema-metadata ble lagt inn. Detaljerte schema-/modellregresjoner skal
+ikke gjøre målinstallasjonen til FAIL.</li>
+<li>Installeren skal <strong>ikke</strong> kjøre syntetisk Start,
+opprette testsesjoner, trykke HA-knapper, kjøre Systemkontroll, teste
+restart/restore eller utføre øvrige
+domene-/runtime-akseptansetester.</li>
+<li>Statiske tester, kontrakttester, schema-/modellregresjoner,
+Function-unit-tester og pakketester er <strong>releaseporter</strong> og
+kjøres før pakking; de skal ikke gjentas som installasjonskritiske
+tester hos operatøren.</li>
+<li>Fysisk schema, runtime- og integrasjonsstatus etter installasjon
+verifiseres mot MariaDB-metadata gjennom applikasjonens egen
+<strong>Teknisk/Systemkontroll</strong>- og
+<strong>Verifikasjon</strong>-flate.</li>
+<li>Installerresultat skal skrives som både <code>.log</code> og
+strukturert <code>.json</code>, med minst <code>last_step</code>,
+exitkode, versjon og hvilke config-ID-er som ble bevart.</li>
+<li>Ved FAIL skal installeren stoppe med presis
+installasjonsdiagnostikk. Den skal ikke forsøke brede automatiske
+reparasjoner eller starte nye funksjonstester.</li>
+<li>Pakken skal inneholde aktiv kilde, SQL, dashboard/frontend, tester,
+byggverktøy, runtime-avhengigheter, release-metadata og komplett
+gjeldende dokumentasjon.</li>
+</ol>
+<p><strong>Prinsipp:</strong> <em>Installeren verifiserer
+installasjonen. Applikasjonen verifiserer applikasjonen.</em></p>
+<h2 id="frontendgrense">Frontendgrense</h2>
+<p>Installeren skal stage dashboard, custom card og loader i
+<code>/data/gjaeringsassistent/frontend-source</code> og publisheren i
+<code>/data/gjaeringsassistent/runtime</code>. Selve publiseringen til
+<code>/data/gjaeringsassistent/ha-public</code> eies av Node-RED ved
+oppstart. Dette er nødvendig fordi <code>ha-public</code> er et separat
+bind-mount som skygger tilsvarende katalog under hoved-mountet
+<code>/data</code>.</p>
+<h2 id="p23-verifikasjons-dokumentasjonskrav">P23
+verifikasjons-/dokumentasjonskrav</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Status</th>
+<th>Krav</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>REQ-INST-001</td>
+<td>Fastsatt</td>
+<td>Gjeldende dokumentasjon skal bygges som del av samme releasebygg som
+kode/SQL/kontrakter. Generert HTML er artefakt, ikke separat
+vedlikeholdt sannhetskilde.</td>
+</tr>
+<tr class="even">
+<td>REQ-INST-002</td>
+<td>Fastsatt</td>
+<td>Ordinær releasepakke skal ikke inneholde komplett historisk
+p19-dokumentasjon. Historikk beholdes bare når den uttrykkelig
+dokumenterer forlatte løsninger eller funksjonelle referanser som
+fortsatt er relevante.</td>
+</tr>
+<tr class="odd">
+<td>REQ-INST-003</td>
+<td>Fastsatt</td>
+<td>Releaseporten skal bevare testbarhet og relevante
+regresjons-/arkitekturkontroller, men skal ikke feile på kunstige
+minimumstall for dokumenter, REQ, DEC eller OPEN.</td>
+</tr>
+<tr class="even">
+<td>REQ-INST-004</td>
+<td>Fastsatt</td>
+<td>Etter vellykket releaseport skal strukturerte release-testresultater
+kunne følge pakken og importeres som verifikasjonsfakta ved
+installasjon.</td>
+</tr>
+<tr class="odd">
+<td>REQ-INST-005</td>
+<td>Fastsatt</td>
+<td>Før database-reset eller endring av Node-RED-flow skal installeren
+lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte
+verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon
+skal fremgå av installasjonsrapporten.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="p24r14-avgrenset-lesing-og-publisering">p24r14: avgrenset lesing
+og publisering</h2>
+<p><code>tools/overview_reads.sql</code>,
+<code>tools/report_reads.sql</code> og <code>sql/20-views.sql</code> er
+de autoritative lesedefinisjonene.
+<code>tools/build_read_queries.py</code> kompilerer disse til
+DB-prosedyrer i <code>sql/11-runtime-routines.sql</code>.
+<code>contracts/read-execution-schema.json</code> inneholder faktiske
+MariaDB-typer, tegnsett og kollasjoner;
+<code>read-execution-plan.json</code> beskriver avhengighetsrekkefølgen.
+Ingen domeneformel oversettes til en ny JavaScript-implementasjon.</p>
+<p><code>ga_init_read_basis</code> oppretter tomme, forbindelsesprivate
+tabeller før read-only-transaksjonen. <code>ga_fill_read_basis</code>
+tar bare med valgt sesjon og eventuell valgt sesjonssammenligning via
+deklarerte eierskaps-FK-er. Globale bibliotekvalg og tekniske problemer
+beholder sin globale betydning. Kilder leses med vanlige konsistente
+SELECT-er; JSON_TABLE fyller de private tabellene internt i databasen.
+Tidsserier deles i dagsgrupper for å begrense intern JSON-størrelse.
+Ingen stor JSON-pakke sendes frem og tilbake over DB-adapteren.
+Mellomresultater beregnes én gang i SQL, i avhengighetsrekkefølge.
+Private Aria-tabeller er avledede engangsresultater; de er ingen
+permanent autoritet. Permanente tabeller beholder InnoDB og normal
+transaksjonshåndtering.</p>
+<p><code>ga_read_overview</code> og <code>ga_read_report</code> eier
+normalt sitt konsistente read-only-snapshot og rydder etter både suksess
+og feil. SQLite-arbeideren oppretter tabellene før sitt snapshot og
+gjenbruker rapportlesingen innen samme snapshot som arkivinnholdet. Den
+rydder etter commit/rollback. Ingen global kø eller manuell skrivelås
+innføres.</p>
+<p><code>ga_poll_overview</code> sammenligner kildenes antall/siste
+daterte endring og valgsekvenser med siste vellykkede
+publiseringskvittering. Dette er en invalidasjonskontroll over fysiske
+tabeller, ikke en ny kjøring av grafviews. Permanente uforanderlige
+parameterbarn dekkes av eierens daterte revisjon. Handlinger tvinger
+full oppdatering; tid, konfigurasjon uten egen endringsdato og ferskhet
+vurderes minst hvert DB-angitte
+<code>overview_clock_refresh_seconds</code> (60 sekunder).
+Detaljpunktoppløsning er fortsatt fem minutter.
+<code>read_model_publication_receipts</code> lagrer bare tekniske
+publiseringsfakta, ikke domene- eller grafverdier. Node-RED kvitterer
+først etter vellykket atomisk publisering.</p>
+<p>Kriterier har separate DB-felt for originalt templatekrav, effektivt
+krav og vurderingssnapshot. <code>criterion_basis_current</code> kommer
+fra nullsikker sammenligning av vurdert og gjeldende kriterierevisjon.
+Før ny vurdering viser DB «Venter på ny vurdering», og prosessberedskap
+er <code>not_evaluated</code>. Historiske bevis endres ikke.
+<code>v_criterion_correction_receipts</code> finner en vurdering som
+bruker den nøyaktige revisjonen også etter automatisk B-overgang.
+Frontend bruker DB-kvitteringens melding.</p>
+</body>
+</html>

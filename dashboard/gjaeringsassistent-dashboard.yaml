@@ -1,0 +1,634 @@
+title: Gjæringsassistent p24r6
+views:
+  - title: Gjæring
+    path: gjaring
+    icon: mdi:glass-mug-variant
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: idle
+            card:
+              type: entities
+              title: Velg template
+              show_header_toggle: false
+              entities:
+                - entity: select.gjaeringsassistent_template
+                  name: Template
+                - entity: button.gjaeringsassistent_skann_templater
+                  name: Les templater på nytt
+          - type: conditional
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: configured
+            card:
+              type: entities
+              title: Startgrunnlag · HA-historikk + live
+              show_header_toggle: false
+              entities:
+                - entity: sensor.gjaeringsassistent_valgt_template
+                  name: Valgt template
+                - entity: select.gjaeringsassistent_template
+                  name: Bytt template før start
+                - entity: text.gjaeringsassistent_batchnavn
+                  name: Batchnavn
+                - entity: number.gjaeringsassistent_volum_l
+                  name: Volum
+                - entity: select.gjaeringsassistent_pitchmodus
+                  name: Pitchmodus
+                - entity: number.gjaeringsassistent_gjaermengde_g
+                  name: Tørrgjærmengde
+                - entity: number.gjaeringsassistent_slurry_volum_ml
+                  name: Slurryvolum
+                - entity: text.gjaeringsassistent_slurry_kildebatch
+                  name: Slurryens kildebatch
+                - entity: number.gjaeringsassistent_slurry_generasjon
+                  name: Slurrygenerasjon
+                - entity: text.gjaeringsassistent_oksygenering
+                  name: Oksygenering
+          - type: conditional
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: configured
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Start fra
+              view: starttime
+              entity: text.gjaeringsassistent_pitchtid
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: configured
+            card:
+              type: entities
+              title: Første komplette målesett
+              show_header_toggle: false
+              entities:
+                - entity: select.gjaeringsassistent_kontroll_malemetode
+                  name: Måleinstrument
+                - entity: number.gjaeringsassistent_malt_sg
+                  name: Målt SG (OG ved Start)
+                - entity: number.gjaeringsassistent_provetemperatur
+                  name: Prøvetemperatur
+                - entity: number.gjaeringsassistent_hydrometer_kalibreringstemperatur
+                  name: Hydrometerets kalibreringstemperatur
+                - entity: number.gjaeringsassistent_manuell_temperatur
+                  name: Manuelt målt temperatur
+                - entity: number.gjaeringsassistent_trykk
+                  name: Trykk
+                - entity: number.gjaeringsassistent_kjolemaskin_settpunkt
+                  name: Kjølemaskinens settpunkt
+                - entity: number.gjaeringsassistent_kjolemaskin_kalibrering
+                  name: Kjølemaskinens kalibreringsverdi
+                - entity: select.gjaeringsassistent_gjaerlasaktivitet
+                  name: Gjærlåsaktivitet
+                - entity: number.gjaeringsassistent_acetaldehyd
+                  name: Acetaldehyd
+                - entity: number.gjaeringsassistent_diacetyl
+                  name: Diacetyl
+                - entity: number.gjaeringsassistent_vorteraktig_preg
+                  name: Vørteraktig preg
+                - entity: number.gjaeringsassistent_svovel_so2
+                  name: SO₂ / fyrstikk
+                - entity: number.gjaeringsassistent_svovel_h2s
+                  name: H₂S / råttent egg
+                - entity: number.gjaeringsassistent_klarhet
+                  name: Klarhet
+                - entity: number.gjaeringsassistent_utfelling_i_prove
+                  name: Utfelling i prøve
+                - entity: number.gjaeringsassistent_utfelling_minutter
+                  name: Hviletid prøve
+                - entity: select.gjaeringsassistent_kontroll_konklusjon
+                  name: Samlet brukervurdering
+                - entity: text.gjaeringsassistent_kontrollnotat
+                  name: Målenotat
+      - type: grid
+        column_span: 1
+        cards:
+          - type: custom:gjaeringsassistent-card
+            title: Start gjæring
+            view: startaction
+            start_entity: button.gjaeringsassistent_start_gjaering
+            status_entity: sensor.gjaeringsassistent_startstatus
+
+      - type: grid
+        column_span: 3
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Aktiv gjæring
+              view: overview
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: button
+              entity: button.gjaeringsassistent_avslutt_gjaering
+              name: Avslutt gjæring
+              icon: mdi:stop-circle-outline
+              tap_action:
+                action: perform-action
+                perform_action: button.press
+                target:
+                  entity_id: button.gjaeringsassistent_avslutt_gjaering
+                confirmation:
+                  text: Avslutt gjæringen? Sessionen låses for videre gjæringsmålinger.
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: completed
+            card:
+              type: vertical-stack
+              cards:
+                - type: entities
+                  title: Gjæring avsluttet
+                  show_header_toggle: false
+                  entities:
+                    - entity: sensor.gjaeringsassistent_sesjonsstatus
+                      name: Session
+                    - type: attribute
+                      entity: sensor.gjaeringsassistent_sesjonsstatus
+                      attribute: archive_status_display
+                      name: Arkivering
+                    - entity: sensor.gjaeringsassistent_valgt_template
+                      name: Template
+                    - entity: sensor.gjaeringsassistent_systemstatus
+                      name: Status
+                - type: custom:gjaeringsassistent-card
+                  view: archive-action
+                - type: markdown
+                  content: >-
+                    Når gjæringen avsluttes genereres et sammenhørende SQLite-par og lesbar HTML-rapport automatisk. **Gjør klar** frigir sessionen uten å slette historikken; reell gjæring krever verifisert arkiv før frigivelse.
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state_not: active
+              - entity: sensor.gjaeringsassistent_livslop
+                state_not: completed
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:gjaeringsassistent-card
+                  view: demo
+                  title: Demo-datasett
+                - type: markdown
+                  content: >-
+                    **Referansedemo** starter W-34/70-templaten gjennom ordinær Start og fyller MariaDB med en deterministisk Tilt-basert 5-minuttersserie med bevarte datagap for visualisering og funksjonstest.
+
+      - type: grid
+        column_span: 3
+        cards:
+          - type: custom:gjaeringsassistent-card
+            title: Gjæringshistorikk og rapporter
+            view: history
+            data_url: /local/gjaeringsassistent/session-history.json
+
+      - type: grid
+        column_span: 3
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Aktiv gjæringsrapport
+              view: report
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: 6
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: button
+              entity: button.gjaeringsassistent_generer_aktiv_rapport
+              name: Generer rapport nå
+              icon: mdi:file-document-outline
+              tap_action:
+                action: perform-action
+                perform_action: button.press
+                target:
+                  entity_id: button.gjaeringsassistent_generer_aktiv_rapport
+  - title: Biologi
+    path: biologi
+    icon: mdi:chart-timeline-variant
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 3
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state_not: idle
+              - entity: sensor.gjaeringsassistent_livslop
+                state_not: configured
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Biologisk forløp
+              view: biology
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Korriger starttidspunkt for biologisk fase
+              view: timecorrection
+              correction_kind: biological
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Notater
+              view: notes
+
+  - title: Prosesstrinn
+    path: prosesstrinn
+    icon: mdi:format-list-checks
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 3
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Prosesstrinn
+              view: process
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Korriger starttidspunkt for prosesstrinn
+              view: timecorrection
+              correction_kind: process
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+
+
+  - title: Analyse
+    path: analyse
+    icon: mdi:chart-line
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 3
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Analyse
+              view: analysis
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+
+  - title: Måleresultater
+    path: malinger
+    icon: mdi:flask-outline
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Lagre målinger
+              view: measurementaction
+              save_entity: button.gjaeringsassistent_lagre_malinger
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: entities
+              title: Manuell SG
+              entities:
+                - entity: select.gjaeringsassistent_kontroll_malemetode
+                  name: Målemetode
+                - entity: number.gjaeringsassistent_malt_sg
+                  name: Målt SG
+                - entity: number.gjaeringsassistent_provetemperatur
+                  name: Prøvetemperatur
+                - entity: number.gjaeringsassistent_hydrometer_kalibreringstemperatur
+                  name: Hydrometer kalibrering
+                - entity: sensor.gjaeringsassistent_korrigert_manuell_sg
+                  name: Korrigert manuell SG
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: entities
+              title: Prosessmålinger
+              entities:
+                - entity: number.gjaeringsassistent_manuell_temperatur
+                  name: Manuell temperatur
+                - entity: number.gjaeringsassistent_trykk
+                  name: Trykk
+                - entity: number.gjaeringsassistent_kjolemaskin_settpunkt
+                  name: Kjølesettpunkt
+                - entity: number.gjaeringsassistent_kjolemaskin_kalibrering
+                  name: Kjølekalibrering
+                - entity: select.gjaeringsassistent_gjaerlasaktivitet
+                  name: Gjærlåsaktivitet
+                - entity: select.gjaeringsassistent_kontroll_konklusjon
+                  name: Samlet vurdering
+                - entity: text.gjaeringsassistent_kontrollnotat
+                  name: Kommentar
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: entities
+              title: Sensorikk 0–5
+              entities:
+                - entity: number.gjaeringsassistent_acetaldehyd
+                  name: ACE · Acetaldehyd
+                - entity: number.gjaeringsassistent_diacetyl
+                  name: DIA · Diacetyl
+                - entity: number.gjaeringsassistent_vorteraktig_preg
+                  name: VØR · Vørter
+                - entity: number.gjaeringsassistent_svovel_so2
+                  name: SO2 · Fyrstikk
+                - entity: number.gjaeringsassistent_svovel_h2s
+                  name: H2S · Råttent egg
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: entities
+              title: Klarhet og utfelling
+              entities:
+                - entity: number.gjaeringsassistent_klarhet
+                  name: KLA · Klarhet
+                - entity: number.gjaeringsassistent_utfelling_i_prove
+                  name: UTF · Utfelling
+                - entity: number.gjaeringsassistent_utfelling_minutter
+                  name: Hviletid prøve (min)
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: markdown
+              title: Sensorikkskala
+              content: |
+                **0 = ønsket / ingen avvik → 5 = størst avvik.**
+
+                1 = spor · 2 = lite · 3 = tydelig · 4 = stort · 5 = dominerende.
+
+                Dette gjelder også **KLA** og **UTF**.
+      - type: grid
+        column_span: 3
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Målehistorikk
+              view: measurements
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+      - type: grid
+        column_span: 1
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:gjaeringsassistent-card
+                  title: Notater
+                  view: notes
+                - type: custom:gjaeringsassistent-card
+                  title: Korriger måletidspunkt
+                  view: timecorrection
+                  correction_kind: observation
+                  data_url: /local/gjaeringsassistent/fermentation-overview.json
+                  refresh_seconds: 15
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Korriger pitchtid
+              view: timecorrection
+              correction_kind: pitch
+              data_url: /local/gjaeringsassistent/fermentation-overview.json
+              refresh_seconds: 15
+  - title: Template og arkiv
+    path: template
+    icon: mdi:file-cog-outline
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 3
+        cards:
+          - type: custom:gjaeringsassistent-archive-card
+            grid_options:
+              columns: full
+            data_url: /local/gjaeringsassistent/archive-library.json
+          - type: custom:gjaeringsassistent-card
+            grid_options:
+              columns: full
+            title: Templates
+            view: template
+            data_url: /local/gjaeringsassistent/template-editor.json
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Notater
+              view: notes
+
+  - title: Verifikasjon
+    path: verifikasjon
+    icon: mdi:clipboard-check-outline
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 3
+        cards:
+          - type: custom:gjaeringsassistent-card
+            grid_options:
+              columns: full
+            title: Verifikasjon
+            view: verification
+            data_url: /local/gjaeringsassistent/verification-overview.json
+            refresh_seconds: 30
+
+
+  - title: Teknisk
+    path: teknisk
+    icon: mdi:cog-outline
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        column_span: 3
+        cards:
+          - type: custom:gjaeringsassistent-card
+            grid_options:
+              columns: full
+            title: Teknisk oversikt
+            view: system
+            systemcheck_entity: button.gjaeringsassistent_kjor_systemkontroll
+      - type: grid
+        column_span: 3
+        cards:
+          - type: custom:gjaeringsassistent-card
+            grid_options:
+              columns: full
+            title: Verifikasjonsstatus
+            view: verification-summary
+            data_url: /local/gjaeringsassistent/verification-overview.json
+            refresh_seconds: 30
+      - type: grid
+        column_span: 2
+        cards:
+          - type: conditional
+            grid_options:
+              columns: full
+            conditions:
+              - entity: sensor.gjaeringsassistent_livslop
+                state: active
+            card:
+              type: custom:gjaeringsassistent-card
+              title: Notater
+              view: notes

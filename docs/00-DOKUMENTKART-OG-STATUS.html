@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>00 – Dokumentkart og status</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">00 – Dokumentkart og status</h1>
+</header>
+<h1 id="00--dokumentkart-og-status">00 – Dokumentkart og status</h1>
+<p><strong>Gjeldende release:</strong> <code>2026.11.07-1</code></p>
+<p>Prosjektets utviklings-/publiseringsregler står i <a
+href="../AGENTS.html">AGENTS.md</a>. Datoversjon er ÅÅÅÅ.MM.DD-N med kort
+releasebeskrivelse. Utvikling skjer direkte på main etter avklaring og
+«start»; issues/PR inngår ikke i arbeidsflyten.</p>
+<h2 id="dokumentprinsipper">Dokumentprinsipper</h2>
+<p>Dokumentsettet beskriver <strong>gjeldende</strong> krav, arkitektur,
+semantikk og operativ bruk. Releasehistorikk skal ligge i
+<code>RELEASE-NOTES.md</code> eller historisk referansemateriale, ikke
+som løpende «revisedX»-seksjoner i normative dokumenter.</p>
+<p>Tre nivåer skal holdes adskilt:</p>
+<ol type="1">
+<li><strong>Normativt krav / beslutning</strong> – hva systemet skal
+gjøre og hvorfor.</li>
+<li><strong>Implementert og release-verifisert</strong> – hva som finnes
+i den aktuelle pakken og har bestått releaseporten.</li>
+<li><strong>Målmiljø-verifisert</strong> – hva som faktisk er
+demonstrert mot installert Home Assistant/Node-RED/MariaDB og reelle
+data.</li>
+</ol>
+<p><code>docs/*.md</code>, SQL/registry og de strukturerte
+verifikasjonskildene er vedlikeholdte kilder etter hvilket
+informasjonselement de eier. HTML og genererte JSON-/SQL-uttrekk er
+avledede artefakter og skal ikke redigeres som parallelle
+sannhetskilder. Feil eller mangler skal rettes ved den autoritative
+kilden; Node-RED, Home Assistant eller frontend skal aldri kompensere
+med skjulte defaults, fallback eller parallell domenelogikk.</p>
+<h2 id="dokumenthierarki">Dokumenthierarki</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Nr</th>
+<th>Dokument</th>
+<th>Rolle</th>
+<th>Autoritet</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">01</td>
+<td>Krav – felles</td>
+<td>Produkt- og domenekrav</td>
+<td>Normativ</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">02</td>
+<td>Krav – motor og integrasjon</td>
+<td>Node-RED/MariaDB/HA-ansvar og motorgrenser</td>
+<td>Normativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">03</td>
+<td>Krav – dashboard</td>
+<td>Operatørflate og visualisering</td>
+<td>Normativ</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">04</td>
+<td>Krav – installer og release</td>
+<td>Installasjons-/releasegrense</td>
+<td>Normativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">05</td>
+<td>Frontend- og integrasjonskontrakt</td>
+<td>HA ↔︎ Node-RED-kontrakt</td>
+<td>Normativ</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">06</td>
+<td>Datamodell og persistens</td>
+<td>Logisk datamodell og persistensprinsipper</td>
+<td>Normativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">07</td>
+<td>Systemarkitektur og dataflyt</td>
+<td>Systemgrenser og hovedflyter</td>
+<td>Normativ</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">08</td>
+<td>Driftsveiledning</td>
+<td>Installasjon, drift og feilsøking</td>
+<td>Normativ operativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">09</td>
+<td>Akseptansetest</td>
+<td>Målmiljø-verifikasjon</td>
+<td>Normativ verifikasjon</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>Regel- og evalueringsmodell</td>
+<td>Generisk regel-/kriterie-/datakvalitetssemantikk</td>
+<td>Normativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>Template- og editormodell</td>
+<td>Draft → publisering → frozen session</td>
+<td>Normativ</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>Operasjons- og transaksjonskontrakt</td>
+<td>Node-RED ↔︎ MariaDB-operasjonsgrense</td>
+<td>Normativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>Livsløp, observasjoner, rapport og historikk</td>
+<td>Session-livsløp og historikk</td>
+<td>Normativ</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>Aktive beslutninger</td>
+<td>ADR/DEC-register</td>
+<td>Normativ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>Åpent arbeid</td>
+<td>Reelle gjenstående måltester/avklaringer</td>
+<td>Gjeldende status</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>W-34/70 faggrunnlag og prosessmodell</td>
+<td>Profilspesifikk forklaring; eksakte verdier genereres fra SQL</td>
+<td>Normativ forklaring + generert detaljfasit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td>Implementasjons- og verifikasjonsstatus</td>
+<td>Gjeldende capability/status uten releasehistorikk</td>
+<td>Gjeldende status</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19</td>
+<td>Teknisk diagnostikk og Systemkontroll</td>
+<td>Observability-/diagnostikkmodell</td>
+<td>Normativ</td>
+</tr>
+</tbody>
+</table>
+<h2 id="autoritative-kilder">Autoritative kilder</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Informasjon</th>
+<th>Autoritativ kilde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Produkt-/domenekrav</td>
+<td>dokument 01–04</td>
+</tr>
+<tr class="even">
+<td>Arkitektur-/produktbeslutninger</td>
+<td>dokument 14</td>
+</tr>
+<tr class="odd">
+<td>HA entity/config-ID-er, eventkanaler, bootstrapmetadata</td>
+<td>MariaDB <code>ha_entity_registry</code> /
+<code>ha_event_registry</code> + underregistre; seed i
+<code>../sql/21-system-metadata-seed.sql</code></td>
+</tr>
+<tr class="even">
+<td>HA↔︎Node-RED-semantikk</td>
+<td>dokument 05</td>
+</tr>
+<tr class="odd">
+<td>Fysiske tabeller/views/kolonner/constraints</td>
+<td>SQL DDL + MariaDB <code>INFORMATION_SCHEMA</code></td>
+</tr>
+<tr class="even">
+<td>Template-/registry-regler</td>
+<td>SQL registry/template-seed + installert MariaDB</td>
+</tr>
+<tr class="odd">
+<td>W-34/70 eksakte aktive kriterier/parametere</td>
+<td><code>../sql/03-w3470-template-seed.sql</code>; generert
+inspeksjonsuttrekk <code>generated/w3470-rule-reference.json</code></td>
+</tr>
+<tr class="even">
+<td>Målekilde-/valideringsprofil</td>
+<td><code>../sql/23-measurement-source-seed.sql</code>; generert
+inspeksjonsuttrekk <code>generated/w3470-rule-reference.json</code></td>
+</tr>
+<tr class="odd">
+<td>Systemfunksjoner og informasjonsavhengigheter</td>
+<td><code>system_functions</code>, <code>information_objects</code>,
+<code>function_information_dependencies</code></td>
+</tr>
+<tr class="even">
+<td>Implementert/release-verifisert funksjon</td>
+<td>dokument 18 + releaseport/tester</td>
+</tr>
+<tr class="odd">
+<td>Målmiljø-verifisering og åpne forhold</td>
+<td>dokument 15 og dokument 09</td>
+</tr>
+<tr class="even">
+<td>Krav-/beslutningsmetadata</td>
+<td>dokument 01–04 og 14, generert til MariaDB-katalog</td>
+</tr>
+<tr class="odd">
+<td>VER-/TEST-relasjoner</td>
+<td><code>../verification/verification-model.json</code> og
+<code>../verification/test-catalog.json</code>, validert/generert ved
+build</td>
+</tr>
+<tr class="even">
+<td>Faktiske TECH/FUNC/UAT-resultater</td>
+<td>MariaDB <code>verification_test_runs</code> /
+<code>verification_test_results</code></td>
+</tr>
+</tbody>
+</table>
+<p>Genererte artefakter er <strong>ikke</strong> nye sannhetskilder. De
+gjør normative kilder søkbare og maskinlesbare.</p>
+<h2 id="maskinlesbar-dokumentasjon">Maskinlesbar dokumentasjon</h2>
+<p><code>tools/build_docs.py</code> genererer minst:</p>
+<ul>
+<li><code>generated/document-index.json</code> – dokument-ID, rolle og
+status;</li>
+<li><code>generated/requirements.json</code> – krav-ID, status, tekst og
+kildeposisjon;</li>
+<li><code>generated/traceability.json</code> – eldre tekstbasert
+referanseuttrekk; den strukturerte VER/TEST-modellen er fasit for
+gjeldende verifikasjon;</li>
+<li><code>generated/verification-model.json</code> – generert
+krav/DEC/VER/TEST-relasjonsmodell fra gjeldende kilder;</li>
+<li><code>generated/decisions.json</code> – ADR/DEC-uttrekk;</li>
+<li><code>generated/open-work.json</code> – OPEN-register;</li>
+<li><code>generated/w3470-rule-reference.json</code> – avledet
+inspeksjonsuttrekk fra W-34/70-/målekilde-SQL.</li>
+</ul>
+<p>HTML-leseutgaver genereres fra Markdown med samme byggesteg.
+Releaseporten skal regenerere dokumentartefaktene og kreve null
+diff.</p>
+<h2 id="historiske-referanser">Historiske referanser</h2>
+<p>Ordinær p24-release inneholder ikke komplette historiske
+dokumentsett. <code>../reference/BASELINES.json</code> beholder bare
+eksplisitte funksjonelle/designmessige referanser. <code>p18-r5</code>
+og <code>p17r12</code> kan brukes når gjeldende dokumentasjon
+uttrykkelig peker på dem; deres tekniske implementasjon er ikke
+baseline. Forlatte tekniske løsninger som ikke skal gjeninnføres
+beskrives som aktive DEC/arkitektursperrer, ikke ved å distribuere gamle
+normative dokumenter.</p>
+<h2 id="videreføring-til-ny-chat">Videreføring til ny chat</h2>
+<p><code>../OVERLEVERING.md</code> er leveransens daterte
+overleveringssnapshot med leserekkefølge, prinsipper og
+installasjons-/teststatus. Det er et inngangspunkt, ikke en parallell
+normativ kilde. Nye observasjoner kontrolleres mot aktuell versjon.</p>
+</body>
+</html>

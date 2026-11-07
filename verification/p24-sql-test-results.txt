@@ -1,0 +1,172 @@
+SERVER /workspace/scratch/1ddb593c676d/mariadb-12.3.3-test/extracted/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)
+PASS Oslo timezone fixture
+PASS clean schema, routines, views and all seeds
+PASS actual p20_restore_query SQL before Start
+PASS actual p20_systemcheck_query SQL before Start
+PASS actual p20_template_editor_query SQL before Start
+PASS actual p20_technical_export_query SQL before Start
+PASS actual p20_overview_query SQL before Start
+PASS actual p23_verification_read_query SQL before Start
+PASS actual template selection SQL creates the pre-start draft
+PASS Start freezes session through real transaction routine
+PASS actual p20_restore_query SQL with active session
+PASS actual p20_systemcheck_query SQL with active session
+PASS actual p20_template_editor_query SQL with active session
+PASS actual p20_technical_export_query SQL with active session
+PASS actual p20_overview_query SQL with active session
+PASS actual p23_verification_read_query SQL with active session
+PASS clone full fields, injected rollback, policy freeze, counts and lineage
+PASS all 167 actual view queries
+PASS lineage filters with declared, legacy client and MariaDB 11.8 default collations
+PASS actual 12.3.3 read_only=ON through shipping Systemkontroll query
+PASS actual 12.3.3 read_only=NO_LOCK through shipping Systemkontroll query
+PASS actual 12.3.3 read_only=NO_LOCK_NO_ADMIN through shipping Systemkontroll query
+PASS actual 12.3.3 read_only=OFF through shipping Systemkontroll query
+PASS actual Systemkontroll write SQL with real ON row and all 15 results
+PASS real OFF row is writable and clears prior issue without rewriting history
+PASS persisted status/style, shared effective-pitch axes and biological handling across evaluations
+PASS read frozen calculation/metric/publication policies
+PASS actual measured analysis transaction, live zero, 24/48 curves, AA/ABV and idempotence
+PASS saved calibration survives history loss and stale current values are unavailable
+PASS actual bio correction transaction with unset optional bounds
+PASS actual process correction transaction with unset optional bounds
+PASS pitch correction appends a new analysis basis and retains historical facts
+PASS read actual Start observation revision
+PASS persist real manual observation with FK revision basis
+PASS append corrected manual SG/time without altering first revision
+PASS corrected manual AA/current latest excludes former revision
+PASS actual Avslutt write transaction; archive required
+PASS archive attempt is persisted before files are built
+PASS read first actual DB-generated archive attempt
+PASS archive failure is registered as terminal append-only metadata
+PASS Gjør klar retains completed session until file verification
+PASS retry on completed session appends attempt without a new lifecycle end
+PASS read retry attempt identity
+PASS actual >19 MB helper verification registered in MariaDB by compact SQL
+PASS actual Gjør klar releases only after SQLite pair and HTML verification
+PASS actual Start freezes s04-cool@1.0 targets, final manual/sensory controls and analysis policies
+PASS release isolated demo fixture
+PASS actual Start freezes m42-cool@1.0 targets, final manual/sensory controls and analysis policies
+PASS release isolated demo fixture
+PASS actual editor draft-save retains endpoint model/window configuration
+RESULT: PASS – actual MariaDB 12.3.3 SQL integration, revision-aware manual AA, >19 MB file metadata, failure/retry/release and ale freeze; target HA/Node-RED UAT remains separate
+PASS persist demo choice and actual preparation tilt-pro-blue-20260925
+PASS r7 actual Start r7-ipl
+PASS r7 seed tilt-pro-blue-20260925 with exact original values
+PASS release isolated r7 fixture r7-ipl
+PASS persist demo choice and actual preparation gyllen-pils-20260925
+PASS r7 actual Start r7-gyllen
+PASS r7 seed gyllen-pils-20260925 with exact original values
+PASS release isolated r7 fixture r7-gyllen
+PASS r7 actual Start r7-hourly
+PASS hourly imports/replay, actual means and a missing-hour segment
+PASS hourly analysis preserves endpoint/range calculations
+PASS ingestion transaction rollback with an injected later failure
+PASS persistent comparison selector, elapsed alignment and independent analysis
+PASS r8 half-hour display and unchanged source data
+PASS r7 actual p20_overview_query with hourly primary and detailed comparison
+PASS r7 actual p22_active_report_query with hourly primary and detailed comparison
+PASS r7 actual p23_measurement_export_query with hourly primary and detailed comparison
+PASS r7 complete check fixture
+PASS rapid unique atomic Systemkontroll runs
+PASS Systemkontroll rollback with an injected middle-result failure
+PASS technical recovery ordering with identical timestamps
+PASS report time range independent of dashboard selection
+PASS actual completed archive/report SQL with hourly source and full chronology
+PASS prior data/lifecycle/statistics/comparison/atomic regressions
+PASS r8 clock and schema expectation regressions
+PASS r8 direct event data persist shared 30-minute choice
+PASS r8 actual technical diagnostic query
+PASS r8 actual Systemkontroll clock expression in Oslo timezone
+RESULT: PASS – r8 native MariaDB data/lifecycle/statistics/comparison/diagnostics/clock checks
+PASS release isolated r7 fixture r7-hourly
+PASS r7 actual Start r9-criteria
+PASS r9 graph/demo event envelope 0
+PASS r9 graph/demo event envelope 1
+PASS r9 graph/demo event envelope 2
+PASS r9 graph/demo event envelope 3
+PASS r9 actual DB statistics decision after 300 seconds
+PASS r9 actual DB statistics decision after 3599 seconds
+PASS r9 actual DB statistics decision after 3600 seconds
+PASS r9 actual DB statistics decision after 86400 seconds
+PASS r9 initial statistics decision
+PASS r9 actual warning/recovery transaction and no healthy-success spam
+PASS r9 fixture series columns
+PASS r9 isolated direct process criterion graph binding
+PASS r9 read graph-bound bio threshold
+PASS r9 read frozen bio parameters
+PASS r9 read frozen correction policy bio
+PASS r9 original graph requirements bio
+PASS r9 append explicit bio met evidence 0
+PASS r9 read correction head bio
+PASS r9 real bio override transaction 1
+PASS r9 read persisted revision id bio
+PASS r9 effective bound addition and obsolete marker bio
+PASS r9 append explicit bio met evidence 1
+PASS r9 current graph/report requirements bio
+PASS r9 read correction head bio
+PASS r9 real bio override transaction 2
+PASS r9 read persisted revision id bio
+PASS r9 explicit unset bound bio
+PASS r9 read correction head bio
+PASS r9 real bio reset transaction 3
+PASS r9 read persisted revision id bio
+PASS r9 reset graph requirements bio
+PASS r9 append explicit bio met evidence 3
+PASS r9 reset marker revision bio
+PASS r9 unchanged frozen bio parameters
+PASS r9 read graph-bound process threshold
+PASS r9 read frozen process parameters
+PASS r9 read frozen correction policy process
+PASS r9 original graph requirements process
+PASS r9 append explicit process met evidence 0
+PASS r9 read correction head process
+PASS r9 real process override transaction 1
+PASS r9 read persisted revision id process
+PASS r9 effective bound addition and obsolete marker process
+PASS r9 append explicit process met evidence 1
+PASS r9 current graph/report requirements process
+PASS r9 read correction head process
+PASS r9 real process override transaction 2
+PASS r9 read persisted revision id process
+PASS r9 explicit unset bound process
+PASS r9 read correction head process
+PASS r9 real process reset transaction 3
+PASS r9 read persisted revision id process
+PASS r9 reset graph requirements process
+PASS r9 append explicit process met evidence 3
+PASS r9 reset marker revision process
+PASS r9 unchanged frozen process parameters
+PASS r9 read frozen graph columns session_analysis_graphs
+PASS r9 isolated 24-hour graph fixture session_analysis_graphs
+PASS r9 isolated 48-hour graph fixture session_analysis_graphs
+PASS r9 read frozen graph columns session_analysis_graph_series
+PASS r9 isolated 24-hour graph fixture session_analysis_graph_series
+PASS r9 isolated 48-hour graph fixture session_analysis_graph_series
+PASS r9 read bio 24-hour stability criterion
+PASS r9 stability frozen bio
+PASS r9 stability correction policy bio
+PASS r9 original stability window association bio
+PASS r9 read correction head bio
+PASS r9 real bio override transaction 4
+PASS r9 read persisted revision id bio
+PASS r9 effective stability window association bio
+PASS r9 read correction head bio
+PASS r9 real bio reset transaction 5
+PASS r9 read persisted revision id bio
+PASS r9 reset stability window association bio
+PASS r9 read process 24-hour stability criterion
+PASS r9 stability frozen process
+PASS r9 stability correction policy process
+PASS r9 original stability window association process
+PASS r9 read correction head process
+PASS r9 real process override transaction 4
+PASS r9 read persisted revision id process
+PASS r9 effective stability window association process
+PASS r9 read correction head process
+PASS r9 real process reset transaction 5
+PASS r9 read persisted revision id process
+PASS r9 reset stability window association process
+PASS r9 actual published selection values
+PASS r9 actual comparison read-model
+RESULT: PASS – r9 native event/import/current-criterion regressions

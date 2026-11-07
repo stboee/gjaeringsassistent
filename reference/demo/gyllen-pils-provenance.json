@@ -1,0 +1,194 @@
+{
+  "profile_id": "gyllen-pils-20260925",
+  "name": "2026-09-25 Gyllen pils",
+  "pitched_at_utc": "2026-09-25T20:00:00Z",
+  "og": 1.048,
+  "tilt_first_sg": 1.0463,
+  "span_seconds": 945000,
+  "measurement_count": 2924,
+  "raw_history_buckets_used": 625,
+  "raw_samples_rejected": 17,
+  "csv_buckets": 2920,
+  "gap_count": 32,
+  "gaps": [
+    {
+      "start": 1200,
+      "end": 40200,
+      "duration": 39000
+    },
+    {
+      "start": 56100,
+      "end": 58200,
+      "duration": 2100
+    },
+    {
+      "start": 133200,
+      "end": 133500,
+      "duration": 300
+    },
+    {
+      "start": 134400,
+      "end": 134700,
+      "duration": 300
+    },
+    {
+      "start": 135300,
+      "end": 135600,
+      "duration": 300
+    },
+    {
+      "start": 136200,
+      "end": 136800,
+      "duration": 600
+    },
+    {
+      "start": 138000,
+      "end": 140400,
+      "duration": 2400
+    },
+    {
+      "start": 140700,
+      "end": 141000,
+      "duration": 300
+    },
+    {
+      "start": 141600,
+      "end": 142200,
+      "duration": 600
+    },
+    {
+      "start": 143100,
+      "end": 143400,
+      "duration": 300
+    },
+    {
+      "start": 143700,
+      "end": 147600,
+      "duration": 3900
+    },
+    {
+      "start": 148800,
+      "end": 149100,
+      "duration": 300
+    },
+    {
+      "start": 149400,
+      "end": 150000,
+      "duration": 600
+    },
+    {
+      "start": 150300,
+      "end": 151200,
+      "duration": 900
+    },
+    {
+      "start": 151800,
+      "end": 152400,
+      "duration": 600
+    },
+    {
+      "start": 152700,
+      "end": 154200,
+      "duration": 1500
+    },
+    {
+      "start": 154500,
+      "end": 154800,
+      "duration": 300
+    },
+    {
+      "start": 156300,
+      "end": 156600,
+      "duration": 300
+    },
+    {
+      "start": 156900,
+      "end": 158700,
+      "duration": 1800
+    },
+    {
+      "start": 159600,
+      "end": 159900,
+      "duration": 300
+    },
+    {
+      "start": 160800,
+      "end": 163500,
+      "duration": 2700
+    },
+    {
+      "start": 163800,
+      "end": 164700,
+      "duration": 900
+    },
+    {
+      "start": 165300,
+      "end": 166500,
+      "duration": 1200
+    },
+    {
+      "start": 174600,
+      "end": 177000,
+      "duration": 2400
+    },
+    {
+      "start": 180300,
+      "end": 181500,
+      "duration": 1200
+    },
+    {
+      "start": 184500,
+      "end": 184800,
+      "duration": 300
+    },
+    {
+      "start": 243600,
+      "end": 243900,
+      "duration": 300
+    },
+    {
+      "start": 546900,
+      "end": 547200,
+      "duration": 300
+    },
+    {
+      "start": 644400,
+      "end": 645600,
+      "duration": 1200
+    },
+    {
+      "start": 702600,
+      "end": 702900,
+      "duration": 300
+    },
+    {
+      "start": 709800,
+      "end": 710100,
+      "duration": 300
+    },
+    {
+      "start": 873000,
+      "end": 873300,
+      "duration": 300
+    }
+  ],
+  "files": [
+    {
+      "filename": "sg-temp.tsv",
+      "sha256": "5961f3a15f66bdce250728e34f01ea1791ba0a72873be87f3bbeec32609ff1ff",
+      "bytes": 137640
+    },
+    {
+      "filename": "20261006T203845-gjaeringsassistent-maledata.csv",
+      "sha256": "bbb55d9df057e9cd7fef0530ee1f4315017964e959a34e47cf6f0458031f459e",
+      "bytes": 778846
+    },
+    {
+      "filename": "tilt-history-20260925(1).json",
+      "sha256": "0ef609c58e8e4b5b2ccbf9287b9524b84340291085c38226d8c8272972ed43bf",
+      "bytes": 17513617
+    }
+  ],
+  "merge_policy": "raw SG/temp > complete CSV > older TSV; CSV RSSI retained where available; no interpolation; no inferred heartbeat; naive TSV times interpreted Europe/Oslo",
+  "last_measurement_utc": "2026-10-06T18:30:00+00:00"
+}

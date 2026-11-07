@@ -1,0 +1,14 @@
+{
+  "application_version": "2026.11.07-1",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "status": "pass",
+  "checks": [
+    "effective B/P requirements update immediately after reset; stale assessment blocks Next; old facts remain; receipt waits for exact revised evaluation",
+    "B and P: actual correction, explicit unset, actual evaluation history, reset and numeric bounds refresh without contract errors",
+    "all six actual SQL graphs share geometry and typography; manual points, plans, FG band, gaps and real comparison render identically in dashboard/report",
+    "report retains full measurements and dates while dashboard uses the selected last-24-hour window",
+    "B and P use the same correction/exception styles and separate handling cells",
+    "SQLite preserves explicit unset history; old typed-zero history remains zero; missing legacy facts reject"
+  ],
+  "target_ha_uat": "not_run"
+}

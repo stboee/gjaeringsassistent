@@ -1,0 +1,131 @@
+{
+  "generated_from": "docs/15-AAPENT-ARBEID.md",
+  "items": [
+    {
+      "id": "OPEN-001",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Reell HA-history/live",
+      "exit_criterion": "Clean install fullfører; Start fra historisk tidspunkt importerer/validerer 5-minuttersdata, registrerer gap, replay-er B/P sekvensielt, går til LIVE og fortsetter etter restart fra persistert cursor.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 14
+    },
+    {
+      "id": "OPEN-002",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Målekilde/Tilt-projeksjon",
+      "exit_criterion": "Teknisk/Systemkontroll viser fersk DB-eid Tilt-status før Start/under catch-up/i LIVE uten nullable HA-attributtfeil eller konkurrerende produsent.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 15
+    },
+    {
+      "id": "OPEN-003",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Datakvalitet",
+      "exit_criterion": "Reelt Tilt-grunnlag demonstrerer at åpenbare outliers forkastes før `measurements_5m`, robust median brukes og kvalitetsutfall er sporbare uten clamp.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 16
+    },
+    {
+      "id": "OPEN-004",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Analyse",
+      "exit_criterion": "Tre aktive analysegrafer viser kun ordinære målebaserte verdier og datagrunnlag etter frozen policy; ingen oppdiktede oppstartsnuller, SG-stabilitetsbånd eller linjer gjennom datagap.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 17
+    },
+    {
+      "id": "OPEN-005",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Graf/rapport",
+      "exit_criterion": "Gjæring- og rapportgrafer oppdateres med nye committed 5-minuttersdata og bryter linjer ved de samme persisterte `measurement_data_gaps`.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 18
+    },
+    {
+      "id": "OPEN-006",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Tidskorrigering",
+      "exit_criterion": "Pitch-/B-/P-/observation-korreksjon verifiseres mot reelle data; effektive referanser endres uten å omskrive absolutte måletimestamps.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 19
+    },
+    {
+      "id": "OPEN-007",
+      "type": "Faglig kalibrering",
+      "status": "Åpen",
+      "subject": "W-34/70 kriterier",
+      "exit_criterion": "Hver aktiv terskel/regel er klassifisert som kildebelagt, empirisk kalibrert eller prototypegrense og vurdert mot minst representative reelle gjæringer.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 20
+    },
+    {
+      "id": "OPEN-008",
+      "type": "Avklaring",
+      "status": "Åpen",
+      "subject": "Målevalideringsgrenser",
+      "exit_criterion": "SG/temperatur/RSSI hard range, MAD-multiplikator, max-jump og minimum acceptance er faglig/teknisk begrunnet og justert dersom reell datadistribusjon tilsier det.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 21
+    },
+    {
+      "id": "OPEN-009",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Historisk sammenligning",
+      "exit_criterion": "Pitch-justert sammenligning er implementert; valg av begge datasett og avsluttet session samt persistens skal måltestes.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 22
+    },
+    {
+      "id": "OPEN-011",
+      "type": "Arkitektur",
+      "status": "Åpen",
+      "subject": "Lineage",
+      "exit_criterion": "Required grensesnitt og aktive systemfunksjoner har komplett registrert lineage; beslutning om eventuell bredere fysisk DB-dekning er dokumentert eksplisitt.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 23
+    },
+    {
+      "id": "OPEN-012",
+      "type": "UX",
+      "status": "Åpen",
+      "subject": "Operatørflate",
+      "exit_criterion": "Gjenstående hensiktsmessige notatplasseringer/handlingskvitteringer fra funksjonelle referanser er enten implementert eller eksplisitt avvist uten å endre domenemodellen.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 24
+    },
+    {
+      "id": "OPEN-013",
+      "type": "Verifikasjon",
+      "status": "Åpen",
+      "subject": "Verifikasjonsmodell",
+      "exit_criterion": "Eksisterende krav/tester kobles gradvis til strukturerte VER/TEST-relasjoner; manglende koblinger er synlige i Verifikasjon-fanen og skal ikke skjules med kunstig coverage-score.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 26
+    },
+    {
+      "id": "OPEN-014",
+      "type": "Måltest/diagnostikk",
+      "status": "Åpen",
+      "subject": "Gjeldende installasjon/arkiv",
+      "exit_criterion": "Installer/schema samsvarer med release-metadata; SQLite-par/sluttrapport, ny start, sammenligning og HA-gjenoppkobling verifiseres i faktisk Docker/HA/Node-RED. TEST-UAT-012/013/014 er åpne.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 28
+    },
+    {
+      "id": "OPEN-015",
+      "type": "Avklaring/implementering",
+      "status": "Åpen",
+      "subject": "Oppgradering med databevaring",
+      "exit_criterion": "Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 46
+    }
+  ]
+}

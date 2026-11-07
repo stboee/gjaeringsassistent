@@ -1,0 +1,132 @@
+{
+  "version": "2026.11.07-1",
+  "scope": "Første GitHub-utgave fra p24r16 med datoversjon og oppdatert dokumentasjon/pakking",
+  "required_files": [
+    "VERSION",
+    "README.md",
+    "RELEASE-NOTES.md",
+    "TEST-RESULTS.md",
+    "BUILD-INFO.json",
+    "RELEASE-MANIFEST.json",
+    "SHA256SUMS",
+    "dashboard/gjaeringsassistent-dashboard.yaml",
+    "dashboard/gjaeringsassistent-card.js",
+    "nodered/flows.template.json",
+    "installer/install.sh",
+    "sql/00-template-schema.sql",
+    "sql/10-runtime-schema.sql",
+    "sql/11-runtime-routines.sql",
+    "sql/20-views.sql",
+    "sql/21-system-metadata-seed.sql",
+    "sql/24-verification-metadata-seed.sql",
+    "sql/25-release-verification-results-seed.sql",
+    "sql/90-schema-verification.sql",
+    "verification/test-catalog.json",
+    "verification/verification-model.json",
+    "verification/release-results.json",
+    "tests/verify-verification-model.py",
+    "tools/build_verification_registry.py",
+    "tools/write_release_verification_results.py",
+    "contracts/ha-node-red-contract.json",
+    "docs/index.md",
+    "docs/index.html",
+    "docs/generated/verification-model.json",
+    "reference/BASELINES.json",
+    "tools/graph_renderer.js",
+    "tests/test-p24-analysis.js",
+    "tests/test-mariadb-p24.py",
+    "tests/test-p24-editor.js",
+    "tools/analysis_methods.js",
+    "tools/embed_analysis_methods.py",
+    "tests/test-p24-methodology.js",
+    "verification/p24-analysis-data-review.json",
+    "installer/check-database-version.py",
+    "tests/test-installer-db-version.py",
+    "verification/mariadb-12.3.3-environment.json",
+    "verification/p24r2-on-12.3.3-sql-results.txt",
+    "verification/p24r9-writable-regression.json",
+    "tools/archive_export.js",
+    "tests/test-archive-export.js",
+    "sql/04-ale-templates-seed.sql",
+    "docs/17-ALE-TEMPLATER-OG-FAKTA.md",
+    "verification/p24-sql-test-results.txt",
+    "verification/p24-release-gate-results.txt",
+    "tools/report_renderer.js",
+    "tools/report_queries.sql",
+    "tests/test-p24r7.js",
+    "contracts/read-model-columns.json",
+    "reference/demo/2026-09-25-Gyllen-pils-5m.csv",
+    "reference/demo/gyllen-pils-provenance.json",
+    "verification/p24r9-data-regression.json",
+    "tools/presentation_payload.js",
+    "tools/publish_payload.js",
+    "tests/test-p24r8.js",
+    "verification/p24r8-presentation-regression.json",
+    "tests/test-p24r9.js",
+    "verification/p24r9-runtime-regression.json",
+    "OVERLEVERING.md",
+    "tests/test-p24r16-system-live.js",
+    "verification/p24r16-system-regression.json",
+    "verification/release-gate.log",
+    "AGENTS.md",
+    "LICENSE",
+    "tools/package_files.py"
+  ],
+  "component_groups": {
+    "runtime": [
+      "dashboard",
+      "nodered",
+      "installer",
+      "sql"
+    ],
+    "verification": [
+      "verification",
+      "tests",
+      "tools"
+    ],
+    "documentation": [
+      "docs",
+      "contracts"
+    ],
+    "operations": [
+      "compose"
+    ],
+    "provenance": [
+      "reference"
+    ]
+  },
+  "documentation": {
+    "normative_root": "docs",
+    "index": "docs/index.md",
+    "historical_full_document_sets_in_package": false,
+    "functional_reference_registry": "reference/BASELINES.json",
+    "machine_metadata_authority": "MariaDB registries + verification catalogs + system_functions/function_information_dependencies + INFORMATION_SCHEMA",
+    "generated_ha_contract": "contracts/ha-node-red-contract.json",
+    "source_authority": "docs/*.md + SQL/registry + verification/*.json by owned information domain; HTML/docs/generated/sql/24 are build derivatives",
+    "documentation_builder": "tools/build_docs.py",
+    "generated_machine_metadata": [
+      "docs/generated/document-index.json",
+      "docs/generated/requirements.json",
+      "docs/generated/decisions.json",
+      "docs/generated/open-work.json",
+      "docs/generated/w3470-rule-reference.json",
+      "docs/generated/verification-model.json"
+    ]
+  },
+  "architecture": {
+    "persistent_authority": "MariaDB/InnoDB",
+    "motor": "Node-RED",
+    "operator_presentation": "Home Assistant",
+    "runtime_history": "normalized append-only facts/revisions; current state derived in views",
+    "verification_history": "append-only verification_test_runs and verification_test_results",
+    "concurrency": "database-native MVCC/constraints/short transactions; no application locking or global writer serialization",
+    "separate_backend": false,
+    "error_correction_rule": "fix data/model errors at the authoritative source; no Node-RED/frontend fallback or parallel domain logic"
+  },
+  "obsolete_active_components_not_carried_forward": [
+    "p19 FastAPI backend",
+    "SQLite runtime/database owner",
+    "application writer queue / normal explicit locking",
+    "complete p19 documentation set"
+  ]
+}
