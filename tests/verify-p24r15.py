@@ -42,9 +42,9 @@ for m in re.finditer(r'CREATE TABLE IF NOT EXISTS (\w+) \(([\s\S]*?)\) ENGINE[^;
         fk = re.match(r'CONSTRAINT\s+(\w+)\s+FOREIGN KEY', definition, re.I)
         if fk: declared_keys.add((name, fk[1]))
     tables[name] = columns
-assert set(tables) == set(physical['tables']) and len(tables) == 202
+assert set(tables) == set(physical['tables']) and len(tables) == 207
 views = set(re.findall(r'CREATE OR REPLACE VIEW (\w+)', (ROOT/'sql/20-views.sql').read_text()))
-assert views == set(physical['views']) and len(views) == 178
+assert views == set(physical['views']) and len(views) == 183
 assert physical['indices'] and {i['TABLE_NAME'] for i in physical['indices']} == set(tables)
 catalog = {}
 for c in physical['columns']:

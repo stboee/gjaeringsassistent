@@ -5,7 +5,7 @@
     "docs/03-*.md",
     "docs/04-*.md"
   ],
-  "count": 257,
+  "count": 259,
   "requirements": [
     {
       "id": "REQ-COM-001",
@@ -2058,9 +2058,25 @@
     {
       "id": "REQ-INST-005",
       "status": "Fastsatt",
-      "requirement": "Før database-reset eller endring av Node-RED-flow skal installeren lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon skal fremgå av installasjonsrapporten.",
+      "requirement": "Før databaseendring eller endring av Node-RED-flow skal installeren lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon skal fremgå av installasjonsrapporten.",
       "source": "04-KRAV-INSTALLER.md",
       "line": 42,
+      "test_references": 0
+    },
+    {
+      "id": "REQ-INST-006",
+      "status": "Fastsatt",
+      "requirement": "Eksisterende sesjoner, målinger, korreksjoner, templates, kladder, innstillinger og registrerte testresultater skal bevares ved oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon.",
+      "source": "04-KRAV-INSTALLER.md",
+      "line": 43,
+      "test_references": 0
+    },
+    {
+      "id": "REQ-INST-007",
+      "status": "Fastsatt",
+      "requirement": "Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat verifisert backup og faktisk installasjonsutfall skal være sporbare. Samme målversjon kan reinstallere filer uten å kjøre migreringen på nytt.",
+      "source": "04-KRAV-INSTALLER.md",
+      "line": 44,
       "test_references": 0
     }
   ]

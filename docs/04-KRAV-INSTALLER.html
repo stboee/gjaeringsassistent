@@ -37,8 +37,10 @@ releasegrense.</p>
 ikke være et alternativt test- eller driftsverktøy for
 applikasjonen.</p>
 <ol type="1">
-<li>Prototypeinstallasjon kan resette MariaDB uten backup/migrering av
-testdata.</li>
+<li>Installasjon skal bevare eksisterende brukerdata. Tom database
+initialiseres; kjent eksisterende versjon oppgraderes gjennom et
+eksplisitt migreringsmanifest. Ingen automatisk database-reset er
+tillatt.</li>
 <li>Før mutasjon skal installeren kontrollere kun nødvendige
 forutsetninger: obligatoriske containere/verktøy, kjørende Node-RED for
 pakkekontroll og faktisk UID/GID, Node-RED <code>/data</code>,
@@ -47,11 +49,14 @@ syntaktisk lesbare kontrakt-/flowfiler.</li>
 <li>Installer skal gjenbruke eksisterende HA- og
 MariaDB-config-noder/credentials når de avtalte config-ID-ene
 finnes.</li>
-<li>Installer skal installere MariaDB-schema/seeds/views, Node-RED-flow
-og Home Assistant frontendfiler fra den aktuelle releasepakken.</li>
-<li>Node-RED skal stoppes bare når det er nødvendig for atomisk
-utskifting av flow, og startes én gang etter installasjonen. Unødvendige
-restart-/restore-runder er ikke tillatt.</li>
+<li>Førstegangsinstallasjon bruker baseline/schema/seeds. Oppgradering
+bruker bare deklarerte migreringer, oppdaterte rutiner/views og
+relevante systemmetadata; bruker- og template-data reseedes ikke.</li>
+<li>Node-RED stoppes én gang for konsistent backup og utskifting og
+startes én gang etter vellykket installasjon. Backup skal være vellykket
+og komprimeringen kontrolleres før databaseendringer. Ved feil etter
+stopp forblir Node-RED stoppet med eksplisitt feilsteg og
+backupsti.</li>
 <li>Etter DB-installasjon skal installeren bare kontrollere
 installasjonsmetadata som er nødvendig for å vite at riktig release og
 schema-metadata ble lagt inn. Detaljerte schema-/modellregresjoner skal
@@ -131,10 +136,25 @@ installasjon.</td>
 <tr class="odd">
 <td>REQ-INST-005</td>
 <td>Fastsatt</td>
-<td>Før database-reset eller endring av Node-RED-flow skal installeren
+<td>Før databaseendring eller endring av Node-RED-flow skal installeren
 lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte
 verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon
 skal fremgå av installasjonsrapporten.</td>
+</tr>
+<tr class="even">
+<td>REQ-INST-006</td>
+<td>Fastsatt</td>
+<td>Eksisterende sesjoner, målinger, korreksjoner, templates, kladder,
+innstillinger og registrerte testresultater skal bevares ved
+oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon.</td>
+</tr>
+<tr class="odd">
+<td>REQ-INST-007</td>
+<td>Fastsatt</td>
+<td>Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat
+verifisert backup og faktisk installasjonsutfall skal være sporbare.
+Samme målversjon kan reinstallere filer uten å kjøre migreringen på
+nytt.</td>
 </tr>
 </tbody>
 </table>

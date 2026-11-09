@@ -219,6 +219,9 @@ contract_path=ROOT/'contracts/ha-node-red-contract.json'
 contract=json.loads(contract_path.read_text(encoding='utf-8'))
 meta=load_system_metadata(ROOT)
 from system_metadata import insert_rows
+contract['version']=(ROOT/'VERSION').read_text().strip()
+contract['start_fields']=insert_rows(ROOT/'sql/21-system-metadata-seed.sql','start_field_rules')
+contract['start_pitch_modes']=insert_rows(ROOT/'sql/21-system-metadata-seed.sql','start_field_pitch_modes')
 contract['projections']=insert_rows(ROOT/'sql/21-system-metadata-seed.sql','ha_projection_routes')
 contract['fields']=insert_rows(ROOT/'sql/21-system-metadata-seed.sql','ha_projection_fields')
 contract['draft_bindings']=insert_rows(ROOT/'sql/21-system-metadata-seed.sql','ha_draft_output_bindings')

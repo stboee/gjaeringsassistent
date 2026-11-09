@@ -16,7 +16,6 @@ source_format: markdown
 | DEC-GA-003 | `p18-r5` er funksjonell/designmessig referanse, ikke teknisk baseline. | Verdifull funksjon/UX skal kunne sammenlignes uten å gjeninnføre svak implementasjon. | SQLite/writer-kø/lokal runtime-state fra referansen kopieres ikke. |
 | DEC-GA-004 | Normaliserte domenedata foretrekkes fremfor generiske JSON-event/state-blobs. | Integritet, sporing og DB-validering. | JSON brukes som transport/eksport/read-model, ikke autoritativ runtime. |
 | DEC-GA-005 | Tetthet er SG-only. | Én entydig domenekontrakt. | Ingen Brix i GUI, template, runtime, rapport, docs eller tester. |
-| DEC-GA-006 | Prototypebasen kan resettes mellom tester. | Ingen produksjonshistorikk skal reddes i prototypefasen. | Installer kan resette DB uten migreringskompleksitet. |
 | DEC-GA-007 | E2E-/måltest går gjennom den reelle operatør-/integrasjonsgrensen. | Direkte DB/inject kan gi falsk trygghet. | Direkte tester kan være unit/integration, men ikke kalles operatør-E2E. |
 | DEC-GA-008 | HA-semantikk dokumenteres i 05; eksakte maskinmetadata eies av MariaDB-registre. | Unngå parallelle entity/event-lister. | Generert kontrakt er avledet inspeksjon. |
 | DEC-GA-009 | Teknisk er operativ observability, ikke bare PASS/FAIL. | Sporadiske runtimefeil må finnes igjen. | Technical Events, aktive issues, målekilde og Systemkontroll vises samlet. |
@@ -95,3 +94,10 @@ source_format: markdown
 |---|---|---|---|
 | DEC-RELEASE-001 | Datoversjon ÅÅÅÅ.MM.DD-N, v-prefiks på tag og kort releasebeskrivelse. | Entydig publiseringsdag og identitet uten prototype-serier. | Løpenummer starter på 1 hver publiseringsdag; prosjektversjon samordnes i leveranse- og runtime-metadata. |
 | DEC-WORK-001 | Avklaring i chat, «start», implementering og relevante kontroller; direkte commit på main. | Dagens avtalte prosjektarbeidsmåte. | Issues/PR og den gamle Chat→Work-handoff-prosessen videreføres ikke. |
+
+## Databevaring og oppstart
+
+| ID | Beslutning | Begrunnelse | Konsekvens |
+|---|---|---|---|
+| DEC-PROD-001 | Installasjon bevarer eksisterende data; verifiserte migreringer erstatter prototype-reset. | Brukeren tar løsningen i ordinær drift. | Førstegangsseeding kjøres bare på tom database. Privat backup før oppgradering; ukjent kilde avvises. Erstatter tidligere DEC-GA-006. |
+| DEC-START-001 | Startfelt, mangler og startklarstatus eies av databasekladden og DB-registre. | Gamle HA-tall kunne skjule NULL etter nytt templatevalg. | Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt og DB-avvisning. |

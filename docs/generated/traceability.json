@@ -1,7 +1,7 @@
 {
   "generated_from": "requirements.json + tests/* textual REQ references",
   "note": "A textual test reference is evidence of explicit traceability, not proof that the requirement is fully verified.",
-  "requirements_total": 257,
+  "requirements_total": 259,
   "with_explicit_test_reference": 15,
   "without_explicit_test_reference": [
     "REQ-COM-001",
@@ -245,6 +245,8 @@
     "REQ-INST-002",
     "REQ-INST-003",
     "REQ-INST-004",
-    "REQ-INST-005"
+    "REQ-INST-005",
+    "REQ-INST-006",
+    "REQ-INST-007"
   ]
 }

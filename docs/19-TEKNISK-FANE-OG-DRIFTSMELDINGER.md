@@ -121,3 +121,7 @@ Tekniske event-ID-er, schema_version og lagringstid genereres av MariaDB. Node-R
 `HA_PUBLICATION_DEFERRED` er en åpen, deduplisert advarsel per berørt HA-utgangsnode ved `NoConnectionError`/«Integration not loaded». Hendelsen lagres uten straks å publisere driftsmeldingen tilbake gjennom feilbanen. En ti-sekunders teknisk kontroll leser ventende DB-problemer. Når pluginens egen forbindelsestelemetri er connected/running, leses ferske DB-projeksjoner for status, teknisk, målekilde og startstatus. Ingen gamle domenepayloads eller redigerbare arbeidskladder blir lagt i en lokal retry-kø.
 
 Den faktiske HA-nodens vellykkede utgang kvitterer `HA_PUBLICATION_RECOVERED` for samme node. Verken en mottatt kommando, en eksisterende entitet, neste Systemkontroll eller forbindelsesflagget alene lukker problemet. Normale publiseringer uten gjenoppretting lager ingen ekstra kvitteringsspørring. Payload-/kontraktfeil forblir reelle feil. Feil i den tekniske DB-writeren skal ikke utløse ny HA-publisering som rekursivt lager samme feil.
+
+## Sporbar oppstartsavvisning
+
+Teknisk eksport inneholder `start_diagnostics`: aktuell DB-startklarstatus og de ti siste startforsøkene med tilhørende feltvise snapshots. Forsøkets tidspunkt/ID skiller et tidligere avvist grunnlag fra dagens utfylling. HA-felt og DB-kladd kan derfor sammenlignes uten å anta at en synlig HA-verdi er lagret i den aktuelle kladden. Beholdte gamle sesjoner inngår ikke i Systemkontrolls operative P/B-telling.

@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.07-1",
+  "application_version": "2026.11.09-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "fixture": {
@@ -13,59 +13,59 @@
     {
       "view": "v_graph_definitions",
       "rows": 6,
-      "elapsed_ms": 1206,
+      "elapsed_ms": 796,
       "rows_read": 78790,
       "cpu_ms": null
     },
     {
       "view": "v_graph_series",
       "rows": 26374,
-      "elapsed_ms": 1252,
+      "elapsed_ms": 760,
       "rows_read": 72010,
       "cpu_ms": null
     },
     {
       "view": "v_graph_latest",
       "rows": 18,
-      "elapsed_ms": 1205,
+      "elapsed_ms": 826,
       "rows_read": 72010,
       "cpu_ms": null
     },
     {
       "view": "v_graph_axis_ticks",
       "rows": 41,
-      "elapsed_ms": 1134,
+      "elapsed_ms": 781,
       "rows_read": 72768,
       "cpu_ms": null
     },
     {
       "view": "v_graph_time_markers",
-      "rows": 42,
-      "elapsed_ms": 1261,
+      "rows": 48,
+      "elapsed_ms": 844,
       "rows_read": 88781,
       "cpu_ms": null
     }
   ],
   "baseline_graph_total": {
-    "elapsed_ms": 6058,
+    "elapsed_ms": 4007,
     "rows_read": 384359
   },
   "full_overview": {
-    "elapsed_ms": 8850,
+    "elapsed_ms": 5466,
     "rows_read": 54523,
     "cpu_ms": null
   },
   "with_three_historical_series": {
-    "elapsed_ms": 8847,
+    "elapsed_ms": 5559,
     "rows_read": 54568,
     "cpu_ms": null
   },
   "unchanged_poll": {
-    "elapsed_ms": 8,
+    "elapsed_ms": 3,
     "rows_read": 371,
     "cpu_ms": null
   },
-  "concurrent_write_ms": 0.7386440000045695,
+  "concurrent_write_ms": 0.4203489999999874,
   "checks": [
     "21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages",
     "three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot",

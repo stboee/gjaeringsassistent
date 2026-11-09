@@ -82,12 +82,6 @@ runtime.</td>
 tester.</td>
 </tr>
 <tr class="even">
-<td>DEC-GA-006</td>
-<td>Prototypebasen kan resettes mellom tester.</td>
-<td>Ingen produksjonshistorikk skal reddes i prototypefasen.</td>
-<td>Installer kan resette DB uten migreringskompleksitet.</td>
-</tr>
-<tr class="odd">
 <td>DEC-GA-007</td>
 <td>E2E-/måltest går gjennom den reelle
 operatør-/integrasjonsgrensen.</td>
@@ -95,35 +89,35 @@ operatør-/integrasjonsgrensen.</td>
 <td>Direkte tester kan være unit/integration, men ikke kalles
 operatør-E2E.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-008</td>
 <td>HA-semantikk dokumenteres i 05; eksakte maskinmetadata eies av
 MariaDB-registre.</td>
 <td>Unngå parallelle entity/event-lister.</td>
 <td>Generert kontrakt er avledet inspeksjon.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-009</td>
 <td>Teknisk er operativ observability, ikke bare PASS/FAIL.</td>
 <td>Sporadiske runtimefeil må finnes igjen.</td>
 <td>Technical Events, aktive issues, målekilde og Systemkontroll vises
 samlet.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-010</td>
 <td><code>Tilbake</code> krever advarsel/bekreftelse, ikke obligatorisk
 begrunnelse.</td>
 <td>Operatørflyten skal ikke blokkeres unødig.</td>
 <td>Kommentar kan registreres som generelt notat.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-011</td>
 <td>Publiserte defaults/regler skal være eksplisitte; motor/frontend
 skal ikke gjette fallback.</td>
 <td>Skjulte defaults gjør vurderinger irreproduserbare.</td>
 <td>Manglende grunnlag er synlig feil/status.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-012</td>
 <td>Runtimehistorikk innenfor hver beholdt sesjon er append-only der ny
 tilstand kan uttrykkes som nytt faktum/revision. Hele historiske
@@ -131,7 +125,7 @@ sesjoner kan slettes eksplisitt.</td>
 <td>Audit og reproduksjon.</td>
 <td>Current state utledes i views.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-013</td>
 <td>Draft-tabeller er eksplisitte mutable arbeidsflater.</td>
 <td>Redigering trenger mutabilitet uten å omskrive historikk.</td>
@@ -139,7 +133,7 @@ sesjoner kan slettes eksplisitt.</td>
 <code>measurement_input_draft</code>, template-draft skilles fra
 journal.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-014</td>
 <td>Ingen generell writer-kø eller eksplisitt DB-locking som
 normalmekanisme.</td>
@@ -147,69 +141,69 @@ normalmekanisme.</td>
 kompleksitet.</td>
 <td>Modell/constraints/transaksjon revurderes før locking innføres.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-015</td>
 <td>PK/FK/UNIQUE/CHECK, operation-ID og korte transaksjoner er primær
 konsistensmekanisme.</td>
 <td>Konsistens bør ligge nær data.</td>
 <td>Applikasjonen bygger på DB-integritet.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-016</td>
 <td>Kortvarig stale read er akseptabelt.</td>
 <td>Normal MVCC/snapshot-adferd trenger ikke global serialisering.</td>
 <td>Neste read-model-refresh viser siste commit.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-017</td>
 <td>Deadlock analyseres som modell/SQL-symptom, ikke maskeres med
 generell retry.</td>
 <td>Retry kan skjule strukturelle feil.</td>
 <td>Konkret årsak må forstås før tiltak.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-018</td>
 <td>Funksjonell verdi prioriteres; teknisk arbeid gjøres når robust
 funksjon krever det.</td>
 <td>Prototypearbeidet skal ikke bli infrastrukturprosjekt.</td>
 <td>Teknisk kompleksitet må begrunnes av konkret behov.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-019</td>
 <td>Runtime-/valideringsmetadata har én autoritativ kilde.</td>
 <td>Metadata-duplisering gir drift.</td>
 <td>HA-metadata og funksjon↔︎informasjon-lineage modelleres i
 MariaDB.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-020</td>
 <td>Ordinær Start omfatter history catch-up og overgang til kontinuerlig
 5-minuttersimport.</td>
 <td>Én sammenhengende måleprosess.</td>
 <td>Ingen separat «live-start»-modus.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-021</td>
 <td><code>Start fra</code> er opprinnelig pitch-/importstart; senere
 pitchkorreksjon omskriver ikke måletimestamps.</td>
 <td>Historiske målepunkter må beholde faktisk tid.</td>
 <td>Effektiv pitchreferanse kan revideres separat.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-022</td>
 <td>Eksterne Tilt entity-ID-er eies av
 <code>measurement_source_profiles</code>.</td>
 <td>Sensorbinding er konfigurasjon.</td>
 <td>Node-RED Function-kode hardkoder ikke entity-ID-er.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-023</td>
 <td>Heartbeat er autoritativt datadekningssignal.</td>
 <td>Uendret SG/temperatur betyr ikke kommunikasjonsbrudd.</td>
 <td>Gap bygges fra heartbeat og persisteres i
 <code>measurement_data_gaps</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>ADR-GA-024</td>
 <td>Registry, template, frozen session og motor har separate
 ansvar.</td>
@@ -217,72 +211,72 @@ ansvar.</td>
 <td>Registry definerer vokabular; template velger; Start fryser; motor
 utfører generiske modeller.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-025</td>
 <td>Metric-ID alene skal ikke gi skjult beregningssemantikk.</td>
 <td>Navn er ikke fagregel.</td>
 <td>Beregningsmodell/input/parametere er eksplisitte metadata.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-026</td>
 <td>Freshness og persistens/stabilitet er separate begreper.</td>
 <td>De beskriver ulike egenskaper.</td>
 <td>Maks alder skal ikke brukes som skjult persistensregel.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-027</td>
 <td>Biologisk progresjon er sekvensiell; datagap bryter nødvendig
 kontinuitet.</td>
 <td>Hindrer historiske hopp og falsk persistens.</td>
 <td>Bare neste B-kandidat vurderes.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-028</td>
 <td>Målekildestatus har én MariaDB-read-model/produsent.</td>
 <td>Konkurrerende produsenter ga stale/motstridende status.</td>
 <td>Ingest/Systemkontroll trigger refresh, men lager ikke alternativ
 status.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-029</td>
 <td>HA-inputbinding/verdimapping eies av MariaDB.</td>
 <td>Entity→domene-felt skal ikke ligge som lokal Function-tabell.</td>
 <td>Manglende binding/mapping er konfigurasjonsfeil.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-030</td>
 <td>Frontend er ren visning/interaksjon av ferdige domenefelt.</td>
 <td>GUI-workarounds skjuler kildedefekter.</td>
 <td>Ingen domeneberegning/fallback/formatregler i frontend.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-031</td>
 <td>En metric har én autoritativ beregningsbane.</td>
 <td>Parallelle formler gir mismatch.</td>
 <td>Overview/B/P/report/Analyse leser persistert
 resultat/read-model.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-032</td>
 <td>DB/read-model-feil skal være synlig og rettes ved kilden.</td>
 <td>Fail-visible gir bedre arkitektur enn skjult fallback.</td>
 <td>GUI/Node-RED skal ikke maskere feil med lokal workaround.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-033</td>
 <td>Ugyldige råmålinger forkastes før autoritativ domenelagring; de
 clampes ikke.</td>
 <td>Korrigerte oppdiktede data forurenser analysegrunnlaget.</td>
 <td>Kvalitetsutfall logges separat.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-034</td>
 <td>Analysevisualisering og behandlingsregler er
 datamodell/template-metadata.</td>
 <td>Nye grafer skal ikke kreve spesialmotor/frontend.</td>
 <td>Graph/series/warm-up/gap/markerpolicy fryses til session.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-035</td>
 <td>Utilstrekkelig minste beregningsgrunnlag gir ingen verdi; p24r7
 krever ordinært faktisk grunnlag.</td>
@@ -290,13 +284,13 @@ krever ordinært faktisk grunnlag.</td>
 <td>Status, datagrunnlag og stil leveres fra read-model; ordinære krav
 beholdes.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-036</td>
 <td>Uncaught teknisk feilfangst er et generelt flow-safety-net.</td>
 <td>Nye noder skal ikke falle utenfor «søppelbøtta».</td>
 <td>Technical Event-writer/fangstsløyfe skjermes mot rekursjon.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-037</td>
 <td>Gyldighetsdomene for avledede metrics er domenemetadata og håndheves
 før B/P og Analyse.</td>
@@ -304,14 +298,14 @@ før B/P og Analyse.</td>
 grafer.</td>
 <td>Output utenfor frozen domene avvises, ikke clampes.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-038</td>
 <td>Historisk P-autoovergang er per-step frozen policy.</td>
 <td>Historikk kan rekonstrueres uten å late som fysisk operatørhandling
 er utført.</td>
 <td>W-34/70 kan autoetablere P1/P2; P3+ krever operatørtransition.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-039</td>
 <td>Rapport/Gjæring/Analyse bruker autoritative datagap og samme
 domeneseriegrunnlag.</td>
@@ -319,7 +313,7 @@ domeneseriegrunnlag.</td>
 informasjon.</td>
 <td>Renderer bryter kurver ved persisterte gap.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-040</td>
 <td>Normativ dokumentasjon skal beskrive gjeldende sannhet;
 releasehistorikk holdes separat og maskinmetadata genereres fra
@@ -329,14 +323,14 @@ validere.</td>
 <td>Markdown er kilde; HTML/JSON/traceability genereres og
 releasekontrolleres.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-041</td>
 <td>Templateadministrasjon er uavhengig av runtime/session.</td>
 <td>Frozen sessionplan gjør senere templatearbeid trygt.</td>
 <td>Aktiv eller completed session blokkerer ikke templatebibliotek,
 draft eller publisering.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-042</td>
 <td>Template lifecycle er <code>draft/published/retired</code>, og
 <code>retired</code> er reversibel.</td>
@@ -345,7 +339,7 @@ eller tvinge ny versjon.</td>
 <td>Retired versjon kan reaktiveres; publisert/retired faginnhold er
 immutable.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-043</td>
 <td>Template-fanens administrasjonsvalg og Start-fanens templatevalg er
 separate MariaDB-fakta.</td>
@@ -355,7 +349,7 @@ neste gjæring starter med.</td>
 <code>session_setup_draft</code>; Start kan kun velge
 <code>published</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-044</td>
 <td>Verifikasjon modelleres som strukturerte relasjoner i MariaDB.</td>
 <td>Krav, verifikasjon og resultater må kunne inspiseres og analyseres
@@ -363,7 +357,7 @@ uten tekstsøk.</td>
 <td>Metadata og faktiske resultater skilles; read-models utleder
 status.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-045</td>
 <td>TECH, FUNC og UAT er separate verifikasjonsklasser.</td>
 <td>Teknisk integritet, domeneregresjon og målmiljøbruk har ulike
@@ -371,7 +365,7 @@ testegenskaper.</td>
 <td>Testtype og metode er eksplisitt metadata; én type erstatter ikke de
 andre.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-046</td>
 <td>Høy testbarhet beholdes selv når hele testpakken ikke kjøres ved
 hver prototypeendring.</td>
@@ -380,7 +374,7 @@ testprosess.</td>
 <td>Testomfang tilpasses risiko; etablerte regresjonstester
 bevares.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-047</td>
 <td>UAT-resultater er append-only verifikasjonsfakta og kan registreres
 fra dashboardet.</td>
@@ -389,7 +383,7 @@ krav/testmetadata.</td>
 <td>Ny UAT gir ny run/result; tidligere observasjoner overskrives
 ikke.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-048</td>
 <td>JSON-eksport og HTML-verifikasjonsrapport produseres fra samme
 DB-grunnlag.</td>
@@ -397,14 +391,14 @@ DB-grunnlag.</td>
 <td>Rapportgeneratoren presenterer; den beregner ikke alternativ
 verifikasjonsstatus.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>DEC-GA-049</td>
 <td>Komplett p19-dokumentasjon distribueres ikke i p23-release.</td>
 <td>Historisk teknisk arkitektur kan forveksles med gjeldende
 løsning.</td>
 <td>Bare eksplisitte baseline-/forlatt-løsning-referanser beholdes.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>DEC-GA-050</td>
 <td>Separat FastAPI/backend-lag og tidligere
 SQLite-/writer-kø-arkitektur er forlatte løsninger og skal ikke
@@ -541,6 +535,36 @@ direkte commit på main.</td>
 <td>Dagens avtalte prosjektarbeidsmåte.</td>
 <td>Issues/PR og den gamle Chat→Work-handoff-prosessen videreføres
 ikke.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="databevaring-og-oppstart">Databevaring og oppstart</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Beslutning</th>
+<th>Begrunnelse</th>
+<th>Konsekvens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DEC-PROD-001</td>
+<td>Installasjon bevarer eksisterende data; verifiserte migreringer
+erstatter prototype-reset.</td>
+<td>Brukeren tar løsningen i ordinær drift.</td>
+<td>Førstegangsseeding kjøres bare på tom database. Privat backup før
+oppgradering; ukjent kilde avvises. Erstatter tidligere DEC-GA-006.</td>
+</tr>
+<tr class="even">
+<td>DEC-START-001</td>
+<td>Startfelt, mangler og startklarstatus eies av databasekladden og
+DB-registre.</td>
+<td>Gamle HA-tall kunne skjule NULL etter nytt templatevalg.</td>
+<td>Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen
+HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt
+og DB-avvisning.</td>
 </tr>
 </tbody>
 </table>

@@ -140,5 +140,16 @@ kriteriebevis skal ikke telles som håndtert.</p>
 kladdgrunnlag. Node-RED kaller rutinen og sender resultatet gjennom den
 ordinære Start-banen; demofakta er ikke lokale
 Node-RED-standardverdier.</p>
+<h2 id="db-validering-av-start">DB-validering av Start</h2>
+<p><code>ga_read_start_context(attempt_id,historical_end)</code>
+validerer den aktuelle kladden, lagrer feltvise forsøksfakta og
+returnerer validering og samme DB-grunnlag fra ett konsistent snapshot.
+Startfunksjonen transporterer DB-avvisningen og kontrollerer kontraktens
+tilstedeværelse/samsvar; den har ingen alternativ
+slurry-/tørrgjærvalidering. <code>ga_start_session_tx</code> beholder
+den atomiske frozen-/pitch-/livsløpsskrivingen.
+<code>v_system_check_session</code> teller åpne P/B-besøk bare innen
+operativ aktiv sesjon og oppdager både manglende og reelt doble åpne
+besøk.</p>
 </body>
 </html>

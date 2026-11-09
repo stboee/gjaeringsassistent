@@ -1,3 +1,15 @@
+# 2026.11.09-1 – Databevaring og trygg oppstart
+
+- Installer oppgraderer fra p24r16 eller 2026.11.07-1 uten å nullstille databasen. Verifisert privat database-/flowbackup før mutasjon, strukturkontroll og migreringskvittering. Samme målversjon kan reinstallere filer.
+- Startfelt viser aktuell databasekladd direkte. Slurryvolum/generasjon som mangler vises som manglende; gamle HA-tall er ikke grunnlag. Eksplisitt samme-verdi-lagring støttes.
+- DB eier startklarstatus, feltvise avvisninger og lagrede startforsøk. Teknisk eksport inkluderer de ti siste forsøkenes snapshots.
+- Systemkontroll avgrenser P/B-telling til aktiv operativ sesjon og oppdager reelle doble åpne besøk.
+- Normaliserte metadata, HA-kontrakt, dokumentasjon og regresjonstester oppdateres samlet. Ingen endringer i grafmotor eller gjæringsprofiler.
+
+Se TEST-RESULTS.md for faktisk bevis og begrensninger. Lokal HA-/Docker-transport er simulert; installasjon og brukerflate på gangpc er ikke målbekreftet.
+
+## Tidligere utgave
+
 # 2026.11.07-1 – Første GitHub-utgave
 
 Første utgave i nytt repository, med siste fungerende p24r16 som teknisk grunnlag.

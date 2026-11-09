@@ -259,5 +259,12 @@ gjenoppretting lager ingen ekstra kvitteringsspørring.
 Payload-/kontraktfeil forblir reelle feil. Feil i den tekniske
 DB-writeren skal ikke utløse ny HA-publisering som rekursivt lager samme
 feil.</p>
+<h2 id="sporbar-oppstartsavvisning">Sporbar oppstartsavvisning</h2>
+<p>Teknisk eksport inneholder <code>start_diagnostics</code>: aktuell
+DB-startklarstatus og de ti siste startforsøkene med tilhørende feltvise
+snapshots. Forsøkets tidspunkt/ID skiller et tidligere avvist grunnlag
+fra dagens utfylling. HA-felt og DB-kladd kan derfor sammenlignes uten å
+anta at en synlig HA-verdi er lagret i den aktuelle kladden. Beholdte
+gamle sesjoner inngår ikke i Systemkontrolls operative P/B-telling.</p>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.07-1",
+  "application_version": "2026.11.09-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "plugin_version": "0.80.3",
   "status": "pass",
@@ -14,10 +14,10 @@
     "payload defects remain real errors and a failed technical writer does not recursively publish through the same broken path"
   ],
   "source_fingerprints": {
-    "sql/10-runtime-schema.sql": "b375a6b4be88b47ed5ec7a13917fc3a0907fde28d6397e1820d35f51f18ab013",
-    "sql/20-views.sql": "6ef02c7bf196f03d4f74811998dd3327a813393de87b0a2c80aef50f906a8a69",
-    "sql/21-system-metadata-seed.sql": "4f329573963c4dfb49df465c6dca5d7f85db7609dfbf95eecc6258557f47e362",
-    "nodered/flows.template.json": "22df1c27c29f77dbbea8396bb89ec211374aba0ec08ea1cac9fdae4302f88199",
+    "sql/10-runtime-schema.sql": "e1d216aef68c5d9ed9c2566e29e353766e376ffbc5497de7176799ab49b060f9",
+    "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
+    "sql/21-system-metadata-seed.sql": "be4002f98d9e8e3d6262f3b2b8f7c6330619574409e1fa219f08a67ade5af825",
+    "nodered/flows.template.json": "bb69d0929e0eec96553e39a9d97e1e7bfa0600ecc99cd826c4f07e7bd5c33fd4",
     "tests/test-p24r16-system-live.js": "d65cdb286c9abe70bc1ec9e1556ce95195250d3534213f9cc525e11cf5e28d3d"
   }
 }

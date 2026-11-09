@@ -113,7 +113,7 @@ Arbeid direkte på main etter avtalt bestilling. Issues, PR og den tidligere Cha
 
 Rene dokumentoppdateringer kan ligge på main etter siste tag. Ikke påstå at de dermed inngår i en allerede publisert ZIP. En eksisterende release/tag skal ikke omskrives for å få dokumenthistorikken til å stemme.
 
-**Nåværende installer resetter databasen.** Et databevarende oppgraderingsløp er åpent arbeid. Kontroller alltid siste status før installasjons-/oppgraderingsforslag; ikke bruk en prototypebestilling om reset som varig produksjonsautorisasjon. Onboarding gir ikke adgang til å kjøre installasjon, restart eller datamigrering.
+**Installeren bevarer databasen gjennom deklarerte migreringer.** Støttede kilder og strukturavtrykk står i installer/migrations.json; målmiljøbekreftelse er fortsatt åpen. Kontroller alltid siste status før installasjons-/oppgraderingsforslag; ikke bruk en prototypebestilling om reset som varig produksjonsautorisasjon. Onboarding gir ikke adgang til å kjøre installasjon, restart eller datamigrering.
 
 Historiske pakker brukes bare når dagens dokumentasjon uttrykkelig gir dem en rolle. P17r12/p18r5 er funksjonelle/designmessige referanser, ikke teknisk baseline. Forlatt SQLite-runtime, separat backend eller writer-kø skal ikke gjeninnføres som løsning på et nytt problem.
 

@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.07-1",
-  "built_at_utc": "2026-11-07T11:07:51Z",
+  "version": "2026.11.09-1",
+  "built_at_utc": "2026-11-08T23:13:34Z",
   "architecture": "Node-RED motor + MariaDB/InnoDB authority; append-only history within retained sessions, explicit atomic archive deletion; HA operator presentation",
   "baseline": "0.1.0-prototype24-r16",
   "baselines": {
@@ -22,26 +22,26 @@
     "mariadb": "12.3.3",
     "node_js_minimum": "24"
   },
-  "scope": "Første offentlige GitHub-utgave: datoversjon, gjeldende arbeidsregler, faglige kildelenker og Git-basert pakking",
+  "scope": "Databevarende oppgradering, DB-eide startfelt/startvalidering og sesjonsavgrenset Systemkontroll",
   "verification_model": {
-    "requirements": 257,
-    "decisions": 65,
-    "verifications": 21,
-    "tests_total": 49,
+    "requirements": 259,
+    "decisions": 66,
+    "verifications": 22,
+    "tests_total": 51,
     "tests_tech": 12,
-    "tests_func": 23,
+    "tests_func": 25,
     "tests_uat": 14
   },
   "package_policy": "current source/runtime/test/docs/release metadata; explicit file selection excludes Git, local data and build output",
   "documentation": "current Markdown/SQL/registry/verification sources + generated HTML and machine-readable registries from the same build",
-  "local_sql_test": "New isolated native MariaDB 12.3.3 integration and actual plugin 0.80.3; HA transport simulated; target UAT not run",
-  "release_name": "Første GitHub-utgave",
+  "local_sql_test": "Fresh native MariaDB 12.3.3 + actual HA plugin 0.80.3; installer/dump/restore tested separately with simulated Docker transport; target HA UAT not run",
+  "release_name": "Databevaring og trygg oppstart",
   "baseline_package_sha256": "884b2dea0e42cfbf5efabc8a32ff3c0ab464c18c4ab206ec0d38a6c8ba6c26d4",
   "repository": "https://github.com/stboee/gjaeringsassistent",
   "versioning": {
     "scheme": "YYYY.MM.DD-N",
     "tag_prefix": "v",
     "description": "Kort beskrivelse i release-tittelen; løpenummer starter på 1 hver publiseringsdag",
-    "npm_version": "2026.11.7-1"
+    "npm_version": "2026.11.9-1"
   }
 }

@@ -208,3 +208,7 @@ Målmiljøet må i TEST-UAT-014 i tillegg prøves med faktiske HA Recorder-data:
 ## Måltest av diagnostikk og gjenoppkobling
 
 TEST-UAT-014 omfatter også: importer en eldre periode med bare timesstatistikk; forvent ferdig behandlet periode med synlig datagrunnlagsadvarsel og ingen falsk feil for HISTORISK. Kontroller at counts/tidsgrenser stemmer med DB-eksporten. Koble HA fra og til mens Node-RED kjører; forvent dedupliserte ventende publiseringer, gjenlesing fra DB og lukking først etter faktisk vellykket HA-utgang. Kontroller at redigerbare input ikke resettes av denne retry-banen. Dette krever faktisk Docker/HA og er ikke utført av native testen.
+
+## Måltest av databevaring og slurry-start
+
+Oppgrader en kjent kilde med aktiv gjæring, beholdt tidligere sesjon og egne/importerte templates. Kontroller uendret sesjons-ID, målinger, korreksjoner, templateinnhold og kladd etter oppgradering. Kontroller installasjonsrapportens backupsti og migreringskvittering. Ved neste ordinære start: velg Slurry, bekreft at manglende DB-felt vises som manglende, lagre volum/generasjon/kildebatch/oksygenering og start. Samme verdi skal kunne lagres på nytt. Teknisk eksport skal vise startforsøkets faktiske verdier; Systemkontroll skal vise én operativ P-/B-fase selv om gamle sesjoner beholdes. Lokal simulert HA-transport er ikke målmiljø-UAT.

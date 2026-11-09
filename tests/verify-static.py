@@ -280,7 +280,7 @@ ok(not contract.get('temporary_deviations'),'temporary deviations list is empty 
 default_schema=(ROOT/'sql/00-template-schema.sql').read_text(encoding='utf-8')
 metadata_seed=(ROOT/'sql/21-system-metadata-seed.sql').read_text(encoding='utf-8')
 ok(all(x in default_schema for x in ['ha_entity_registry','ha_event_registry','system_functions','information_objects','function_information_dependencies']),'system metadata tables are part of MariaDB schema')
-ok(metadata_seed.count('INSERT INTO ha_entity_registry(')==75 and metadata_seed.count('INSERT INTO ha_event_registry(')==22,'system metadata seed contains 75 HA entities and 22 events including deprecated event')
+ok(metadata_seed.count('INSERT INTO ha_entity_registry(')==75 and metadata_seed.count('INSERT INTO ha_event_registry(')==23,'system metadata seed contains 75 HA entities and 23 events including deprecated event')
 ok('information_schema.tables' in metadata_seed and "CONCAT('table:',table_name)" in metadata_seed and "CONCAT('view:',table_name)" in metadata_seed,'table/view information objects are discovered from MariaDB INFORMATION_SCHEMA')
 ok('function_information_dependencies' in metadata_seed and 'ha_contract_bootstrap' in metadata_seed and 'run_system_check' in metadata_seed,'function-information lineage metadata is seeded')
 default_seed=(ROOT/'sql/03-w3470-template-seed.sql').read_text(encoding='utf-8')
@@ -289,7 +289,7 @@ ok(all(x in default_schema for x in default_fields) and all(x in default_seed fo
 ok('og_default DECIMAL(18,6) NOT NULL' in default_schema and '1.050' in default_seed,'W-34/70 has a valid persisted OG default')
 start_guard=node_by_id(flow,'p20_start_guard').get('func',''); start_ctx=node_by_id(flow,'p20_start_context_result').get('func','')
 ok('ga_visible_sg' not in start_guard+start_ctx and "homeassistant" not in start_guard.lower(),'Start has no HA-value fallback or SG workaround')
-ok('visibleStartSg' not in sys_result and 'draft.measured_sg' in sys_result,'Systemkontroll evaluates persisted draft SG only')
+ok('visibleStartSg' not in sys_result and 'startReadiness.message' in sys_result and 'v_start_readiness' in node_by_id(flow,'p20_systemcheck_query').get('func',''),'Systemkontroll consumes DB-owned start readiness')
 forbidden=['maximum_age_minutes??1e12','minimum_samples||0','minimum_span_hours||0','current_phase_order||1','current_visit_revision_no||1']
 ok(not any(x in be for x in forbidden) and 'invalid_configuration' in be,'B evaluator rejects missing required configuration instead of guessing fallbacks')
 ok(node_by_id(flow,'p20_restore_result').get('outputs')==6 and 'Ikke validert etter omstart' not in node_by_id(flow,'p20_restore_result').get('func',''),'restore has no dead observation-validation output')
@@ -389,7 +389,7 @@ end_fn=node_by_id(flow,'p21_session_end_context_result').get('func','')
 prepare_fn=node_by_id(flow,'p21_session_prepare_context_result').get('func','')
 ok('INSERT INTO session_lifecycle_events' in end_fn and "'completed'" in end_fn and 'INSERT INTO process_visit_revisions' in end_fn and 'INSERT INTO biological_visit_revisions' in end_fn,'Avslutt appends completed lifecycle and closes open B/P visits by revision')
 ok('INSERT INTO session_release_events' in prepare_fn and 'verified_export_count' in prepare_fn and 'DELETE FROM sessions' not in prepare_fn,'Gjør klar appends release fact, enforces export gate and preserves session history')
-ok('v_current_session' in node_by_id(flow,'p20_start_guard').get('func','') and 'ga_select_start_template_tx' in node_by_id(flow,'p20_template_select').get('func','') and 'NOT EXISTS(SELECT 1 FROM v_current_session)' in (ROOT/'sql/11-runtime-routines.sql').read_text(),'Start/template configuration are blocked by unreleased completed session')
+ok('ga_read_start_context' in node_by_id(flow,'p20_start_guard').get('func','') and 'v_start_issues' in views_sql and 'ga_select_start_template_tx' in node_by_id(flow,'p20_template_select').get('func','') and 'NOT EXISTS(SELECT 1 FROM v_current_session)' in (ROOT/'sql/11-runtime-routines.sql').read_text(),'Start/template configuration are blocked by unreleased completed session')
 ok('state: completed' in dashboard and 'button.gjaeringsassistent_avslutt_gjaering' in dashboard and 'view: archive-action' in dashboard and 'button.gjaeringsassistent_gjor_klar_ny_gjaering' in card and 'can_prepare_new' in card,'dashboard exposes active End and DB-gated completed Prepare-new surfaces')
 
 # revised19: read-model contract repair + visual flow untangle without topology changes.
@@ -452,7 +452,7 @@ live_process=node_by_id(flow,'p21_live_history_process').get('func','')
 ok('heartbeat_entity_id' in live_context and 'rssi_entity_id' in live_context and 'last_import_cutoff_at' in live_context and 'flatten:true' in live_context,'p21r13 history request is DB-driven, includes RSSI and resumes from persisted cutoff')
 ok('ga_store_ingest_tx' in live_process and all(x in (ROOT/'sql/11-runtime-routines.sql').read_text() for x in ['home_assistant_heartbeat','measurement_data_gaps','measurements_5m','rssi_mean_dbm','pressure_mean_bar']),'p21r13 heartbeat drives gaps while healthy buckets persist SG/temp/RSSI and leave generic pressure nullable')
 ok('session_measurement_sources' in start_mutation_sql and '@ga_source_profile' in start_mutation_sql,'p21r10 ordinary Start binds session to DB-configured HA measurement source')
-ok('Startgrunnlag · HA-historikk + live' in dashboard and 'view: starttime' in dashboard and 'text.gjaeringsassistent_pitchtid' in dashboard,'p21r10 dashboard presents Start via dedicated datetime picker plus separate demo')
+ok('view: startfields' in dashboard and 'section: pitch' in dashboard and 'section: measurement' in dashboard and 'datetime-local' in views_sql,'dashboard presents DB-backed start fields including timestamp and separate demo')
 ok('type="datetime-local"' in card and 'start-time-input' in card and "callService('text','set_value'" in card,'p21r10 Start fra reuses datetime-local control and persists through existing pitch-time HA text entity')
 ok('name: Start fra (dato/tid)' not in dashboard,'p21r10 removes free-text Start fra entity row from ordinary Start UI')
 ok('select.gjaeringsassistent_pitchtid_modus' not in dashboard,'p21r10 hides obsolete pitch-time mode selector from ordinary Start UI')
@@ -522,7 +522,7 @@ ok(all(x not in json.dumps(flow,ensure_ascii=False) for x in ['metric-fg-progres
 # revised3 target-runtime regressions.
 installer=(ROOT/'installer/install.sh').read_text(encoding='utf-8')
 ok('sql/90-schema-verification.sql' not in installer and 'verify MariaDB schema' not in installer,'installer does not run detailed schema regression as an installation-critical gate')
-ok('sql/11-runtime-routines.sql' in installer,'installer installs transactional runtime routines')
+ok(all('sql/11-runtime-routines.sql' in json.loads((ROOT/'installer/migrations.json').read_text())[key] for key in ['fresh_files','upgrade_files']),'installer installs transactional runtime routines through declared plans')
 registry=(ROOT/'sql/02-runtime-registry-seed.sql').read_text(encoding='utf-8')
 ok('expected-attenuation-midpoint-v1' in registry and 'expected-fg-midpoint-v1' not in registry,'finished-ABV calculation model registry matches attenuation-based runtime')
 ok("LEFT JOIN v_current_fermentation_target ft" in views_sql and 'expected_attenuation_display' in views_sql,'current-session read-model exposes attenuation and derived-FG display values')
@@ -539,7 +539,7 @@ ok(all(x in metadata_seed for x in ["'ha_registry_active_count',NULL,75","'ha_re
 
 
 # p23r2-revised6: all database-owned user-facing report timestamps are rendered in Europe/Oslo.
-report_sql = views_sql[views_sql.index("CREATE OR REPLACE VIEW v_active_session_report_summary"):views_sql.index('CREATE OR REPLACE VIEW v_session_start_status')]
+report_sql = views_sql[views_sql.index("CREATE OR REPLACE VIEW v_active_session_report_summary"):views_sql.index('-- START FIELD READ MODEL')]
 ok("DATE_FORMAT(CONVERT_TZ(s.pitched_at,'+00:00','Europe/Oslo'),'%d.%m.%Y %H:%i') AS pitched_display" in report_sql,
    'active-session Pitch display converts stored UTC to Europe/Oslo')
 raw_report_date_formats=[line for line in report_sql.splitlines()

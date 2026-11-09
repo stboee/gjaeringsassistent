@@ -13,7 +13,7 @@ COMPONENTS = {
 }
 TRANSIENT_DIRS = {'node_modules', '__pycache__', 'install-reports', '.cache', '.tmp', 'secrets', 'credentials'}
 LOCAL_NAMES = {'secrets.yaml', 'secrets.yml', 'secrets.json', 'credentials.json',
-               'credentials.yaml', 'credentials.yml', '.npmrc', '.config.runtime.json'}
+               'credentials.yaml', 'credentials.yml', '.npmrc', '.config.runtime.json', 'flows.generated.json'}
 
 
 def is_source_file(path: Path):

@@ -1,54 +1,37 @@
 # Gjæringsassistent – videreføring
 
-Oppdatert 7. november 2026 for **2026.11.07-1 – Første GitHub-utgave**. Teknisk utgangspunkt er p24r16, original ZIP-SHA-256 884b2dea0e42cfbf5efabc8a32ff3c0ab464c18c4ab206ec0d38a6c8ba6c26d4.
+Leveranse **2026.11.09-1 – Databevaring og trygg oppstart**. Teknisk utgangspunkt er p24r16 og første GitHub-utgave 2026.11.07-1. Se VERSION, BUILD-INFO.json, Git-tag og release-artefakt for faktisk identitet; dokumentasjon på main kan være nyere enn en publisert pakke.
 
 ## Ny chat
 
-Start med [den faste onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md). Den bruker dette notatet som datert status og peker videre til autoritative krav og strukturerte kilder. Les aktuell main og release; ikke anta at siste release er installert.
+Følg [onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md). Les AGENTS.md, dokumentkart 00, aktive beslutninger 14, relevante kontrakter og de strukturerte SQL-/registry-kildene. Skill kode, lokal test, publisert pakke og faktisk installasjon. Diskuter neste arbeid før «start»; allerede autorisert arbeid videreføres uten gjentatte godkjenninger.
 
-## Status
+## Denne leveransen
 
-Brukeren har bekreftet at p24r16 er installert og fungerer fint og ønsker å forsøke løsningen i produksjon. Datoversjonen er første publisering i nytt repository. [Release v2026.11.07-1](https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.07-1) er publisert fra commit a1919e64d6a9db5aec9ae3cc2fd0b18314d9caca med ZIP og SHA-256. Dokumentoppdateringer på main etter taggen er ikke en ny programvareleveranse. Tidligere brukerbekreftelse er ikke en samlet UAT-kvittering for datoversjonen.
+- Databevarende installasjon fra `0.1.0-prototype24-r16` eller `2026.11.07-1`; tom database initialiseres. Samme målversjon kan reinstallere filer med samsvarende migreringskvittering. Manifestet står i installer/migrations.json.
+- Privat, komprimert SQL-backup og flow/credentials før endring. Backup tar med tabeller, rutiner, triggere, hendelser og view-definisjonenes tegnsett/sikkerhet uten å evaluere grafuttrykk. Feil i backup eller ukjent grunnlag hindrer migrering.
+- DB-eide startfelt og startklarstatus. HA kan ikke skjule et NULL-felt i en ny kladd med en gammel tallverdi. Samme verdi kan registreres eksplisitt. Slurry og tørrgjær valideres fra samme aktuelle DB-grunnlag.
+- Startforsøk med feltvise snapshots i MariaDB og de ti siste i teknisk eksport. Normaliserte regler og HA-bindinger eier labels, valg, grenser og krav.
+- Systemkontroll teller åpne P/B-besøk bare innen aktiv operativ sesjon og avdekker reelle doble/manglende besøk. Beholdte gamle sesjoner utløser ikke denne feilen.
 
-Gjeldende repository er https://github.com/stboee/gjaeringsassistent. Det gamle er omdøpt til gjaeringsassistent-old. En separat videreføringspakke er sikret med 200 gamle filer, p24r16 og kontrollsummer. Gamle styringsfiler og historiske løsninger skal ikke overstyre dagens dokumentasjon.
+Runtime-schema er 10, template-schema 4, med 207 permanente InnoDB-tabeller og 183 views. Historiske testnavn beholder sine navn; application_version og kildeavtrykk angir hva som faktisk er testet. Grafmotor, gjæringsprofiler og arkivformat er videreført.
 
-Denne utgaven samordner datoversjon, dokumentasjon, faglige kildelenker og Git-basert pakking. Nåværende MariaDB/InnoDB-arkitektur, generisk Node-RED-motor, HA-presentasjon, frosne sesjoner, historisk fra–til, seks felles grafer og SQLite-par er teknisk grunnlag.
+## Arkitektursperrer
 
-Se TEST-RESULTS.md og verification/ for faktisk ny kjøring, kildeavtrykk og begrensninger. Eldre filnavn er testenes opprinnelse; application_version må stemme med utgaven. Native HA-plugin-tester bruker faktisk plugin med simulert transport. Det er ikke faktisk HA-/nettleser-UAT.
+MariaDB/InnoDB er eneste persistente domeneautoritet. Node-RED er generisk motor/transport; HA/frontend viser ferdige DB-felt og sender eksplisitte kommandoer. Ingen HA-reserveverdier, skjulte defaults, frontend-beregninger eller generell writer-kø. Registry → template → normalisert frozen sesjon → generisk evaluering. SG-only, egne B/P-faser og ingen automatisk fysisk utstyrsstyring. Korte transaksjoner og DB-constraints håndterer integritet/samtidighet.
 
-## Leserekkefølge
+Append-only gjelder fakta/revisjoner i hver beholdt sesjon. Hele gamle sesjoner og ubrukte importerte templates kan slettes eksplisitt og atomisk. Startdiagnostikk følger en eksplisitt slettet template gjennom deklarert FK-kaskade. Én felles graftegner brukes i dashboard og rapport. SQLite-par er utvekslingsformat; operativ sammenligning skjer i MariaDB.
 
-1. AGENTS.md, README, VERSION, BUILD-INFO.json, RELEASE-MANIFEST.json, RELEASE-NOTES.md og TEST-RESULTS.md.
-2. docs/00-DOKUMENTKART-OG-STATUS.md og dokument 14 med aktive beslutninger.
-3. Relevante krav 01–04, arkitektur 07, integrasjonskontrakt 05, datamodell 06 og operasjonskontrakt 12.
-4. Regelmodell 10, template/editor 11, livsløp/rapport 13 og relevante fagprofiler 16/17.
-5. Åpent arbeid 15, akseptanse 09, implementasjonsstatus 18 og teknisk diagnostikk 19.
-6. SQL DDL, views/rutiner, registry-/template-seeder samt verification/test-catalog.json og verification/verification-model.json.
+## Test og målmiljø
 
-## Prinsipper som skal videreføres
+Se [TEST-RESULTS.md](TEST-RESULTS.md), verification/release-results.json og de kildebundne native regresjonsfilene. 37 automatiserte tester og 14 UAT er registrert. Native testmiljø bruker faktisk MariaDB 12.3.3 og plugin 0.80.3; Docker-/HA-transport er simulert. Databevaring sammenlignes over alle eksisterende domenetabeller, og backup gjenopprettes på separat isolert MariaDB-instans. Ingen produksjonsinstallasjon er utført av denne arbeidsøkten.
 
-- MariaDB/InnoDB er eneste autoritative persistente domenekilde. Node-RED er generisk motor/orchestrator; HA/frontend viser ferdige read-model-felt og formidler handlinger.
-- Feil rettes i modellen, registry, frozen session eller read-model. Ingen lokale defaults, oppdiktede verdier, reserveberegninger eller frontend-workarounds.
-- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner. InnoDB håndterer samtidighet; ingen generell writer-kø eller eksplisitt locking som normalmekanisme.
-- Append-only gjelder fakta/revisjoner innenfor hver beholdt sesjon. Hele historiske sesjoner og ubrukte importerte templates kan slettes eksplisitt og atomisk. Drafts er egne mutable arbeidsflater.
-- Registry → template → normalisert frozen session → generisk motor. Ingen nødvendig domenepersistens i flow/global, HA, nettleser eller lokale runtimefiler.
-- Reelt fravær dokumenteres og erstattes ikke med 0. Påkrevde kontraktfelt kan ikke utelates.
-- SG-only, separate B/P-modeller, én operativ sesjon og ingen automatisk fysisk utstyrsstyring.
-- Én felles graftegner og samme autoritative seriegrunnlag i dashboard/rapport. Manglende måleverdier estimeres ikke. HA-timesstatistikk supplerer historiske grafer uten oppdiktet heartbeat eller ordinært B/P-grunnlag.
-- SQLite er arkiv-/utvekslingsformat for sammenhørende sesjons- og templatefiler. Sammenligning skjer i MariaDB etter import. Importert template får unik identitet og opprinnelse.
+Siste vedlagte målrapport er fra **p24r16 den 08.11.2026 kl. 22:57**. HA viste slurryvolum 4000/generasjon 2 mens databasekladden hadde NULL. Tidligere rapport viste feil P/B-telling. Brukeren hadde tidligere bekreftet generell funksjon i p24r16; nyere konkrete avvik og manglende måltest av denne leveransen er ikke overstyrt av den bekreftelsen.
 
-## Strukturerte kilder må faktisk undersøkes
+Åpent mål-/fagarbeid står i dokument 15 og akseptanse 09: reell oppgradering og startflate, Recorder-/timesimport, HA-gjenoppkobling, nettverksbrudd, nettleser/tidssoner, arkiv/ny start, B/P-korreksjoner, CPU/slow-log og faglig kalibrering. Ingen UAT er automatisk merket bestått.
 
-HA-identitet, inputbindinger, mappings og constraints eies av ha_entity_registry/ha_event_registry med underregistre. Output følger ha_projection_routes/ha_projection_fields/ha_draft_output_bindings. Funksjon–informasjon-lineage finnes i system_functions, information_objects og function_information_dependencies. Schema-/fraværssemantikk finnes i schema_relation_semantics/schema_absence_semantics; fysisk fasit er DDL og INFORMATION_SCHEMA.
+## Videre arbeid og publisering
 
-SQL 01–04, 21, 23 og 24 beskriver registry, templates, system-/målekildemetadata og verifikasjon. Faktiske resultater er verification_test_runs/verification_test_results, med seed 25 for utførte releasekontroller. HTML, genererte JSON-kataloger og fysisk katalog er avledet inspeksjon.
+Arbeid direkte på main; issues og PR inngår ikke i prosjektprosessen. Versjon er ÅÅÅÅ.MM.DD-N, tag v-prefiks, med kort releasebeskrivelse. Publisert release inneholder ZIP og SHA-256 knyttet til samme kildecommit. Eksisterende tag/artefakt skal ikke omskrives.
 
-## Arbeidsmåte og neste steg
-
-Diskuter omfang først og vent på «start» før implementering. Gjennomfør deretter avtalt arbeid uten unødvendige nye avklaringer. Arbeidet føres direkte på main; issues/PR og den gamle Chat→Work/handoff-prosessen inngår ikke i arbeidsflyten. Datoversjon er ÅÅÅÅ.MM.DD-N, tag med v-prefiks og kort beskrivelse i release-tittelen.
-
-Skill besluttet, implementert, lokalt testet, levert, installert og målmiljøbekreftet. Nye observasjoner må knyttes til riktig tid og versjon. Ikke påstå at tidligere chat eller vedlegg er lest uten faktisk tilgang. Ikke viderefør gammel backlog uten kontroll mot dagens grunnlag.
-
-**Prototypeinstalleren resetter databasen.** Et oppgraderingsløp med databevaring er neste avgrensede arbeid før ordinære produksjonsoppgraderinger. Reell Recorder-/timesimport, HA-gjenoppkobling, nettverksbrudd, nettleser/tidssoner, arkiv-/ny-start-flyt og CPU/slow-log må fortsatt målverifiseres der konkret bevis mangler. Faglig kalibrering er åpen.
-
-En ny chat bør først oppsummere kilder den faktisk har lest, versjon/installasjonsstatus, bindende prinsipper, siste endringer, åpne forhold og foreslått omfang. Ingen ny funksjonalitet eller produksjonsinstallasjon følger automatisk av denne overleveringen.
+Nåværende oppgraderingsbestilling omfatter bygg/publisering, ikke kjøring på brukerens server. Ingen ny implementeringsoppgave er avtalt utover denne leveransen. Ved videre feil: les fersk teknisk rapport, skill aktive feil fra historiske hendelser og følg HA/NR/read-model til autoritativ DB-kilde.

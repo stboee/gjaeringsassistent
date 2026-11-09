@@ -91,3 +91,7 @@ Node-RED leser HA entity/event-registre, inputbindings og bootstrapmetadata fra 
 Prosessovergang leser `v_process_guidance_effective`. Registrert fravik og tilbaketrekking påvirker samme DB-resultat i anbefaling, overgangsbeslutning og oversikt. Manglende påkrevd kriteriebevis skal ikke telles som håndtert.
 
 `ga_prepare_selected_demo_tx` eier også demoens kladdgrunnlag. Node-RED kaller rutinen og sender resultatet gjennom den ordinære Start-banen; demofakta er ikke lokale Node-RED-standardverdier.
+
+## DB-validering av Start
+
+`ga_read_start_context(attempt_id,historical_end)` validerer den aktuelle kladden, lagrer feltvise forsøksfakta og returnerer validering og samme DB-grunnlag fra ett konsistent snapshot. Startfunksjonen transporterer DB-avvisningen og kontrollerer kontraktens tilstedeværelse/samsvar; den har ingen alternativ slurry-/tørrgjærvalidering. `ga_start_session_tx` beholder den atomiske frozen-/pitch-/livsløpsskrivingen. `v_system_check_session` teller åpne P/B-besøk bare innen operativ aktiv sesjon og oppdager både manglende og reelt doble åpne besøk.

@@ -1,0 +1,26 @@
+{
+  "application_version": "2026.11.09-1",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "status": "pass",
+  "target_ha_uat": "not_run",
+  "checks": [
+    "empty DB fields are explicitly missing despite stale HA numbers; rejected Start persists exact field snapshots",
+    "concurrent draft edit cannot change the exact validated/returned/recorded start snapshot and does not require an application lock",
+    "same-value explicit HA event persists through actual DB binding and complete slurry Start stores only slurry pitch facts",
+    "retained old session plus active fermentation yields process=1/biology=1 through actual Systemkontroll query and consumer",
+    "unregistered start binding fails visibly in the DB contract"
+  ],
+  "source_fingerprints": {
+    "installer/install.sh": "7fcbe0ad6396f23f19eddf463eee7e710f10a8cd4408e3b7d98749ee249df36d",
+    "installer/database-plan.py": "0897049c67136543570fa0f1282e526fad2fadfa7c5f8c31c2fc39c49483050c",
+    "installer/migrations.json": "0f923e66fdba04e5adeb42c219305e492405a51a067b660b5b98fbac15e79671",
+    "sql/10-runtime-schema.sql": "e1d216aef68c5d9ed9c2566e29e353766e376ffbc5497de7176799ab49b060f9",
+    "sql/11-runtime-routines.sql": "8a886a169ac60af55c337d0759aea848f91bfc6cfb832c0aa2a8a777a5408f0c",
+    "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
+    "sql/21-system-metadata-seed.sql": "be4002f98d9e8e3d6262f3b2b8f7c6330619574409e1fa219f08a67ade5af825",
+    "nodered/flows.template.json": "bb69d0929e0eec96553e39a9d97e1e7bfa0600ecc99cd826c4f07e7bd5c33fd4",
+    "dashboard/gjaeringsassistent-card.js": "927f4582b59c973016c856c5f0a6cd196f32bb9c35fdde83ad20b655e9ba1fc4",
+    "dashboard/gjaeringsassistent-dashboard.yaml": "bab6eb2666c406e365e6e5694985276517736f6283c26a7aca4b24c2d9666f88",
+    "tests/test-start-control-live.js": "93cf98bb2c1d0d6b433249394db722636854d619f512ed2b72418c6cde138763"
+  }
+}

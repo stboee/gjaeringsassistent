@@ -1,4 +1,4 @@
-title: Gjæringsassistent p24r6
+title: Gjæringsassistent
 views:
   - title: Gjæring
     path: gjaring
@@ -27,39 +27,10 @@ views:
               - entity: sensor.gjaeringsassistent_livslop
                 state: configured
             card:
-              type: entities
-              title: Startgrunnlag · HA-historikk + live
-              show_header_toggle: false
-              entities:
-                - entity: sensor.gjaeringsassistent_valgt_template
-                  name: Valgt template
-                - entity: select.gjaeringsassistent_template
-                  name: Bytt template før start
-                - entity: text.gjaeringsassistent_batchnavn
-                  name: Batchnavn
-                - entity: number.gjaeringsassistent_volum_l
-                  name: Volum
-                - entity: select.gjaeringsassistent_pitchmodus
-                  name: Pitchmodus
-                - entity: number.gjaeringsassistent_gjaermengde_g
-                  name: Tørrgjærmengde
-                - entity: number.gjaeringsassistent_slurry_volum_ml
-                  name: Slurryvolum
-                - entity: text.gjaeringsassistent_slurry_kildebatch
-                  name: Slurryens kildebatch
-                - entity: number.gjaeringsassistent_slurry_generasjon
-                  name: Slurrygenerasjon
-                - entity: text.gjaeringsassistent_oksygenering
-                  name: Oksygenering
-          - type: conditional
-            conditions:
-              - entity: sensor.gjaeringsassistent_livslop
-                state: configured
-            card:
               type: custom:gjaeringsassistent-card
-              title: Start fra
-              view: starttime
-              entity: text.gjaeringsassistent_pitchtid
+              title: Startgrunnlag · lagret i MariaDB
+              view: startfields
+              section: pitch
       - type: grid
         column_span: 1
         cards:
@@ -68,48 +39,10 @@ views:
               - entity: sensor.gjaeringsassistent_livslop
                 state: configured
             card:
-              type: entities
+              type: custom:gjaeringsassistent-card
               title: Første komplette målesett
-              show_header_toggle: false
-              entities:
-                - entity: select.gjaeringsassistent_kontroll_malemetode
-                  name: Måleinstrument
-                - entity: number.gjaeringsassistent_malt_sg
-                  name: Målt SG (OG ved Start)
-                - entity: number.gjaeringsassistent_provetemperatur
-                  name: Prøvetemperatur
-                - entity: number.gjaeringsassistent_hydrometer_kalibreringstemperatur
-                  name: Hydrometerets kalibreringstemperatur
-                - entity: number.gjaeringsassistent_manuell_temperatur
-                  name: Manuelt målt temperatur
-                - entity: number.gjaeringsassistent_trykk
-                  name: Trykk
-                - entity: number.gjaeringsassistent_kjolemaskin_settpunkt
-                  name: Kjølemaskinens settpunkt
-                - entity: number.gjaeringsassistent_kjolemaskin_kalibrering
-                  name: Kjølemaskinens kalibreringsverdi
-                - entity: select.gjaeringsassistent_gjaerlasaktivitet
-                  name: Gjærlåsaktivitet
-                - entity: number.gjaeringsassistent_acetaldehyd
-                  name: Acetaldehyd
-                - entity: number.gjaeringsassistent_diacetyl
-                  name: Diacetyl
-                - entity: number.gjaeringsassistent_vorteraktig_preg
-                  name: Vørteraktig preg
-                - entity: number.gjaeringsassistent_svovel_so2
-                  name: SO₂ / fyrstikk
-                - entity: number.gjaeringsassistent_svovel_h2s
-                  name: H₂S / råttent egg
-                - entity: number.gjaeringsassistent_klarhet
-                  name: Klarhet
-                - entity: number.gjaeringsassistent_utfelling_i_prove
-                  name: Utfelling i prøve
-                - entity: number.gjaeringsassistent_utfelling_minutter
-                  name: Hviletid prøve
-                - entity: select.gjaeringsassistent_kontroll_konklusjon
-                  name: Samlet brukervurdering
-                - entity: text.gjaeringsassistent_kontrollnotat
-                  name: Målenotat
+              view: startfields
+              section: measurement
       - type: grid
         column_span: 1
         cards:

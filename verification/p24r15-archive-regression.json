@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.07-1",
+  "application_version": "2026.11.09-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "checks": [
@@ -15,6 +15,6 @@
     "active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection"
   ],
   "deleted_rows": 605,
-  "active_export_sha256": "2c89e072bf4935eca1d95d9e838b904a3dda3c387b830fdc6f1722368c290944",
-  "concurrent_snapshot_writes": 159
+  "active_export_sha256": "16ba9bdfac7fac230636a0ec6d4f958658b4b503fcad24a51e0d9e4a72f919e1",
+  "concurrent_snapshot_writes": 118
 }

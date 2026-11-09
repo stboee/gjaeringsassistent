@@ -130,3 +130,9 @@ Oversiktspayload 2.5 har DB-leverte duration_display, duration_seconds, started_
 
 
 Målekildeprojeksjonen har obligatoriske displayfelt import_counts_display, import_coverage_display og import_summary_display. Oversiktspayload 2.5 har det valgfrie import_coverage-objektet når en operativ kildeimport finnes. Normal historisk status er ikke en transportfeil. Teknisk HA-publisering kvitteres ved den reelle sensor-/binary-sensor-utgangen; metadataenes target-ID følger den tekniske meldingen og inngår ikke i domeneattributtene.
+
+## DB-eide startfelt
+
+Startflaten bruker `v_start_fields` via `sensor.gjaeringsassistent_startstatus.attributes.start_fields`. Verdi, fravær, label, valg, grenser og valideringsmelding leveres av MariaDB. `gjaeringsassistent_set_start_field` sender entity-ID og eksplisitt brukerinput til den registrerte DB-bindingen, også når samme tall tidligere stod i HA. Node-RED leser ingen HA-verdi som reservegrunnlag. HA number/text/select-entitetene beholdes som kompatible inputkanaler; deres lagrede state er ikke kvittering for innholdet i en ny kladd.
+
+Startflaten viser `start_ready` og `start_readiness_message` uten egen domenetolkning. Kontrollene viser tom input/«Ikke angitt» ved DB-fravær. Fokusert, ennå usendt brukerinput er bare flyktig redigering; lagret status kommer ved neste DB-projeksjon.

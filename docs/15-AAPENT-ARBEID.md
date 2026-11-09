@@ -35,14 +35,15 @@ Bevar rå HA-historikk lenger og hold HA/Raspberry Pi i drift under oppstart. Te
 
 ## Gjeldende målmiljøstatus
 
-Brukeren har bekreftet at p24r16 er installert og fungerer fint. Første GitHub-utgave 2026.11.07-1 bygger på dette grunnlaget. Bekreftelsen lukker ikke automatisk hver enkelt av de 14 UAT-testene; faktisk installasjon av datoversjonen og konkrete målresultater må registreres separat.
+Siste vedlagte målrapport er fra p24r16 den 08.11.2026 kl. 22:57. Den dokumenterer slurryfelter som avviker mellom HA og ny databasekladd; tidligere rapport viser feil P/B-telling når gamle sesjoner beholdes. Rettelsene i 2026.11.09-1 er ikke bekreftet installert i målmiljøet. De 14 UAT-testene beholder sine faktiske statuser.
 
 Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal native integrasjon dokumenterer leseavgrensning og samtidighet, ikke garantert responstid på gangpc. Reell HA Recorder/time-statistikk, nettverksfeil, nettleser/tidssoner, B/P-korreksjoner, faste akser, arkiv/ny start og HA-gjenoppkobling er fortsatt måltester der konkrete bevis mangler.
 
-## Produksjonsoppgraderinger
+## Oppgradering og oppstart
 
 | ID | Type | Status | Område | Exit-kriterium |
 |---|---|---|---|---|
-| OPEN-015 | Avklaring/implementering | Åpen | Oppgradering med databevaring | Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling. |
+| OPEN-015 | Måltest | Åpen | Oppgradering med databevaring | Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling. |
+| OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den nye DB-baserte startflaten, samme-verdi-lagring, presise avvisninger og P/B-kontroll bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; installert retting er ikke bekreftet. |
 
-Dagens installer resetter fortsatt databasen. GitHub-publisering er ikke en databevarende migrering. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.
+Databevarende migrering fra p24r16 / 2026.11.07-1 er implementert med native tester og simulert Docker-transport. Faktisk oppgradering på gangpc er ikke bekreftet. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.

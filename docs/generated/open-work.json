@@ -120,12 +120,21 @@
     },
     {
       "id": "OPEN-015",
-      "type": "Avklaring/implementering",
+      "type": "Måltest",
       "status": "Åpen",
       "subject": "Oppgradering med databevaring",
       "exit_criterion": "Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling.",
       "source": "15-AAPENT-ARBEID.md",
       "line": 46
+    },
+    {
+      "id": "OPEN-016",
+      "type": "Måltest",
+      "status": "Åpen",
+      "subject": "Slurry/startfelt",
+      "exit_criterion": "Den nye DB-baserte startflaten, samme-verdi-lagring, presise avvisninger og P/B-kontroll bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; installert retting er ikke bekreftet.",
+      "source": "15-AAPENT-ARBEID.md",
+      "line": 47
     }
   ]
 }

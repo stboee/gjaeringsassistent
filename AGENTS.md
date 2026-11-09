@@ -12,7 +12,7 @@ Les `docs/00-DOKUMENTKART-OG-STATUS.md`, aktive beslutninger i dokument 14 og re
 - Oppdater autoritative kilder, metadata, relevante tester og dokumentasjon samlet. Generer avledede filer med prosjektets byggverktøy.
 - Kjør tester som er relevante for endringen. Skill mellom kildeinspeksjon, lokale tester, faktisk MariaDB-/plugin-integrasjon og målmiljø/UAT. Ikke gi eldre bevis ny testdato eller versjon uten ny kjøring.
 - Ta ikke med passord, HA-token, credentials, driftsdatabaser eller lokale rapporter i Git. Bevar eksisterende brukerarbeid.
-- Produksjonsinstallasjon, restart og datamigrering krever at brukerens bestilling omfatter dette. Nåværende prototypeinstaller resetter databasen og er ingen databevarende oppgradering.
+- Produksjonsinstallasjon, restart og datamigrering krever at brukerens bestilling omfatter dette. Installeren bevarer databasen og bruker kun verifiserte versjonsstyrte oppgraderingsbaner; se installer/migrations.json. Ukjent struktur/versjon avvises før mutasjon.
 
 ## Arkitektursperrer
 

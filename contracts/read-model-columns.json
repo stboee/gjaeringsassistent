@@ -2923,6 +2923,47 @@
     "message",
     "database_now"
   ],
+  "v_start_fields": [
+    "entity_id",
+    "field_name",
+    "section_id",
+    "sort_order",
+    "label",
+    "converter_id",
+    "required_value",
+    "positive_required",
+    "applicable",
+    "database_value",
+    "input_value",
+    "input_type",
+    "minimum_value",
+    "maximum_value",
+    "step_value",
+    "options_json",
+    "validation_status",
+    "validation_message",
+    "value_display"
+  ],
+  "v_start_field_values": [
+    "draft_key",
+    "entity_id",
+    "database_value"
+  ],
+  "v_start_issues": [
+    "issue_key",
+    "message"
+  ],
+  "v_start_readiness": [
+    "ready_to_start",
+    "message",
+    "issues_json"
+  ],
+  "v_system_check_session": [
+    "check_id",
+    "check_status",
+    "severity",
+    "summary"
+  ],
   "v_system_function_information_chain": [
     "function_id",
     "function_label",

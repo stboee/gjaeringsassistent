@@ -1,5 +1,4 @@
-[ { v: '12.3.3-MariaDB-ubu2404' } ]
-RUN python3 tests/test-mariadb-p24.py --binary /workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd --basedir /workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr --datadir /workspace/scratch/1ddb593c676d/release-test-env/data --port 13310
+RUN python3 tests/test-mariadb-p24.py --binary /workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd --basedir /workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr --datadir /workspace/scratch/1ddb593c676d/release-test-env/production-native-1794179362 --port 13310
 SERVER /workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)
 PASS Oslo timezone fixture
 PASS clean schema, routines, views and all seeds
@@ -18,7 +17,7 @@ PASS actual p20_technical_export_query SQL with active session
 PASS actual p20_overview_query SQL with active session
 PASS actual p23_verification_read_query SQL with active session
 PASS clone full fields, injected rollback, policy freeze, counts and lineage
-PASS all 178 actual view queries
+PASS all 183 actual view queries
 PASS lineage filters with declared, legacy client and MariaDB 11.8 default collations
 PASS actual 12.3.3 read_only=ON through shipping Systemkontroll query
 PASS actual 12.3.3 read_only=NO_LOCK through shipping Systemkontroll query
@@ -174,6 +173,14 @@ PASS r9 actual comparison read-model
 RESULT: PASS – r9 native event/import/current-criterion regressions
 RUN node tests/reset-isolated-db.js
 PASS clean isolated database through actual installer SQL order
+RUN node tests/test-start-control-live.js
+PASS empty DB fields are explicitly missing despite stale HA numbers; rejected Start persists exact field snapshots
+PASS concurrent draft edit cannot change the exact validated/returned/recorded start snapshot and does not require an application lock
+PASS same-value explicit HA event persists through actual DB binding and complete slurry Start stores only slurry pitch facts
+PASS retained old session plus active fermentation yields process=1/biology=1 through actual Systemkontroll query and consumer
+PASS unregistered start binding fails visibly in the DB contract
+RUN node tests/reset-isolated-db.js
+PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r16-system-live.js
 PASS processed empty period remains explicit missing data rather than successful data coverage
 PASS reported historical-only case: ready import, 215 hourly records, zero detail and DB-owned coverage warning without false error
@@ -210,48 +217,11 @@ RESULT: PASS – SQLite transfer and concurrency on actual MariaDB 12.3.3
 RUN node tests/reset-isolated-db.js
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r15-performance-live.js
-READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1151,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1215,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1280,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1207,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":42,"elapsed_ms":1184,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":8726,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":6,"rows_read":371,"cpu_ms":null}}
-MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1151,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1215,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1280,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1207,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":42,"elapsed_ms":1184,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":8726,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":6,"rows_read":371,"cpu_ms":null}}
-PASS 21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages
-PASS three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot
-ERR_ASSERTION Expected values to be strictly equal:
-
-0 !== 1
-
-[ { v: '12.3.3-MariaDB-ubu2404' } ]
-RUN node tests/reset-isolated-db.js
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-performance-live.js
-READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1176,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1141,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1226,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1133,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":42,"elapsed_ms":1239,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":9273,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":6,"rows_read":371,"cpu_ms":null}}
-MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1176,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1141,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1226,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1133,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":42,"elapsed_ms":1239,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":9273,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":6,"rows_read":371,"cpu_ms":null}}
-PASS 21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages
-PASS three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot
-ERR_ASSERTION clock refresh deadline must trigger a new overview
-
-0 !== 1
-
-[ { v: '12.3.3-MariaDB-ubu2404' } ]
-RUN node tests/reset-isolated-db.js
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-performance-live.js
-READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1206,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1252,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1205,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1134,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":42,"elapsed_ms":1261,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":8850,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":8,"rows_read":371,"cpu_ms":null}}
-MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1206,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1252,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1205,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1134,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":42,"elapsed_ms":1261,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":8850,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":8,"rows_read":371,"cpu_ms":null}}
+READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":796,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":760,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":826,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":781,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":844,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":5466,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":3,"rows_read":371,"cpu_ms":null}}
+MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":796,"rows_read":78790,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":760,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":826,"rows_read":72010,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":781,"rows_read":72768,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":844,"rows_read":88781,"cpu_ms":null}],"after":{"elapsed_ms":5466,"rows_read":54523,"cpu_ms":null},"poll":{"elapsed_ms":3,"rows_read":371,"cpu_ms":null}}
 PASS 21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages
 PASS three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot
 PASS measurement change and DB clock deadline each trigger fresh publication; receipt is idempotent and unchanged polls remain cheap
-RUN node tests/reset-isolated-db.js
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-historical-live.js
-ERR_ASSERTION AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
-+ actual - expected
-
-+ '2026-09-27 18:07:00.000'
-- '2026-09-27 20:07:00.000'
-              ^
-
-    at /workspace/scratch/1ddb593c676d/gjaeringsassistent/tests/test-p24r15-historical-live.js:20:9
-    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
-[ { v: '12.3.3-MariaDB-ubu2404' } ]
 RUN node tests/reset-isolated-db.js
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r15-historical-live.js

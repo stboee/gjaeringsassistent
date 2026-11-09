@@ -10,7 +10,7 @@ SELECT 'timezone_europe_oslo_available' AS test,
        ) AS result;
 
 SELECT 'base_table_count' AS test,
-       IF(COUNT(*)=202,'PASS',CONCAT('FAIL: ',COUNT(*))) AS result
+       IF(COUNT(*)=207,'PASS',CONCAT('FAIL: ',COUNT(*))) AS result
 FROM information_schema.tables
 WHERE table_schema=DATABASE() AND table_type='BASE TABLE';
 
@@ -49,7 +49,7 @@ WHERE table_schema=DATABASE() AND table_name='sessions'
   AND column_name IN ('status','active_guard','activity_started_at','completed_at','completion_note');
 
 SELECT 'view_count' AS test,
-       IF(COUNT(*)=178,'PASS',CONCAT('FAIL: ',COUNT(*))) AS result
+       IF(COUNT(*)=183,'PASS',CONCAT('FAIL: ',COUNT(*))) AS result
 FROM information_schema.views
 WHERE table_schema=DATABASE();
 
@@ -167,7 +167,7 @@ WHERE table_schema=DATABASE()
 SELECT 'p20r1_database_metadata' AS test,
        IF(COUNT(*)=1,'PASS','FAIL') AS result
 FROM database_metadata
-WHERE metadata_id=1 AND schema_version=9 AND application_version IS NOT NULL AND application_version<>'';
+WHERE metadata_id=1 AND schema_version=10 AND application_version IS NOT NULL AND application_version<>'';
 
 SELECT 'p20r1_draft_pitch_timing_columns' AS test,
        IF(COUNT(*)=2,'PASS',CONCAT('FAIL: ',COUNT(*),'/2')) AS result

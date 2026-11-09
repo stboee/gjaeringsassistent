@@ -3422,6 +3422,121 @@ FROM archive_import_candidates c WHERE EXISTS(SELECT 1 FROM archive_uploads u WH
 
 
 -- Reconstructed at startup and after every lifecycle/measurement transition.
+
+-- START FIELD READ MODEL: values are read from the current DB draft, never HA.
+CREATE OR REPLACE VIEW v_start_field_values AS
+SELECT d.draft_key,'text.gjaeringsassistent_batchnavn' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`batch_name` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'text.gjaeringsassistent_pitchtid' COLLATE utf8mb4_unicode_ci AS entity_id,DATE_FORMAT(d.`pitched_at`,'%Y-%m-%dT%H:%i:%s.%fZ') COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'select.gjaeringsassistent_pitchtid_modus' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`pitch_time_mode` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_volum_l' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`volume_l` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_pitchtemperatur_c' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`manual_temperature_c` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'select.gjaeringsassistent_pitchmodus' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`pitch_mode_id` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_gjaermengde_g' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`yeast_amount_g` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_slurry_volum_ml' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`slurry_volume_ml` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'text.gjaeringsassistent_slurry_kildebatch' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`slurry_source_batch` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_slurry_generasjon' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`slurry_generation` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'text.gjaeringsassistent_oksygenering' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`oxygenation_note` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'select.gjaeringsassistent_kontroll_malemetode' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`measurement_method_id` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_malt_sg' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`measured_sg` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_provetemperatur' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`sample_temperature_c` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_hydrometer_kalibreringstemperatur' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`calibration_temperature_c` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_manuell_temperatur' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`manual_temperature_c` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_trykk' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`pressure_bar` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_kjolemaskin_settpunkt' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`cooler_setpoint_c` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_kjolemaskin_kalibrering' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`cooler_calibration_offset_c` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'select.gjaeringsassistent_gjaerlasaktivitet' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`airlock_activity` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_acetaldehyd' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`acetaldehyde_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_diacetyl' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`diacetyl_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_vorteraktig_preg' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`wort_like_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_svovel_so2' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`sulfur_so2_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_svovel_h2s' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`sulfur_h2s_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_klarhet' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`clarity_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_utfelling_i_prove' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`settling_yeast_level` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'number.gjaeringsassistent_utfelling_minutter' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`settling_minutes` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'select.gjaeringsassistent_kontroll_konklusjon' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`user_conclusion` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d
+UNION ALL
+SELECT d.draft_key,'text.gjaeringsassistent_kontrollnotat' COLLATE utf8mb4_unicode_ci AS entity_id,CAST(d.`measurement_note` AS CHAR) COLLATE utf8mb4_unicode_ci AS database_value FROM session_setup_draft d;
+
+CREATE OR REPLACE VIEW v_start_fields AS
+SELECT q.*,
+CASE WHEN q.applicable=0 THEN 'not_applicable'
+ WHEN q.database_value IS NULL OR CHAR_LENGTH(TRIM(q.database_value))=0 THEN IF(q.required_value=1,'missing','ok')
+ WHEN q.converter_id IN('number','integer') AND (CAST(q.database_value AS DECIMAL(24,8))<q.minimum_value OR CAST(q.database_value AS DECIMAL(24,8))>q.maximum_value OR q.positive_required=1 AND CAST(q.database_value AS DECIMAL(24,8))<=0) THEN 'invalid'
+ WHEN q.converter_id='select' AND NOT EXISTS(SELECT 1 FROM ha_entity_input_value_mappings m WHERE m.entity_id=q.entity_id AND m.database_value=q.database_value) THEN 'invalid'
+ ELSE 'ok' END AS validation_status,
+CASE WHEN q.applicable=0 THEN 'Ikke aktuelt for valgt pitchmodus'
+ WHEN q.database_value IS NULL OR CHAR_LENGTH(TRIM(q.database_value))=0 THEN IF(q.required_value=1,CONCAT('Mangler: ',q.label),'Ikke angitt')
+ WHEN q.converter_id IN('number','integer') AND (CAST(q.database_value AS DECIMAL(24,8))<q.minimum_value OR CAST(q.database_value AS DECIMAL(24,8))>q.maximum_value OR q.positive_required=1 AND CAST(q.database_value AS DECIMAL(24,8))<=0) THEN CONCAT('Ugyldig verdi: ',q.label)
+ WHEN q.converter_id='select' AND NOT EXISTS(SELECT 1 FROM ha_entity_input_value_mappings m WHERE m.entity_id=q.entity_id AND m.database_value=q.database_value) THEN CONCAT('Ugyldig valg: ',q.label)
+ ELSE 'Lagret i MariaDB' END AS validation_message,
+IF(q.database_value IS NULL,'Ikke angitt',q.database_value) AS value_display
+FROM (
+ SELECT f.entity_id,b.session_field AS field_name,f.section_id,f.sort_order,REPLACE(r.display_name,'Gjæringsassistent ','') AS label,b.converter_id,
+ IF(b.session_field='pitched_at',IF(d.pitch_time_mode='specified',1,0),f.required_value) AS required_value,f.positive_required,
+ IF(EXISTS(SELECT 1 FROM start_field_pitch_modes m WHERE m.entity_id=f.entity_id),EXISTS(SELECT 1 FROM start_field_pitch_modes m WHERE m.entity_id=f.entity_id AND m.pitch_mode_id=d.pitch_mode_id),1) AS applicable,
+ v.database_value,
+ CASE b.converter_id WHEN 'select' THEN (SELECT m.ha_value FROM ha_entity_input_value_mappings m WHERE m.entity_id=f.entity_id AND m.database_value=v.database_value) WHEN 'datetime' THEN DATE_FORMAT(CONVERT_TZ(STR_TO_DATE(v.database_value,'%Y-%m-%dT%H:%i:%s.%fZ'),'+00:00','Europe/Oslo'),'%Y-%m-%dT%H:%i:%s') ELSE v.database_value END AS input_value,
+ CASE b.converter_id WHEN 'select' THEN 'select' WHEN 'datetime' THEN 'datetime-local' WHEN 'text' THEN 'text' ELSE 'number' END AS input_type,
+ c.minimum_value,c.maximum_value,c.step_value,
+ COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('value',m.ha_value,'label',m.ha_value) ORDER BY m.ha_value) FROM ha_entity_input_value_mappings m WHERE m.entity_id=f.entity_id),JSON_ARRAY()) AS options_json
+ FROM start_field_rules f JOIN ha_entity_input_bindings b ON b.entity_id=f.entity_id JOIN ha_entity_registry r ON r.entity_id=f.entity_id
+ JOIN session_setup_draft d ON d.draft_key='current' JOIN v_start_field_values v ON v.draft_key=d.draft_key AND v.entity_id=f.entity_id
+ LEFT JOIN ha_entity_number_constraints c ON c.entity_id=f.entity_id
+) q;
+CREATE OR REPLACE VIEW v_start_issues AS
+SELECT field_name AS issue_key,validation_message AS message FROM v_start_fields WHERE applicable=1 AND validation_status IN('missing','invalid')
+UNION ALL SELECT 'template','Velg en publisert template' WHERE NOT EXISTS(SELECT 1 FROM session_setup_draft d JOIN template_versions t ON t.version_id=d.template_version_id AND t.status='published')
+UNION ALL SELECT 'session','Det finnes allerede en operativ session' WHERE EXISTS(SELECT 1 FROM v_current_session)
+UNION ALL SELECT 'source','Obligatorisk målekilde mangler' WHERE NOT EXISTS(SELECT 1 FROM measurement_source_profiles WHERE status='active')
+UNION ALL SELECT 'pitch_time','Starttidspunkt ligger i fremtiden' FROM session_setup_draft d WHERE d.pitch_time_mode='specified' AND d.pitched_at>UTC_TIMESTAMP(3)
+UNION ALL SELECT 'attenuation','Minimum utgjæring er større enn maksimum' FROM session_setup_draft d WHERE d.expected_attenuation_min_percent>d.expected_attenuation_max_percent
+UNION ALL SELECT 'attenuation_range','Forventet utgjæring må være mellom 0 og 100 prosent' FROM session_setup_draft d WHERE d.expected_attenuation_min_percent<=0 OR d.expected_attenuation_max_percent>=100
+UNION ALL SELECT 'measurement_note','Målenotat er lengre enn 255 tegn' FROM session_setup_draft d WHERE CHAR_LENGTH(d.measurement_note)>255
+UNION ALL SELECT 'number_contract','Tallfelt mangler DB-grenser' WHERE EXISTS(SELECT 1 FROM start_field_rules r JOIN ha_entity_input_bindings b ON b.entity_id=r.entity_id LEFT JOIN ha_entity_number_constraints c ON c.entity_id=r.entity_id WHERE b.converter_id IN('number','integer') AND c.entity_id IS NULL)
+UNION ALL SELECT 'field_registry','DB-kontrakt for startfelt er ufullstendig' WHERE EXISTS(SELECT 1 FROM ha_entity_input_bindings b LEFT JOIN start_field_rules r ON r.entity_id=b.entity_id WHERE b.session_field IS NOT NULL AND r.entity_id IS NULL);
+CREATE OR REPLACE VIEW v_start_readiness AS
+SELECT IF(COUNT(*)=0,1,0) AS ready_to_start,
+ IF(COUNT(*)=0,'Startgrunnlag komplett og lagret i MariaDB',GROUP_CONCAT(message ORDER BY issue_key SEPARATOR ' · ')) AS message,
+ COALESCE(JSON_ARRAYAGG(JSON_OBJECT('field',issue_key,'message',message) ORDER BY issue_key),JSON_ARRAY()) AS issues_json
+FROM v_start_issues;
+CREATE OR REPLACE VIEW v_system_check_session AS
+SELECT 'session' AS check_id,
+IF(c.current_sessions<=1 AND c.active_sessions<=1 AND c.completed_sessions<=1 AND (c.active_sessions=0 OR c.active_process=1 AND c.active_biology=1),'ok','error') AS check_status,
+IF(c.current_sessions<=1 AND c.active_sessions<=1 AND c.completed_sessions<=1 AND (c.active_sessions=0 OR c.active_process=1 AND c.active_biology=1),'info','error') AS severity,
+CASE WHEN c.current_sessions=0 THEN 'Ingen operativ session' WHEN c.completed_sessions=1 THEN 'Avsluttet session venter klargjøring' ELSE CONCAT('Aktiv session: prosess=',c.active_process,', biologi=',c.active_biology) END AS summary
+FROM (SELECT (SELECT COUNT(*) FROM v_current_session) AS current_sessions,(SELECT COUNT(*) FROM v_active_session) AS active_sessions,
+(SELECT COUNT(*) FROM v_current_session WHERE lifecycle='completed') AS completed_sessions,
+(SELECT COUNT(*) FROM process_visits p JOIN v_current_process_visit_revision r ON r.visit_id=p.visit_id JOIN v_active_session a ON a.session_id=p.session_id WHERE r.ended_at IS NULL) AS active_process,
+(SELECT COUNT(*) FROM biological_visits p JOIN v_current_biological_visit_revision r ON r.visit_id=p.visit_id JOIN v_active_session a ON a.session_id=p.session_id WHERE r.ended_at IS NULL) AS active_biology) c;
+
 CREATE OR REPLACE VIEW v_session_start_status AS
 SELECT x.session_id,x.lifecycle,x.is_demo,x.last_import_cutoff_at,x.initial_target_at,x.source_started_at,
 CASE WHEN x.session_id IS NULL THEN 0 WHEN x.lifecycle='completed' OR x.is_demo=1 AND x.demo_points>0 THEN 100
@@ -3430,7 +3545,7 @@ CASE WHEN x.session_id IS NULL THEN 'idle' WHEN x.lifecycle='completed' THEN 'co
  WHEN x.is_demo=1 THEN IF(x.demo_points>0,'ready','starting')
  WHEN x.source_profile_id IS NULL THEN 'error' WHEN x.is_historical=1 AND x.last_import_cutoff_at>=x.initial_target_at THEN 'ready' WHEN x.last_error IS NOT NULL THEN 'error'
  WHEN x.source_started_at<x.initial_target_at AND (x.last_import_cutoff_at IS NULL OR x.last_import_cutoff_at<x.initial_target_at) THEN 'importing' ELSE 'ready' END AS state,
-CASE WHEN x.session_id IS NULL THEN 'Klar for valg av template og ny gjæring' WHEN x.lifecycle='completed' THEN 'Gjæring avsluttet'
+CASE WHEN x.session_id IS NULL THEN (SELECT message FROM v_start_readiness) WHEN x.lifecycle='completed' THEN 'Gjæring avsluttet'
  WHEN x.is_demo=1 THEN IF(x.demo_points>0,'Demo er startet','Laster demo')
  WHEN x.source_profile_id IS NULL THEN 'Obligatorisk målekilde mangler i databasen' WHEN x.is_historical=1 AND x.last_import_cutoff_at>=x.initial_target_at THEN CONCAT('Historisk periode ferdig behandlet · klar for etterregistrering · ',c.summary_display,IF(x.last_error IS NULL,'',CONCAT(' · importadvarsel: ',x.last_error))) WHEN x.last_error IS NOT NULL THEN x.last_error
  WHEN x.source_started_at<x.initial_target_at AND (x.last_import_cutoff_at IS NULL OR x.last_import_cutoff_at<x.initial_target_at) THEN 'Importerer målehistorikk' WHEN x.is_historical=1 THEN 'Historisk import fullført · klar for etterregistrering' ELSE 'Gjæring startet' END AS message,
@@ -3482,7 +3597,7 @@ CREATE OR REPLACE VIEW v_ha_start_status_payload AS
 SELECT r.projection_id,r.output_slot,
 JSON_OBJECT('state',s.state,'attributes',JSON_MERGE_PATCH(
  JSON_OBJECT('phase',s.state,'message',s.message,'source','MariaDB','updated_at',DATE_FORMAT(s.database_now,'%Y-%m-%dT%H:%i:%s.%fZ'),
- 'progress_percent',s.progress_percent,'availability',JSON_OBJECT('session_id',IF(s.session_id IS NULL,'not_started','present'),
+ 'progress_percent',s.progress_percent,'start_ready',(SELECT ready_to_start FROM v_start_readiness),'start_readiness_message',(SELECT message FROM v_start_readiness),'start_fields',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('entity_id',f.entity_id,'field_name',f.field_name,'section_id',f.section_id,'label',f.label,'input_type',f.input_type,'value',f.input_value,'value_display',f.value_display,'minimum',f.minimum_value,'maximum',f.maximum_value,'step',f.step_value,'required',f.required_value,'applicable',f.applicable,'validation_status',f.validation_status,'validation_message',f.validation_message,'options',JSON_QUERY(f.options_json,'$')) ORDER BY f.sort_order) FROM v_start_fields f WHERE NOT EXISTS(SELECT 1 FROM v_current_session)),JSON_ARRAY()),'availability',JSON_OBJECT('session_id',IF(s.session_id IS NULL,'not_started','present'),
  'processed_to',IF(s.last_import_cutoff_at IS NULL,'not_yet','present'),'target_import_end',IF(s.initial_target_at IS NULL,'not_applicable','present'),
  'source_started_at',IF(s.source_started_at IS NULL,'not_applicable','present'))),
  JSON_OBJECT('session_id',s.session_id,'processed_to',DATE_FORMAT(s.last_import_cutoff_at,'%Y-%m-%dT%H:%i:%s.%fZ'),

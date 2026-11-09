@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.07-1",
-  "scope": "Første GitHub-utgave fra p24r16 med datoversjon og oppdatert dokumentasjon/pakking",
+  "version": "2026.11.09-1",
+  "scope": "Databevarende installasjon, DB-eid oppstart og aktiv sesjonskontroll",
   "required_files": [
     "VERSION",
     "README.md",
@@ -72,7 +72,19 @@
     "LICENSE",
     "tools/package_files.py",
     "docs/ONBOARDING-NY-CHAT.md",
-    "docs/ONBOARDING-NY-CHAT.html"
+    "docs/ONBOARDING-NY-CHAT.html",
+    "installer/database-plan.py",
+    "installer/backup-database.py",
+    "installer/migrations.json",
+    "sql/migrations/2026.11.09-1-schema.sql",
+    "sql/migrations/2026.11.09-1-metadata.sql",
+    "tests/verify-production.py",
+    "tests/test-start-form.js",
+    "tests/test-start-control-live.js",
+    "tests/test-install-upgrade-live.js",
+    "tests/docker-install-simulator.py",
+    "verification/start-control-regression.json",
+    "verification/install-upgrade-regression.json"
   ],
   "component_groups": {
     "runtime": [

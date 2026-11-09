@@ -381,5 +381,24 @@ avledet opptelling, ikke en ny persistent målekopi.
 med faktiske datagrunnlag. HA-publiseringsfeil/-kvitteringer er ordinære
 append-only Technical Events, ikke et alternativt
 session-state-lager.</p>
+<h2 id="startkontrakt-og-migreringsjournal">Startkontrakt og
+migreringsjournal</h2>
+<p><code>start_field_rules</code> og
+<code>start_field_pitch_modes</code> utvider HA-inputregistrene med
+normalisert krav/tilhørighet. <code>v_start_fields</code>,
+<code>v_start_issues</code> og <code>v_start_readiness</code> leser
+aktuelle kladdverdier og registrerte grenser.
+<code>ga_read_start_context</code> lagrer ett startforsøk og feltvise
+snapshots i <code>session_start_attempts</code> /
+<code>session_start_attempt_fields</code> før det samme konsistente
+grunnlaget returneres til motoren. NULL betyr at input faktisk manglet;
+det blir ikke 0. <code>database_migrations</code> journalfører utført
+migrering og kildeavtrykk. <code>installer/migrations.json</code> eier
+støttede oppgraderingsbaner; DB-ledgeren eier installasjonens faktiske
+utførelseshistorikk.</p>
+<p>Startforsøk som tilhører en eksplisitt slettet ubrukt template følger
+denne slettingen gjennom FK-kaskade, inkludert feltvise snapshots. De
+blokkerer derfor ikke den avtalte oppryddingen av importerte templates.
+Beholdte sesjoner og deres frozen grunnlag endres ikke.</p>
 </body>
 </html>

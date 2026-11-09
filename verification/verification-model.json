@@ -367,6 +367,20 @@
         "TEST-FUNC-023",
         "TEST-UAT-014"
       ]
+    },
+    {
+      "verification_id": "VER-FUNC-018",
+      "verification_type": "functional",
+      "title": "Databevaring og DB-eid oppstart",
+      "acceptance_criterion": "Oppgradering bevarer domenefakta; slurry og manglende input håndteres fra DB-kladden uten HA-fallback; gamle sesjoner påvirker ikke operativ P/B-kontroll.",
+      "requirements": [
+        "REQ-INST-006",
+        "REQ-INST-007"
+      ],
+      "tests": [
+        "TEST-FUNC-024",
+        "TEST-FUNC-025"
+      ]
     }
   ],
   "decision_requirement_links": [

@@ -13,11 +13,11 @@ source_format: markdown
 
 Installeren skal **installere** releasepakken. Den skal ikke være et alternativt test- eller driftsverktøy for applikasjonen.
 
-1. Prototypeinstallasjon kan resette MariaDB uten backup/migrering av testdata.
+1. Installasjon skal bevare eksisterende brukerdata. Tom database initialiseres; kjent eksisterende versjon oppgraderes gjennom et eksplisitt migreringsmanifest. Ingen automatisk database-reset er tillatt.
 2. Før mutasjon skal installeren kontrollere kun nødvendige forutsetninger: obligatoriske containere/verktøy, kjørende Node-RED for pakkekontroll og faktisk UID/GID, Node-RED `/data`, eksisterende config/credentials som må bevares, release-SHA og syntaktisk lesbare kontrakt-/flowfiler.
 3. Installer skal gjenbruke eksisterende HA- og MariaDB-config-noder/credentials når de avtalte config-ID-ene finnes.
-4. Installer skal installere MariaDB-schema/seeds/views, Node-RED-flow og Home Assistant frontendfiler fra den aktuelle releasepakken.
-5. Node-RED skal stoppes bare når det er nødvendig for atomisk utskifting av flow, og startes én gang etter installasjonen. Unødvendige restart-/restore-runder er ikke tillatt.
+4. Førstegangsinstallasjon bruker baseline/schema/seeds. Oppgradering bruker bare deklarerte migreringer, oppdaterte rutiner/views og relevante systemmetadata; bruker- og template-data reseedes ikke.
+5. Node-RED stoppes én gang for konsistent backup og utskifting og startes én gang etter vellykket installasjon. Backup skal være vellykket og komprimeringen kontrolleres før databaseendringer. Ved feil etter stopp forblir Node-RED stoppet med eksplisitt feilsteg og backupsti.
 6. Etter DB-installasjon skal installeren bare kontrollere installasjonsmetadata som er nødvendig for å vite at riktig release og schema-metadata ble lagt inn. Detaljerte schema-/modellregresjoner skal ikke gjøre målinstallasjonen til FAIL.
 7. Installeren skal **ikke** kjøre syntetisk Start, opprette testsesjoner, trykke HA-knapper, kjøre Systemkontroll, teste restart/restore eller utføre øvrige domene-/runtime-akseptansetester.
 8. Statiske tester, kontrakttester, schema-/modellregresjoner, Function-unit-tester og pakketester er **releaseporter** og kjøres før pakking; de skal ikke gjentas som installasjonskritiske tester hos operatøren.
@@ -39,7 +39,9 @@ Installeren skal stage dashboard, custom card og loader i `/data/gjaeringsassist
 | REQ-INST-002 | Fastsatt | Ordinær releasepakke skal ikke inneholde komplett historisk p19-dokumentasjon. Historikk beholdes bare når den uttrykkelig dokumenterer forlatte løsninger eller funksjonelle referanser som fortsatt er relevante. |
 | REQ-INST-003 | Fastsatt | Releaseporten skal bevare testbarhet og relevante regresjons-/arkitekturkontroller, men skal ikke feile på kunstige minimumstall for dokumenter, REQ, DEC eller OPEN. |
 | REQ-INST-004 | Fastsatt | Etter vellykket releaseport skal strukturerte release-testresultater kunne følge pakken og importeres som verifikasjonsfakta ved installasjon. |
-| REQ-INST-005 | Fastsatt | Før database-reset eller endring av Node-RED-flow skal installeren lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon skal fremgå av installasjonsrapporten. |
+| REQ-INST-005 | Fastsatt | Før databaseendring eller endring av Node-RED-flow skal installeren lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon skal fremgå av installasjonsrapporten. |
+| REQ-INST-006 | Fastsatt | Eksisterende sesjoner, målinger, korreksjoner, templates, kladder, innstillinger og registrerte testresultater skal bevares ved oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon. |
+| REQ-INST-007 | Fastsatt | Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat verifisert backup og faktisk installasjonsutfall skal være sporbare. Samme målversjon kan reinstallere filer uten å kjøre migreringen på nytt. |
 
 ## p24r14: avgrenset lesing og publisering
 

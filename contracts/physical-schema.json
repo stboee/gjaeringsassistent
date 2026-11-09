@@ -1,6 +1,6 @@
 {
   "generated_from": "MariaDB 12.3.3 INFORMATION_SCHEMA",
-  "application_version": "2026.11.07-1",
+  "application_version": "2026.11.09-1",
   "tables": [
     "action_types",
     "active_report_requests",
@@ -34,6 +34,7 @@
     "criterion_model_parameters",
     "criterion_roles",
     "database_metadata",
+    "database_migrations",
     "demo_profile_selection_events",
     "demo_reference_analysis_values",
     "demo_reference_data_gaps",
@@ -144,10 +145,14 @@
     "session_release_events",
     "session_setup_draft",
     "session_slurry_pitches",
+    "session_start_attempts",
+    "session_start_attempt_fields",
     "session_template_defaults",
     "session_template_snapshots",
     "session_template_validation_warnings",
     "session_timing_revisions",
+    "start_field_pitch_modes",
+    "start_field_rules",
     "system_check_definitions",
     "system_check_expectations",
     "system_check_results",
@@ -373,6 +378,11 @@
     "v_session_report_timeline",
     "v_session_runtime_presentation",
     "v_session_start_status",
+    "v_start_fields",
+    "v_start_field_values",
+    "v_start_issues",
+    "v_start_readiness",
+    "v_system_check_session",
     "v_system_function_information_chain",
     "v_technical_event_presentation",
     "v_technical_presentation_context",
@@ -2943,6 +2953,56 @@
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
       "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "COLUMN_NAME": "migration_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "COLUMN_NAME": "checksum_sha256",
+      "COLUMN_TYPE": "char(64)",
+      "DATA_TYPE": "char",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "COLUMN_NAME": "source_version",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "COLUMN_NAME": "target_version",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "COLUMN_NAME": "applied_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -13087,6 +13147,116 @@
       "COLLATION_NAME": null
     },
     {
+      "TABLE_NAME": "session_start_attempts",
+      "COLUMN_NAME": "attempt_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "COLUMN_NAME": "requested_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "COLUMN_NAME": "ready_to_start",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "COLUMN_NAME": "validation_message",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "COLUMN_NAME": "template_version_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "COLUMN_NAME": "pitch_mode_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "COLUMN_NAME": "attempt_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "COLUMN_NAME": "observed_value",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "COLUMN_NAME": "validation_status",
+      "COLUMN_TYPE": "varchar(24)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "COLUMN_NAME": "validation_message",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
       "TABLE_NAME": "session_template_defaults",
       "COLUMN_NAME": "session_id",
       "COLUMN_TYPE": "varchar(128)",
@@ -13633,6 +13803,76 @@
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
       "ORDINAL_POSITION": "10",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "COLUMN_NAME": "pitch_mode_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "COLUMN_NAME": "section_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "COLUMN_NAME": "required_value",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "COLUMN_NAME": "positive_required",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "COLUMN_NAME": "sort_order",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44089,8 +44329,8 @@
     {
       "TABLE_NAME": "v_session_start_status",
       "COLUMN_NAME": "message",
-      "COLUMN_TYPE": "mediumtext",
-      "DATA_TYPE": "mediumtext",
+      "COLUMN_TYPE": "longtext",
+      "DATA_TYPE": "longtext",
       "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "9",
       "CHARACTER_SET_NAME": "utf8mb4",
@@ -44105,6 +44345,316 @@
       "ORDINAL_POSITION": "10",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "field_name",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "section_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "sort_order",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "label",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "converter_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "required_value",
+      "COLUMN_TYPE": "int(4)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "positive_required",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "applicable",
+      "COLUMN_TYPE": "int(2)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "9",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "database_value",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "10",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "input_value",
+      "COLUMN_TYPE": "longtext",
+      "DATA_TYPE": "longtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "11",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "input_type",
+      "COLUMN_TYPE": "varchar(14)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "12",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "minimum_value",
+      "COLUMN_TYPE": "decimal(18,6)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "13",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "maximum_value",
+      "COLUMN_TYPE": "decimal(18,6)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "14",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "step_value",
+      "COLUMN_TYPE": "decimal(18,6)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "15",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "options_json",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "16",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "validation_status",
+      "COLUMN_TYPE": "varchar(14)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "17",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "validation_message",
+      "COLUMN_TYPE": "varchar(270)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "18",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "value_display",
+      "COLUMN_TYPE": "longtext",
+      "DATA_TYPE": "longtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "19",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_field_values",
+      "COLUMN_NAME": "draft_key",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_start_field_values",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(59)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_field_values",
+      "COLUMN_NAME": "database_value",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_issues",
+      "COLUMN_NAME": "issue_key",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_start_issues",
+      "COLUMN_NAME": "message",
+      "COLUMN_TYPE": "varchar(270)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_readiness",
+      "COLUMN_NAME": "ready_to_start",
+      "COLUMN_TYPE": "int(2)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_readiness",
+      "COLUMN_NAME": "message",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_readiness",
+      "COLUMN_NAME": "issues_json",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_system_check_session",
+      "COLUMN_NAME": "check_id",
+      "COLUMN_TYPE": "varchar(7)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_system_check_session",
+      "COLUMN_NAME": "check_status",
+      "COLUMN_TYPE": "varchar(5)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_system_check_session",
+      "COLUMN_NAME": "severity",
+      "COLUMN_TYPE": "varchar(5)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_system_check_session",
+      "COLUMN_NAME": "summary",
+      "COLUMN_TYPE": "varchar(75)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
     {
       "TABLE_NAME": "v_system_function_information_chain",
@@ -46788,6 +47338,14 @@
       "TABLE_NAME": "database_metadata",
       "CONSTRAINT_NAME": "PRIMARY",
       "COLUMN_NAME": "metadata_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "migration_id",
       "REFERENCED_TABLE_NAME": null,
       "REFERENCED_COLUMN_NAME": null,
       "ORDINAL_POSITION": "1"
@@ -51897,6 +52455,62 @@
       "ORDINAL_POSITION": "1"
     },
     {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "1",
+      "COLUMN_NAME": "template_version_id",
+      "REFERENCED_TABLE_NAME": "template_versions",
+      "REFERENCED_COLUMN_NAME": "version_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "2",
+      "COLUMN_NAME": "pitch_mode_id",
+      "REFERENCED_TABLE_NAME": "pitch_modes",
+      "REFERENCED_COLUMN_NAME": "pitch_mode_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "attempt_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "1",
+      "COLUMN_NAME": "attempt_id",
+      "REFERENCED_TABLE_NAME": "session_start_attempts",
+      "REFERENCED_COLUMN_NAME": "attempt_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "2",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": "ha_entity_input_bindings",
+      "REFERENCED_COLUMN_NAME": "entity_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "attempt_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
       "TABLE_NAME": "session_template_defaults",
       "CONSTRAINT_NAME": "fk_session_template_defaults__measurement_method",
       "COLUMN_NAME": "measurement_method_id",
@@ -52087,6 +52701,62 @@
       "REFERENCED_TABLE_NAME": null,
       "REFERENCED_COLUMN_NAME": null,
       "ORDINAL_POSITION": "3"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "1",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": "start_field_rules",
+      "REFERENCED_COLUMN_NAME": "entity_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "2",
+      "COLUMN_NAME": "pitch_mode_id",
+      "REFERENCED_TABLE_NAME": "pitch_modes",
+      "REFERENCED_COLUMN_NAME": "pitch_mode_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "pitch_mode_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "1",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": "ha_entity_input_bindings",
+      "REFERENCED_COLUMN_NAME": "entity_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "sort_order",
+      "COLUMN_NAME": "sort_order",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
     },
     {
       "TABLE_NAME": "system_check_definitions",
@@ -55509,6 +56179,11 @@
       "CONSTRAINT_TYPE": "CHECK"
     },
     {
+      "TABLE_NAME": "database_migrations",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
       "TABLE_NAME": "demo_profile_selection_events",
       "CONSTRAINT_NAME": "fk_demo_selection_profile",
       "CONSTRAINT_TYPE": "FOREIGN KEY"
@@ -58774,6 +59449,46 @@
       "CONSTRAINT_TYPE": "CHECK"
     },
     {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "1",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "2",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "CONSTRAINT_NAME": "ready_to_start",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "1",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "2",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "CONSTRAINT_NAME": "validation_status",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
       "TABLE_NAME": "session_template_defaults",
       "CONSTRAINT_NAME": "CONSTRAINT_1",
       "CONSTRAINT_TYPE": "CHECK"
@@ -58901,6 +59616,51 @@
     {
       "TABLE_NAME": "session_timing_revisions",
       "CONSTRAINT_NAME": "uq_session_timing_revisions__timing_ref",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "1",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "2",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "1",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "positive_required",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "required_value",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "section_id",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "CONSTRAINT_NAME": "sort_order",
       "CONSTRAINT_TYPE": "UNIQUE"
     },
     {
@@ -61638,6 +62398,13 @@
       "NON_UNIQUE": "0",
       "SEQ_IN_INDEX": 1,
       "COLUMN_NAME": "metadata_id"
+    },
+    {
+      "TABLE_NAME": "database_migrations",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "migration_id"
     },
     {
       "TABLE_NAME": "demo_profile_selection_events",
@@ -65805,6 +66572,48 @@
       "COLUMN_NAME": "pitch_mode_id"
     },
     {
+      "TABLE_NAME": "session_start_attempts",
+      "INDEX_NAME": "pitch_mode_id",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "pitch_mode_id"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "attempt_id"
+    },
+    {
+      "TABLE_NAME": "session_start_attempts",
+      "INDEX_NAME": "template_version_id",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "template_version_id"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "INDEX_NAME": "entity_id",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "entity_id"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "attempt_id"
+    },
+    {
+      "TABLE_NAME": "session_start_attempt_fields",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "entity_id"
+    },
+    {
       "TABLE_NAME": "session_template_defaults",
       "INDEX_NAME": "fk_session_template_defaults__measurement_method",
       "NON_UNIQUE": "1",
@@ -65957,6 +66766,41 @@
       "NON_UNIQUE": "0",
       "SEQ_IN_INDEX": 3,
       "COLUMN_NAME": "timing_revision_id"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "INDEX_NAME": "pitch_mode_id",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "pitch_mode_id"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "entity_id"
+    },
+    {
+      "TABLE_NAME": "start_field_pitch_modes",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "pitch_mode_id"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "entity_id"
+    },
+    {
+      "TABLE_NAME": "start_field_rules",
+      "INDEX_NAME": "sort_order",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "sort_order"
     },
     {
       "TABLE_NAME": "system_check_definitions",
@@ -68337,6 +69181,12 @@
       "normalization_note": "Atomære fakta bestemt av hele primærnøkkelen; identiteter og medlemskap er relasjoner med fremmednøkler."
     },
     {
+      "object_id": "table:database_migrations",
+      "relation_kind": "event",
+      "fact_scope": "Primærnøkkelen i database_migrations",
+      "normalization_note": "Atomære fakta bestemt av hele nøkkelen; referanser er fremmednøkler."
+    },
+    {
       "object_id": "table:demo_profile_selection_events",
       "relation_kind": "event",
       "fact_scope": "Fakta for nøkkel (selection_seq) i demo_profile_selection_events",
@@ -68991,6 +69841,18 @@
       "normalization_note": "Atomære fakta bestemt av hele primærnøkkelen; identiteter og medlemskap er relasjoner med fremmednøkler."
     },
     {
+      "object_id": "table:session_start_attempt_fields",
+      "relation_kind": "snapshot",
+      "fact_scope": "Primærnøkkelen i session_start_attempt_fields",
+      "normalization_note": "Atomære fakta bestemt av hele nøkkelen; referanser er fremmednøkler."
+    },
+    {
+      "object_id": "table:session_start_attempts",
+      "relation_kind": "event",
+      "fact_scope": "Primærnøkkelen i session_start_attempts",
+      "normalization_note": "Atomære fakta bestemt av hele nøkkelen; referanser er fremmednøkler."
+    },
+    {
       "object_id": "table:session_template_defaults",
       "relation_kind": "snapshot",
       "fact_scope": "Fakta for nøkkel (session_id) i session_template_defaults",
@@ -69019,6 +69881,18 @@
       "relation_kind": "relation",
       "fact_scope": "Fakta for nøkkel (session_id) i sessions",
       "normalization_note": "Atomære fakta bestemt av hele primærnøkkelen; identiteter og medlemskap er relasjoner med fremmednøkler."
+    },
+    {
+      "object_id": "table:start_field_pitch_modes",
+      "relation_kind": "relation",
+      "fact_scope": "Primærnøkkelen i start_field_pitch_modes",
+      "normalization_note": "Atomære fakta bestemt av hele nøkkelen; referanser er fremmednøkler."
+    },
+    {
+      "object_id": "table:start_field_rules",
+      "relation_kind": "registry",
+      "fact_scope": "Primærnøkkelen i start_field_rules",
+      "normalization_note": "Atomære fakta bestemt av hele nøkkelen; referanser er fremmednøkler."
     },
     {
       "object_id": "table:system_check_definitions",
@@ -71205,6 +72079,24 @@
       "column_name": "yeast_amount_g",
       "absence_kind": "not_yet",
       "explanation": "Ikke angitt i arbeidskladden ennå. En obligatorisk verdi må foreligge før handlingen kan fullføres."
+    },
+    {
+      "object_id": "table:session_start_attempt_fields",
+      "column_name": "observed_value",
+      "absence_kind": "not_yet",
+      "explanation": "Verdien var ikke registrert ved dette startforsøket; ingen HA-verdi eller nulltall erstatter fraværet."
+    },
+    {
+      "object_id": "table:session_start_attempts",
+      "column_name": "pitch_mode_id",
+      "absence_kind": "not_yet",
+      "explanation": "Verdien var ikke registrert ved dette startforsøket; ingen HA-verdi eller nulltall erstatter fraværet."
+    },
+    {
+      "object_id": "table:session_start_attempts",
+      "column_name": "template_version_id",
+      "absence_kind": "not_yet",
+      "explanation": "Verdien var ikke registrert ved dette startforsøket; ingen HA-verdi eller nulltall erstatter fraværet."
     },
     {
       "object_id": "table:session_template_defaults",

@@ -1,6 +1,6 @@
 {
   "server_version": "12.3.3-MariaDB-ubu2404",
-  "sql_sha256": "6ef02c7bf196f03d4f74811998dd3327a813393de87b0a2c80aef50f906a8a69",
+  "sql_sha256": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
   "views": {
     "v_active_analysis_biological_markers": [
       {
@@ -23630,8 +23630,8 @@
       {
         "TABLE_NAME": "v_session_start_status",
         "COLUMN_NAME": "message",
-        "COLUMN_TYPE": "mediumtext",
-        "DATA_TYPE": "mediumtext",
+        "COLUMN_TYPE": "longtext",
+        "DATA_TYPE": "longtext",
         "IS_NULLABLE": "YES",
         "CHARACTER_SET_NAME": "utf8mb4",
         "COLLATION_NAME": "utf8mb4_unicode_ci"
@@ -23644,6 +23644,295 @@
         "IS_NULLABLE": "NO",
         "CHARACTER_SET_NAME": null,
         "COLLATION_NAME": null
+      }
+    ],
+    "v_start_fields": [
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "entity_id",
+        "COLUMN_TYPE": "varchar(255)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": "ascii",
+        "COLLATION_NAME": "ascii_bin"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "field_name",
+        "COLUMN_TYPE": "varchar(128)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "ascii",
+        "COLLATION_NAME": "ascii_bin"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "section_id",
+        "COLUMN_TYPE": "varchar(32)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "sort_order",
+        "COLUMN_TYPE": "int(11)",
+        "DATA_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "label",
+        "COLUMN_TYPE": "varchar(255)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "converter_id",
+        "COLUMN_TYPE": "varchar(32)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": "ascii",
+        "COLLATION_NAME": "ascii_bin"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "required_value",
+        "COLUMN_TYPE": "int(4)",
+        "DATA_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "positive_required",
+        "COLUMN_TYPE": "tinyint(4)",
+        "DATA_TYPE": "tinyint",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "applicable",
+        "COLUMN_TYPE": "int(2)",
+        "DATA_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "database_value",
+        "COLUMN_TYPE": "mediumtext",
+        "DATA_TYPE": "mediumtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "input_value",
+        "COLUMN_TYPE": "longtext",
+        "DATA_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "input_type",
+        "COLUMN_TYPE": "varchar(14)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "minimum_value",
+        "COLUMN_TYPE": "decimal(18,6)",
+        "DATA_TYPE": "decimal",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "maximum_value",
+        "COLUMN_TYPE": "decimal(18,6)",
+        "DATA_TYPE": "decimal",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "step_value",
+        "COLUMN_TYPE": "decimal(18,6)",
+        "DATA_TYPE": "decimal",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "options_json",
+        "COLUMN_TYPE": "mediumtext",
+        "DATA_TYPE": "mediumtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "validation_status",
+        "COLUMN_TYPE": "varchar(14)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "validation_message",
+        "COLUMN_TYPE": "varchar(270)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_fields",
+        "COLUMN_NAME": "value_display",
+        "COLUMN_TYPE": "longtext",
+        "DATA_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      }
+    ],
+    "v_start_field_values": [
+      {
+        "TABLE_NAME": "v_start_field_values",
+        "COLUMN_NAME": "draft_key",
+        "COLUMN_TYPE": "varchar(32)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": "ascii",
+        "COLLATION_NAME": "ascii_bin"
+      },
+      {
+        "TABLE_NAME": "v_start_field_values",
+        "COLUMN_NAME": "entity_id",
+        "COLUMN_TYPE": "varchar(59)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_field_values",
+        "COLUMN_NAME": "database_value",
+        "COLUMN_TYPE": "mediumtext",
+        "DATA_TYPE": "mediumtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      }
+    ],
+    "v_start_issues": [
+      {
+        "TABLE_NAME": "v_start_issues",
+        "COLUMN_NAME": "issue_key",
+        "COLUMN_TYPE": "varchar(128)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "ascii",
+        "COLLATION_NAME": "ascii_bin"
+      },
+      {
+        "TABLE_NAME": "v_start_issues",
+        "COLUMN_NAME": "message",
+        "COLUMN_TYPE": "varchar(270)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      }
+    ],
+    "v_start_readiness": [
+      {
+        "TABLE_NAME": "v_start_readiness",
+        "COLUMN_NAME": "ready_to_start",
+        "COLUMN_TYPE": "int(2)",
+        "DATA_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": null,
+        "COLLATION_NAME": null
+      },
+      {
+        "TABLE_NAME": "v_start_readiness",
+        "COLUMN_NAME": "message",
+        "COLUMN_TYPE": "mediumtext",
+        "DATA_TYPE": "mediumtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_start_readiness",
+        "COLUMN_NAME": "issues_json",
+        "COLUMN_TYPE": "mediumtext",
+        "DATA_TYPE": "mediumtext",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      }
+    ],
+    "v_system_check_session": [
+      {
+        "TABLE_NAME": "v_system_check_session",
+        "COLUMN_NAME": "check_id",
+        "COLUMN_TYPE": "varchar(7)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "NO",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_system_check_session",
+        "COLUMN_NAME": "check_status",
+        "COLUMN_TYPE": "varchar(5)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_system_check_session",
+        "COLUMN_NAME": "severity",
+        "COLUMN_TYPE": "varchar(5)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
+      },
+      {
+        "TABLE_NAME": "v_system_check_session",
+        "COLUMN_NAME": "summary",
+        "COLUMN_TYPE": "varchar(75)",
+        "DATA_TYPE": "varchar",
+        "IS_NULLABLE": "YES",
+        "CHARACTER_SET_NAME": "utf8mb4",
+        "COLLATION_NAME": "utf8mb4_unicode_ci"
       }
     ],
     "v_system_function_information_chain": [

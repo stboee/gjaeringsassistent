@@ -173,3 +173,9 @@ Historisk etterregistrering er et datert operatørfaktum. Det hevder ikke at kri
 
 
 `measurement_source_check_policy` er normalisert klassifiseringsmetadata med nøkkel source_state og obligatorisk kontrollstatus/alvorlighet. `v_session_import_coverage` er en avledet opptelling, ikke en ny persistent målekopi. `v_measurement_source_system_check` kobler registrert policy med faktiske datagrunnlag. HA-publiseringsfeil/-kvitteringer er ordinære append-only Technical Events, ikke et alternativt session-state-lager.
+
+## Startkontrakt og migreringsjournal
+
+`start_field_rules` og `start_field_pitch_modes` utvider HA-inputregistrene med normalisert krav/tilhørighet. `v_start_fields`, `v_start_issues` og `v_start_readiness` leser aktuelle kladdverdier og registrerte grenser. `ga_read_start_context` lagrer ett startforsøk og feltvise snapshots i `session_start_attempts` / `session_start_attempt_fields` før det samme konsistente grunnlaget returneres til motoren. NULL betyr at input faktisk manglet; det blir ikke 0. `database_migrations` journalfører utført migrering og kildeavtrykk. `installer/migrations.json` eier støttede oppgraderingsbaner; DB-ledgeren eier installasjonens faktiske utførelseshistorikk.
+
+Startforsøk som tilhører en eksplisitt slettet ubrukt template følger denne slettingen gjennom FK-kaskade, inkludert feltvise snapshots. De blokkerer derfor ikke den avtalte oppryddingen av importerte templates. Beholdte sesjoner og deres frozen grunnlag endres ikke.

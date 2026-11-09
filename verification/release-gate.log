@@ -61,14 +61,17 @@
 [WARNING] Could not load translations for nb-NO
   data file translations/nb.yaml not found
 [WARNING] The term Abstract has no translation defined.
-RESULT: PASS – dokumentasjon: 21 aktive kilder, 257 REQ, 65 DEC/ADR, 14 OPEN; HTML/maskinmetadata reproduserbare
+[WARNING] Could not load translations for nb-NO
+  data file translations/nb.yaml not found
+[WARNING] The term Abstract has no translation defined.
+RESULT: PASS – dokumentasjon: 22 aktive kilder, 259 REQ, 66 DEC/ADR, 15 OPEN; HTML/maskinmetadata reproduserbare
 RESULT: PASS – komplett p24-releasepakke uten historisk p19-dokumentsett; versjon/SHA/artefakter konsistente
-RESULT: PASS – MariaDB HA-metadata: 75 aktive entiteter, 22 events, 64 bootstrap-states; JSON/flow/dashboard konsistente
+RESULT: PASS – MariaDB HA-metadata: 75 aktive entiteter, 23 events, 64 bootstrap-states; JSON/flow/dashboard konsistente
 PASS all HA entity registry statuses satisfy DDL CHECK constraint
 PASS all HA event registry statuses satisfy DDL CHECK constraint
 PASS all system function registry statuses satisfy DDL CHECK constraint
 PASS 75 active HA entities in MariaDB metadata seed
-PASS 21 active HA events in MariaDB metadata seed
+PASS 22 active HA events in MariaDB metadata seed
 PASS 15 DB-defined Systemkontroll checks include Frontendpublisering, Målekilde and Aktive driftsfeil
 PASS Systemkontroll expectations are DB-seeded for schema and frontend release
 PASS HA entity/config identities are unique
@@ -233,13 +236,13 @@ PASS measured SG uses clean contracted entity/config ID
 PASS legacy raw-SG and observation-validation entities are removed
 PASS temporary deviations list is empty in revised19 prototype contract
 PASS system metadata tables are part of MariaDB schema
-PASS system metadata seed contains 75 HA entities and 22 events including deprecated event
+PASS system metadata seed contains 75 HA entities and 23 events including deprecated event
 PASS table/view information objects are discovered from MariaDB INFORMATION_SCHEMA
 PASS function-information lineage metadata is seeded
 PASS published template owns complete persisted start defaults including OG/SG
 PASS W-34/70 has a valid persisted OG default
 PASS Start has no HA-value fallback or SG workaround
-PASS Systemkontroll evaluates persisted draft SG only
+PASS Systemkontroll consumes DB-owned start readiness
 PASS B evaluator rejects missing required configuration instead of guessing fallbacks
 PASS restore has no dead observation-validation output
 PASS overview read-model carries DB-backed measurement feedback and correction state
@@ -252,11 +255,11 @@ PASS active measurement input has a MariaDB draft table
 PASS template biology calculation parent exposes composite key required by child foreign keys
 PASS HA input mapping is normalized in MariaDB metadata tables
 PASS schema verification exposes expected base-table count
-PASS schema verification base-table count matches DDL (202)
+PASS schema verification base-table count matches DDL (207)
 PASS schema verification exposes expected view count
-PASS schema verification view count matches DDL (178)
+PASS schema verification view count matches DDL (183)
 PASS Systemkontroll metadata exposes expected view count
-PASS Systemkontroll/schema-verification view counts match DDL (178)
+PASS Systemkontroll/schema-verification view counts match DDL (183)
 PASS schema verification exposes expected HA entity count
 PASS schema verification HA entity count matches generated contract (75)
 PASS schema verification explicitly checks active measurement draft table
@@ -342,7 +345,7 @@ PASS p21r10 ingestion uses existing Home Assistant Get History connection
 PASS p21r13 history request is DB-driven, includes RSSI and resumes from persisted cutoff
 PASS p21r13 heartbeat drives gaps while healthy buckets persist SG/temp/RSSI and leave generic pressure nullable
 PASS p21r10 ordinary Start binds session to DB-configured HA measurement source
-PASS p21r10 dashboard presents Start via dedicated datetime picker plus separate demo
+PASS dashboard presents DB-backed start fields including timestamp and separate demo
 PASS p21r10 Start fra reuses datetime-local control and persists through existing pitch-time HA text entity
 PASS p21r10 removes free-text Start fra entity row from ordinary Start UI
 PASS p21r10 hides obsolete pitch-time mode selector from ordinary Start UI
@@ -381,7 +384,7 @@ PASS pitch temperature removed as separate Start input
 PASS Start derives pitch-temperature snapshot from manual temperature
 PASS obsolete FG-progress/absolute-rate/rate-to-peak calculation models are removed from executable flow
 PASS installer does not run detailed schema regression as an installation-critical gate
-PASS installer installs transactional runtime routines
+PASS installer installs transactional runtime routines through declared plans
 PASS finished-ABV calculation model registry matches attenuation-based runtime
 PASS current-session read-model exposes attenuation and derived-FG display values
 PASS Systemkontroll does not equate active HA registry count with mandatory HA entity count
@@ -618,9 +621,10 @@ PASS measured read amplification, cheap unchanged polling, historical growth, ty
 PASS bounded historical import, DB phase boundaries, later exceptions and SQLite round-trip native evidence
 RESULT: PASS – p24r15 schema and integration release contract
 PASS current native system-check, historical coverage and plugin publication acknowledgment evidence
-RESULT: PASS – strukturert verifikasjonsmodell: 269 kontroller, 49 TEST, 21 VER
+RESULT: PASS – strukturert verifikasjonsmodell: 278 kontroller, 51 TEST, 22 VER
 RESULT: PASS – tested config-node IDs are preserved and all references are patched
 RESULT: PASS – pinned MariaDB version and stopped Node-RED; actual installer rejects before database or flow mutation
+PASS current native start/upgrade/backup proof, migration planner and absence of installer reset
 RESULT: PASS – Start/SG contract, late-template regression, Systemkontroll and Technical Event SQL
 RESULT: PASS – Technical rich read-model and local-time output regression
 RESULT: PASS – p18 Technical Notes path persisted/read-model contract
@@ -641,6 +645,7 @@ RESULT: PASS – p22r7 analysis output validation rejects impossible derived val
 RESULT: PASS – p23r2 revised7/revised8 criterion-derived B and MariaDB measurement export
 RESULT: PASS – p23 structured UAT registration and shared JSON/HTML verification export
 RESULT: PASS – p21r13 active-session-driven Home Assistant ingestion, persisted RSSI/5-minute diagnostics and heartbeat gap lifecycle
+PASS DB form renders NULL without stale HA fallback, sends same-value saves and waits for DB-published values
 RESULT: PASS – p24r6 measured endpoints and raw/manual sources, gaps, stability without band, single point, shared renderer
 RESULT: PASS – >19 MB SQLite pair verification, both hashes, compact SQL, missing/tampered/short files and retry contract
 RESULT: PASS – input before blur, refresh races, focus, auxiliary forms and timestamp download names

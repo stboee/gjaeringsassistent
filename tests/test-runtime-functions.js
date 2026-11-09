@@ -10,7 +10,8 @@ const inputContracts=(context)=>{const field=context==='start'?'session_field':'
 const byId=Object.fromEntries(flow.map(n=>[n.id,n]));
 function invoke(id,msg,globalObj={get:()=>null}){
   const n=byId[id];
-  if(id==='p20_start_context_result')msg={...msg,payload:[...msg.payload,...inputContracts('start')]};
+  if(id==='p20_systemcheck_result')msg={...msg,payload:[...msg.payload,[{_set:'session_check',check_id:'session',check_status:'ok',severity:'info',summary:'Ingen operativ session'}],[{_set:'start_readiness',ready_to_start:1,message:'Startgrunnlag OK fra DB-fixture'}]]};
+  if(id==='p20_start_context_result'){const d=msg.payload[0]?.[0]||{};const fields=haContract.input_bindings.filter(b=>b.session_field).map(b=>({_set:'start_fields',field_name:b.session_field,converter_id:b.converter_id,input_type:['number','integer'].includes(b.converter_id)?'number':b.converter_id,required_value:0,applicable:1,database_value:d[b.session_field]}));msg={...msg,payload:[...msg.payload,fields,[{_set:'start_validation',ready_to_start:1,message:'Eksplisitt DB-valideringsfixture',...msg.dbStartValidation}]]};}
   if(id==='p20_measurement_context_result'){msg={...msg,payload:[...msg.payload,...inputContracts('measurement')]};const row=msg.payload.find(rows=>rows[0]?._set==='session')?.[0];if(row)row.database_now='2026-10-10 20:00:00.000';}
 
   msg={_msgid:'unit-msg',...msg};
@@ -39,7 +40,7 @@ assert.equal(out[0].payload[20],1.052); // measured SG; expected FG is derived i
 assert.equal(out[0].payload[3],'tilt-pro-blue-ha'); // DB-configured measurement source
 
 const bad={...draft,measured_sg:null,og:1.052};
-out=invoke('p20_start_context_result',{payload:[[bad],[],[sourceRow]]});
+out=invoke('p20_start_context_result',{payload:[[bad],[],[sourceRow]],dbStartValidation:{ready_to_start:0,message:'Mangler: measured_sg'}});
 assert.equal(out[0],null);assert.match(out[1].payload,/measured_sg/);assert.equal(out[2].ga_event.code,'START_REJECTED');
 
 // pitch_time_mode=now must not require a persisted explicit timestamp.
@@ -48,7 +49,7 @@ out=invoke('p20_start_context_result',{payload:[[nowDraft],[],[sourceRow]]});
 assert.ok(out[0]);assert.equal(out[1],null);assert.equal(out[0].payload.length,44);assert.equal(out[0].payload[42],'expected-attenuation-midpoint-v1');
 
 // No HA fallback: persisted draft is authoritative even if a stray command value is supplied.
-out=invoke('p20_start_context_result',{ga_visible_sg:1.056,payload:[[bad],[],[sourceRow]]});
+out=invoke('p20_start_context_result',{ga_visible_sg:1.056,payload:[[bad],[],[sourceRow]],dbStartValidation:{ready_to_start:0,message:'Mangler: measured_sg'}});
 assert.equal(out[0],null);assert.match(out[1].payload,/measured_sg/);
 
 

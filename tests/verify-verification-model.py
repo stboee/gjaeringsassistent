@@ -45,7 +45,7 @@ for v in model['verifications']:
 for tid in model.get('uat_steps',{}): ok(tid in tids and tid.startswith('TEST-UAT-'),f'UAT-steg peker på ukjent/ikke-UAT test {tid}')
 
 # Build/install sources must carry metadata then result seed in dependency order.
-pos24=installer.find('24-verification-metadata-seed.sql'); pos25=installer.find('25-release-verification-results-seed.sql')
+fresh_files=json.loads((ROOT/'installer/migrations.json').read_text())['fresh_files']; pos24=fresh_files.index('sql/24-verification-metadata-seed.sql'); pos25=fresh_files.index('sql/25-release-verification-results-seed.sql')
 ok(pos24!=-1 and pos25!=-1 and pos24<pos25,'installer mangler korrekt 24→25 verification seed-rekkefølge')
 
 # HA/event/flow integration.

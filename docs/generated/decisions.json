@@ -1,6 +1,6 @@
 {
   "generated_from": "docs/14-AKTIVE-BESLUTNINGER.md",
-  "count": 65,
+  "count": 66,
   "decisions": [
     {
       "id": "DEC-GA-001",
@@ -43,20 +43,12 @@
       "line": 18
     },
     {
-      "id": "DEC-GA-006",
-      "decision": "Prototypebasen kan resettes mellom tester.",
-      "rationale": "Ingen produksjonshistorikk skal reddes i prototypefasen.",
-      "consequence": "Installer kan resette DB uten migreringskompleksitet.",
-      "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 19
-    },
-    {
       "id": "DEC-GA-007",
       "decision": "E2E-/måltest går gjennom den reelle operatør-/integrasjonsgrensen.",
       "rationale": "Direkte DB/inject kan gi falsk trygghet.",
       "consequence": "Direkte tester kan være unit/integration, men ikke kalles operatør-E2E.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 20
+      "line": 19
     },
     {
       "id": "DEC-GA-008",
@@ -64,7 +56,7 @@
       "rationale": "Unngå parallelle entity/event-lister.",
       "consequence": "Generert kontrakt er avledet inspeksjon.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 21
+      "line": 20
     },
     {
       "id": "DEC-GA-009",
@@ -72,7 +64,7 @@
       "rationale": "Sporadiske runtimefeil må finnes igjen.",
       "consequence": "Technical Events, aktive issues, målekilde og Systemkontroll vises samlet.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 22
+      "line": 21
     },
     {
       "id": "DEC-GA-010",
@@ -80,7 +72,7 @@
       "rationale": "Operatørflyten skal ikke blokkeres unødig.",
       "consequence": "Kommentar kan registreres som generelt notat.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 23
+      "line": 22
     },
     {
       "id": "DEC-GA-011",
@@ -88,7 +80,7 @@
       "rationale": "Skjulte defaults gjør vurderinger irreproduserbare.",
       "consequence": "Manglende grunnlag er synlig feil/status.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 24
+      "line": 23
     },
     {
       "id": "DEC-GA-012",
@@ -96,7 +88,7 @@
       "rationale": "Audit og reproduksjon.",
       "consequence": "Current state utledes i views.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 25
+      "line": 24
     },
     {
       "id": "DEC-GA-013",
@@ -104,7 +96,7 @@
       "rationale": "Redigering trenger mutabilitet uten å omskrive historikk.",
       "consequence": "`session_setup_draft`, `measurement_input_draft`, template-draft skilles fra journal.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 26
+      "line": 25
     },
     {
       "id": "DEC-GA-014",
@@ -112,7 +104,7 @@
       "rationale": "InnoDB håndterer concurrency; applikasjonslocking øker kompleksitet.",
       "consequence": "Modell/constraints/transaksjon revurderes før locking innføres.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 27
+      "line": 26
     },
     {
       "id": "DEC-GA-015",
@@ -120,7 +112,7 @@
       "rationale": "Konsistens bør ligge nær data.",
       "consequence": "Applikasjonen bygger på DB-integritet.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 28
+      "line": 27
     },
     {
       "id": "DEC-GA-016",
@@ -128,7 +120,7 @@
       "rationale": "Normal MVCC/snapshot-adferd trenger ikke global serialisering.",
       "consequence": "Neste read-model-refresh viser siste commit.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 29
+      "line": 28
     },
     {
       "id": "DEC-GA-017",
@@ -136,7 +128,7 @@
       "rationale": "Retry kan skjule strukturelle feil.",
       "consequence": "Konkret årsak må forstås før tiltak.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 30
+      "line": 29
     },
     {
       "id": "DEC-GA-018",
@@ -144,7 +136,7 @@
       "rationale": "Prototypearbeidet skal ikke bli infrastrukturprosjekt.",
       "consequence": "Teknisk kompleksitet må begrunnes av konkret behov.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 31
+      "line": 30
     },
     {
       "id": "DEC-GA-019",
@@ -152,7 +144,7 @@
       "rationale": "Metadata-duplisering gir drift.",
       "consequence": "HA-metadata og funksjon↔informasjon-lineage modelleres i MariaDB.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 32
+      "line": 31
     },
     {
       "id": "DEC-GA-020",
@@ -160,7 +152,7 @@
       "rationale": "Én sammenhengende måleprosess.",
       "consequence": "Ingen separat «live-start»-modus.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 33
+      "line": 32
     },
     {
       "id": "DEC-GA-021",
@@ -168,7 +160,7 @@
       "rationale": "Historiske målepunkter må beholde faktisk tid.",
       "consequence": "Effektiv pitchreferanse kan revideres separat.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 34
+      "line": 33
     },
     {
       "id": "DEC-GA-022",
@@ -176,7 +168,7 @@
       "rationale": "Sensorbinding er konfigurasjon.",
       "consequence": "Node-RED Function-kode hardkoder ikke entity-ID-er.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 35
+      "line": 34
     },
     {
       "id": "DEC-GA-023",
@@ -184,7 +176,7 @@
       "rationale": "Uendret SG/temperatur betyr ikke kommunikasjonsbrudd.",
       "consequence": "Gap bygges fra heartbeat og persisteres i `measurement_data_gaps`.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 36
+      "line": 35
     },
     {
       "id": "ADR-GA-024",
@@ -192,7 +184,7 @@
       "rationale": "Fagregler må være deklarative/reproduserbare.",
       "consequence": "Registry definerer vokabular; template velger; Start fryser; motor utfører generiske modeller.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 37
+      "line": 36
     },
     {
       "id": "DEC-GA-025",
@@ -200,7 +192,7 @@
       "rationale": "Navn er ikke fagregel.",
       "consequence": "Beregningsmodell/input/parametere er eksplisitte metadata.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 38
+      "line": 37
     },
     {
       "id": "DEC-GA-026",
@@ -208,7 +200,7 @@
       "rationale": "De beskriver ulike egenskaper.",
       "consequence": "Maks alder skal ikke brukes som skjult persistensregel.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 39
+      "line": 38
     },
     {
       "id": "DEC-GA-027",
@@ -216,7 +208,7 @@
       "rationale": "Hindrer historiske hopp og falsk persistens.",
       "consequence": "Bare neste B-kandidat vurderes.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 40
+      "line": 39
     },
     {
       "id": "DEC-GA-028",
@@ -224,7 +216,7 @@
       "rationale": "Konkurrerende produsenter ga stale/motstridende status.",
       "consequence": "Ingest/Systemkontroll trigger refresh, men lager ikke alternativ status.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 41
+      "line": 40
     },
     {
       "id": "DEC-GA-029",
@@ -232,7 +224,7 @@
       "rationale": "Entity→domene-felt skal ikke ligge som lokal Function-tabell.",
       "consequence": "Manglende binding/mapping er konfigurasjonsfeil.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 42
+      "line": 41
     },
     {
       "id": "DEC-GA-030",
@@ -240,7 +232,7 @@
       "rationale": "GUI-workarounds skjuler kildedefekter.",
       "consequence": "Ingen domeneberegning/fallback/formatregler i frontend.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 43
+      "line": 42
     },
     {
       "id": "DEC-GA-031",
@@ -248,7 +240,7 @@
       "rationale": "Parallelle formler gir mismatch.",
       "consequence": "Overview/B/P/report/Analyse leser persistert resultat/read-model.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 44
+      "line": 43
     },
     {
       "id": "DEC-GA-032",
@@ -256,7 +248,7 @@
       "rationale": "Fail-visible gir bedre arkitektur enn skjult fallback.",
       "consequence": "GUI/Node-RED skal ikke maskere feil med lokal workaround.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 45
+      "line": 44
     },
     {
       "id": "DEC-GA-033",
@@ -264,7 +256,7 @@
       "rationale": "Korrigerte oppdiktede data forurenser analysegrunnlaget.",
       "consequence": "Kvalitetsutfall logges separat.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 46
+      "line": 45
     },
     {
       "id": "DEC-GA-034",
@@ -272,7 +264,7 @@
       "rationale": "Nye grafer skal ikke kreve spesialmotor/frontend.",
       "consequence": "Graph/series/warm-up/gap/markerpolicy fryses til session.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 47
+      "line": 46
     },
     {
       "id": "DEC-GA-035",
@@ -280,7 +272,7 @@
       "rationale": "Unngå oppdiktede tall.",
       "consequence": "Status, datagrunnlag og stil leveres fra read-model; ordinære krav beholdes.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 48
+      "line": 47
     },
     {
       "id": "DEC-GA-036",
@@ -288,7 +280,7 @@
       "rationale": "Nye noder skal ikke falle utenfor «søppelbøtta».",
       "consequence": "Technical Event-writer/fangstsløyfe skjermes mot rekursjon.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 49
+      "line": 48
     },
     {
       "id": "DEC-GA-037",
@@ -296,7 +288,7 @@
       "rationale": "Urimelige derived values skal ikke drive overganger eller grafer.",
       "consequence": "Output utenfor frozen domene avvises, ikke clampes.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 50
+      "line": 49
     },
     {
       "id": "DEC-GA-038",
@@ -304,7 +296,7 @@
       "rationale": "Historikk kan rekonstrueres uten å late som fysisk operatørhandling er utført.",
       "consequence": "W-34/70 kan autoetablere P1/P2; P3+ krever operatørtransition.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 51
+      "line": 50
     },
     {
       "id": "DEC-GA-039",
@@ -312,7 +304,7 @@
       "rationale": "Linje gjennom manglende data skaper oppdiktet visuell informasjon.",
       "consequence": "Renderer bryter kurver ved persisterte gap.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 52
+      "line": 51
     },
     {
       "id": "DEC-GA-040",
@@ -320,7 +312,7 @@
       "rationale": "Historikk i kravdokumenter gjorde dem stale og vanskelige å validere.",
       "consequence": "Markdown er kilde; HTML/JSON/traceability genereres og releasekontrolleres.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 53
+      "line": 52
     },
     {
       "id": "DEC-GA-041",
@@ -328,7 +320,7 @@
       "rationale": "Frozen sessionplan gjør senere templatearbeid trygt.",
       "consequence": "Aktiv eller completed session blokkerer ikke templatebibliotek, draft eller publisering.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 54
+      "line": 53
     },
     {
       "id": "DEC-GA-042",
@@ -336,7 +328,7 @@
       "rationale": "En versjon kan tas ut av Start-utvalget uten å slette historikk eller tvinge ny versjon.",
       "consequence": "Retired versjon kan reaktiveres; publisert/retired faginnhold er immutable.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 55
+      "line": 54
     },
     {
       "id": "DEC-GA-043",
@@ -344,7 +336,7 @@
       "rationale": "Inspeksjon/redigering skal ikke utilsiktet endre hvilken prosess neste gjæring starter med.",
       "consequence": "Publisering/åpning i Template-fanen endrer ikke `session_setup_draft`; Start kan kun velge `published`.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 56
+      "line": 55
     },
     {
       "id": "DEC-GA-044",
@@ -352,7 +344,7 @@
       "rationale": "Krav, verifikasjon og resultater må kunne inspiseres og analyseres uten tekstsøk.",
       "consequence": "Metadata og faktiske resultater skilles; read-models utleder status.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 57
+      "line": 56
     },
     {
       "id": "DEC-GA-045",
@@ -360,7 +352,7 @@
       "rationale": "Teknisk integritet, domeneregresjon og målmiljøbruk har ulike testegenskaper.",
       "consequence": "Testtype og metode er eksplisitt metadata; én type erstatter ikke de andre.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 58
+      "line": 57
     },
     {
       "id": "DEC-GA-046",
@@ -368,7 +360,7 @@
       "rationale": "Testarkitektur har verdi, men prototypearbeidet skal ikke styres av testprosess.",
       "consequence": "Testomfang tilpasses risiko; etablerte regresjonstester bevares.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 59
+      "line": 58
     },
     {
       "id": "DEC-GA-047",
@@ -376,7 +368,7 @@
       "rationale": "Målmiljøerfaring skal være synlig og analyserbar sammen med krav/testmetadata.",
       "consequence": "Ny UAT gir ny run/result; tidligere observasjoner overskrives ikke.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 60
+      "line": 59
     },
     {
       "id": "DEC-GA-048",
@@ -384,7 +376,7 @@
       "rationale": "Maskinanalyse og menneskelesing skal beskrive samme snapshot.",
       "consequence": "Rapportgeneratoren presenterer; den beregner ikke alternativ verifikasjonsstatus.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 61
+      "line": 60
     },
     {
       "id": "DEC-GA-049",
@@ -392,7 +384,7 @@
       "rationale": "Historisk teknisk arkitektur kan forveksles med gjeldende løsning.",
       "consequence": "Bare eksplisitte baseline-/forlatt-løsning-referanser beholdes.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 62
+      "line": 61
     },
     {
       "id": "DEC-GA-050",
@@ -400,7 +392,7 @@
       "rationale": "De økte kompleksitet og ga flere sannhetskilder/concurrencyproblemer uten funksjonell gevinst.",
       "consequence": "Gjeldende p24 er Node-RED ↔ MariaDB direkte med InnoDB/constraints/transaksjoner og DB-eide read-models.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 63
+      "line": 62
     },
     {
       "id": "DEC-GA-051",
@@ -408,7 +400,7 @@
       "rationale": "Samme beregningsgrunnlag og terskler.",
       "consequence": "Ordinære verdier og datagrunnlag persisteres append-only; utilstrekkelig grunnlag gir fravær.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 65
+      "line": 64
     },
     {
       "id": "DEC-GA-052",
@@ -416,7 +408,7 @@
       "rationale": "Et bånd må ha konkret fysisk/statistisk betydning.",
       "consequence": "P24r7-AA/rate/stabilitet har ingen estimert bånd. Oversiktsgrafer kan vise faktisk min/maks-spredning fra samme godkjente prøvesett.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 66
+      "line": 65
     },
     {
       "id": "DEC-GA-053",
@@ -424,7 +416,7 @@
       "rationale": "En fase skal kunne forklares fra sitt grunnlag.",
       "consequence": "Direkte fasesetter fjernes; korreksjon/fravik er egne append-only fakta.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 67
+      "line": 66
     },
     {
       "id": "DEC-GA-054",
@@ -432,7 +424,7 @@
       "rationale": "Operatøren trenger konsistent håndtering på B og P.",
       "consequence": "Editor kan deaktivere rettigheter; Start fryser policyen.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 68
+      "line": 67
     },
     {
       "id": "DEC-GA-055",
@@ -440,7 +432,7 @@
       "rationale": "Sammenlignbar oppstart og synlig ventetid.",
       "consequence": "DB/read-model leverer felles X-akse til dashboard og rapporter.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 69
+      "line": 68
     },
     {
       "id": "DEC-P24R6-001",
@@ -448,7 +440,7 @@
       "rationale": "Manglende pitchhistorikk og store SQL-pakker blokkerte bruk",
       "consequence": "Separate rå/manuelle AA-kilder, målt endepunktrate, ordinære vinduer, metadata-only eksportregistrering og append-only retry.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 71
+      "line": 70
     },
     {
       "id": "DEC-P24R8-TRANSPORT",
@@ -456,7 +448,7 @@
       "rationale": "Gjentatt metadata var hovedårsaken til store filer.",
       "consequence": "Ingen råmålinger slettes ved transportkomprimering; DB styrer utvalg og verdier.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 73
+      "line": 72
     },
     {
       "id": "DEC-P24R9-CURRENT",
@@ -464,7 +456,7 @@
       "rationale": "Gjentatt statistikkhenting og gamle kravlinjer ga misvisende visning.",
       "consequence": "Normal live-import henter detaljdata; parameterkorreksjon/reset og oppfylt-markører følger DB-revisjonen. Tidligere målinger og evalueringer beholdes.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 75
+      "line": 74
     },
     {
       "id": "DEC-P24R10-ARCHIVES",
@@ -472,7 +464,7 @@
       "rationale": "Filer skal være søkbare og kunne importeres uten å sende store JSON-pakker til DB.",
       "consequence": "All runtime authority og all sammenligning ligger fortsatt i MariaDB.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 81
+      "line": 80
     },
     {
       "id": "DEC-P24R10-IMPORT",
@@ -480,7 +472,7 @@
       "rationale": "Kilden skal ikke blandes med eksisterende templates eller aktiv gjæring.",
       "consequence": "Import er tillatt under gjæring; feil ruller tilbake hele settet og redigering krever egen kopi.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 82
+      "line": 81
     },
     {
       "id": "DEC-P24R11-DELETE",
@@ -488,7 +480,7 @@
       "rationale": "Gamle sesjoner skal kunne ryddes etter eksport eller sammenligning.",
       "consequence": "Eksplisitt sletting av hele sesjonen i én transaksjon, med aktivbeskyttelse og referansekontroll for templates.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 88
+      "line": 87
     },
     {
       "id": "DEC-P24R11-SNAPSHOT",
@@ -496,7 +488,7 @@
       "rationale": "Aktiv drift skal kunne fortsette mens arkivet lages.",
       "consequence": "SQLite-par, HTML og SHA-filer deler prefix; aktivt øyeblikksbilde merkes med tidspunkt.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 89
+      "line": 88
     },
     {
       "id": "DEC-P24R11-SHA",
@@ -504,7 +496,7 @@
       "rationale": "Gamle eller flyttede arkiver skal fortsatt kunne importeres.",
       "consequence": "Manglende/feil SHA blokkerer ikke import; intern integritet og faktisk overføring valideres obligatorisk.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 90
+      "line": 89
     },
     {
       "id": "DEC-RELEASE-001",
@@ -512,7 +504,7 @@
       "rationale": "Entydig publiseringsdag og identitet uten prototype-serier.",
       "consequence": "Løpenummer starter på 1 hver publiseringsdag; prosjektversjon samordnes i leveranse- og runtime-metadata.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 96
+      "line": 95
     },
     {
       "id": "DEC-WORK-001",
@@ -520,7 +512,23 @@
       "rationale": "Dagens avtalte prosjektarbeidsmåte.",
       "consequence": "Issues/PR og den gamle Chat→Work-handoff-prosessen videreføres ikke.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
-      "line": 97
+      "line": 96
+    },
+    {
+      "id": "DEC-PROD-001",
+      "decision": "Installasjon bevarer eksisterende data; verifiserte migreringer erstatter prototype-reset.",
+      "rationale": "Brukeren tar løsningen i ordinær drift.",
+      "consequence": "Førstegangsseeding kjøres bare på tom database. Privat backup før oppgradering; ukjent kilde avvises. Erstatter tidligere DEC-GA-006.",
+      "source": "14-AKTIVE-BESLUTNINGER.md",
+      "line": 102
+    },
+    {
+      "id": "DEC-START-001",
+      "decision": "Startfelt, mangler og startklarstatus eies av databasekladden og DB-registre.",
+      "rationale": "Gamle HA-tall kunne skjule NULL etter nytt templatevalg.",
+      "consequence": "Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt og DB-avvisning.",
+      "source": "14-AKTIVE-BESLUTNINGER.md",
+      "line": 103
     }
   ]
 }

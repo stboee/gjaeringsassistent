@@ -19,13 +19,13 @@ docker compose up -d --no-deps gjaeringsassistent-mariadb
 docker exec gjaeringsassistent-mariadb sh -lc 'mariadb -N -B -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" -e "SELECT VERSION()"'
 ```
 
-Vent til containeren er healthy og versjonsspørringen viser `12.3.3-MariaDB...`. `MARIADB_AUTO_UPGRADE` lar det offisielle imaget oppdatere MariaDBs egne systemtabeller ved behov. Prosjektets prototypeinstallasjon resetter deretter Gjæringsassistent-databasen; den migrerer ikke tidligere sessions. Lokal SQL-verifikasjon gjelder ren schema-installasjon, ikke oppgradering av brukerens eksisterende datadir eller full Docker/HA/Node-RED-integrasjon.
+Vent til containeren er healthy og versjonsspørringen viser `12.3.3-MariaDB...`. `MARIADB_AUTO_UPGRADE` lar det offisielle imaget oppdatere MariaDBs egne systemtabeller ved behov. Gjæringsassistent oppgraderer deretter applikasjonsskjemaet gjennom sin egen databevarende migrering. MariaDB-systemoppgradering og applikasjonsmigrering er separate operasjoner.
 
-Node-RED-containeren må kjøre for at installeren skal kontrollere installerpakker og lese faktisk UID/GID. Hvis den er stoppet, kjør `docker start gjaeringsassistent-nodered` først. Installeren avviser stoppet/restarting container før database-reset og flowendringer, med egen diagnose.
+Node-RED-containeren må kjøre for at installeren skal kontrollere installerpakker og lese faktisk UID/GID. Hvis den er stoppet, kjør `docker start gjaeringsassistent-nodered` først. Installeren avviser stoppet/restarting container før database- og flowendringer, med egen diagnose.
 
-Kjør `./installer/install.sh` fra den utpakkede releasepakken. Prototypeinstallasjonen kan resette MariaDB. Installeren installerer schema/seeds/views, Node-RED-flow og frontendkilde, men kjører ikke syntetisk Start, Systemkontroll eller andre runtime-akseptansetester.
+Kjør `./installer/install.sh` fra den utpakkede releasepakken. Eksisterende data bevares; baseline/seeds brukes bare på tom database. Installeren installerer schema/seeds/views, Node-RED-flow og frontendkilde, men kjører ikke syntetisk Start, Systemkontroll eller andre runtime-akseptansetester.
 
-Før reset leser installeren serverversjonen og sammenligner med `BUILD-INFO.json`. Annen versjon avvises før database- eller flowendringer. Faktisk serverversjon følger `.json`-rapporten som `database_server_version`.
+Før mutasjon leser installeren serverversjonen og sammenligner med `BUILD-INFO.json`. Annen versjon avvises før database- eller flowendringer. Faktisk serverversjon følger `.json`-rapporten som `database_server_version`.
 
 Installerresultat skrives som `.json` og `.log` under `install-reports/`. Ved FAIL brukes `last_step` og tilhørende logg; installerfeil skal løses som installer-/DDL-/flowfeil, ikke maskeres med runtime-workarounds.
 
@@ -149,4 +149,18 @@ Historisk import viser separat at perioden er ferdig behandlet og hvilke måleda
 
 En ventende HA-publisering er synlig som advarsel til den berørte utgangen har bekreftet ny publisering. La forbindelsen/integrasjonen komme opp; systemet leser deretter fersk DB-state på nytt. Ved vedvarende problem hentes Teknisk-eksport og Node-RED-logg. Ugyldige payloads og DB-feil skal undersøkes som reelle feil, ikke avskrives som oppstartsstøy.
 
-Prototypeinstallasjon resetter fortsatt databasen. Eksportér sesjoner som skal beholdes før installasjon; dette er ikke en databevarende migrering.
+Oppgradering støttes fra p24r16 og 2026.11.07-1. Sesjoner, frozen grunnlag, målinger, korreksjoner, templates og kladder bevares. Samme målversjon kan reinstallere filer ved samsvarende migreringskvittering.
+
+## Oppgradering og gjenoppretting
+
+Kjør `./installer/install.sh` som root fra den utpakkede, SHA-kontrollerte pakken. `installer/migrations.json` beskriver kildeversjoner, strukturavtrykk, filrekkefølge og målversjon. Ukjent grunnlag avvises før Node-RED stoppes. Standardløpet har ingen reset-kommando.
+
+Etter stopp lagres `database.sql.gz` (rutiner, triggere, hendelser og alle data), `flows.json`, eventuell `flows_cred.json` og SHA-kontroll i en privat katalog under Node-RED `/data/gjaeringsassistent/backups/`. Konkret hoststi står i installasjonsrapporten. Backupkatalogen har kun root-tilgang og skal ikke legges på GitHub eller i HA-public. Backup beholdes inntil brukeren velger opprydding.
+
+Ved feil etter stopp: les `last_step`, logg og backupsti. Node-RED startes ikke automatisk med en delvis oppgradert database. DDL kan ikke rulles tilbake som én vanlig InnoDB-transaksjon; backupen er tilbakeføringsgrunnlaget. Undersøk feilen før ny installasjon.
+
+Tilbakeføring er en separat, uttrykkelig driftsbeslutning: hold Node-RED stoppet, kontroller SHA og `gzip -t`, gjenopprett dumpen til en tom Gjæringsassistent-database, og legg tilbake flow/credentials med samme UID/GID som før. Eksisterende delvis oppgraderte objekter må ikke blandes med gammelt schema. Denne tømmingen er en valgt gjenoppretting, aldri del av installasjonen. Den lokale integrasjonstesten prøver faktisk dump og gjenoppretting; målmiljøets Docker-transport må fortsatt bekreftes.
+
+Nye startfelt leser databasekladden direkte. Verdier som manglet før oppgradering blir fortsatt eksplisitt manglende og må registreres av brukeren; gamle HA-verdier importeres ikke automatisk.
+
+Den nye startflaten forutsetter oppdatert dashboard-YAML. Når Home Assistant leser den publiserte YAML-filen direkte, lastes dashboardet på nytt etter installasjon. Hvis YAML tidligere er kopiert/importert manuelt til et dashboard i lagringsmodus, oppdater denne kopien fra `dashboard/gjaeringsassistent-dashboard.yaml` i den nye pakken. Filpublisering endrer ikke en separat lagret Lovelace-konfigurasjon.

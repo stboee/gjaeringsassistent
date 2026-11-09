@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "version": "2026.11.07-1",
+  "version": "2026.11.09-1",
   "normative": false,
   "source_baseline": "0.1.0-prototype22-r4-revised1",
   "change_rule": "HA metadata is changed in the MariaDB registry seed; flow/dashboard/generated contract/tests must remain consistent with that registry.",
@@ -733,6 +733,12 @@
       "direction": "home_assistant_to_nodered",
       "mode": "parameterized",
       "listener_id": "p24_archive_library_event"
+    },
+    {
+      "event_type": "gjaeringsassistent_set_start_field",
+      "direction": "home_assistant_to_nodered",
+      "mode": "parameterized",
+      "listener_id": "p26_start_field_event"
     }
   ],
   "deviations": [],
@@ -2525,6 +2531,30 @@
       "required": 1,
       "absence_policy": "error",
       "empty_allowed": 0
+    },
+    {
+      "projection_id": "start_status",
+      "field_path": "attributes.start_ready",
+      "value_type": "number",
+      "required": 1,
+      "absence_policy": "error",
+      "empty_allowed": 0
+    },
+    {
+      "projection_id": "start_status",
+      "field_path": "attributes.start_fields",
+      "value_type": "array",
+      "required": 1,
+      "absence_policy": "error",
+      "empty_allowed": 0
+    },
+    {
+      "projection_id": "start_status",
+      "field_path": "attributes.start_readiness_message",
+      "value_type": "string",
+      "required": 1,
+      "absence_policy": "error",
+      "empty_allowed": 0
     }
   ],
   "draft_bindings": [
@@ -3389,5 +3419,239 @@
       "created_at": "UTC_TIMESTAMP(3)"
     }
   ],
-  "plugin_version": "0.80.3"
+  "plugin_version": "0.80.3",
+  "start_fields": [
+    {
+      "entity_id": "text.gjaeringsassistent_batchnavn",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 1
+    },
+    {
+      "entity_id": "text.gjaeringsassistent_pitchtid",
+      "section_id": "pitch",
+      "required_value": 0,
+      "positive_required": 0,
+      "sort_order": 2
+    },
+    {
+      "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 3
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_volum_l",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 1,
+      "sort_order": 4
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_pitchtemperatur_c",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 5
+    },
+    {
+      "entity_id": "select.gjaeringsassistent_pitchmodus",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 6
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 1,
+      "sort_order": 7
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 1,
+      "sort_order": 8
+    },
+    {
+      "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 9
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 10
+    },
+    {
+      "entity_id": "text.gjaeringsassistent_oksygenering",
+      "section_id": "pitch",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 11
+    },
+    {
+      "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 12
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_malt_sg",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 13
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_provetemperatur",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 14
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_hydrometer_kalibreringstemperatur",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 15
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_manuell_temperatur",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 16
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_trykk",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 17
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_kjolemaskin_settpunkt",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 18
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_kjolemaskin_kalibrering",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 19
+    },
+    {
+      "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 20
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_acetaldehyd",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 21
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_diacetyl",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 22
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_vorteraktig_preg",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 23
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_svovel_so2",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 24
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_svovel_h2s",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 25
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_klarhet",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 26
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_utfelling_i_prove",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 27
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_utfelling_minutter",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 28
+    },
+    {
+      "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+      "section_id": "measurement",
+      "required_value": 1,
+      "positive_required": 0,
+      "sort_order": 29
+    },
+    {
+      "entity_id": "text.gjaeringsassistent_kontrollnotat",
+      "section_id": "measurement",
+      "required_value": 0,
+      "positive_required": 0,
+      "sort_order": 30
+    }
+  ],
+  "start_pitch_modes": [
+    {
+      "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+      "pitch_mode_id": "dry"
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+      "pitch_mode_id": "slurry"
+    },
+    {
+      "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+      "pitch_mode_id": "slurry"
+    },
+    {
+      "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+      "pitch_mode_id": "slurry"
+    },
+    {
+      "entity_id": "text.gjaeringsassistent_oksygenering",
+      "pitch_mode_id": "slurry"
+    }
+  ]
 }

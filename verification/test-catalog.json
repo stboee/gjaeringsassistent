@@ -441,6 +441,24 @@
       "method_type": "node_integration",
       "implementation_ref": "tests/test-p24r16-system-live.js",
       "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-024",
+      "test_type": "FUNC",
+      "title": "DB-eid slurry-start og operativ P/B-kontroll",
+      "description": "Faktisk SQL og NR-feltbane: NULL, eksplisitt samme-verdi-lagring, slurry, snapshot og beholdt gammel sesjon. Simulert HA-transport.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-start-control-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-025",
+      "test_type": "FUNC",
+      "title": "Databevarende installasjon og backup/gjenoppretting",
+      "description": "Faktisk install.sh, MariaDB 12.3.3, dump/gjenoppretting, støttede kildeversjoner, reinstallasjon og avvisning av ukjent grunnlag. Docker-transport simulert.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-install-upgrade-live.js",
+      "automated": true
     }
   ]
 }

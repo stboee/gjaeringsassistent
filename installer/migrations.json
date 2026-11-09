@@ -1,0 +1,39 @@
+{
+  "format_version": 1,
+  "target_version": "2026.11.09-1",
+  "supported_sources": [
+    "0.1.0-prototype24-r16",
+    "2026.11.07-1"
+  ],
+  "baseline_tables": 202,
+  "baseline_views": 178,
+  "migration_id": "2026.11.09-1-start-control",
+  "upgrade_files": [
+    "sql/migrations/2026.11.09-1-schema.sql",
+    "sql/11-runtime-routines.sql",
+    "sql/20-views.sql",
+    "sql/migrations/2026.11.09-1-metadata.sql",
+    "sql/24-verification-metadata-seed.sql"
+  ],
+  "fresh_files": [
+    "sql/00-template-schema.sql",
+    "sql/01-template-registry-seed.sql",
+    "sql/10-runtime-schema.sql",
+    "sql/11-runtime-routines.sql",
+    "sql/02-runtime-registry-seed.sql",
+    "sql/03-w3470-template-seed.sql",
+    "sql/04-ale-templates-seed.sql",
+    "sql/20-views.sql",
+    "sql/21-system-metadata-seed.sql",
+    "sql/22-demo-reference-seed.sql",
+    "sql/23-measurement-source-seed.sql",
+    "sql/24-verification-metadata-seed.sql",
+    "sql/25-release-verification-results-seed.sql"
+  ],
+  "baseline_schema_sha256": "c5862c63bc11cf24c6439b565963bb15a637910418f14f0b813af72cb976a7a6",
+  "target_tables": 207,
+  "target_views": 183,
+  "baseline_schema_version": 9,
+  "target_schema_version": 10,
+  "template_schema_version": 4
+}
