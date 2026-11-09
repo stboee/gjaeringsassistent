@@ -1,6 +1,6 @@
 # Gjæringsassistent – videreføring
 
-Leveranse **2026.11.09-1 – Databevaring og trygg oppstart**. Teknisk utgangspunkt er p24r16 og første GitHub-utgave 2026.11.07-1. Se VERSION, BUILD-INFO.json, Git-tag og release-artefakt for faktisk identitet; dokumentasjon på main kan være nyere enn en publisert pakke.
+Leveranse **2026.11.09-2 – Rettede startkort**. Teknisk utgangspunkt er p24r16 og første GitHub-utgave 2026.11.07-1. Se VERSION, BUILD-INFO.json, Git-tag og release-artefakt for faktisk identitet; dokumentasjon på main kan være nyere enn en publisert pakke.
 
 ## Ny chat
 
@@ -8,7 +8,10 @@ Følg [onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md). Les AGENTS.md, dok
 
 ## Denne leveransen
 
-- Databevarende installasjon fra `0.1.0-prototype24-r16` eller `2026.11.07-1`; tom database initialiseres. Samme målversjon kan reinstallere filer med samsvarende migreringskvittering. Manifestet står i installer/migrations.json.
+- Retter avvisning av de to startkortene: `startfields` er en tillatt kortvisning. Testen leser begge konfigurasjonene fra dashboard-YAML og bruker offentlig `setConfig`, i tillegg til DB-felt- og hendelsesgrensen.
+- Filoppgradering fra 2026.11.09-1 beholder alle domenedata og kontrollerer schema og den tidligere migreringskvitteringen.
+
+- Databevarende installasjon fra `0.1.0-prototype24-r16` eller `2026.11.07-1`, samt filoppgradering fra `2026.11.09-1`; tom database initialiseres. Samme målversjon kan reinstallere filer med samsvarende migreringskvittering. Manifestet står i installer/migrations.json.
 - Privat, komprimert SQL-backup og flow/credentials før endring. Backup tar med tabeller, rutiner, triggere, hendelser og view-definisjonenes tegnsett/sikkerhet uten å evaluere grafuttrykk. Feil i backup eller ukjent grunnlag hindrer migrering.
 - DB-eide startfelt og startklarstatus. HA kan ikke skjule et NULL-felt i en ny kladd med en gammel tallverdi. Samme verdi kan registreres eksplisitt. Slurry og tørrgjær valideres fra samme aktuelle DB-grunnlag.
 - Startforsøk med feltvise snapshots i MariaDB og de ti siste i teknisk eksport. Normaliserte regler og HA-bindinger eier labels, valg, grenser og krav.
@@ -34,4 +37,6 @@ Siste vedlagte målrapport er fra **p24r16 den 08.11.2026 kl. 22:57**. HA viste 
 
 Arbeid direkte på main; issues og PR inngår ikke i prosjektprosessen. Versjon er ÅÅÅÅ.MM.DD-N, tag v-prefiks, med kort releasebeskrivelse. Publisert release inneholder ZIP og SHA-256 knyttet til samme kildecommit. Eksisterende tag/artefakt skal ikke omskrives.
 
-Nåværende oppgraderingsbestilling omfatter bygg/publisering, ikke kjøring på brukerens server. Ingen ny implementeringsoppgave er avtalt utover denne leveransen. Ved videre feil: les fersk teknisk rapport, skill aktive feil fra historiske hendelser og følg HA/NR/read-model til autoritativ DB-kilde.
+Nåværende oppgraderingsbestilling omfatter bygg/publisering, ikke kjøring på brukerens server. Den autoriserte rettelsen av startkortenes konfigurasjonsfeil inngår i denne leveransen. Ved videre feil: les fersk teknisk rapport, skill aktive feil fra historiske hendelser og følg HA/NR/read-model til autoritativ DB-kilde.
+
+Brukeren rapporterte to konfigurasjonsfeil etter templatevalg i den nye startflaten. Begge er reprodusert lokalt i 2026.11.09-1 og rettet her. Dette er ikke en bekreftelse på at den øvrige startflyten eller databevaring er målmiljøtestet.

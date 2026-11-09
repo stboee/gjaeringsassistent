@@ -35,7 +35,7 @@ Bevar rå HA-historikk lenger og hold HA/Raspberry Pi i drift under oppstart. Te
 
 ## Gjeldende målmiljøstatus
 
-Siste vedlagte målrapport er fra p24r16 den 08.11.2026 kl. 22:57. Den dokumenterer slurryfelter som avviker mellom HA og ny databasekladd; tidligere rapport viser feil P/B-telling når gamle sesjoner beholdes. Rettelsene i 2026.11.09-1 er ikke bekreftet installert i målmiljøet. De 14 UAT-testene beholder sine faktiske statuser.
+Siste vedlagte målrapport er fra p24r16 den 08.11.2026 kl. 22:57. Den dokumenterer slurryfelter som avviker mellom HA og ny databasekladd; tidligere rapport viser feil P/B-telling når gamle sesjoner beholdes. Brukeren rapporterer nå to konfigurasjonsfeil i den nye startflaten etter templatevalg. Begge er reprodusert i 2026.11.09-1 og rettet i 2026.11.09-2; faktisk versjonsidentitet er ikke bekreftet med en nyere rapport. Startflyt og databevaring er fortsatt ikke målmiljøbekreftet. De 14 UAT-testene beholder sine faktiske statuser.
 
 Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal native integrasjon dokumenterer leseavgrensning og samtidighet, ikke garantert responstid på gangpc. Reell HA Recorder/time-statistikk, nettverksfeil, nettleser/tidssoner, B/P-korreksjoner, faste akser, arkiv/ny start og HA-gjenoppkobling er fortsatt måltester der konkrete bevis mangler.
 

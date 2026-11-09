@@ -23,6 +23,8 @@ Vent til containeren er healthy og versjonsspørringen viser `12.3.3-MariaDB...`
 
 Node-RED-containeren må kjøre for at installeren skal kontrollere installerpakker og lese faktisk UID/GID. Hvis den er stoppet, kjør `docker start gjaeringsassistent-nodered` først. Installeren avviser stoppet/restarting container før database- og flowendringer, med egen diagnose.
 
+Oppgradering fra 2026.11.09-1 er en fil-/metadataoppdatering: kjent fysisk struktur og tidligere migreringskvittering kontrolleres, domenetabeller/rutiner/views beholdes, og privat backup tas før endring.
+
 Kjør `./installer/install.sh` fra den utpakkede releasepakken. Eksisterende data bevares; baseline/seeds brukes bare på tom database. Installeren installerer schema/seeds/views, Node-RED-flow og frontendkilde, men kjører ikke syntetisk Start, Systemkontroll eller andre runtime-akseptansetester.
 
 Før mutasjon leser installeren serverversjonen og sammenligner med `BUILD-INFO.json`. Annen versjon avvises før database- eller flowendringer. Faktisk serverversjon følger `.json`-rapporten som `database_server_version`.

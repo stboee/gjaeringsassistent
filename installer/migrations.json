@@ -1,19 +1,20 @@
 {
   "format_version": 1,
-  "target_version": "2026.11.09-1",
+  "target_version": "2026.11.09-2",
   "supported_sources": [
     "0.1.0-prototype24-r16",
     "2026.11.07-1"
   ],
   "baseline_tables": 202,
   "baseline_views": 178,
-  "migration_id": "2026.11.09-1-start-control",
+  "migration_id": "2026.11.09-2-start-cards",
   "upgrade_files": [
     "sql/migrations/2026.11.09-1-schema.sql",
     "sql/11-runtime-routines.sql",
     "sql/20-views.sql",
     "sql/migrations/2026.11.09-1-metadata.sql",
-    "sql/24-verification-metadata-seed.sql"
+    "sql/24-verification-metadata-seed.sql",
+    "sql/migrations/2026.11.09-2-metadata.sql"
   ],
   "fresh_files": [
     "sql/00-template-schema.sql",
@@ -35,5 +36,16 @@
   "target_views": 183,
   "baseline_schema_version": 9,
   "target_schema_version": 10,
-  "template_schema_version": 4
+  "template_schema_version": 4,
+  "patch_sources": {
+    "2026.11.09-1": {
+      "migration_id": "2026.11.09-1-start-control",
+      "checksum_sha256": "ad08eed5968039bea99eaa029149e524e87fde95c6628d51538c98ac67a0b0e7"
+    }
+  },
+  "patch_files": [
+    "sql/migrations/2026.11.09-2-metadata.sql",
+    "sql/24-verification-metadata-seed.sql"
+  ],
+  "target_schema_sha256": "ed20fe5a24d1d6b8d996af8a0e03dec0a55d524435e2d1bba43ce6db38f8591d"
 }

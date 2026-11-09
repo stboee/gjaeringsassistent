@@ -105,7 +105,8 @@ class GjaeringsassistentCard extends HTMLElement {
     this._verificationExportBase='';
   }
   setConfig(config){
-    if(!config||!['demo','archive-action','system','notes','template','overview','report','history','biology','process','timecorrection','starttime','startaction','measurementaction','measurements','analysis','verification','verification-summary'].includes(config.view)) throw new Error('p21r13: gjaeringsassistent-card støtter view: system|notes|template|overview|report|history|biology|process|analysis|timecorrection|starttime|measurementaction|measurements|verification|verification-summary');
+    const supportedViews=['demo','archive-action','system','notes','template','overview','report','history','biology','process','timecorrection','starttime','startfields','startaction','measurementaction','measurements','analysis','verification','verification-summary'];
+    if(!config||!supportedViews.includes(config.view)) throw new Error('gjaeringsassistent-card støtter view: '+supportedViews.join('|'));
     this._config={...this._config,...config};
     if(this._config.view==='template') this._scheduleTemplate();
     if(['demo','overview','report','biology','process','analysis','timecorrection','measurementaction','measurements'].includes(this._config.view)) this._scheduleOverview();

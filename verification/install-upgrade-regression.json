@@ -1,33 +1,38 @@
 {
-  "application_version": "2026.11.09-1",
+  "application_version": "2026.11.09-2",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "docker_transport": "simulated",
   "target_ha_uat": "not_run",
   "supported_sources": [
     "0.1.0-prototype24-r16",
-    "2026.11.07-1"
+    "2026.11.07-1",
+    "2026.11.09-1"
   ],
   "checks": [
     "changed source structure and failed backup prevent migration and preserve all existing domain rows",
     "0.1.0-prototype24-r16: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically",
-    "0.1.0-prototype24-r16: reinstall keeps data and one matching migration receipt",
+    "0.1.0-prototype24-r16: reinstall keeps data and matching migration receipts; version expectations agree",
     "2026.11.07-1: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically",
-    "2026.11.07-1: reinstall keeps data and one matching migration receipt",
+    "2026.11.07-1: reinstall keeps data and matching migration receipts; version expectations agree",
+    "2026.11.09-1: invalid prior receipt and altered schema reject file upgrade before stopping Node-RED",
+    "2026.11.09-1: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically",
+    "2026.11.09-1: reinstall keeps data and matching migration receipts; version expectations agree",
     "unknown source is rejected before stopping Node-RED or changing user data",
     "fresh installation initializes an empty database without a synthetic session or reset"
   ],
   "source_fingerprints": {
-    "installer/install.sh": "7fcbe0ad6396f23f19eddf463eee7e710f10a8cd4408e3b7d98749ee249df36d",
-    "installer/database-plan.py": "0897049c67136543570fa0f1282e526fad2fadfa7c5f8c31c2fc39c49483050c",
+    "installer/install.sh": "d570e88cba2f368e883cd361aa3ec48de594c7bc636736a0ee8f64d2331f3050",
+    "installer/database-plan.py": "bec599acb1161fb7830d918e23751afc7d60c5e332b8b8fa1bfaa1d6a92f1bae",
     "installer/backup-database.py": "11915f04473775647bee4b8e5baf65b3eba9476576a02f9866cadc7f5f670968",
-    "installer/migrations.json": "0f923e66fdba04e5adeb42c219305e492405a51a067b660b5b98fbac15e79671",
+    "installer/migrations.json": "c28479ea7b4827a6e09de0a727c8548a2bc62bb26cb23021a0465ae6ad4a1c3e",
     "sql/migrations/2026.11.09-1-schema.sql": "1746fc6ee43c292f655d72bc15acddbbd22bc80ae3c72d53a2044353f2bd8a4f",
     "sql/11-runtime-routines.sql": "8a886a169ac60af55c337d0759aea848f91bfc6cfb832c0aa2a8a777a5408f0c",
     "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
     "sql/migrations/2026.11.09-1-metadata.sql": "95701490e6f83e5b9cad81d38fc04feb88c7369439288dad7d9bdd613dec6c87",
     "sql/24-verification-metadata-seed.sql": "8c2ca845a80cc00e07d7b0f9f607aeffa0095d4fa9fff4078417b1e8a307aca2",
-    "tests/test-install-upgrade-live.js": "1a56951394f38d542c223f953dd5e134d7bc180861e8102645d38504bc958462",
+    "sql/migrations/2026.11.09-2-metadata.sql": "37c53d1fae4e7f9ede38be129299cc2bbc6d2fe3d6f1df85c6805674fbe52006",
+    "tests/test-install-upgrade-live.js": "50b2faac9b51cd87a63b5e4ae13b41f7652b8b133f5d7a7282712d34bc088cba",
     "tests/docker-install-simulator.py": "c55e28a575a4f6e8b27bc42cbd84f4d9bf7b7bd0e2497d32c7d166cff1e46459"
   }
 }

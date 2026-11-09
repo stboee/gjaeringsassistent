@@ -181,7 +181,7 @@ PASS all Function nodes and frontend JavaScript pass syntax check
 PASS W-34/70 seed has 15 process slots
 PASS W-34/70 seed has 6 biological phases
 PASS release schema verification expects exactly the same 6 W-34/70 biological phases as the canonical seed
-PASS custom card explicitly supports overview, biology, process, timecorrection and measurement views
+PASS every dashboard card view is accepted by the declared configuration contract
 PASS Template B/P details preserve expanded state across legitimate rerenders
 PASS Template does not rerender on unrelated HA state ticks
 PASS Technical tables explicitly render local Europe/Oslo timestamps
@@ -645,7 +645,7 @@ RESULT: PASS – p22r7 analysis output validation rejects impossible derived val
 RESULT: PASS – p23r2 revised7/revised8 criterion-derived B and MariaDB measurement export
 RESULT: PASS – p23 structured UAT registration and shared JSON/HTML verification export
 RESULT: PASS – p21r13 active-session-driven Home Assistant ingestion, persisted RSSI/5-minute diagnostics and heartbeat gap lifecycle
-PASS DB form renders NULL without stale HA fallback, sends same-value saves and waits for DB-published values
+PASS both actual dashboard start cards enter through setConfig; DB form renders NULL without stale HA fallback, sends same-value saves and waits for DB-published values
 RESULT: PASS – p24r6 measured endpoints and raw/manual sources, gaps, stability without band, single point, shared renderer
 RESULT: PASS – >19 MB SQLite pair verification, both hashes, compact SQL, missing/tampered/short files and retry contract
 RESULT: PASS – input before blur, refresh races, focus, auxiliary forms and timestamp download names

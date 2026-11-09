@@ -92,6 +92,7 @@ install_database(){
   if [[ "$DATABASE_MODE" != "reinstall" ]]; then
     mode_key="upgrade_files"
     [[ "$DATABASE_MODE" == "fresh" ]] && mode_key="fresh_files"
+    [[ "$DATABASE_MODE" == "patch" ]] && mode_key="patch_files"
     while IFS= read -r f; do
       CURRENT_STEP="MariaDB $DATABASE_MODE $f"
       db_apply "$SOURCE_ROOT/$f"

@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.09-1",
-  "scope": "Databevarende installasjon, DB-eid oppstart og aktiv sesjonskontroll",
+  "version": "2026.11.09-2",
+  "scope": "Rettede startkort og databevarende filoppgradering fra 2026.11.09-1",
   "required_files": [
     "VERSION",
     "README.md",

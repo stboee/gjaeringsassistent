@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.09-1",
+  "application_version": "2026.11.09-2",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "plugin_version": "0.80.3",
   "status": "pass",
@@ -16,8 +16,8 @@
   "source_fingerprints": {
     "sql/10-runtime-schema.sql": "e1d216aef68c5d9ed9c2566e29e353766e376ffbc5497de7176799ab49b060f9",
     "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
-    "sql/21-system-metadata-seed.sql": "be4002f98d9e8e3d6262f3b2b8f7c6330619574409e1fa219f08a67ade5af825",
-    "nodered/flows.template.json": "bb69d0929e0eec96553e39a9d97e1e7bfa0600ecc99cd826c4f07e7bd5c33fd4",
+    "sql/21-system-metadata-seed.sql": "ed489d869a5633bf397148c747f2e007d487ef8923b69073b73622b69928bd90",
+    "nodered/flows.template.json": "9b58e03b29e9d86ee6eeb04bd2c51035c493b5b7a28b49a039efa80581a788a7",
     "tests/test-p24r16-system-live.js": "d65cdb286c9abe70bc1ec9e1556ce95195250d3534213f9cc525e11cf5e28d3d"
   }
 }

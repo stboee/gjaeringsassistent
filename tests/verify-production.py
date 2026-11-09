@@ -24,6 +24,15 @@ for bad in [('unknown',202,178,[]),(version,207,183,[]),(version,206,183,[])]:
         raise AssertionError('Unrecognized migration input accepted')
 receipt = [{'migration_id': manifest['migration_id'], 'checksum_sha256': digest}]
 assert module.choose_plan(root, manifest, version, 207, 183, receipt)['mode'] == 'reinstall'
+for source, expected in manifest['patch_sources'].items():
+    assert module.choose_plan(root, manifest, source, 207, 183, [expected])['mode'] == 'patch'
+    for history in [[], [{**expected, 'checksum_sha256': '0'*64}]]:
+        try:
+            module.choose_plan(root, manifest, source, 207, 183, history)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError('File upgrade accepted without a verified previous receipt')
 installer = (root/'installer/install.sh').read_text()
 assert 'DROP DATABASE' not in installer and 'reset_database' not in installer
 assert installer.index('DATABASE_PLAN=') < installer.index('docker stop')

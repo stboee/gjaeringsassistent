@@ -7,7 +7,7 @@ source_format: markdown
 
 # 00 – Dokumentkart og status
 
-**Gjeldende release:** `2026.11.09-1`
+**Gjeldende release:** `2026.11.09-2`
 
 Prosjektets utviklings-/publiseringsregler står i [AGENTS.md](../AGENTS.md). Datoversjon er ÅÅÅÅ.MM.DD-N med kort releasebeskrivelse. Utvikling skjer direkte på main etter avklaring og «start»; issues/PR inngår ikke i arbeidsflyten.
 

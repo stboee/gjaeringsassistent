@@ -9,7 +9,7 @@ from pathlib import Path
 
 def migration_digest(root, manifest):
     h = hashlib.sha256()
-    for name in manifest['upgrade_files']:
+    for name in dict.fromkeys(manifest['upgrade_files'] + manifest['patch_files']):
         h.update(name.encode() + b'\0' + (root / name).read_bytes() + b'\0')
     return h.hexdigest()
 
@@ -28,6 +28,12 @@ def choose_plan(root, manifest, version, tables, views, history):
         if not receipt or receipt['checksum_sha256'] != digest:
             raise ValueError('Installert målversjon mangler samsvarende migreringskvittering')
         return {'mode': 'reinstall', 'source_version': version, 'migration_sha256': digest}
+    if version in manifest['patch_sources']:
+        expected = manifest['patch_sources'][version]
+        receipt = next((x for x in history if x['migration_id'] == expected['migration_id']), None)
+        if (tables, views) != (manifest['target_tables'], manifest['target_views']) or not receipt or receipt['checksum_sha256'] != expected['checksum_sha256']:
+            raise ValueError('Filoppgradering krever kjent databasestruktur og samsvarende migreringskvittering')
+        return {'mode': 'patch', 'source_version': version, 'migration_sha256': digest}
     if version not in manifest['supported_sources']:
         raise ValueError(f'Ingen verifisert oppgraderingsbane fra {version!r}')
     if (tables, views) != (manifest['baseline_tables'], manifest['baseline_views']):
@@ -73,7 +79,7 @@ def main():
         version = versions[0]
         runtime_schema = int(read('SELECT schema_version FROM database_metadata WHERE metadata_id=1;'))
         template_schema = int(read('SELECT schema_version FROM template_database_metadata WHERE metadata_id=1;'))
-        expected_schema = manifest['target_schema_version'] if version == manifest['target_version'] else manifest['baseline_schema_version']
+        expected_schema = manifest['target_schema_version'] if version == manifest['target_version'] or version in manifest['patch_sources'] else manifest['baseline_schema_version']
         if runtime_schema != expected_schema or template_schema != manifest['template_schema_version']:
             raise ValueError('Ukjent schema-versjon; ingen endringer er utført')
     history = []
@@ -83,6 +89,8 @@ def main():
             history.append({'migration_id': migration_id, 'checksum_sha256': checksum})
     if version in manifest['supported_sources'] and signature_sha != manifest['baseline_schema_sha256']:
         raise ValueError('Databasestrukturen avviker fra verifisert kildeversjon; ingen endringer er utført')
+    if (version == manifest['target_version'] or version in manifest['patch_sources']) and signature_sha != manifest['target_schema_sha256']:
+        raise ValueError('Databasestrukturen avviker fra verifisert målstruktur; ingen endringer er utført')
     plan = choose_plan(root, manifest, version, tables, views, history)
     plan.update({'target_version': manifest['target_version'], 'migration_id': manifest['migration_id']})
     print(json.dumps(plan, ensure_ascii=False))

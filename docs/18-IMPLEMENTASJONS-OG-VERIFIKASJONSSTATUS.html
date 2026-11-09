@@ -30,7 +30,7 @@
 </header>
 <h1 id="18--implementasjons--og-verifikasjonsstatus">18 –
 Implementasjons- og verifikasjonsstatus</h1>
-<p><strong>Gjeldende release:</strong> <code>2026.11.09-1</code>.
+<p><strong>Gjeldende release:</strong> <code>2026.11.09-2</code>.
 Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i
 RELEASE-NOTES.md.</p>
 <p>Implementert, lokalt release-verifisert og målmiljø-verifisert er
@@ -119,15 +119,15 @@ transport</td>
 <tr class="odd">
 <td>Databevarende oppgradering og backup</td>
 <td>Ja</td>
-<td>TEST-FUNC-025: faktisk installer/dump/restore, begge kildeversjoner
-og feiltilfeller; Docker-transport simulert</td>
+<td>TEST-FUNC-025: faktisk installer/dump/restore, baseline- og
+filoppgradering samt feiltilfeller; Docker-transport simulert</td>
 <td>OPEN-015 åpen</td>
 </tr>
 <tr class="even">
 <td>DB-eide startfelt/slurry og operativ P/B-kontroll</td>
 <td>Ja</td>
-<td>TEST-FUNC-024: faktiske DB-feltbindinger/snapshots og ny sesjon ved
-siden av beholdt gammel</td>
+<td>TEST-FUNC-024: faktiske DB-feltbindinger/snapshots, begge startkort
+via dashboardets setConfig og beholdt gammel sesjon</td>
 <td>OPEN-016 åpen</td>
 </tr>
 <tr class="odd">
@@ -152,5 +152,9 @@ B/P-målegrunnlag.</p>
 leveransen er ikke bekreftet installert i målmiljøet. Tidligere generell
 bekreftelse av p24r16 lukker ikke de ferske konkrete avvikene eller de
 enkelte UAT-testene.</p>
+<p>Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg
+er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning
+av <code>startfields</code> i kortets konfigurasjonskontroll, rettet i
+denne utgaven. Faktisk HA-/nettleserbekreftelse gjenstår.</p>
 </body>
 </html>

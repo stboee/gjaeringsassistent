@@ -1,6 +1,6 @@
 {
   "generated_from": "MariaDB 12.3.3 INFORMATION_SCHEMA",
-  "application_version": "2026.11.09-1",
+  "application_version": "2026.11.09-2",
   "tables": [
     "action_types",
     "active_report_requests",

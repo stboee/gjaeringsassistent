@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.09-1",
+  "application_version": "2026.11.09-2",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "target_ha_uat": "not_run",
@@ -11,15 +11,15 @@
     "unregistered start binding fails visibly in the DB contract"
   ],
   "source_fingerprints": {
-    "installer/install.sh": "7fcbe0ad6396f23f19eddf463eee7e710f10a8cd4408e3b7d98749ee249df36d",
-    "installer/database-plan.py": "0897049c67136543570fa0f1282e526fad2fadfa7c5f8c31c2fc39c49483050c",
-    "installer/migrations.json": "0f923e66fdba04e5adeb42c219305e492405a51a067b660b5b98fbac15e79671",
+    "installer/install.sh": "d570e88cba2f368e883cd361aa3ec48de594c7bc636736a0ee8f64d2331f3050",
+    "installer/database-plan.py": "bec599acb1161fb7830d918e23751afc7d60c5e332b8b8fa1bfaa1d6a92f1bae",
+    "installer/migrations.json": "c28479ea7b4827a6e09de0a727c8548a2bc62bb26cb23021a0465ae6ad4a1c3e",
     "sql/10-runtime-schema.sql": "e1d216aef68c5d9ed9c2566e29e353766e376ffbc5497de7176799ab49b060f9",
     "sql/11-runtime-routines.sql": "8a886a169ac60af55c337d0759aea848f91bfc6cfb832c0aa2a8a777a5408f0c",
     "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
-    "sql/21-system-metadata-seed.sql": "be4002f98d9e8e3d6262f3b2b8f7c6330619574409e1fa219f08a67ade5af825",
-    "nodered/flows.template.json": "bb69d0929e0eec96553e39a9d97e1e7bfa0600ecc99cd826c4f07e7bd5c33fd4",
-    "dashboard/gjaeringsassistent-card.js": "927f4582b59c973016c856c5f0a6cd196f32bb9c35fdde83ad20b655e9ba1fc4",
+    "sql/21-system-metadata-seed.sql": "ed489d869a5633bf397148c747f2e007d487ef8923b69073b73622b69928bd90",
+    "nodered/flows.template.json": "9b58e03b29e9d86ee6eeb04bd2c51035c493b5b7a28b49a039efa80581a788a7",
+    "dashboard/gjaeringsassistent-card.js": "e587867de995b3a3eb22d6c7f3319bd9979a57ed69968e66fcd56f3734d11a7c",
     "dashboard/gjaeringsassistent-dashboard.yaml": "bab6eb2666c406e365e6e5694985276517736f6283c26a7aca4b24c2d9666f88",
     "tests/test-start-control-live.js": "93cf98bb2c1d0d6b433249394db722636854d619f512ed2b72418c6cde138763"
   }

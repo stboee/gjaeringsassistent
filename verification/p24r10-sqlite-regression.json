@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.09-1",
+  "application_version": "2026.11.09-2",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "checks": [
@@ -14,7 +14,7 @@
     "one archive catalogue from manifests; missing/mismatched SHA warnings; import still succeeds",
     "active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection"
   ],
-  "concurrent_measurement_writes": 67,
+  "concurrent_measurement_writes": 168,
   "session_archive_bytes": 348160,
   "template_archive_bytes": 249856
 }

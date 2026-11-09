@@ -188,7 +188,10 @@ ok("w3470_six_biological_phases" in schema_verify and "IF(COUNT(*)=6,'PASS',CONC
 
 
 # revised11: p17r12 visual/functional Gjæring + Biologi on p20 MariaDB/read-model.
-ok("['demo','archive-action','system','notes','template','overview','report','history','biology','process','timecorrection','starttime','startaction','measurementaction','measurements','analysis','verification','verification-summary']" in card and 'view:overview' not in card,'custom card explicitly supports overview, biology, process, timecorrection and measurement views')
+supported=re.search(r"supportedViews=\[([^\]]*)\]",card)
+supported_views=set(re.findall(r"'([^']+)'",supported.group(1))) if supported else set()
+dashboard_views=set(re.findall(r"^\s+view: ([a-z-]+)\s*$",dashboard,re.M))
+ok(dashboard_views <= supported_views and 'view:overview' not in card,'every dashboard card view is accepted by the declared configuration contract')
 ok('_templateOpenDetails' in card and 'data-detail-key' in card and "addEventListener('toggle'" in card,'Template B/P details preserve expanded state across legitimate rerenders')
 ok("if(this._config.view==='template'){" in card and "if(changed&&!this._templateDirty) this._loadTemplate();" in card,'Template does not rerender on unrelated HA state ticks')
 ok('occurred_at_local' in card and 'Tid · Europe/Oslo' in card and 'Sist sett · lokal tid' in card,'Technical tables explicitly render local Europe/Oslo timestamps')

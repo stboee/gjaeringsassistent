@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.09-1",
-  "built_at_utc": "2026-11-08T23:13:34Z",
+  "version": "2026.11.09-2",
+  "built_at_utc": "2026-11-09T07:10:41Z",
   "architecture": "Node-RED motor + MariaDB/InnoDB authority; append-only history within retained sessions, explicit atomic archive deletion; HA operator presentation",
   "baseline": "0.1.0-prototype24-r16",
   "baselines": {
@@ -22,7 +22,7 @@
     "mariadb": "12.3.3",
     "node_js_minimum": "24"
   },
-  "scope": "Databevarende oppgradering, DB-eide startfelt/startvalidering og sesjonsavgrenset Systemkontroll",
+  "scope": "Rettede startkort og databevarende filoppgradering fra 2026.11.09-1",
   "verification_model": {
     "requirements": 259,
     "decisions": 66,
@@ -43,5 +43,6 @@
     "tag_prefix": "v",
     "description": "Kort beskrivelse i release-tittelen; løpenummer starter på 1 hver publiseringsdag",
     "npm_version": "2026.11.9-1"
-  }
+  },
+  "source_commit": null
 }

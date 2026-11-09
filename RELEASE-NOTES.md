@@ -1,3 +1,13 @@
+# 2026.11.09-2 – Rettede startkort
+
+- Retter konfigurasjonsfeil på kortene «Startgrunnlag · lagret i MariaDB» og «Første komplette målesett» etter templatevalg.
+- Regresjonstesten bruker de faktiske kortkonfigurasjonene fra dashboardet gjennom samme setConfig-grense som Home Assistant.
+- Databevarende filoppgradering fra 2026.11.09-1 kontrollerer struktur og tidligere migreringskvittering. Domenetabeller, rutiner og views endres ikke i denne oppgraderingsbanen. Oppgradering fra p24r16 / 2026.11.07-1 er fortsatt støttet.
+
+Installeren er kjørbar direkte fra den utpakkede pakken. Installer med `./installer/install.sh` og last Home Assistant-dashboardet på nytt med Ctrl+F5. Se TEST-RESULTS.md for faktisk testomfang; nettleser-UAT i målmiljøet er fortsatt åpen.
+
+## Tidligere utgaver
+
 # 2026.11.09-1 – Databevaring og trygg oppstart
 
 - Installer oppgraderer fra p24r16 eller 2026.11.07-1 uten å nullstille databasen. Verifisert privat database-/flowbackup før mutasjon, strukturkontroll og migreringskvittering. Samme målversjon kan reinstallere filer.

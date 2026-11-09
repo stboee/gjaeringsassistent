@@ -119,6 +119,10 @@ installerpakker og lese faktisk UID/GID. Hvis den er stoppet, kjør
 <code>docker start gjaeringsassistent-nodered</code> først. Installeren
 avviser stoppet/restarting container før database- og flowendringer, med
 egen diagnose.</p>
+<p>Oppgradering fra 2026.11.09-1 er en fil-/metadataoppdatering: kjent
+fysisk struktur og tidligere migreringskvittering kontrolleres,
+domenetabeller/rutiner/views beholdes, og privat backup tas før
+endring.</p>
 <p>Kjør <code>./installer/install.sh</code> fra den utpakkede
 releasepakken. Eksisterende data bevares; baseline/seeds brukes bare på
 tom database. Installeren installerer schema/seeds/views, Node-RED-flow

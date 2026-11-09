@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.09-1",
+  "application_version": "2026.11.09-2",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "plugin_version": "0.80.3",
   "plugin_schema_sha256": "f84558841ac431cc101371e04a2f0824d5e97798e546f5cdf023944e699cea36",
@@ -16,8 +16,8 @@
   ],
   "source_fingerprints": {
     "contracts/read-execution-plan.json": "8580014edf9fa156fd077eb3b8ab95654638504015c6506eb5ae6e4d2801bcaf",
-    "dashboard/gjaeringsassistent-card.js": "927f4582b59c973016c856c5f0a6cd196f32bb9c35fdde83ad20b655e9ba1fc4",
-    "nodered/flows.template.json": "bb69d0929e0eec96553e39a9d97e1e7bfa0600ecc99cd826c4f07e7bd5c33fd4",
+    "dashboard/gjaeringsassistent-card.js": "e587867de995b3a3eb22d6c7f3319bd9979a57ed69968e66fcd56f3734d11a7c",
+    "nodered/flows.template.json": "9b58e03b29e9d86ee6eeb04bd2c51035c493b5b7a28b49a039efa80581a788a7",
     "sql/00-template-schema.sql": "7da559fa1f08d2aaca18d488f5dd765fb615a26c56e15a668015474d1ea26682",
     "sql/01-template-registry-seed.sql": "8d58675939b870a94464ab950f7bd4b9ab601fa90b5e4a031fa118426eafbfe7",
     "sql/02-runtime-registry-seed.sql": "cdbf52edcf02b6957622b6bd1d0dafb8371ac94e691268193258e2d5d08c633e",
@@ -26,7 +26,7 @@
     "sql/10-runtime-schema.sql": "e1d216aef68c5d9ed9c2566e29e353766e376ffbc5497de7176799ab49b060f9",
     "sql/11-runtime-routines.sql": "8a886a169ac60af55c337d0759aea848f91bfc6cfb832c0aa2a8a777a5408f0c",
     "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
-    "sql/21-system-metadata-seed.sql": "be4002f98d9e8e3d6262f3b2b8f7c6330619574409e1fa219f08a67ade5af825",
+    "sql/21-system-metadata-seed.sql": "ed489d869a5633bf397148c747f2e007d487ef8923b69073b73622b69928bd90",
     "sql/22-demo-reference-seed.sql": "e8b4c2f91fc06a4423daa90b72e93ddab74f32fcf503d00d159fe8fd2c0e9daa",
     "sql/23-measurement-source-seed.sql": "619bf30a1bb5aa82891fe29d5bcc12366afde976611b2cb4500256a52e46e7a3",
     "sql/24-verification-metadata-seed.sql": "8c2ca845a80cc00e07d7b0f9f607aeffa0095d4fa9fff4078417b1e8a307aca2",
