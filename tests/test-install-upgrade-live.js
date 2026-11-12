@@ -14,6 +14,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
 (async()=>{
  const db=await mysql.createConnection({host:'127.0.0.1',port:13310,user:'root',multipleStatements:true,dateStrings:true});
  try{
+  let originalShape=null;
   let database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';
   const fresh=async()=>{
    await db.query('CREATE DATABASE IF NOT EXISTS `'+database+'` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;USE `'+database+'`;SET FOREIGN_KEY_CHECKS=0;');
@@ -25,9 +26,9 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
   };
   const allowed=new Set(['database_metadata','template_database_metadata','ha_event_registry','ha_projection_fields','information_objects','function_information_dependencies','system_functions','schema_relation_semantics','schema_absence_semantics','system_check_expectations','verification_requirements_catalog','verification_decisions_catalog','verification_verifications','verification_requirements','verification_test_definitions','verification_verification_requirements','verification_verification_tests','verification_decision_requirements','verification_uat_steps']);
   const hash=async(connection=db)=>{
-   const [tables]=await connection.query("SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA=DATABASE() AND TABLE_TYPE='BASE TABLE' ORDER BY TABLE_NAME");const out={};
-   for(const {TABLE_NAME:name} of tables){if(allowed.has(name)||(name.startsWith('verification_')&&!['verification_test_runs','verification_test_results'].includes(name))||name==='database_migrations'||name.startsWith('start_field_')||name.startsWith('session_start_attempt'))continue;
-    const [rows]=await connection.query('SELECT * FROM `'+name+'`');const serial=rows.map(r=>JSON.stringify(r)).sort();out[name]=crypto.createHash('sha256').update(JSON.stringify(serial)).digest('hex');
+   const [tables]=await connection.query("SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA=DATABASE() AND TABLE_TYPE='BASE TABLE' ORDER BY TABLE_NAME");const out={};if(!originalShape){originalShape={};for(const {TABLE_NAME:t} of tables){originalShape[t]=(await connection.query('SHOW COLUMNS FROM `'+t+'`'))[0].map(c=>c.Field);}}
+   for(const {TABLE_NAME:name} of tables){if(!originalShape[name]||allowed.has(name)||(name.startsWith('verification_')&&!['verification_test_runs','verification_test_results'].includes(name))||name==='database_migrations'||name.startsWith('start_field_')||name.startsWith('session_start_attempt'))continue;
+    let sourceTable=name;if(name==='measurement_source_profiles'&&!(await connection.query('SHOW COLUMNS FROM measurement_source_profiles'))[0].some(c=>c.Field==='sg_entity_id'))sourceTable='v_measurement_source_profiles';const [rows]=await connection.query('SELECT '+originalShape[name].map(c=>'`'+c+'`').join(',')+' FROM `'+sourceTable+'`');const serial=rows.map(r=>JSON.stringify(r)).sort();out[name]=crypto.createHash('sha256').update(JSON.stringify(serial)).digest('hex');
    }return out;
   };
   const input=(folder,env)=>{
@@ -38,10 +39,10 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
   };
   const run=(env,expected=0)=>{const result=spawnSync('bash',[path.join(root,'installer/install.sh')],{cwd:root,env,encoding:'utf8',maxBuffer:2e6});assert.equal(result.status,expected,result.stdout+'\n'+result.stderr);return result.stdout;};
   for(const source of [...manifest.supported_sources,...Object.keys(manifest.patch_sources)]){
-   const patch=Object.hasOwn(manifest.patch_sources,source),fixture=patch?previous:baseline;
+   const patch=Object.hasOwn(manifest.patch_sources,source),fixture=patch?path.join(path.dirname(previous),'previous-'+source):baseline;
    const fixtureManifest=patch?JSON.parse(fs.readFileSync(path.join(fixture,'installer/migrations.json'),'utf8')):null;
    database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';
-   await fresh();for(const f of manifest.fresh_files)await db.query(ddl(fs.readFileSync(path.join(fixture,f),'utf8')));
+   originalShape=null;await fresh();const fixtureFiles=fixtureManifest?fixtureManifest.fresh_files:manifest.fresh_files.filter(f=>!f.includes('12-operator-')&&!f.includes('26-operator-'));for(const f of fixtureFiles){console.log('SOURCE',source,f);try{await db.query(ddl(fs.readFileSync(path.join(fixture,f),'utf8')));}catch(e){console.error('SOURCE SQL FAILED',f,e.sql?.slice(-300));throw e;}}
    await db.query('UPDATE database_metadata SET application_version=?;UPDATE template_database_metadata SET application_version=?',[source,source]);
    if(patch){const receipt=manifest.patch_sources[source],h=crypto.createHash('sha256');for(const f of fixtureManifest.upgrade_files)h.update(f+'\0').update(fs.readFileSync(path.join(fixture,f))).update('\0');assert.equal(h.digest('hex'),receipt.checksum_sha256);await db.query('INSERT INTO database_migrations VALUES(?,?,?,?,UTC_TIMESTAMP(3))',[receipt.migration_id,receipt.checksum_sha256,'empty',source]);}
    const by=Object.fromEntries(JSON.parse(fs.readFileSync(path.join(baseline,'nodered/flows.template.json'))).map(n=>[n.id,n]));
@@ -73,9 +74,9 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
     pass('changed source structure and failed backup prevent migration and preserve all existing domain rows');
    }
    const output=run(env);assert.match(output,/RESULTAT: PASS/);assert.ok(output.includes('Databaseplan: '+(patch?'patch':'upgrade')));
-   if(patch){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);assert.doesNotMatch(output,/-> (?:2026\.11\.09-1-schema|11-runtime-routines|20-views)\.sql/);}
+   if(patch){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);assert.match(output,/12-operator-schema/);}
    assert.deepEqual(await hash(),before,'every existing user/domain table must retain byte-equivalent rows');
-   assert.equal((await db.query('SELECT session_id FROM v_active_session'))[0][0].session_id,active);
+   assert.equal(Number((await db.query('SELECT COUNT(*) n FROM session_measurement_signal_bindings'))[0][0].n),10);assert.equal((await db.query('SELECT session_id FROM v_active_session'))[0][0].session_id,active);
    assert.equal((await db.query('SELECT check_status FROM v_system_check_session'))[0][0].check_status,'ok');assert.equal(Number((await db.query('SELECT COUNT(*) n FROM v_metadata_lineage_gaps'))[0][0].n),0);if(!patch)assert.equal((await db.query("SELECT status FROM verification_decisions_catalog WHERE decision_id='DEC-GA-006'"))[0][0].status,'deprecated');
    const reports=fs.readdirSync(path.join(root,'install-reports')).filter(f=>f.endsWith('.json')).sort();const report=JSON.parse(fs.readFileSync(path.join(root,'install-reports',reports.at(-1))));
    assert.equal(report.prototype_database_reset,false);assert.equal(report.backup_verified,true);assert.equal(report.database_source_version,source);assert.ok(fs.statSync(path.join(report.backup_directory,'database.sql.gz')).size>0);
@@ -83,9 +84,10 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    // Restore on a second isolated server, retaining the original database name.
    // This also proves that no view silently reads the still-running source DB.
    const restoreData=path.join(folder,'restore-data'),base=process.env.GA_MARIADB_BASEDIR;
-   const init=spawnSync(path.join(base,'bin/mariadb-install-db'),['--no-defaults','--user=root','--auth-root-authentication-method=normal','--basedir='+base,'--datadir='+restoreData],{env:process.env,encoding:'utf8',maxBuffer:2e6});assert.equal(init.status,0,init.stdout+init.stderr);
+   const init=spawnSync(path.join(base,'bin/mariadb-install-db'),['--no-defaults','--auth-root-authentication-method=normal','--basedir='+base,'--datadir='+restoreData],{env:process.env,encoding:'utf8',maxBuffer:2e6});assert.equal(init.status,0,init.stdout+init.stderr);
+   const restoreTmp=path.join(folder,'restore-tmp');fs.mkdirSync(restoreTmp);
    const restoreLog=fs.openSync(path.join(folder,'restore-server.log'),'w');
-   const server=spawn(process.env.GA_MARIADB_SERVER,['--no-defaults','--user=root','--basedir='+base,'--datadir='+restoreData,'--socket=','--pid-file='+path.join(folder,'restore.pid'),'--port=13311','--bind-address=127.0.0.1','--innodb-buffer-pool-size=64M','--innodb-use-native-aio=0','--innodb-flush-method=fsync'],{env:process.env,stdio:['ignore',restoreLog,restoreLog]});
+   const server=spawn(process.env.GA_MARIADB_SERVER,['--no-defaults','--user='+os.userInfo().username,'--basedir='+base,'--datadir='+restoreData,'--socket=','--tmpdir='+restoreTmp,'--pid-file='+path.join(folder,'restore.pid'),'--port=13311','--bind-address=127.0.0.1','--innodb-buffer-pool-size=64M','--innodb-use-native-aio=0','--innodb-flush-method=fsync'],{env:process.env,stdio:['ignore',restoreLog,restoreLog]});
    let restored=null;
    try{
     for(let n=0;n<40;n++){try{restored=await mysql.createConnection({host:'127.0.0.1',port:13311,user:'root',multipleStatements:true,dateStrings:true});break;}catch{await new Promise(resolve=>setTimeout(resolve,100));}}
@@ -104,8 +106,8 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
   const folder=path.join(temporary,'reject');fs.mkdirSync(folder);const env=input(folder,{});const before=await hash();
   await db.query("UPDATE database_metadata SET application_version='unknown';UPDATE template_database_metadata SET application_version='unknown'");run(env,1);assert.equal(fs.readFileSync(env.GA_INSTALLER_SIMULATOR_STATE,'utf8'),'running');assert.deepEqual(await hash(),before);
   pass('unknown source is rejected before stopping Node-RED or changing user data');
-  database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';await fresh();const freshFolder=path.join(temporary,'fresh');fs.mkdirSync(freshFolder);const freshEnv=input(freshFolder,{});const installed=run(freshEnv);assert.match(installed,/Databaseplan: fresh/);assert.equal((await db.query('SELECT COUNT(*) n FROM sessions'))[0][0].n,0);assert.equal((await db.query('SELECT COUNT(*) n FROM database_migrations'))[0][0].n,1);pass('fresh installation initializes an empty database without a synthetic session or reset');
+  database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';originalShape=null;await fresh();const freshFolder=path.join(temporary,'fresh');fs.mkdirSync(freshFolder);const freshEnv=input(freshFolder,{});const installed=run(freshEnv);assert.match(installed,/Databaseplan: fresh/);assert.equal((await db.query('SELECT COUNT(*) n FROM sessions'))[0][0].n,0);assert.equal((await db.query('SELECT COUNT(*) n FROM database_migrations'))[0][0].n,1);pass('fresh installation initializes an empty database without a synthetic session or reset');
   const sources=[...new Set(['installer/install.sh','installer/database-plan.py','installer/backup-database.py','installer/migrations.json',...manifest.upgrade_files,...manifest.patch_files,'tests/test-install-upgrade-live.js','tests/docker-install-simulator.py'])];
-  fs.writeFileSync(path.join(root,'verification/install-upgrade-regression.json'),JSON.stringify({application_version:version,server_version:(await db.query('SELECT VERSION() v'))[0][0].v,status:'pass',docker_transport:'simulated',target_ha_uat:'not_run',supported_sources:[...manifest.supported_sources,...Object.keys(manifest.patch_sources)],checks,source_fingerprints:Object.fromEntries(sources.map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')]))},null,2)+'\n');
+  fs.writeFileSync(path.join(root,'verification/install-upgrade-regression.json'),JSON.stringify({application_version:version,server_version:(await db.query('SELECT VERSION() v'))[0][0].v,status:'pass',docker_transport:'simulated',target_ha_uat:'not_run',supported_sources:[...manifest.supported_sources,...Object.keys(manifest.patch_sources)],fixture_provenance:'p24r16/2026.11.07-1: complete Git tag v2026.11.07-1; physical DDL verified byte-identical to retained p24r16 source; application markers varied explicitly. Later sources: exact Git tags.',checks,source_fingerprints:Object.fromEntries(sources.map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')]))},null,2)+'\n');
  }finally{await db.end();fs.rmSync(temporary,{recursive:true,force:true});}
 })().catch(e=>{console.error(e.code||'ASSERT',e.sqlMessage||e.stack);process.exitCode=1;});

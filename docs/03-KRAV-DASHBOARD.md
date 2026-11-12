@@ -232,3 +232,11 @@ SG-rate bruker målte endepunkter i et sammenhengende 24-timersvindu med minst 1
 
 Velg historisk start i «Start fra» og lagre tidspunktet før import. Fyll de vanlige startmålingene, velg sluttdato/tid og trykk «Importer avsluttet gjæring». Tidsfeltene bruker Europe/Oslo. Etter import vises målekilden HISTORISK. Etterregistrerte målinger lagres først ved sluttgrensen; bruk eksisterende «Korriger tidspunkt for målerunde» for faktisk historisk måletid. Eksisterende P/B-visits korrigeres som før; manglende fase/trinn kan etterregistreres i tidskortet uten å konstruere et automatisk vurderingsbevis.
 
+
+## Sensoroppsett og eksplisitte måleverdier
+
+| ID | Status | Krav |
+|---|---|---|
+| REQ-HA-093 | Aktiv | Sensoriske 0–5-felt vises som heltallsslidere fra DB-metadata. Ikke registrert skal skilles fra registrert 0. Manuell temperatur vises med én desimal; lagret presisjon beholdes. |
+| REQ-HA-094 | Aktiv | Målekilder og sensorer plasseres øverst i Teknisk, med DB-kvittert les/kontroller/lagre, HA-valg og sist kontrollerte verdier. Startbildet viser et kompakt kildesammendrag. Pågående redigering overskrives ikke ved bakgrunnsoppdatering. |
+| REQ-HA-095 | Aktiv | Teknisk Kilde viser DB-registrert komponentnavn; rå node-/rutineidentitet bevares i detaljer/eksport. Prosesstrinn og Biologi tilbyr samme kriteriekorreksjon og tillatte kriterieavvik fra frozen grunnlag. |

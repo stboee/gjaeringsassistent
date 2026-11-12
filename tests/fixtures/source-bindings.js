@@ -1,0 +1,2 @@
+// Explicit transport fixture, mirroring the DB signal-binding contract.
+module.exports = ids => ['sg','temperature','heartbeat','rssi','pressure'].map(signal_id => ({signal_id,input_mode:signal_id==='pressure'?'manual':'sensor',entity_id:signal_id==='pressure'?null:ids[signal_id+'_entity_id'],observation_kind:signal_id==='heartbeat'?'timestamp':'number',sensor_required:signal_id==='pressure'?0:1,multiplier:1,additive_offset:0,minimum_value:null,maximum_value:null}));

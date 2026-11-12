@@ -1,6 +1,6 @@
 {
   "generated_from": "MariaDB 12.3.3 INFORMATION_SCHEMA",
-  "application_version": "2026.11.09-2",
+  "application_version": "2026.11.12-1",
   "tables": [
     "action_types",
     "active_report_requests",
@@ -58,6 +58,8 @@
     "ha_event_registry",
     "ha_projection_fields",
     "ha_projection_routes",
+    "ha_sensor_catalog",
+    "ha_sensor_catalog_checks",
     "information_objects",
     "legacy_measurement_graph_models",
     "legacy_measurement_graph_series_models",
@@ -69,7 +71,11 @@
     "measurement_input_draft",
     "measurement_methods",
     "measurement_source_check_policy",
+    "measurement_source_configurations",
     "measurement_source_profiles",
+    "measurement_source_signals",
+    "measurement_source_signal_bindings",
+    "measurement_source_units",
     "measurement_source_validation_rules",
     "measurement_source_validation_rule_parameter_values",
     "measurement_statistics_hourly",
@@ -122,7 +128,9 @@
     "session_fermentation_target_revisions",
     "session_history_windows",
     "session_lifecycle_events",
+    "session_measurement_signal_bindings",
     "session_measurement_sources",
+    "session_measurement_source_configurations",
     "session_measurement_validation_rules",
     "session_measurement_validation_rule_parameter_values",
     "session_metric_runtime_inputs",
@@ -160,6 +168,7 @@
     "system_functions",
     "target_metric_models",
     "target_models",
+    "technical_components",
     "technical_events",
     "templates",
     "template_analysis_graphs",
@@ -256,6 +265,7 @@
     "v_current_biological_visit",
     "v_current_biological_visit_revision",
     "v_current_fermentation_target",
+    "v_current_measurement_source_configuration",
     "v_current_measurement_statistics_hourly",
     "v_current_metric_value",
     "v_current_observation_revision",
@@ -265,6 +275,7 @@
     "v_current_process_visit",
     "v_current_process_visit_revision",
     "v_current_session",
+    "v_current_session_measurement_source_configuration",
     "v_current_session_summary",
     "v_current_session_timing",
     "v_current_verification_test_result",
@@ -310,6 +321,7 @@
     "v_latest_system_check",
     "v_measurement_data_gaps",
     "v_measurement_source_ha_projection",
+    "v_measurement_source_profiles",
     "v_measurement_source_status",
     "v_measurement_source_system_check",
     "v_metadata_lineage_gaps",
@@ -357,6 +369,7 @@
     "v_session_lifecycle",
     "v_session_measurement_segments",
     "v_session_measurement_series",
+    "v_session_measurement_source_profiles",
     "v_session_overview_axis_ticks",
     "v_session_overview_graph_axes",
     "v_session_overview_graph_extents",
@@ -377,7 +390,13 @@
     "v_session_report_summary",
     "v_session_report_timeline",
     "v_session_runtime_presentation",
+    "v_session_source_configuration_values",
     "v_session_start_status",
+    "v_source_binding_options",
+    "v_source_binding_option_sets",
+    "v_source_configuration_fields",
+    "v_source_configuration_history",
+    "v_source_configuration_values",
     "v_start_fields",
     "v_start_field_values",
     "v_start_issues",
@@ -4318,11 +4337,21 @@
     },
     {
       "TABLE_NAME": "ha_entity_number_constraints",
+      "COLUMN_NAME": "display_decimals",
+      "COLUMN_TYPE": "tinyint(3) unsigned",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "ha_entity_number_constraints",
       "COLUMN_NAME": "created_at",
       "COLUMN_TYPE": "datetime(3)",
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "6",
+      "ORDINAL_POSITION": "7",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -4705,6 +4734,116 @@
       "ORDINAL_POSITION": "5",
       "CHARACTER_SET_NAME": "ascii",
       "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "check_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "friendly_name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "device_class",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "ha_unit",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "state_text",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "COLUMN_NAME": "last_updated",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "COLUMN_NAME": "check_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "COLUMN_NAME": "operation_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "COLUMN_NAME": "checked_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "COLUMN_NAME": "sensor_count",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
     },
     {
       "TABLE_NAME": "information_objects",
@@ -5987,6 +6126,76 @@
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
     {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "source_profile_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "parent_configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "parent_key",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "operation_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "note",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
       "TABLE_NAME": "measurement_source_profiles",
       "COLUMN_NAME": "source_profile_id",
       "COLUMN_TYPE": "varchar(128)",
@@ -6018,51 +6227,11 @@
     },
     {
       "TABLE_NAME": "measurement_source_profiles",
-      "COLUMN_NAME": "sg_entity_id",
-      "COLUMN_TYPE": "varchar(255)",
-      "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "4",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
-    },
-    {
-      "TABLE_NAME": "measurement_source_profiles",
-      "COLUMN_NAME": "temperature_entity_id",
-      "COLUMN_TYPE": "varchar(255)",
-      "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "5",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
-    },
-    {
-      "TABLE_NAME": "measurement_source_profiles",
-      "COLUMN_NAME": "heartbeat_entity_id",
-      "COLUMN_TYPE": "varchar(255)",
-      "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "6",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
-    },
-    {
-      "TABLE_NAME": "measurement_source_profiles",
-      "COLUMN_NAME": "rssi_entity_id",
-      "COLUMN_TYPE": "varchar(255)",
-      "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "7",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
-    },
-    {
-      "TABLE_NAME": "measurement_source_profiles",
       "COLUMN_NAME": "poll_interval_seconds",
       "COLUMN_TYPE": "int(11)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "8",
+      "ORDINAL_POSITION": "4",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -6072,7 +6241,7 @@
       "COLUMN_TYPE": "int(11)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "9",
+      "ORDINAL_POSITION": "5",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -6082,7 +6251,7 @@
       "COLUMN_TYPE": "int(11)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "10",
+      "ORDINAL_POSITION": "6",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -6092,7 +6261,7 @@
       "COLUMN_TYPE": "int(11)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "11",
+      "ORDINAL_POSITION": "7",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -6102,7 +6271,7 @@
       "COLUMN_TYPE": "varchar(16)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "12",
+      "ORDINAL_POSITION": "8",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -6112,7 +6281,7 @@
       "COLUMN_TYPE": "text",
       "DATA_TYPE": "text",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "13",
+      "ORDINAL_POSITION": "9",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -6122,7 +6291,7 @@
       "COLUMN_TYPE": "datetime(3)",
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "14",
+      "ORDINAL_POSITION": "10",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -6132,9 +6301,219 @@
       "COLUMN_TYPE": "datetime(3)",
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "15",
+      "ORDINAL_POSITION": "11",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "label",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "observation_kind",
+      "COLUMN_TYPE": "varchar(16)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "sensor_required",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "operator_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "display_order",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "show_on_start",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "COLUMN_NAME": "description",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "COLUMN_NAME": "input_mode",
+      "COLUMN_TYPE": "varchar(16)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "COLUMN_NAME": "unit_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "unit_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "ha_unit",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "label",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "multiplier",
+      "COLUMN_TYPE": "decimal(24,12)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "additive_offset",
+      "COLUMN_TYPE": "decimal(24,12)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "is_canonical",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "COLUMN_NAME": "canonical_signal",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "measurement_source_validation_rules",
@@ -10987,6 +11366,86 @@
       "COLLATION_NAME": null
     },
     {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "session_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "input_mode",
+      "COLUMN_TYPE": "varchar(16)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "unit_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "minimum_value",
+      "COLUMN_TYPE": "decimal(24,8)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "COLUMN_NAME": "maximum_value",
+      "COLUMN_TYPE": "decimal(24,8)",
+      "DATA_TYPE": "decimal",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
       "TABLE_NAME": "session_measurement_sources",
       "COLUMN_NAME": "session_id",
       "COLUMN_TYPE": "varchar(128)",
@@ -11063,6 +11522,66 @@
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
       "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "COLUMN_NAME": "session_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "COLUMN_NAME": "effective_from",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "COLUMN_NAME": "profile_name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "COLUMN_NAME": "note",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -14325,6 +14844,46 @@
       "ORDINAL_POSITION": "4",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "COLUMN_NAME": "component_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "COLUMN_NAME": "display_name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "COLUMN_NAME": "component_layer",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "COLUMN_NAME": "description",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
     {
       "TABLE_NAME": "technical_events",
@@ -25637,6 +26196,76 @@
       "COLLATION_NAME": null
     },
     {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "source_profile_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "parent_configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "parent_key",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "operation_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "note",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_current_measurement_source_configuration",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
       "TABLE_NAME": "v_current_measurement_statistics_hourly",
       "COLUMN_NAME": "statistic_seq",
       "COLUMN_TYPE": "bigint(20) unsigned",
@@ -27193,6 +27822,66 @@
       "DATA_TYPE": "datetime",
       "IS_NULLABLE": "NO",
       "ORDINAL_POSITION": "17",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_current_session_measurement_source_configuration",
+      "COLUMN_NAME": "session_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_current_session_measurement_source_configuration",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_current_session_measurement_source_configuration",
+      "COLUMN_NAME": "effective_from",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_current_session_measurement_source_configuration",
+      "COLUMN_NAME": "profile_name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_current_session_measurement_source_configuration",
+      "COLUMN_NAME": "note",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_current_session_measurement_source_configuration",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -33861,40 +34550,40 @@
       "COLUMN_NAME": "sg_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "6",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_ha_projection",
       "COLUMN_NAME": "temperature_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "7",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_ha_projection",
       "COLUMN_NAME": "heartbeat_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "8",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_ha_projection",
       "COLUMN_NAME": "rssi_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "9",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_ha_projection",
@@ -34157,6 +34846,176 @@
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
     {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "source_profile_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "source_type",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "poll_interval_seconds",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "gap_threshold_seconds",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "fresh_age_minutes",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "stale_age_minutes",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "status",
+      "COLUMN_TYPE": "varchar(16)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "description",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "9",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "10",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "updated_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "11",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "12",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "sg_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "13",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "temperature_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "14",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "heartbeat_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "15",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "rssi_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "16",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_measurement_source_profiles",
+      "COLUMN_NAME": "pressure_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "17",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
       "TABLE_NAME": "v_measurement_source_status",
       "COLUMN_NAME": "state",
       "COLUMN_TYPE": "varchar(9)",
@@ -34211,40 +35070,40 @@
       "COLUMN_NAME": "sg_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "6",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_status",
       "COLUMN_NAME": "temperature_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "7",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_status",
       "COLUMN_NAME": "heartbeat_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "8",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_status",
       "COLUMN_NAME": "rssi_entity_id",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
+      "IS_NULLABLE": "YES",
       "ORDINAL_POSITION": "9",
-      "CHARACTER_SET_NAME": "utf8mb4",
-      "COLLATION_NAME": "utf8mb4_unicode_ci"
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
     },
     {
       "TABLE_NAME": "v_measurement_source_status",
@@ -35568,11 +36427,21 @@
     },
     {
       "TABLE_NAME": "v_process_evaluation_criterion_read_model",
+      "COLUMN_NAME": "exception_register_allowed",
+      "COLUMN_TYPE": "int(2)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "27",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_process_evaluation_criterion_read_model",
       "COLUMN_NAME": "label",
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "27",
+      "ORDINAL_POSITION": "28",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35582,7 +36451,7 @@
       "COLUMN_TYPE": "varchar(255)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "28",
+      "ORDINAL_POSITION": "29",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35592,7 +36461,7 @@
       "COLUMN_TYPE": "varchar(64)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "29",
+      "ORDINAL_POSITION": "30",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35602,7 +36471,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "30",
+      "ORDINAL_POSITION": "31",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35612,7 +36481,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "31",
+      "ORDINAL_POSITION": "32",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35622,7 +36491,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "32",
+      "ORDINAL_POSITION": "33",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35632,7 +36501,7 @@
       "COLUMN_TYPE": "int(1)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "33",
+      "ORDINAL_POSITION": "34",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -35642,7 +36511,7 @@
       "COLUMN_TYPE": "varchar(32)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "34",
+      "ORDINAL_POSITION": "35",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35652,7 +36521,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "35",
+      "ORDINAL_POSITION": "36",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -35662,7 +36531,7 @@
       "COLUMN_TYPE": "varchar(67)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "36",
+      "ORDINAL_POSITION": "37",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -41937,6 +42806,216 @@
       "COLLATION_NAME": null
     },
     {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "source_profile_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "source_type",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "poll_interval_seconds",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "gap_threshold_seconds",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "fresh_age_minutes",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "stale_age_minutes",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "status",
+      "COLUMN_TYPE": "varchar(16)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "description",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "9",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "10",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "updated_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "11",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "session_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "12",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "13",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "configuration_started_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "14",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "sg_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "15",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "temperature_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "16",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "heartbeat_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "17",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "rssi_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "18",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "pressure_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "19",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "signal_bindings",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "20",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_session_measurement_source_profiles",
+      "COLUMN_NAME": "next_configuration_at",
+      "COLUMN_TYPE": "datetime(3) /* mariadb-5.3 */",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "21",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
       "TABLE_NAME": "v_session_overview_axis_ticks",
       "COLUMN_NAME": "session_id",
       "COLUMN_TYPE": "varchar(128)",
@@ -44247,6 +45326,86 @@
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
     {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "session_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "sg_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "temperature_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "heartbeat_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "rssi_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "pressure_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_session_source_configuration_values",
+      "COLUMN_NAME": "signal_bindings",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
       "TABLE_NAME": "v_session_start_status",
       "COLUMN_NAME": "session_id",
       "COLUMN_TYPE": "varchar(128)",
@@ -44347,6 +45506,426 @@
       "COLLATION_NAME": null
     },
     {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "friendly_name",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "unit_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "unit_display",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "state_text",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "last_updated",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "check_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "option_label",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "9",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_options",
+      "COLUMN_NAME": "availability_display",
+      "COLUMN_TYPE": "varchar(13)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "10",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_option_sets",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_binding_option_sets",
+      "COLUMN_NAME": "options",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "source_profile_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "signal_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "label",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "display_order",
+      "COLUMN_TYPE": "int(11)",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "description",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "sensor_required",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "7",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "show_on_start",
+      "COLUMN_TYPE": "tinyint(4)",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "8",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "input_mode",
+      "COLUMN_TYPE": "varchar(16)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "9",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "10",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "unit_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "11",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "status_display",
+      "COLUMN_TYPE": "varchar(47)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "12",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "latest_value_display",
+      "COLUMN_TYPE": "varchar(288)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "13",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "last_updated_display",
+      "COLUMN_TYPE": "varchar(24)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "14",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "entity_display",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "15",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "unit_display",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "16",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "manual_unit_id",
+      "COLUMN_TYPE": "varchar(32)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "17",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "modes",
+      "COLUMN_TYPE": "varchar(168)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "18",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_fields",
+      "COLUMN_NAME": "options",
+      "COLUMN_TYPE": "longtext",
+      "DATA_TYPE": "longtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "19",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_history",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_history",
+      "COLUMN_NAME": "source_profile_id",
+      "COLUMN_TYPE": "varchar(128)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_history",
+      "COLUMN_NAME": "created_at",
+      "COLUMN_TYPE": "datetime(3)",
+      "DATA_TYPE": "datetime",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_history",
+      "COLUMN_NAME": "note",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_history",
+      "COLUMN_NAME": "bindings",
+      "COLUMN_TYPE": "mediumtext",
+      "DATA_TYPE": "mediumtext",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_values",
+      "COLUMN_NAME": "configuration_id",
+      "COLUMN_TYPE": "bigint(20) unsigned",
+      "DATA_TYPE": "bigint",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "1",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_values",
+      "COLUMN_NAME": "sg_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "2",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_values",
+      "COLUMN_NAME": "temperature_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "3",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_values",
+      "COLUMN_NAME": "heartbeat_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "4",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_values",
+      "COLUMN_NAME": "rssi_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "5",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
+      "TABLE_NAME": "v_source_configuration_values",
+      "COLUMN_NAME": "pressure_entity_id",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "ascii",
+      "COLLATION_NAME": "ascii_bin"
+    },
+    {
       "TABLE_NAME": "v_start_fields",
       "COLUMN_NAME": "entity_id",
       "COLUMN_TYPE": "varchar(255)",
@@ -44398,11 +45977,21 @@
     },
     {
       "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "help_text",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "6",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
       "COLUMN_NAME": "converter_id",
       "COLUMN_TYPE": "varchar(32)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "6",
+      "ORDINAL_POSITION": "7",
       "CHARACTER_SET_NAME": "ascii",
       "COLLATION_NAME": "ascii_bin"
     },
@@ -44412,7 +46001,7 @@
       "COLUMN_TYPE": "int(4)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "7",
+      "ORDINAL_POSITION": "8",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44422,7 +46011,7 @@
       "COLUMN_TYPE": "tinyint(4)",
       "DATA_TYPE": "tinyint",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "8",
+      "ORDINAL_POSITION": "9",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44432,7 +46021,7 @@
       "COLUMN_TYPE": "int(2)",
       "DATA_TYPE": "int",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "9",
+      "ORDINAL_POSITION": "10",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44442,7 +46031,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "10",
+      "ORDINAL_POSITION": "11",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44452,7 +46041,7 @@
       "COLUMN_TYPE": "longtext",
       "DATA_TYPE": "longtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "11",
+      "ORDINAL_POSITION": "12",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44461,8 +46050,8 @@
       "COLUMN_NAME": "input_type",
       "COLUMN_TYPE": "varchar(14)",
       "DATA_TYPE": "varchar",
-      "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "12",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "13",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44472,7 +46061,7 @@
       "COLUMN_TYPE": "decimal(18,6)",
       "DATA_TYPE": "decimal",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "13",
+      "ORDINAL_POSITION": "14",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44482,7 +46071,7 @@
       "COLUMN_TYPE": "decimal(18,6)",
       "DATA_TYPE": "decimal",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "14",
+      "ORDINAL_POSITION": "15",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44492,7 +46081,17 @@
       "COLUMN_TYPE": "decimal(18,6)",
       "DATA_TYPE": "decimal",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "15",
+      "ORDINAL_POSITION": "16",
+      "CHARACTER_SET_NAME": null,
+      "COLLATION_NAME": null
+    },
+    {
+      "TABLE_NAME": "v_start_fields",
+      "COLUMN_NAME": "display_decimals",
+      "COLUMN_TYPE": "tinyint(3) unsigned",
+      "DATA_TYPE": "tinyint",
+      "IS_NULLABLE": "YES",
+      "ORDINAL_POSITION": "17",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -44502,7 +46101,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "16",
+      "ORDINAL_POSITION": "18",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44512,7 +46111,7 @@
       "COLUMN_TYPE": "varchar(14)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "17",
+      "ORDINAL_POSITION": "19",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44522,7 +46121,7 @@
       "COLUMN_TYPE": "varchar(270)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "18",
+      "ORDINAL_POSITION": "20",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44532,7 +46131,7 @@
       "COLUMN_TYPE": "longtext",
       "DATA_TYPE": "longtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "19",
+      "ORDINAL_POSITION": "21",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -44998,11 +46597,31 @@
     },
     {
       "TABLE_NAME": "v_technical_event_presentation",
+      "COLUMN_NAME": "source_display",
+      "COLUMN_TYPE": "varchar(255)",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "23",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_technical_event_presentation",
+      "COLUMN_NAME": "source_identity_display",
+      "COLUMN_TYPE": "text",
+      "DATA_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "ORDINAL_POSITION": "24",
+      "CHARACTER_SET_NAME": "utf8mb4",
+      "COLLATION_NAME": "utf8mb4_unicode_ci"
+    },
+    {
+      "TABLE_NAME": "v_technical_event_presentation",
       "COLUMN_NAME": "event_order",
       "COLUMN_TYPE": "bigint(21)",
       "DATA_TYPE": "bigint",
       "IS_NULLABLE": "NO",
-      "ORDINAL_POSITION": "23",
+      "ORDINAL_POSITION": "25",
       "CHARACTER_SET_NAME": null,
       "COLLATION_NAME": null
     },
@@ -45012,7 +46631,7 @@
       "COLUMN_TYPE": "varchar(24)",
       "DATA_TYPE": "varchar",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "24",
+      "ORDINAL_POSITION": "26",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -45022,7 +46641,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "25",
+      "ORDINAL_POSITION": "27",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -45032,7 +46651,7 @@
       "COLUMN_TYPE": "mediumtext",
       "DATA_TYPE": "mediumtext",
       "IS_NULLABLE": "YES",
-      "ORDINAL_POSITION": "26",
+      "ORDINAL_POSITION": "28",
       "CHARACTER_SET_NAME": "utf8mb4",
       "COLLATION_NAME": "utf8mb4_unicode_ci"
     },
@@ -47951,6 +49570,38 @@
       "ORDINAL_POSITION": "1"
     },
     {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "CONSTRAINT_NAME": "fk_sensor_catalog__check",
+      "COLUMN_NAME": "check_id",
+      "REFERENCED_TABLE_NAME": "ha_sensor_catalog_checks",
+      "REFERENCED_COLUMN_NAME": "check_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "entity_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "CONSTRAINT_NAME": "operation_id",
+      "COLUMN_NAME": "operation_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "check_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
       "TABLE_NAME": "information_objects",
       "CONSTRAINT_NAME": "PRIMARY",
       "COLUMN_NAME": "object_id",
@@ -48183,6 +49834,78 @@
       "ORDINAL_POSITION": "1"
     },
     {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_source_configurations__parent",
+      "COLUMN_NAME": "source_profile_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_configurations",
+      "REFERENCED_COLUMN_NAME": "source_profile_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_source_configurations__parent",
+      "COLUMN_NAME": "parent_configuration_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_configurations",
+      "REFERENCED_COLUMN_NAME": "configuration_id",
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_source_configurations__profile",
+      "COLUMN_NAME": "source_profile_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_profiles",
+      "REFERENCED_COLUMN_NAME": "source_profile_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "operation_id",
+      "COLUMN_NAME": "operation_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "uq_source_configurations__identity",
+      "COLUMN_NAME": "source_profile_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "uq_source_configurations__identity",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "uq_source_configurations__parent",
+      "COLUMN_NAME": "source_profile_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "uq_source_configurations__parent",
+      "COLUMN_NAME": "parent_key",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
       "TABLE_NAME": "measurement_source_profiles",
       "CONSTRAINT_NAME": "PRIMARY",
       "COLUMN_NAME": "source_profile_id",
@@ -48202,6 +49925,110 @@
       "TABLE_NAME": "measurement_source_profiles",
       "CONSTRAINT_NAME": "uq_measurement_source_profiles__active_name",
       "COLUMN_NAME": "status",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "fk_source_signals__operator_entity",
+      "COLUMN_NAME": "operator_entity_id",
+      "REFERENCED_TABLE_NAME": "ha_entity_registry",
+      "REFERENCED_COLUMN_NAME": "entity_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "fk_source_bindings__configuration",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_configurations",
+      "REFERENCED_COLUMN_NAME": "configuration_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "fk_source_bindings__unit",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_units",
+      "REFERENCED_COLUMN_NAME": "signal_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "fk_source_bindings__unit",
+      "COLUMN_NAME": "unit_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_units",
+      "REFERENCED_COLUMN_NAME": "unit_id",
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "canonical_signal",
+      "COLUMN_NAME": "canonical_signal",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "fk_source_units__signal",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_signals",
+      "REFERENCED_COLUMN_NAME": "signal_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "unit_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "uq_source_units__ha",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "uq_source_units__ha",
+      "COLUMN_NAME": "ha_unit",
       "REFERENCED_TABLE_NAME": null,
       "REFERENCED_COLUMN_NAME": null,
       "ORDINAL_POSITION": "2"
@@ -50943,6 +52770,62 @@
       "ORDINAL_POSITION": "2"
     },
     {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "fk_session_bindings__configuration",
+      "COLUMN_NAME": "session_id",
+      "REFERENCED_TABLE_NAME": "session_measurement_source_configurations",
+      "REFERENCED_COLUMN_NAME": "session_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "fk_session_bindings__configuration",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": "session_measurement_source_configurations",
+      "REFERENCED_COLUMN_NAME": "configuration_id",
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "fk_session_bindings__unit",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_units",
+      "REFERENCED_COLUMN_NAME": "signal_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "fk_session_bindings__unit",
+      "COLUMN_NAME": "unit_id",
+      "REFERENCED_TABLE_NAME": "measurement_source_units",
+      "REFERENCED_COLUMN_NAME": "unit_id",
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "session_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "signal_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "3"
+    },
+    {
       "TABLE_NAME": "session_measurement_sources",
       "CONSTRAINT_NAME": "fk_session_measurement_sources__profile",
       "COLUMN_NAME": "source_profile_id",
@@ -50965,6 +52848,30 @@
       "REFERENCED_TABLE_NAME": null,
       "REFERENCED_COLUMN_NAME": null,
       "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_session_sources__session",
+      "COLUMN_NAME": "session_id",
+      "REFERENCED_TABLE_NAME": "sessions",
+      "REFERENCED_COLUMN_NAME": "session_id",
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "session_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "configuration_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "2"
     },
     {
       "TABLE_NAME": "session_measurement_validation_rules",
@@ -52898,6 +54805,14 @@
       "TABLE_NAME": "target_models",
       "CONSTRAINT_NAME": "PRIMARY",
       "COLUMN_NAME": "model_id",
+      "REFERENCED_TABLE_NAME": null,
+      "REFERENCED_COLUMN_NAME": null,
+      "ORDINAL_POSITION": "1"
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "COLUMN_NAME": "component_id",
       "REFERENCED_TABLE_NAME": null,
       "REFERENCED_COLUMN_NAME": null,
       "ORDINAL_POSITION": "1"
@@ -56625,6 +58540,11 @@
     },
     {
       "TABLE_NAME": "ha_entity_number_constraints",
+      "CONSTRAINT_NAME": "display_decimals",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "ha_entity_number_constraints",
       "CONSTRAINT_NAME": "fk_ha_entity_number_constraints__entity",
       "CONSTRAINT_TYPE": "FOREIGN KEY"
     },
@@ -56807,6 +58727,31 @@
       "TABLE_NAME": "ha_projection_routes",
       "CONSTRAINT_NAME": "PRIMARY",
       "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "CONSTRAINT_NAME": "fk_sensor_catalog__check",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "CONSTRAINT_NAME": "operation_id",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "CONSTRAINT_NAME": "sensor_count",
+      "CONSTRAINT_TYPE": "CHECK"
     },
     {
       "TABLE_NAME": "information_objects",
@@ -57174,6 +59119,36 @@
       "CONSTRAINT_TYPE": "CHECK"
     },
     {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_source_configurations__parent",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_source_configurations__profile",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "operation_id",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "uq_source_configurations__identity",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "CONSTRAINT_NAME": "uq_source_configurations__parent",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
       "TABLE_NAME": "measurement_source_profiles",
       "CONSTRAINT_NAME": "fresh_age_minutes",
       "CONSTRAINT_TYPE": "CHECK"
@@ -57211,6 +59186,86 @@
     {
       "TABLE_NAME": "measurement_source_profiles",
       "CONSTRAINT_NAME": "uq_measurement_source_profiles__active_name",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "fk_source_signals__operator_entity",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "observation_kind",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "sensor_required",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "CONSTRAINT_NAME": "show_on_start",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "CONSTRAINT_1",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "fk_source_bindings__configuration",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "fk_source_bindings__unit",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "input_mode",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "canonical_signal",
+      "CONSTRAINT_TYPE": "UNIQUE"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "fk_source_units__signal",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "is_canonical",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "multiplier",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "CONSTRAINT_NAME": "uq_source_units__ha",
       "CONSTRAINT_TYPE": "UNIQUE"
     },
     {
@@ -57331,12 +59386,12 @@
     {
       "TABLE_NAME": "metrics",
       "CONSTRAINT_NAME": "sort_order",
-      "CONSTRAINT_TYPE": "UNIQUE"
+      "CONSTRAINT_TYPE": "CHECK"
     },
     {
       "TABLE_NAME": "metrics",
       "CONSTRAINT_NAME": "sort_order",
-      "CONSTRAINT_TYPE": "CHECK"
+      "CONSTRAINT_TYPE": "UNIQUE"
     },
     {
       "TABLE_NAME": "metric_runtime_inputs",
@@ -58759,6 +60814,36 @@
       "CONSTRAINT_TYPE": "UNIQUE"
     },
     {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "CONSTRAINT_1",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "CONSTRAINT_2",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "fk_session_bindings__configuration",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "fk_session_bindings__unit",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "input_mode",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
       "TABLE_NAME": "session_measurement_sources",
       "CONSTRAINT_NAME": "CONSTRAINT_1",
       "CONSTRAINT_TYPE": "CHECK"
@@ -58775,6 +60860,16 @@
     },
     {
       "TABLE_NAME": "session_measurement_sources",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "CONSTRAINT_NAME": "fk_session_sources__session",
+      "CONSTRAINT_TYPE": "FOREIGN KEY"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
       "CONSTRAINT_NAME": "PRIMARY",
       "CONSTRAINT_TYPE": "PRIMARY KEY"
     },
@@ -59765,6 +61860,16 @@
     },
     {
       "TABLE_NAME": "target_models",
+      "CONSTRAINT_NAME": "PRIMARY",
+      "CONSTRAINT_TYPE": "PRIMARY KEY"
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "CONSTRAINT_NAME": "component_layer",
+      "CONSTRAINT_TYPE": "CHECK"
+    },
+    {
+      "TABLE_NAME": "technical_components",
       "CONSTRAINT_NAME": "PRIMARY",
       "CONSTRAINT_TYPE": "PRIMARY KEY"
     },
@@ -62827,6 +64932,34 @@
       "COLUMN_NAME": "source_object_id"
     },
     {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "INDEX_NAME": "fk_sensor_catalog__check",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "check_id"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "entity_id"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "INDEX_NAME": "operation_id",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "operation_id"
+    },
+    {
+      "TABLE_NAME": "ha_sensor_catalog_checks",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "check_id"
+    },
+    {
       "TABLE_NAME": "information_objects",
       "INDEX_NAME": "PRIMARY",
       "NON_UNIQUE": "0",
@@ -63023,6 +65156,62 @@
       "COLUMN_NAME": "source_state"
     },
     {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "fk_source_configurations__parent",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "source_profile_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "fk_source_configurations__parent",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "parent_configuration_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "operation_id",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "operation_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "configuration_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "uq_source_configurations__identity",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "source_profile_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "uq_source_configurations__identity",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "configuration_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "uq_source_configurations__parent",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "source_profile_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_configurations",
+      "INDEX_NAME": "uq_source_configurations__parent",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "parent_key"
+    },
+    {
       "TABLE_NAME": "measurement_source_profiles",
       "INDEX_NAME": "PRIMARY",
       "NON_UNIQUE": "0",
@@ -63042,6 +65231,83 @@
       "NON_UNIQUE": "0",
       "SEQ_IN_INDEX": 2,
       "COLUMN_NAME": "status"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "INDEX_NAME": "fk_source_signals__operator_entity",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "operator_entity_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signals",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "INDEX_NAME": "fk_source_bindings__unit",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "INDEX_NAME": "fk_source_bindings__unit",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "unit_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "configuration_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_signal_bindings",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "INDEX_NAME": "canonical_signal",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "canonical_signal"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "unit_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "INDEX_NAME": "uq_source_units__ha",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
+      "TABLE_NAME": "measurement_source_units",
+      "INDEX_NAME": "uq_source_units__ha",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "ha_unit"
     },
     {
       "TABLE_NAME": "measurement_source_validation_rules",
@@ -65333,6 +67599,41 @@
       "COLUMN_NAME": "lifecycle"
     },
     {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "INDEX_NAME": "fk_session_bindings__unit",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "INDEX_NAME": "fk_session_bindings__unit",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "unit_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "session_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "configuration_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_signal_bindings",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 3,
+      "COLUMN_NAME": "signal_id"
+    },
+    {
       "TABLE_NAME": "session_measurement_sources",
       "INDEX_NAME": "fk_session_measurement_sources__profile",
       "NON_UNIQUE": "1",
@@ -65345,6 +67646,41 @@
       "NON_UNIQUE": "0",
       "SEQ_IN_INDEX": 1,
       "COLUMN_NAME": "session_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "INDEX_NAME": "idx_session_sources__time",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "session_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "INDEX_NAME": "idx_session_sources__time",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "effective_from"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "INDEX_NAME": "idx_session_sources__time",
+      "NON_UNIQUE": "1",
+      "SEQ_IN_INDEX": 3,
+      "COLUMN_NAME": "configuration_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "session_id"
+    },
+    {
+      "TABLE_NAME": "session_measurement_source_configurations",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 2,
+      "COLUMN_NAME": "configuration_id"
     },
     {
       "TABLE_NAME": "session_measurement_validation_rules",
@@ -66913,6 +69249,13 @@
       "NON_UNIQUE": "0",
       "SEQ_IN_INDEX": 1,
       "COLUMN_NAME": "model_id"
+    },
+    {
+      "TABLE_NAME": "technical_components",
+      "INDEX_NAME": "PRIMARY",
+      "NON_UNIQUE": "0",
+      "SEQ_IN_INDEX": 1,
+      "COLUMN_NAME": "component_id"
     },
     {
       "TABLE_NAME": "technical_events",
@@ -69325,6 +71668,18 @@
       "normalization_note": "Atomære fakta bestemt av hele primærnøkkelen; identiteter og medlemskap er relasjoner med fremmednøkler."
     },
     {
+      "object_id": "table:ha_sensor_catalog",
+      "relation_kind": "draft",
+      "fact_scope": "Fakta for hele primærnøkkelen i ha_sensor_catalog",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
+      "object_id": "table:ha_sensor_catalog_checks",
+      "relation_kind": "event",
+      "fact_scope": "Fakta for hele primærnøkkelen i ha_sensor_catalog_checks",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
       "object_id": "table:information_objects",
       "relation_kind": "registry",
       "fact_scope": "Fakta for nøkkel (object_id) i information_objects",
@@ -69379,10 +71734,34 @@
       "normalization_note": "source_state bestemmer kontrollstatus og alvorlighet; ingen domenedata eller UI-kopi lagres."
     },
     {
+      "object_id": "table:measurement_source_configurations",
+      "relation_kind": "event",
+      "fact_scope": "Fakta for hele primærnøkkelen i measurement_source_configurations",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
       "object_id": "table:measurement_source_profiles",
       "relation_kind": "relation",
       "fact_scope": "Fakta for nøkkel (source_profile_id) i measurement_source_profiles",
       "normalization_note": "Atomære fakta bestemt av hele primærnøkkelen; identiteter og medlemskap er relasjoner med fremmednøkler."
+    },
+    {
+      "object_id": "table:measurement_source_signal_bindings",
+      "relation_kind": "snapshot",
+      "fact_scope": "Fakta for hele primærnøkkelen i measurement_source_signal_bindings",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
+      "object_id": "table:measurement_source_signals",
+      "relation_kind": "registry",
+      "fact_scope": "Fakta for hele primærnøkkelen i measurement_source_signals",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
+      "object_id": "table:measurement_source_units",
+      "relation_kind": "registry",
+      "fact_scope": "Fakta for hele primærnøkkelen i measurement_source_units",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
     },
     {
       "object_id": "table:measurement_source_validation_rule_parameter_values",
@@ -69703,6 +72082,18 @@
       "normalization_note": "Hver rad er et datert faktum eller en revisjon. Effektiv/siste tilstand beregnes i views; eldre revisjoner beholdes."
     },
     {
+      "object_id": "table:session_measurement_signal_bindings",
+      "relation_kind": "snapshot",
+      "fact_scope": "Fakta for hele primærnøkkelen i session_measurement_signal_bindings",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
+      "object_id": "table:session_measurement_source_configurations",
+      "relation_kind": "snapshot",
+      "fact_scope": "Fakta for hele primærnøkkelen i session_measurement_source_configurations",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
+    },
+    {
       "object_id": "table:session_measurement_sources",
       "relation_kind": "relation",
       "fact_scope": "Fakta for nøkkel (session_id) i session_measurement_sources",
@@ -69935,6 +72326,12 @@
       "relation_kind": "registry",
       "fact_scope": "Fakta for nøkkel (model_id) i target_models",
       "normalization_note": "Atomære fakta bestemt av hele primærnøkkelen; identiteter og medlemskap er relasjoner med fremmednøkler."
+    },
+    {
+      "object_id": "table:technical_components",
+      "relation_kind": "registry",
+      "fact_scope": "Fakta for hele primærnøkkelen i technical_components",
+      "normalization_note": "Bindinger, enheter og fryste sesjonskopier er egne relasjoner; endringer appender revisjoner."
     },
     {
       "object_id": "table:technical_events",
@@ -70911,10 +73308,46 @@
       "explanation": "Ikke angitt i arbeidskladden ennå. En obligatorisk verdi må foreligge før handlingen kan fullføres."
     },
     {
+      "object_id": "table:measurement_source_configurations",
+      "column_name": "note",
+      "absence_kind": "optional",
+      "explanation": "Operatøren har ikke skrevet et tilleggsnotat."
+    },
+    {
+      "object_id": "table:measurement_source_configurations",
+      "column_name": "parent_configuration_id",
+      "absence_kind": "optional",
+      "explanation": "Første konfigurasjon har ingen foregående revisjon."
+    },
+    {
+      "object_id": "table:measurement_source_configurations",
+      "column_name": "parent_key",
+      "absence_kind": "optional",
+      "explanation": "Avledet teknisk indeksnøkkel for rot eller forrige revisjon."
+    },
+    {
       "object_id": "table:measurement_source_profiles",
       "column_name": "description",
       "absence_kind": "optional",
       "explanation": "Opplysningen er valgfri i dette faktumet; fravær er ikke en standardverdi."
+    },
+    {
+      "object_id": "table:measurement_source_signal_bindings",
+      "column_name": "entity_id",
+      "absence_kind": "optional",
+      "explanation": "Manuell kilde har ingen automatisk HA-entitet."
+    },
+    {
+      "object_id": "table:measurement_source_signals",
+      "column_name": "operator_entity_id",
+      "absence_kind": "optional",
+      "explanation": "Signalet har ikke manuelt tallfelt."
+    },
+    {
+      "object_id": "table:measurement_source_units",
+      "column_name": "canonical_signal",
+      "absence_kind": "optional",
+      "explanation": "Teknisk unikhetsnøkkel finnes kun for kanonisk enhet."
     },
     {
       "object_id": "table:measurement_source_validation_rule_parameter_values",
@@ -71767,6 +74200,30 @@
       "column_name": "operation_id",
       "absence_kind": "optional",
       "explanation": "Opplysningen er valgfri i dette faktumet; fravær er ikke en standardverdi."
+    },
+    {
+      "object_id": "table:session_measurement_signal_bindings",
+      "column_name": "entity_id",
+      "absence_kind": "optional",
+      "explanation": "Manuell kilde har ingen HA-entitet."
+    },
+    {
+      "object_id": "table:session_measurement_signal_bindings",
+      "column_name": "maximum_value",
+      "absence_kind": "optional",
+      "explanation": "Signalet har ingen grense fra manuelt tallfelt; øvrig valideringspolicy gjelder."
+    },
+    {
+      "object_id": "table:session_measurement_signal_bindings",
+      "column_name": "minimum_value",
+      "absence_kind": "optional",
+      "explanation": "Signalet har ingen grense fra manuelt tallfelt; øvrig valideringspolicy gjelder."
+    },
+    {
+      "object_id": "table:session_measurement_source_configurations",
+      "column_name": "note",
+      "absence_kind": "optional",
+      "explanation": "Ingen kommentar til denne fryste kildekonfigurasjonen."
     },
     {
       "object_id": "table:session_measurement_sources",

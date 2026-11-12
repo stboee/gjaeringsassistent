@@ -17,17 +17,17 @@ ok(all(e.get('status') in allowed_registry_status for e in m['events']),'all HA 
 ok(all(f.get('status') in allowed_registry_status for f in m['functions']),'all system function registry statuses satisfy DDL CHECK constraint')
 deps=m['dependencies']; check_defs=m['system_check_definitions']; check_exps=m['system_check_expectations']
 ok(len(entities)==75,'75 active HA entities in MariaDB metadata seed')
-ok(len(events)==22,'22 active HA events in MariaDB metadata seed')
+ok(len(events)==23,'23 active HA events in MariaDB metadata seed')
 ok(len(check_defs)==15 and {d['check_id'] for d in check_defs}>={'frontend_publishing','measurement_source','schema','runtime_issues'},'15 DB-defined Systemkontroll checks include Frontendpublisering, Målekilde and Aktive driftsfeil')
 expmap={(e['check_id'],e['expectation_key']):(e.get('expected_text'),e.get('expected_number')) for e in check_exps}
-ok(expmap.get(('schema','base_tables'))==(None,207) and expmap.get(('schema','views'))==(None,183) and expmap.get(('frontend_publishing','application_version'))==(version,None),'Systemkontroll expectations are DB-seeded for schema and frontend release')
+ok(expmap.get(('schema','base_tables'))==(None,216) and expmap.get(('schema','views'))==(None,193) and expmap.get(('frontend_publishing','application_version'))==(version,None),'Systemkontroll expectations are DB-seeded for schema and frontend release')
 ok(len({e['entity_id'] for e in entities})==75 and len({e['config_id'] for e in entities})==75,'HA entity/config identities are unique')
 buttons=[e for e in entities if e['entity_type']=='button']; states=[e for e in entities if e['entity_type']!='button']
 ok(len(buttons)==11 and len(states)==64,'HA registry separates 11 registration-only buttons and 64 state-bearing entities')
 ok(all(e['bootstrap_mode']=='registration_only' and e['bootstrap_slot'] is None for e in buttons),'buttons are registration-only')
 ok(sorted(int(e['bootstrap_slot']) for e in states)==list(range(1,65)) and all(e['bootstrap_value'] is not None or e['bootstrap_mode']=='runtime' for e in states),'all state-bearing entities have DB bootstrap values and stable slots')
 # Physical DB objects referenced by dependencies must exist in active DDL/views.
-ddl=(ROOT/'sql/00-template-schema.sql').read_text(encoding='utf-8')+'\n'+(ROOT/'sql/10-runtime-schema.sql').read_text(encoding='utf-8')
+ddl=(ROOT/'sql/00-template-schema.sql').read_text(encoding='utf-8')+'\n'+(ROOT/'sql/10-runtime-schema.sql').read_text(encoding='utf-8')+'\n'+(ROOT/'sql/12-operator-schema.sql').read_text(encoding='utf-8')
 views=(ROOT/'sql/20-views.sql').read_text(encoding='utf-8')
 tables=set(re.findall(r'CREATE TABLE IF NOT EXISTS\s+([A-Za-z0-9_]+)',ddl,re.I))
 viewnames=set(re.findall(r'CREATE OR REPLACE VIEW\s+([A-Za-z0-9_]+)',views,re.I))

@@ -101,3 +101,10 @@ source_format: markdown
 |---|---|---|---|
 | DEC-PROD-001 | Installasjon bevarer eksisterende data; verifiserte migreringer erstatter prototype-reset. | Brukeren tar løsningen i ordinær drift. | Førstegangsseeding kjøres bare på tom database. Privat backup før oppgradering; ukjent kilde avvises. Erstatter tidligere DEC-GA-006. |
 | DEC-START-001 | Startfelt, mangler og startklarstatus eies av databasekladden og DB-registre. | Gamle HA-tall kunne skjule NULL etter nytt templatevalg. | Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt og DB-avvisning. |
+
+## Sensorbindinger og operatørfelt
+
+| ID | Beslutning | Begrunnelse | Konsekvens |
+|---|---|---|---|
+| DEC-SOURCES-001 | DB-eide reviderte signalbindinger, fryst per sesjon og virkning fra neste DB-bøttegrense ved livebytte. | Kildebytter må være sporbare uten å omskrive tidligere data. | HA-katalog er kontrollert teknisk snapshot; NR transporterer. Valgfritt overtrykk bruker DB-deklarert enhet/konvertering og er manuelt før valg. |
+| DEC-OPERATOR-001 | Feltkontroll og desimaler følger DB-registeret; B/P-avvik bruker samme autoritative transaksjon. | Synlig verdi, mangler og tillatte handlinger må stemme med DB. | Slider har eksplisitt ikke registrert og registrert 0. Kildenavn er lesbare mens rå identitet bevares. |

@@ -34,7 +34,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -426,5 +426,17 @@ manuelt til et dashboard i lagringsmodus, oppdater denne kopien fra
 <code>dashboard/gjaeringsassistent-dashboard.yaml</code> i den nye
 pakken. Filpublisering endrer ikke en separat lagret
 Lovelace-konfigurasjon.</p>
+<h2 id="velg-målekilder">Velg målekilder</h2>
+<p>Åpne Teknisk → Målekilder og sensorer → Kontroller sensorer. Velg SG,
+temperatur, siste MQTT-oppdatering og RSSI; trykk kan stå Manuell
+registrering. En trykksensor må levere overtrykk i en støttet enhet
+(bar, kPa, hPa/mbar, Pa eller psi). Absolutt trykk må ikke velges som
+overtrykk. Temperaturkilden i denne versjonen må levere °C.</p>
+<p>Lagre og vent på databasekvittering. Endringer under en reell
+livegjæring får virkning ved den oppgitte DB-grensen.
+Konfigurasjonshistorikken viser tidligere valg; feltverdier er merket
+sist kontrollert. Arkiverte/historiske sesjoner endres ikke av et nytt
+globalt valg. Trykk fra HA-timesstatistikk er ikke lagt til; trykkimport
+gjelder detaljgrunnlag i femminuttersbøtter.</p>
 </body>
 </html>

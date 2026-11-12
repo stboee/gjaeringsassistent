@@ -993,16 +993,12 @@
         "source_profile_id": "tilt-pro-blue-ha",
         "name": "Tilt Pro Blue · Home Assistant",
         "source_type": "home_assistant",
-        "sg_entity_id": "sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_sg",
-        "temperature_entity_id": "sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_temperatur",
-        "heartbeat_entity_id": "sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_sist_oppdatert",
-        "rssi_entity_id": "sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_rssi",
         "poll_interval_seconds": 300,
         "gap_threshold_seconds": 300,
         "fresh_age_minutes": 15,
         "stale_age_minutes": 60,
         "status": "active",
-        "description": "Primær livekilde. Entity-ID-er er DB-konfigurasjon og skal ikke hardkodes i Node-RED-funksjoner.",
+        "description": "Normaliserte, reviderte bindinger per signal.",
         "created_at": "UTC_TIMESTAMP(3)",
         "updated_at": "UTC_TIMESTAMP(3)"
       }

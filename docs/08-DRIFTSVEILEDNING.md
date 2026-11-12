@@ -166,3 +166,9 @@ Tilbakeføring er en separat, uttrykkelig driftsbeslutning: hold Node-RED stoppe
 Nye startfelt leser databasekladden direkte. Verdier som manglet før oppgradering blir fortsatt eksplisitt manglende og må registreres av brukeren; gamle HA-verdier importeres ikke automatisk.
 
 Den nye startflaten forutsetter oppdatert dashboard-YAML. Når Home Assistant leser den publiserte YAML-filen direkte, lastes dashboardet på nytt etter installasjon. Hvis YAML tidligere er kopiert/importert manuelt til et dashboard i lagringsmodus, oppdater denne kopien fra `dashboard/gjaeringsassistent-dashboard.yaml` i den nye pakken. Filpublisering endrer ikke en separat lagret Lovelace-konfigurasjon.
+
+## Velg målekilder
+
+Åpne Teknisk → Målekilder og sensorer → Kontroller sensorer. Velg SG, temperatur, siste MQTT-oppdatering og RSSI; trykk kan stå Manuell registrering. En trykksensor må levere overtrykk i en støttet enhet (bar, kPa, hPa/mbar, Pa eller psi). Absolutt trykk må ikke velges som overtrykk. Temperaturkilden i denne versjonen må levere °C.
+
+Lagre og vent på databasekvittering. Endringer under en reell livegjæring får virkning ved den oppgitte DB-grensen. Konfigurasjonshistorikken viser tidligere valg; feltverdier er merket sist kontrollert. Arkiverte/historiske sesjoner endres ikke av et nytt globalt valg. Trykk fra HA-timesstatistikk er ikke lagt til; trykkimport gjelder detaljgrunnlag i femminuttersbøtter.

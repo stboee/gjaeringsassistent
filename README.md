@@ -1,4 +1,4 @@
-# Gjæringsassistent 2026.11.09-2
+# Gjæringsassistent 2026.11.12-1
 
 **Rettede startkort**, med databevarende oppgradering fra p24r16, 2026.11.07-1 og 2026.11.09-1. Gjæringsassistent gir råd, oversikt og historikk for gjæring i Home Assistant: templates, biologiske faser, prosesstrinn, målinger, sammenlignbare grafer, rapporter og SQLite-arkiver.
 
@@ -34,7 +34,7 @@ Start i [dokumentkartet](docs/00-DOKUMENTKART-OG-STATUS.md), [aktive beslutninge
 
 [AGENTS.md](AGENTS.md) beskriver avklaring i chat, «start», implementering, relevante kontroller og commit direkte på main. Issues/PR inngår ikke i prosjektprosessen.
 
-Versjoner bruker **ÅÅÅÅ.MM.DD-N**, for eksempel 2026.11.09-2. N starter på 1 hver publiseringsdag. Taggen har v som prefiks; release-tittelen har en kort beskrivelse. Eldre testfilnavn og stabile krav-/beslutnings-ID-er beholdes for sporbarhet.
+Versjoner bruker **ÅÅÅÅ.MM.DD-N**, for eksempel 2026.11.12-1. N starter på 1 hver publiseringsdag. Taggen har v som prefiks; release-tittelen har en kort beskrivelse. Eldre testfilnavn og stabile krav-/beslutnings-ID-er beholdes for sporbarhet.
 
 Bygg med python3 tools/build-package.py --zip og kontroller med bash tools/run-tests.sh. ZIP og SHA-256 havner i dist/. Et avgrenset filutvalg brukes både fra Git og utpakket leveranse, slik at Git-metadata og lokale filer ikke følger med.
 

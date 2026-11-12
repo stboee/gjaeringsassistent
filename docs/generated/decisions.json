@@ -1,6 +1,6 @@
 {
   "generated_from": "docs/14-AKTIVE-BESLUTNINGER.md",
-  "count": 66,
+  "count": 68,
   "decisions": [
     {
       "id": "DEC-GA-001",
@@ -529,6 +529,22 @@
       "consequence": "Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt og DB-avvisning.",
       "source": "14-AKTIVE-BESLUTNINGER.md",
       "line": 103
+    },
+    {
+      "id": "DEC-SOURCES-001",
+      "decision": "DB-eide reviderte signalbindinger, fryst per sesjon og virkning fra neste DB-bøttegrense ved livebytte.",
+      "rationale": "Kildebytter må være sporbare uten å omskrive tidligere data.",
+      "consequence": "HA-katalog er kontrollert teknisk snapshot; NR transporterer. Valgfritt overtrykk bruker DB-deklarert enhet/konvertering og er manuelt før valg.",
+      "source": "14-AKTIVE-BESLUTNINGER.md",
+      "line": 109
+    },
+    {
+      "id": "DEC-OPERATOR-001",
+      "decision": "Feltkontroll og desimaler følger DB-registeret; B/P-avvik bruker samme autoritative transaksjon.",
+      "rationale": "Synlig verdi, mangler og tillatte handlinger må stemme med DB.",
+      "consequence": "Slider har eksplisitt ikke registrert og registrert 0. Kildenavn er lesbare mens rå identitet bevares.",
+      "source": "14-AKTIVE-BESLUTNINGER.md",
+      "line": 110
     }
   ]
 }

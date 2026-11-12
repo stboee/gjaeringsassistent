@@ -568,5 +568,36 @@ og DB-avvisning.</td>
 </tr>
 </tbody>
 </table>
+<h2 id="sensorbindinger-og-operatørfelt">Sensorbindinger og
+operatørfelt</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Beslutning</th>
+<th>Begrunnelse</th>
+<th>Konsekvens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DEC-SOURCES-001</td>
+<td>DB-eide reviderte signalbindinger, fryst per sesjon og virkning fra
+neste DB-bøttegrense ved livebytte.</td>
+<td>Kildebytter må være sporbare uten å omskrive tidligere data.</td>
+<td>HA-katalog er kontrollert teknisk snapshot; NR transporterer.
+Valgfritt overtrykk bruker DB-deklarert enhet/konvertering og er manuelt
+før valg.</td>
+</tr>
+<tr class="even">
+<td>DEC-OPERATOR-001</td>
+<td>Feltkontroll og desimaler følger DB-registeret; B/P-avvik bruker
+samme autoritative transaksjon.</td>
+<td>Synlig verdi, mangler og tillatte handlinger må stemme med DB.</td>
+<td>Slider har eksplisitt ikke registrert og registrert 0. Kildenavn er
+lesbare mens rå identitet bevares.</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>

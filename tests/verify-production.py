@@ -23,7 +23,7 @@ for bad in [('unknown',202,178,[]),(version,207,183,[]),(version,206,183,[])]:
     else:
         raise AssertionError('Unrecognized migration input accepted')
 receipt = [{'migration_id': manifest['migration_id'], 'checksum_sha256': digest}]
-assert module.choose_plan(root, manifest, version, 207, 183, receipt)['mode'] == 'reinstall'
+assert module.choose_plan(root, manifest, version, 216, 193, receipt)['mode'] == 'reinstall'
 for source, expected in manifest['patch_sources'].items():
     assert module.choose_plan(root, manifest, source, 207, 183, [expected])['mode'] == 'patch'
     for history in [[], [{**expected, 'checksum_sha256': '0'*64}]]:
@@ -37,7 +37,7 @@ installer = (root/'installer/install.sh').read_text()
 assert 'DROP DATABASE' not in installer and 'reset_database' not in installer
 assert installer.index('DATABASE_PLAN=') < installer.index('docker stop')
 assert installer.index('backup-database.py') < installer.index('install_database\n')
-for name in ['start-control-regression.json','install-upgrade-regression.json']:
+for name in ['start-control-regression.json','install-upgrade-regression.json','operator-config-regression.json','operator-ui-regression.json']:
     result = json.loads((root/'verification'/name).read_text())
     assert result['status']=='pass' and result['application_version']==version
     assert result['server_version'].startswith('12.3.3-') and result['target_ha_uat']=='not_run'

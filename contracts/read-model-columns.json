@@ -808,6 +808,15 @@
     "created_at",
     "effective_at"
   ],
+  "v_current_measurement_source_configuration": [
+    "configuration_id",
+    "source_profile_id",
+    "parent_configuration_id",
+    "parent_key",
+    "operation_id",
+    "note",
+    "created_at"
+  ],
   "v_current_measurement_statistics_hourly": [
     "statistic_seq",
     "statistic_import_id",
@@ -981,6 +990,14 @@
     "historical_ended_at",
     "is_historical",
     "domain_now"
+  ],
+  "v_current_session_measurement_source_configuration": [
+    "session_id",
+    "configuration_id",
+    "effective_from",
+    "profile_name",
+    "note",
+    "created_at"
   ],
   "v_current_session_summary": [
     "session_id",
@@ -1768,6 +1785,25 @@
     "authority",
     "updated_at_display"
   ],
+  "v_measurement_source_profiles": [
+    "source_profile_id",
+    "name",
+    "source_type",
+    "poll_interval_seconds",
+    "gap_threshold_seconds",
+    "fresh_age_minutes",
+    "stale_age_minutes",
+    "status",
+    "description",
+    "created_at",
+    "updated_at",
+    "configuration_id",
+    "sg_entity_id",
+    "temperature_entity_id",
+    "heartbeat_entity_id",
+    "rssi_entity_id",
+    "pressure_entity_id"
+  ],
   "v_measurement_source_status": [
     "state",
     "message",
@@ -1920,6 +1956,7 @@
     "created_at",
     "evaluated_at",
     "evaluation_created_at",
+    "exception_register_allowed",
     "label",
     "metric_label",
     "metric_unit",
@@ -2640,6 +2677,29 @@
     "source_display",
     "interval_seconds"
   ],
+  "v_session_measurement_source_profiles": [
+    "source_profile_id",
+    "name",
+    "source_type",
+    "poll_interval_seconds",
+    "gap_threshold_seconds",
+    "fresh_age_minutes",
+    "stale_age_minutes",
+    "status",
+    "description",
+    "created_at",
+    "updated_at",
+    "session_id",
+    "configuration_id",
+    "configuration_started_at",
+    "sg_entity_id",
+    "temperature_entity_id",
+    "heartbeat_entity_id",
+    "rssi_entity_id",
+    "pressure_entity_id",
+    "signal_bindings",
+    "next_configuration_at"
+  ],
   "v_session_overview_axis_ticks": [
     "session_id",
     "graph_id",
@@ -2911,6 +2971,16 @@
     "completed_at",
     "active_phase_duration_display"
   ],
+  "v_session_source_configuration_values": [
+    "session_id",
+    "configuration_id",
+    "sg_entity_id",
+    "temperature_entity_id",
+    "heartbeat_entity_id",
+    "rssi_entity_id",
+    "pressure_entity_id",
+    "signal_bindings"
+  ],
   "v_session_start_status": [
     "session_id",
     "lifecycle",
@@ -2923,12 +2993,65 @@
     "message",
     "database_now"
   ],
+  "v_source_binding_options": [
+    "signal_id",
+    "entity_id",
+    "friendly_name",
+    "unit_id",
+    "unit_display",
+    "state_text",
+    "last_updated",
+    "check_id",
+    "option_label",
+    "availability_display"
+  ],
+  "v_source_binding_option_sets": [
+    "signal_id",
+    "options"
+  ],
+  "v_source_configuration_fields": [
+    "source_profile_id",
+    "configuration_id",
+    "signal_id",
+    "label",
+    "display_order",
+    "description",
+    "sensor_required",
+    "show_on_start",
+    "input_mode",
+    "entity_id",
+    "unit_id",
+    "status_display",
+    "latest_value_display",
+    "last_updated_display",
+    "entity_display",
+    "unit_display",
+    "manual_unit_id",
+    "modes",
+    "options"
+  ],
+  "v_source_configuration_history": [
+    "configuration_id",
+    "source_profile_id",
+    "created_at",
+    "note",
+    "bindings"
+  ],
+  "v_source_configuration_values": [
+    "configuration_id",
+    "sg_entity_id",
+    "temperature_entity_id",
+    "heartbeat_entity_id",
+    "rssi_entity_id",
+    "pressure_entity_id"
+  ],
   "v_start_fields": [
     "entity_id",
     "field_name",
     "section_id",
     "sort_order",
     "label",
+    "help_text",
     "converter_id",
     "required_value",
     "positive_required",
@@ -2939,6 +3062,7 @@
     "minimum_value",
     "maximum_value",
     "step_value",
+    "display_decimals",
     "options_json",
     "validation_status",
     "validation_message",
@@ -3001,6 +3125,8 @@
     "blocks_operation",
     "related_event_id",
     "created_at",
+    "source_display",
+    "source_identity_display",
     "event_order",
     "occurred_at_local",
     "event_state",

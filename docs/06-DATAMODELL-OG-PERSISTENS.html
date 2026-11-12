@@ -400,5 +400,21 @@ utførelseshistorikk.</p>
 denne slettingen gjennom FK-kaskade, inkludert feltvise snapshots. De
 blokkerer derfor ikke den avtalte oppryddingen av importerte templates.
 Beholdte sesjoner og deres frozen grunnlag endres ikke.</p>
+<h2 id="normaliserte-målekilder">Normaliserte målekilder</h2>
+<p>Signaler/enheter ligger i measurement_source_signals /
+measurement_source_units. Konfigurasjoner er en ubeskåret revisjonskjede
+per profil med én forelder og unik etterfølger; bindinger ligger i
+measurement_source_signal_bindings. Sesjonskopier i
+session_measurement_source_configurations /
+session_measurement_signal_bindings er uavhengige av den globale
+revisjons-ID-en og følger SQLite-arkivet. En konfigurert sensor er et
+eksplisitt entity-ID/enhet-par. Trykk kan være manual med NULL
+entity-ID. Ikke konfigurert sensor er reelt fravær, ikke 0 bar.</p>
+<p>HA-katalogen er en muterbar teknisk cache med egen kontrollhistorikk.
+technical_components eier presentasjonsnavn uten å endre
+technical_events. ha_entity_number_constraints.display_decimals eier
+inputformat; selve måleverdien beholder sin kolonnetype/presisjon.
+Migrering av gamle sesjoner starter kildehistorikken ved deres lagrede
+importcursor; eldre bytter kan ikke rekonstrueres.</p>
 </body>
 </html>

@@ -272,5 +272,21 @@ innholdet i en ny kladd.</p>
 Kontrollene viser tom input/«Ikke angitt» ved DB-fravær. Fokusert, ennå
 usendt brukerinput er bare flyktig redigering; lagret status kommer ved
 neste DB-projeksjon.</p>
+<h2 id="målekilder-og-sensorer">Målekilder og sensorer</h2>
+<p><code>gjaeringsassistent_source_settings</code> mottar
+<code>action</code> (read/check/save) og unik <code>operation_id</code>.
+Save krever <code>source_profile_id</code>,
+<code>expected_configuration_id</code>, <code>fields</code> og valgfritt
+notat. Hvert felt inneholder signal_id, input_mode, entity_id (NULL ved
+manual) og unit_id. DB avviser utdaterte foreldre, ukjent sensor og feil
+enhet. Check henter HA get_states og lagrer et kontrollert
+katalogsnapshot. Resultat publiseres atomisk som source-settings.json;
+save er først bekreftet når samme operation_id finnes i
+DB-kvitteringen.</p>
+<p>Nettleseren kan holde en ulagret redigeringskladd. Den er ikke
+domenefakta, og bakgrunnslesing skal bevare den opprinnelige forventede
+revisjonen. Lagret konfigurasjon og gjeldende sesjonsbinding vises
+separat. Sist kontrollert er HA-verdien fra siste eksplisitte kontroll,
+ikke en påstått løpende måleverdi.</p>
 </body>
 </html>

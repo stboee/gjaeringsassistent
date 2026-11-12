@@ -79,13 +79,13 @@ BEGIN
  IF p_kind NOT IN('process','biological') OR p_action NOT IN('register','withdraw') OR p_kind IS NULL OR p_action IS NULL OR p_confirmed IS NULL OR p_confirmed<>1 OR p_operation IS NULL OR p_operation='' OR(p_action='register' AND(p_type IS NULL OR p_type NOT IN('akseptert_avvik','ikke_relevant','ugyldig_vurderingsgrunnlag'))) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Kriteriefravik avvist: ugyldig eller ubekreftet forespørsel'; END IF;
  START TRANSACTION WITH CONSISTENT SNAPSHOT;
  IF p_kind='process' THEN
-  SELECT c.session_id,c.candidate_process_id,c.exception_register_allowed INTO v_session,v_owner,v_allowed FROM v_process_evaluation_criterion_read_model c JOIN v_current_process_candidate_evaluation e ON e.evaluation_id=c.evaluation_id JOIN v_active_session a ON a.session_id=c.session_id AND a.lifecycle='active' WHERE c.evaluation_id=p_evaluation AND c.criterion_id=p_criterion;
+  SELECT c.session_id,c.candidate_process_id,c.exception_register_allowed INTO v_session,v_owner,v_allowed FROM v_process_evaluation_criterion_read_model c JOIN v_current_process_candidate_evaluation e ON e.evaluation_id=c.evaluation_id JOIN v_active_session a ON a.session_id=c.session_id WHERE c.evaluation_id=p_evaluation AND c.criterion_id=p_criterion;
   SELECT MAX(revision_no) INTO v_revision FROM process_criterion_exceptions WHERE evaluation_id=p_evaluation AND criterion_id=p_criterion;
   SELECT exception_id,action INTO v_previous,v_previous_action FROM process_criterion_exceptions WHERE evaluation_id=p_evaluation AND criterion_id=p_criterion AND revision_no=v_revision;
  ELSE
-  SELECT c.session_id,c.candidate_phase_id,c.exception_register_allowed INTO v_session,v_owner,v_allowed FROM v_biological_evaluation_criterion_read_model c JOIN v_current_biological_candidate_evaluation e ON e.evaluation_id=c.evaluation_id JOIN v_active_session a ON a.session_id=c.session_id AND a.lifecycle='active' WHERE c.evaluation_id=p_evaluation AND c.criterion_id=p_criterion;
-  SELECT MAX(revision_no) INTO v_revision FROM biological_criterion_exceptions WHERE evaluation_id=p_evaluation AND criterion_id=p_criterion;
-  SELECT exception_id,action INTO v_previous,v_previous_action FROM biological_criterion_exceptions WHERE evaluation_id=p_evaluation AND criterion_id=p_criterion AND revision_no=v_revision;
+  SELECT c.session_id,c.phase_id,c.exception_register_allowed INTO v_session,v_owner,v_allowed FROM v_biological_evaluation_criterion_read_model c JOIN v_current_biological_candidate_evaluation e ON e.evaluation_id=c.evaluation_id JOIN v_active_session a ON a.session_id=c.session_id WHERE c.evaluation_id=p_evaluation AND c.criterion_id=p_criterion;
+  SELECT MAX(revision_no) INTO v_revision FROM biological_criterion_exceptions WHERE session_id=v_session AND phase_id=v_owner AND criterion_id=p_criterion;
+  SELECT exception_id,action INTO v_previous,v_previous_action FROM biological_criterion_exceptions WHERE session_id=v_session AND phase_id=v_owner AND criterion_id=p_criterion AND revision_no=v_revision;
  END IF;
  IF v_session IS NULL OR(p_action='register' AND(v_allowed IS NULL OR v_allowed<>1)) OR(p_action='withdraw' AND(v_previous_action IS NULL OR v_previous_action<>'register')) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Kriteriefravik avvist: ikke gjeldende, ikke tillatt, oppfylt kriterium eller ingen aktiv registrering'; END IF;
  SET v_id=CONCAT('criterion-exception-',REPLACE(UUID(),'-',''));

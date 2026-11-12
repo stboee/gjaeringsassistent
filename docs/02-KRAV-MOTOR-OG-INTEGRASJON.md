@@ -149,3 +149,10 @@ Den historiske sesjonen er den gjeldende operatørens arbeidsøkt mens den etter
 | REQ-MOTOR-076 | Aktiv | Klassifisering av målekildestatus eies av normalisert MariaDB-policy og read-model. Ukjent statuspolicy eller manglende påkrevd kontrollgrunnlag skal være synlig feil, uten lokal Node-RED-liste eller fallback. |
 | REQ-MOTOR-077 | Aktiv | Ferdig behandlet importperiode skal skilles fra faktisk datadekning. Antall og tidsgrenser for ordinære femminuttersmålinger og timesstatistikk samt registrerte rådatagap utledes i DB. Timesstatistikk skal ikke fremstilles som ordinært B/P-grunnlag. |
 | REQ-MOTOR-078 | Aktiv | Forbigående HA-publiseringsbrudd journalføres uten rekursiv publisering av feilen. Nytt forsøk leser ferske DB-projeksjoner, aldri en lokal domenekø. Et konkret publiseringsproblem lukkes først etter vellykket utgang fra den berørte HA-noden. Ugyldig payload skal fortsatt være feil. |
+
+## Reviderte målekilder
+
+| ID | Status | Krav |
+|---|---|---|
+| REQ-MOTOR-079 | Aktiv | Sensorbindinger normaliseres per signal, enhet og konfigurasjonsrevisjon i MariaDB, og fryses per reell sesjon. Livebytte trer i kraft ved en DB-bestemt femminuttersgrense; tidligere bindinger og målinger beholdes. Historisk import endres ikke retroaktivt. |
+| REQ-MOTOR-080 | Aktiv | Trykk er manuelt til en kompatibel HA-sensor er valgt. Sensortrykk omregnes fra deklarert enhet til bar med DB-eide koeffisienter og grenser. Fravær av valgfritt trykk skal ikke blokkere SG/temperatur. B/P-fravik lagres i en felles kort DB-transaksjon med gjeldende evaluering, kriterierevisjon og eksplisitt bekreftelse. |

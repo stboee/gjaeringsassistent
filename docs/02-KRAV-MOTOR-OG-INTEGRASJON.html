@@ -590,5 +590,34 @@ være feil.</td>
 </tr>
 </tbody>
 </table>
+<h2 id="reviderte-målekilder">Reviderte målekilder</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Status</th>
+<th>Krav</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>REQ-MOTOR-079</td>
+<td>Aktiv</td>
+<td>Sensorbindinger normaliseres per signal, enhet og
+konfigurasjonsrevisjon i MariaDB, og fryses per reell sesjon. Livebytte
+trer i kraft ved en DB-bestemt femminuttersgrense; tidligere bindinger
+og målinger beholdes. Historisk import endres ikke retroaktivt.</td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-080</td>
+<td>Aktiv</td>
+<td>Trykk er manuelt til en kompatibel HA-sensor er valgt. Sensortrykk
+omregnes fra deklarert enhet til bar med DB-eide koeffisienter og
+grenser. Fravær av valgfritt trykk skal ikke blokkere SG/temperatur.
+B/P-fravik lagres i en felles kort DB-transaksjon med gjeldende
+evaluering, kriterierevisjon og eksplisitt bekreftelse.</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>

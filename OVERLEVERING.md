@@ -1,4 +1,4 @@
-> Arbeidspunkt 12.11.2026: Kildeendringene er nå rekonstruert og sikret på main, men ikke releasetestet. VERSION beholdes på siste publiserte utgave til alle kontroller er ferdige. Ikke installer main som en ferdig leveranse. Native testmiljø undersøkes for minnegrense under view-innlasting. Rekonstruert mål har 216 tabeller og 193 views.
+> Arbeidspunkt 12.11.2026: Kildeendringene er nå rekonstruert og sikret på main, men ikke releasetestet. VERSION beholdes på siste publiserte utgave til alle kontroller er ferdige. Ikke installer main som en ferdig leveranse. Native grunnlag og faktisk Chromium-kontroll er gjenopprettet. Samlet regresjon og databevarende installasjonstest pågår; ingen release er publisert. Rekonstruert mål har 216 tabeller og 193 views.
 
 # Gjæringsassistent – videreføring
 

@@ -3,6 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.resolve(__dirname,'..'),flow=JSON.parse(fs.readFileSync(path.join(root,'nodered/flows.template.json'))),by=Object.fromEntries(flow.map(n=>[n.id,n]));
 const call=(id,msg)=>new Function('msg','node',by[id].func)(msg,{error:e=>{throw Error(e)},warn:()=>{}});
 const g={session_id:'r7',source_started_at:'2026-10-01T00:00:00Z',import_start:'2026-10-01T00:00:00Z',import_end:'2026-10-01T03:00:00Z',poll_interval_seconds:300,gap_threshold_seconds:300,sg_entity_id:'sensor.sg',temperature_entity_id:'sensor.temp',heartbeat_entity_id:'sensor.updated',rssi_entity_id:'sensor.rssi'};
+g.signal_bindings=require('./fixtures/source-bindings')(g);g.validation_rules=[];
 const hour=3600000,start=Date.parse(g.import_start),h=i=>({start:start+i*hour,end:start+(i+1)*hour,min:1.049-i*.001,mean:1.05-i*.001,max:1.051-i*.001});
 let msg=call('p21_live_history_process',{ga_ingest:g,payload:[],ga_hourly_statistics:{'sensor.sg':[h(0),h(1),h(2)]}}),job=JSON.parse(msg.payload[4]);
 assert.equal(job.hourly.length,3);assert.equal(job.rows.length,0);assert.equal(job.gap_inserts.length,0);assert.equal(job.hourly[0].sg_mean,1.05);assert.ok(!('sg_median' in job.hourly[0]));assert.ok(!('sample_count' in job.hourly[0]));

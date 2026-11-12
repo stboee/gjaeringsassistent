@@ -87,7 +87,7 @@ def execute(sql, label):
 # Load the installer's actual dependency order; a separate test-only order
 # would miss routines needed by seed-time template cloning.
 files=[Path(f).stem for f in json.loads((ROOT/'installer/migrations.json').read_text())['fresh_files']]
-assert len(files)==13 and len(set(files))==13,files
+assert len(files)==16 and len(set(files))==16,files
 assert files.index('11-runtime-routines')<files.index('04-ale-templates-seed'),files
 # Isolated fixture from the host's zoneinfo; this never touches the user's DB.
 from zoneinfo import ZoneInfo
@@ -155,8 +155,8 @@ for query in read_queries:
     execute('USE '+db+';\n'+flow_query(query), 'actual '+query+' SQL with active session')
 
 checks = [
-    ("(SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_type='BASE TABLE')=207", 'table count'),
-    ("(SELECT COUNT(*) FROM information_schema.views WHERE table_schema=DATABASE())=183", 'view count'),
+    ("(SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_type='BASE TABLE')=216", 'table count'),
+    ("(SELECT COUNT(*) FROM information_schema.views WHERE table_schema=DATABASE())=193", 'view count'),
     ("(SELECT COUNT(*) FROM template_biological_criteria WHERE exception_allowed<>1)=0", 'default biology exception policy'),
     ("(SELECT COUNT(*) FROM template_process_criteria WHERE exception_allowed<>1)=0", 'default process exception policy'),
     ("(SELECT expected_attenuation_min_percent=80 AND expected_attenuation_max_percent=84 FROM template_defaults WHERE version_id='p24-clone')=1", 'clone attenuation columns'),
@@ -182,7 +182,7 @@ DROP TRIGGER p24_clone_failure;
 sql += '\n'.join('CALL p24_assert(' + condition + ',' + literal(label) + ');' for condition, label in checks) + '\n'
 execute(sql, 'clone full fields, injected rollback, policy freeze, counts and lineage')
 view_queries=''.join('SELECT COUNT(*) FROM '+name+';\n' for name in re.findall(r'CREATE OR REPLACE VIEW\s+(\w+)',(ROOT/'sql/20-views.sql').read_text(),re.I))
-execute('USE '+db+';\n'+view_queries,'all 183 actual view queries')
+execute('USE '+db+';\n'+view_queries,'all 193 actual view queries')
 execute('USE '+db+';\n'+''.join('SET NAMES utf8mb4 '+collation+';\n'+
     "SELECT COUNT(*) FROM v_metadata_lineage_gaps WHERE gap_type='no_dependency';\n"+
     "SELECT COUNT(*) FROM v_metadata_lineage_gaps WHERE gap_type='missing_producer';\n"+
@@ -468,7 +468,7 @@ print('PASS prior data/lifecycle/statistics/comparison/atomic regressions',flush
 
 # r8: the installed schema and actual HA command receiver accept 30 minutes.
 # Systemkontroll's current epoch must work when MariaDB uses Oslo summer time.
-execute('USE '+db+";\nSET time_zone='+02:00';\nCALL p24_assert(ABS(UNIX_TIMESTAMP()-UNIX_TIMESTAMP(UTC_TIMESTAMP(3))) BETWEEN 7198 AND 7201,'old clock expression reproduces false offset');\nSET time_zone='+00:00';\nCALL p24_assert((SELECT expected_number=207 FROM system_check_expectations WHERE check_id='schema' AND expectation_key='innodb_tables'),'all InnoDB expectations updated');\nCALL p24_assert((SELECT COUNT(*) FROM v_dashboard_graph_view_options WHERE option_kind='interval' AND value_number=1800)=1,'30 minute option is DB owned');", 'r8 clock and schema expectation regressions')
+execute('USE '+db+";\nSET time_zone='+02:00';\nCALL p24_assert(ABS(UNIX_TIMESTAMP()-UNIX_TIMESTAMP(UTC_TIMESTAMP(3))) BETWEEN 7198 AND 7201,'old clock expression reproduces false offset');\nSET time_zone='+00:00';\nCALL p24_assert((SELECT expected_number=216 FROM system_check_expectations WHERE check_id='schema' AND expectation_key='innodb_tables'),'all InnoDB expectations updated');\nCALL p24_assert((SELECT COUNT(*) FROM v_dashboard_graph_view_options WHERE option_kind='interval' AND value_number=1800)=1,'30 minute option is DB owned');", 'r8 clock and schema expectation regressions')
 r8_choice={'source_kind':'reference','reference_id':'gyllen-pils-20260925','interval_seconds':1800,'window_hours':None,'operation_id':'r8-direct-choice'}
 execute('USE '+db+';\n'+flow_query('p24r7_selection_write',r8_choice)+"CALL p24_assert((SELECT interval_seconds=1800 AND operation_id='r8-direct-choice' FROM v_graph_display_selection),'actual direct HA command persisted');\n", 'r8 direct event data persist shared 30-minute choice')
 execute('USE '+db+';\n'+flow_query('p20_technical_export_query'), 'r8 actual technical diagnostic query')

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "version": "2026.11.09-2",
+  "version": "2026.11.12-1",
   "normative": false,
   "source_baseline": "0.1.0-prototype22-r4-revised1",
   "change_rule": "HA metadata is changed in the MariaDB registry seed; flow/dashboard/generated contract/tests must remain consistent with that registry.",
@@ -739,6 +739,12 @@
       "direction": "home_assistant_to_nodered",
       "mode": "parameterized",
       "listener_id": "p26_start_field_event"
+    },
+    {
+      "event_type": "gjaeringsassistent_source_settings",
+      "direction": "home_assistant_to_nodered",
+      "mode": "parameterized",
+      "listener_id": "source_settings_event_v1"
     }
   ],
   "deviations": [],
@@ -3248,6 +3254,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3256,6 +3263,7 @@
       "maximum_value": 30,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3264,6 +3272,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3272,6 +3281,7 @@
       "maximum_value": 1.2,
       "step_value": 0.001,
       "input_mode": "box",
+      "display_decimals": 3,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3280,6 +3290,7 @@
       "maximum_value": 5,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3288,6 +3299,7 @@
       "maximum_value": 30,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3296,6 +3308,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3304,6 +3317,7 @@
       "maximum_value": 100,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3312,6 +3326,7 @@
       "maximum_value": 100,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3320,6 +3335,7 @@
       "maximum_value": 30,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3328,6 +3344,7 @@
       "maximum_value": 30,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3336,6 +3353,7 @@
       "maximum_value": 3.0,
       "step_value": 0.05,
       "input_mode": "box",
+      "display_decimals": 2,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3344,6 +3362,7 @@
       "maximum_value": 40,
       "step_value": 0.1,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3352,6 +3371,7 @@
       "maximum_value": 1440,
       "step_value": 5,
       "input_mode": "box",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3360,6 +3380,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3368,6 +3389,7 @@
       "maximum_value": 20,
       "step_value": 1,
       "input_mode": "box",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3376,6 +3398,7 @@
       "maximum_value": 5000,
       "step_value": 10,
       "input_mode": "box",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3384,6 +3407,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3392,6 +3416,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3400,6 +3425,7 @@
       "maximum_value": 200,
       "step_value": 0.5,
       "input_mode": "box",
+      "display_decimals": 1,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3408,6 +3434,7 @@
       "maximum_value": 5,
       "step_value": 1,
       "input_mode": "slider",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     },
     {
@@ -3416,6 +3443,7 @@
       "maximum_value": 1000,
       "step_value": 1,
       "input_mode": "box",
+      "display_decimals": 0,
       "created_at": "UTC_TIMESTAMP(3)"
     }
   ],

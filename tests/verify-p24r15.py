@@ -33,7 +33,7 @@ def split_definitions(body):
     return result + [body[start:].strip()]
 
 tables = {}; declared_keys = set()
-schema = '\n'.join((ROOT/'sql'/f).read_text() for f in ['00-template-schema.sql','10-runtime-schema.sql'])
+schema = '\n'.join((ROOT/'sql'/f).read_text() for f in ['00-template-schema.sql','10-runtime-schema.sql','12-operator-schema.sql'])
 for m in re.finditer(r'CREATE TABLE IF NOT EXISTS (\w+) \(([\s\S]*?)\) ENGINE[^;]+;', schema):
     name, body = m.groups(); columns = []
     for definition in split_definitions(body):
@@ -42,9 +42,9 @@ for m in re.finditer(r'CREATE TABLE IF NOT EXISTS (\w+) \(([\s\S]*?)\) ENGINE[^;
         fk = re.match(r'CONSTRAINT\s+(\w+)\s+FOREIGN KEY', definition, re.I)
         if fk: declared_keys.add((name, fk[1]))
     tables[name] = columns
-assert set(tables) == set(physical['tables']) and len(tables) == 207
+assert set(tables) == set(physical['tables']) and len(tables) == 216
 views = set(re.findall(r'CREATE OR REPLACE VIEW (\w+)', (ROOT/'sql/20-views.sql').read_text()))
-assert views == set(physical['views']) and len(views) == 183
+assert views == set(physical['views']) and len(views) == 193
 assert physical['indices'] and {i['TABLE_NAME'] for i in physical['indices']} == set(tables)
 catalog = {}
 for c in physical['columns']:

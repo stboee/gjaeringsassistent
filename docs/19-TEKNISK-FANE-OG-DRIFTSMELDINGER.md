@@ -125,3 +125,7 @@ Den faktiske HA-nodens vellykkede utgang kvitterer `HA_PUBLICATION_RECOVERED` fo
 ## Sporbar oppstartsavvisning
 
 Teknisk eksport inneholder `start_diagnostics`: aktuell DB-startklarstatus og de ti siste startforsøkene med tilhørende feltvise snapshots. Forsøkets tidspunkt/ID skiller et tidligere avvist grunnlag fra dagens utfylling. HA-felt og DB-kladd kan derfor sammenlignes uten å anta at en synlig HA-verdi er lagret i den aktuelle kladden. Beholdte gamle sesjoner inngår ikke i Systemkontrolls operative P/B-telling.
+
+## Kildekolonnen
+
+Kilde viser technical_components.display_name. Den opprinnelige source_component, node-ID og node-navn beholdes i tekniske detaljer og JSON-eksport; eldre hendelser omskrives ikke. Ikke registrert identitet vises eksplisitt som ukjent kilde i DB-read-model.

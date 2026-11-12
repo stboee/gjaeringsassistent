@@ -1,7 +1,7 @@
 {
   "generated_from": "requirements.json + tests/* textual REQ references",
   "note": "A textual test reference is evidence of explicit traceability, not proof that the requirement is fully verified.",
-  "requirements_total": 259,
+  "requirements_total": 264,
   "with_explicit_test_reference": 15,
   "without_explicit_test_reference": [
     "REQ-COM-001",
@@ -156,6 +156,8 @@
     "REQ-MOTOR-076",
     "REQ-MOTOR-077",
     "REQ-MOTOR-078",
+    "REQ-MOTOR-079",
+    "REQ-MOTOR-080",
     "REQ-HA-001",
     "REQ-HA-002",
     "REQ-HA-003",
@@ -241,6 +243,9 @@
     "REQ-HA-090",
     "REQ-HA-091",
     "REQ-HA-092",
+    "REQ-HA-093",
+    "REQ-HA-094",
+    "REQ-HA-095",
     "REQ-INST-001",
     "REQ-INST-002",
     "REQ-INST-003",

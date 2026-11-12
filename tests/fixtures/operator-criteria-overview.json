@@ -1,0 +1,3171 @@
+{
+  "schema_version": "2.5",
+  "application_version": "2026.11.12-1",
+  "generated_at": "2026-11-12 22:35:13.061",
+  "time_zone": "Europe/Oslo",
+  "demo_data": false,
+  "demo_options": [
+    {
+      "profile_id": "ipl-synthetic-p17r12",
+      "name": "2026-05-29 IPL",
+      "span_seconds": 777600,
+      "og": "1.04900"
+    },
+    {
+      "profile_id": "gyllen-pils-20260925",
+      "name": "2026-09-25 Gyllen pils",
+      "span_seconds": 945000,
+      "og": "1.04800"
+    }
+  ],
+  "demo_selection": {
+    "selection_seq": "2",
+    "profile_id": "ipl-synthetic-p17r12",
+    "operation_id": "r10-initial-demo",
+    "selected_at": "2026-11-12 22:35:08.850"
+  },
+  "comparison_options": [
+    {
+      "source_kind": "none",
+      "reference_id": "",
+      "label": "Ingen"
+    },
+    {
+      "source_kind": "reference",
+      "reference_id": "gyllen-pils-20260925",
+      "label": "2026-09-25 Gyllen pils"
+    },
+    {
+      "source_kind": "reference",
+      "reference_id": "ipl-synthetic-p17r12",
+      "label": "2026-05-29 IPL"
+    }
+  ],
+  "graph_selection": {
+    "selection_seq": "1",
+    "source_kind": "none",
+    "reference_profile_id": null,
+    "reference_session_id": null,
+    "interval_seconds": 1800,
+    "window_hours": null,
+    "operation_id": "initial-graph-selection",
+    "selected_at": "2026-11-12 22:35:08.608"
+  },
+  "selection_seq": "1",
+  "graph_basis_display": "Detaljdata lagres hvert 5. minutt. Timesstatistikk fra HA beholder sin oppløsning.",
+  "measurement_source_labels": "Ingen måledata",
+  "comparison_display": null,
+  "graph_view_options": [
+    {
+      "option_kind": "interval",
+      "value_number": 300,
+      "label": "5 minutter"
+    },
+    {
+      "option_kind": "interval",
+      "value_number": 900,
+      "label": "15 minutter"
+    },
+    {
+      "option_kind": "interval",
+      "value_number": 1800,
+      "label": "30 minutter"
+    },
+    {
+      "option_kind": "interval",
+      "value_number": 3600,
+      "label": "1 time"
+    },
+    {
+      "option_kind": "window",
+      "value_number": null,
+      "label": "Hele gjæringen"
+    },
+    {
+      "option_kind": "window",
+      "value_number": 24,
+      "label": "Siste 24 timer"
+    },
+    {
+      "option_kind": "window",
+      "value_number": 48,
+      "label": "Siste 48 timer"
+    },
+    {
+      "option_kind": "window",
+      "value_number": 168,
+      "label": "Siste 7 døgn"
+    }
+  ],
+  "comparison_series": [],
+  "session": {
+    "is_historical": 0,
+    "historical_ended_at": null,
+    "domain_now": "2026-11-12 22:35:12.853",
+    "session_id": "20261112223510186-w3470-standard",
+    "batch_name": "W-34/70 batch",
+    "is_demo": 0,
+    "pitched_at": "2026-11-12 21:35:10.166",
+    "activity_started_at": null,
+    "completed_at": null,
+    "lifecycle": "active",
+    "lifecycle_at": "2026-11-12 22:35:10.186",
+    "archive_status": "not_applicable",
+    "archive_status_display": "Sluttarkiv opprettes ved Avslutt gjæring",
+    "archive_error_message": null,
+    "archive_attempt_no": null,
+    "archive_requested_at": null,
+    "can_prepare_new": 0,
+    "prepare_action_display": "Gjør klar for ny gjæring",
+    "og": "1.05000",
+    "volume_l": "150.000",
+    "expected_attenuation_min_percent": "80.0000",
+    "expected_attenuation_max_percent": "84.0000",
+    "expected_fg_min": "1.00800",
+    "expected_fg_max": "1.01000",
+    "expected_attenuation_display": "80.0–84.0 %",
+    "expected_fg_display": "1,008–1,010",
+    "current_process_visit_id": "process-visit-20261112223510186-w3470-standard-1",
+    "current_process_id": "P1",
+    "current_process_order": 1,
+    "current_process_name": "Klargjøring, pitch og temperaturstabilisering",
+    "current_process_started_at": "2026-11-12 21:35:10.166",
+    "current_process_ended_at": null,
+    "current_biological_visit_id": "biological-visit-20261112223510186-w3470-standard-1",
+    "current_biological_phase_id": "B1",
+    "current_biological_phase_order": 1,
+    "current_biological_phase_name": "Inokulert og tilpasning",
+    "current_biological_started_at": "2026-11-12 21:35:10.166",
+    "current_biological_ended_at": null,
+    "latest_observation_id": "observation-20261112223510186-w3470-standard-start",
+    "latest_observation_at": "2026-11-12 21:35:10.166",
+    "latest_manual_sg": "1.05000",
+    "latest_process_evaluation_id": "r12-eval",
+    "latest_process_readiness": "waiting",
+    "recommended_next_process_id": "P2",
+    "recommended_temperature_c": null,
+    "recommended_pressure_bar": null,
+    "latest_biological_evaluation_id": null,
+    "latest_biological_candidate_phase_id": null,
+    "latest_biological_confidence": null,
+    "yeast_profile_id": "fermentis-w3470",
+    "yeast_name": "Fermentis SafLager W-34/70",
+    "original_pitched_at": "2026-11-12 21:35:10.166",
+    "pitch_timing_revision_no": 1,
+    "pitch_timing_source": "start",
+    "manual_pitched_at": null,
+    "frozen_expected_fg_min": "1.00800",
+    "frozen_expected_fg_max": "1.01000",
+    "template_version_id": "w3470-standard@3.0",
+    "template_name": "W-34/70 standardprosess – biologisk styrt",
+    "version_label": "3.0",
+    "active_issue_count": "0",
+    "database_now": "2026-11-12 22:35:13.061",
+    "yeast": "Fermentis SafLager W-34/70",
+    "attention": false,
+    "active_process_order": 1,
+    "active_process_name": "Klargjøring, pitch og temperaturstabilisering",
+    "recommended_process_name": "Kald hovedgjæring"
+  },
+  "biological": {
+    "active_phase_id": "B1",
+    "active_phase_order": 1,
+    "active_phase_name": "Inokulert og tilpasning",
+    "candidate_phase_id": "B2",
+    "metrics": {
+      "sg_rate_points_per_day": null,
+      "sg_rate_display": "Utilgjengelig",
+      "apparent_attenuation_percent": null,
+      "attenuation_display": "Utilgjengelig",
+      "expected_attenuation_min_percent": "80.0000",
+      "expected_attenuation_max_percent": "84.0000"
+    },
+    "transition_evaluations": [
+      {
+        "phase_id": "B2",
+        "phase_order": 2,
+        "phase_name": "Aktivitetsstart og tidlig vekst",
+        "outcome": "not_evaluated",
+        "availability": "not_yet",
+        "evidence_kind": "current",
+        "transition_id": null,
+        "evaluation_id": null,
+        "criteria": []
+      }
+    ]
+  },
+  "biological_duration": {
+    "active_phase_duration_display": "0 dager, 01:00",
+    "active_phase_elapsed_hours": "1.0007",
+    "elapsed_hours": "1.0007",
+    "completed_at": null
+  },
+  "biological_phases": [
+    {
+      "phase_id": "B1",
+      "order": 1,
+      "name": "Inokulert og tilpasning",
+      "description": "Etter pitch; gjæren tilpasser seg før målbar aktivitet."
+    },
+    {
+      "phase_id": "B2",
+      "order": 2,
+      "name": "Aktivitetsstart og tidlig vekst",
+      "description": "Målbar gjæringsaktivitet er etablert."
+    },
+    {
+      "phase_id": "B3",
+      "order": 3,
+      "name": "Aktiv hovedgjæring",
+      "description": "Hovedgjæringen er tydelig etablert og har høy aktivitet."
+    },
+    {
+      "phase_id": "B4",
+      "order": 4,
+      "name": "Sen gjæring",
+      "description": "Utgjæringen er langt kommet og gjæringshastigheten har avtatt."
+    },
+    {
+      "phase_id": "B5",
+      "order": 5,
+      "name": "Modning og metabolsk opprydding",
+      "description": "Nær slutt på utgjæring; gjæren er fortsatt metabolsk aktiv."
+    },
+    {
+      "phase_id": "B6",
+      "order": 6,
+      "name": "Stabil utgjæring",
+      "description": "Forventet utgjæring er nådd og SG er stabil innen definert målevindu."
+    }
+  ],
+  "phase_durations": [
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "kind": "biological",
+      "owner_id": "B1",
+      "duration_seconds": "3602",
+      "duration_display": "0 dager, 01:00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "kind": "process",
+      "owner_id": "P1",
+      "duration_seconds": "3602",
+      "duration_display": "0 dager, 01:00"
+    }
+  ],
+  "historical_phase_options": [],
+  "biological_timeline": [
+    {
+      "visit_id": "biological-visit-20261112223510186-w3470-standard-1",
+      "phase_id": "B1",
+      "phase_order": 1,
+      "name": "Inokulert og tilpasning",
+      "description": "Etter pitch; gjæren tilpasser seg før målbar aktivitet.",
+      "visit_revision_id": "biological-visit-20261112223510186-w3470-standard-1-r1",
+      "revision_no": 1,
+      "started_at": "2026-11-12 21:35:10.166",
+      "ended_at": "2026-11-12 22:35:12.853",
+      "timing_source": "pitch",
+      "confidence": "pitch",
+      "revision_reason": null,
+      "duration_display": "0 dager, 01:00",
+      "duration_seconds": "3602",
+      "started_display": "12.11.2026 22:35",
+      "ended_display": "12.11.2026 23:35",
+      "original_started_at": "2026-11-12 21:35:10.166",
+      "manual_started_at": null
+    }
+  ],
+  "process_timeline": [
+    {
+      "visit_id": "process-visit-20261112223510186-w3470-standard-1",
+      "process_id": "P1",
+      "process_order": 1,
+      "name": "Klargjøring, pitch og temperaturstabilisering",
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "visit_revision_id": "process-visit-20261112223510186-w3470-standard-1-r1",
+      "revision_no": 1,
+      "started_at": "2026-11-12 21:35:10.166",
+      "ended_at": "2026-11-12 22:35:12.853",
+      "timing_source": "start",
+      "revision_reason": null,
+      "duration_display": "0 dager, 01:00",
+      "duration_seconds": "3602",
+      "started_display": "12.11.2026 22:35",
+      "ended_display": "12.11.2026 23:35",
+      "original_started_at": "2026-11-12 21:35:10.166",
+      "manual_started_at": null,
+      "target_temperature_c": "8.000000",
+      "target_pressure_bar": "0.000000"
+    }
+  ],
+  "measurement_history": [
+    {
+      "observation_id": "observation-20261112223510186-w3470-standard-start",
+      "observation_revision_id": "observation-20261112223510186-w3470-standard-start-r1",
+      "revision_no": 1,
+      "status": "active",
+      "recorded_at": "2026-11-12 21:35:10.166",
+      "measurement_method": "refractometer",
+      "measured_sg": "1.05000",
+      "sample_temperature_c": "20.000",
+      "calibration_temperature_c": "20.000",
+      "corrected_sg": "1.05000",
+      "manual_temperature_c": "12.000",
+      "pressure_bar": "0.0000",
+      "cooler_setpoint_c": "12.000",
+      "cooler_calibration_offset_c": "0.000",
+      "airlock_activity": "none",
+      "acetaldehyde_level": 0,
+      "diacetyl_level": 0,
+      "wort_like_level": 0,
+      "sulfur_so2_level": 0,
+      "sulfur_h2s_level": 0,
+      "clarity_level": 0,
+      "settling_yeast_level": 0,
+      "settling_minutes": "0.000",
+      "user_conclusion": "uncertain",
+      "note": null,
+      "original_recorded_at": "2026-11-12 21:35:10.166",
+      "manual_recorded_at": null
+    }
+  ],
+  "measurement_feedback": null,
+  "criterion_corrections": {
+    "biological": {},
+    "process": {}
+  },
+  "process_slots": [
+    {
+      "process_id": "P1",
+      "process_order": 1,
+      "slot_no": 1,
+      "name": "Klargjøring, pitch og temperaturstabilisering",
+      "description": "Registrer pitch ved faktisk temperatur og kjøl kontrollert mot første gjæringsmål. Pitchtemperatur og gjæringstemperatur er separate størrelser.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 1,
+      "targets": [
+        {
+          "process_id": "P1",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Etablere gjæringen og bringe ølet kontrollert mot første gjæringsmål.",
+          "target_value": "8.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P1",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Etablere gjæringen og bringe ølet kontrollert mot første gjæringsmål.",
+          "target_value": "0.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P1",
+          "action_id": "p1-pitch",
+          "action_order": 1,
+          "action_type_id": "operator_action",
+          "label": "Pitch gjær",
+          "target_id": null,
+          "operator_operation_id": "pitch"
+        }
+      ],
+      "criteria": [],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P2",
+      "process_order": 2,
+      "slot_no": 2,
+      "name": "Kald hovedgjæring",
+      "description": "Hold kaldt mens gjæringen etableres og går inn i aktiv hovedgjæring.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 2,
+      "targets": [
+        {
+          "process_id": "P2",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Beholde lav gjæringstemperatur mens aktiviteten etableres.",
+          "target_value": "8.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P2",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Beholde lav gjæringstemperatur mens aktiviteten etableres.",
+          "target_value": "0.300000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [],
+      "criteria": [
+        {
+          "process_id": "P2",
+          "criterion_id": "p2-temperature",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 8.6,
+            "minimum_samples": 5,
+            "minimum_value": 7.4,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P3",
+      "process_order": 3,
+      "slot_no": 3,
+      "name": "Første temperaturøkning mot 10 °C",
+      "description": "Øk først når hovedgjæringen er solid etablert. Terskelen er kalibrert konservativt mot den vellykkede IPL-batchen.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 3,
+      "targets": [
+        {
+          "process_id": "P3",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Støtte videre utgjæring uten å forlate den kalde hovedgjæringen for tidlig.",
+          "target_value": "10.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P3",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Støtte videre utgjæring uten å forlate den kalde hovedgjæringen for tidlig.",
+          "target_value": "0.300000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P3",
+          "action_id": "p3-temperature",
+          "action_order": 1,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturmål",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        },
+        {
+          "process_id": "P3",
+          "action_id": "p3-pressure",
+          "action_order": 2,
+          "action_type_id": "set_target",
+          "label": "Sett trykkmål",
+          "target_id": "pressure",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P3",
+          "criterion_id": "p3-biological-phase",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "biological_phase_order",
+          "model_id": "threshold",
+          "role_id": "required",
+          "label": "Biologisk fase",
+          "exception_allowed": 1,
+          "parameters": {
+            "minimum_value": 3
+          },
+          "correctable_parameters": [
+            "maximum_value",
+            "minimum_value"
+          ],
+          "correction": null
+        },
+        {
+          "process_id": "P3",
+          "criterion_id": "p3-current-temperature",
+          "criterion_order": 2,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 8.8,
+            "minimum_samples": 5,
+            "minimum_value": 7.2,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P4",
+      "process_order": 4,
+      "slot_no": 4,
+      "name": "Videre temperaturøkning mot 12 °C",
+      "description": "Videre ramp styres av biologisk fremdrift, ikke av timer siden forrige endring.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 4,
+      "targets": [
+        {
+          "process_id": "P4",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Støtte sen hovedgjæring mens gjæren fortsatt har tydelig aktivitet.",
+          "target_value": "12.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P4",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Støtte sen hovedgjæring mens gjæren fortsatt har tydelig aktivitet.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P4",
+          "action_id": "p4-temperature",
+          "action_order": 1,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturmål",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        },
+        {
+          "process_id": "P4",
+          "action_id": "p4-pressure",
+          "action_order": 2,
+          "action_type_id": "set_target",
+          "label": "Sett trykkmål",
+          "target_id": "pressure",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P4",
+          "criterion_id": "p4-biological-phase",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "biological_phase_order",
+          "model_id": "threshold",
+          "role_id": "required",
+          "label": "Biologisk fase",
+          "exception_allowed": 1,
+          "parameters": {
+            "minimum_value": 4
+          },
+          "correctable_parameters": [
+            "maximum_value",
+            "minimum_value"
+          ],
+          "correction": null
+        },
+        {
+          "process_id": "P4",
+          "criterion_id": "p4-current-temperature",
+          "criterion_order": 2,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 10.8,
+            "minimum_samples": 5,
+            "minimum_value": 9.2,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P5",
+      "process_order": 5,
+      "slot_no": 5,
+      "name": "Varm sluttfase mot 14 °C",
+      "description": "Øk når biologien er i B5 og forrige temperaturmål er nådd.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 5,
+      "targets": [
+        {
+          "process_id": "P5",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Holde gjæren aktiv gjennom sen utgjæring og forberede metabolsk opprydding.",
+          "target_value": "14.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P5",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Holde gjæren aktiv gjennom sen utgjæring og forberede metabolsk opprydding.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P5",
+          "action_id": "p5-temperature",
+          "action_order": 1,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturmål",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        },
+        {
+          "process_id": "P5",
+          "action_id": "p5-pressure",
+          "action_order": 2,
+          "action_type_id": "set_target",
+          "label": "Sett trykkmål",
+          "target_id": "pressure",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P5",
+          "criterion_id": "p5-biological-phase",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "biological_phase_order",
+          "model_id": "threshold",
+          "role_id": "required",
+          "label": "Biologisk fase",
+          "exception_allowed": 1,
+          "parameters": {
+            "minimum_value": 5
+          },
+          "correctable_parameters": [
+            "maximum_value",
+            "minimum_value"
+          ],
+          "correction": null
+        },
+        {
+          "process_id": "P5",
+          "criterion_id": "p5-current-temperature",
+          "criterion_order": 2,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 12.8,
+            "minimum_samples": 5,
+            "minimum_value": 11.2,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P6",
+      "process_order": 6,
+      "slot_no": 6,
+      "name": "Modning og metabolsk opprydding",
+      "description": "Hold varm sluttfase mens biologien nærmer seg stabil forventet utgjæring.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 6,
+      "targets": [
+        {
+          "process_id": "P6",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Gi gjæren arbeidsbetingelser for siste utgjæring og metabolsk opprydding.",
+          "target_value": "15.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P6",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Gi gjæren arbeidsbetingelser for siste utgjæring og metabolsk opprydding.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P6",
+          "action_id": "p6-temperature",
+          "action_order": 1,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturmål",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        },
+        {
+          "process_id": "P6",
+          "action_id": "p6-pressure",
+          "action_order": 2,
+          "action_type_id": "set_target",
+          "label": "Sett trykkmål",
+          "target_id": "pressure",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P6",
+          "criterion_id": "p6-biological-phase",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "biological_phase_order",
+          "model_id": "threshold",
+          "role_id": "required",
+          "label": "Biologisk fase",
+          "exception_allowed": 1,
+          "parameters": {
+            "minimum_value": 5
+          },
+          "correctable_parameters": [
+            "maximum_value",
+            "minimum_value"
+          ],
+          "correction": null
+        },
+        {
+          "process_id": "P6",
+          "criterion_id": "p6-current-temperature",
+          "criterion_order": 2,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 15,
+            "minimum_samples": 5,
+            "minimum_value": 13,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P7",
+      "process_order": 7,
+      "slot_no": 7,
+      "name": "Tørrhumling",
+      "description": "Sen varm tørrhumling etter at B6 har bekreftet forventet og stabil utgjæring. Kan deaktiveres i templates uten tørrhumling.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 7,
+      "targets": [
+        {
+          "process_id": "P7",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Tilsette tørrhumle mens ølet er nær FG og gjær fortsatt er tilgjengelig for å håndtere eventuell ny fermenterbarhet.",
+          "target_value": "15.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P7",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Tilsette tørrhumle mens ølet er nær FG og gjær fortsatt er tilgjengelig for å håndtere eventuell ny fermenterbarhet.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P7",
+          "action_id": "p7-dry-hop",
+          "action_order": 1,
+          "action_type_id": "operator_action",
+          "label": "Tilsett tørrhumle",
+          "target_id": null,
+          "operator_operation_id": "dry_hop"
+        },
+        {
+          "process_id": "P7",
+          "action_id": "p7-temperature",
+          "action_order": 2,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturmål",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        },
+        {
+          "process_id": "P7",
+          "action_id": "p7-pressure",
+          "action_order": 3,
+          "action_type_id": "set_target",
+          "label": "Sett trykkmål",
+          "target_id": "pressure",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P7",
+          "criterion_id": "p7-biological-phase",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "biological_phase_order",
+          "model_id": "threshold",
+          "role_id": "required",
+          "label": "Biologisk fase",
+          "exception_allowed": 1,
+          "parameters": {
+            "minimum_value": 6
+          },
+          "correctable_parameters": [
+            "maximum_value",
+            "minimum_value"
+          ],
+          "correction": null
+        },
+        {
+          "process_id": "P7",
+          "criterion_id": "p7-current-temperature",
+          "criterion_order": 2,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 16,
+            "minimum_samples": 5,
+            "minimum_value": 14,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P8",
+      "process_order": 8,
+      "slot_no": 8,
+      "name": "Kaldkrasj mot 4 °C",
+      "description": "Kaldkrasj først etter ny SG-stabilitet etter tørrhumling; dette fanger mulig hop creep.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 8,
+      "targets": [
+        {
+          "process_id": "P8",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Stoppe varm prosess og starte kontrollert utfelling, med positivt tanktrykk.",
+          "target_value": "4.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P8",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Stoppe varm prosess og starte kontrollert utfelling, med positivt tanktrykk.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P8",
+          "action_id": "p8-temperature",
+          "action_order": 1,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturmål",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        },
+        {
+          "process_id": "P8",
+          "action_id": "p8-pressure",
+          "action_order": 2,
+          "action_type_id": "set_target",
+          "label": "Sett trykkmål",
+          "target_id": "pressure",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P8",
+          "criterion_id": "p8-biological-phase",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "biological_phase_order",
+          "model_id": "threshold",
+          "role_id": "required",
+          "label": "Biologisk fase",
+          "exception_allowed": 1,
+          "parameters": {
+            "minimum_value": 6
+          },
+          "correctable_parameters": [
+            "maximum_value",
+            "minimum_value"
+          ],
+          "correction": null
+        },
+        {
+          "process_id": "P8",
+          "criterion_id": "p8-sg-stability-after-dry-hop",
+          "criterion_order": 2,
+          "enabled": 1,
+          "metric_id": "tilt_sg",
+          "model_id": "stability_window",
+          "role_id": "required",
+          "label": "SG-stabilitet etter tørrhumling",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_range_points": 1.5,
+            "minimum_samples": 12,
+            "minimum_span_hours": 24,
+            "since_current_process_start": true,
+            "window_hours": 48
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_range_points",
+            "minimum_samples",
+            "minimum_span_hours",
+            "since_current_process_start",
+            "window_hours"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P9",
+      "process_order": 9,
+      "slot_no": 9,
+      "name": "Bunnfallsdump",
+      "description": "Dump bunnfall når kaldkrasjtemperaturen er oppnådd og utfelling er etablert.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 9,
+      "targets": [
+        {
+          "process_id": "P9",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "exact",
+          "label": "Øltemperatur",
+          "purpose": "Fjerne sediment etter kaldkrasj.",
+          "target_value": "4.000000",
+          "minimum_value": null,
+          "maximum_value": null
+        },
+        {
+          "process_id": "P9",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Fjerne sediment etter kaldkrasj.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P9",
+          "action_id": "p9-sediment-dump",
+          "action_order": 1,
+          "action_type_id": "operator_action",
+          "label": "Dump bunnfall",
+          "target_id": null,
+          "operator_operation_id": "sediment_dump"
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P9",
+          "criterion_id": "p9-temperature",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 4.6,
+            "minimum_samples": 5,
+            "minimum_value": 3.4,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P10",
+      "process_order": 10,
+      "slot_no": 10,
+      "name": "Kaldkondisjonering ved 2–3 °C",
+      "description": "Kondisjoner kaldt etter bunnfallsdump.",
+      "enabled": 1,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 10,
+      "targets": [
+        {
+          "process_id": "P10",
+          "target_id": "beer_temperature",
+          "target_order": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "range",
+          "label": "Øltemperatur",
+          "purpose": "Kald kondisjonering og videre klaring.",
+          "target_value": null,
+          "minimum_value": "2.000000",
+          "maximum_value": "3.000000"
+        },
+        {
+          "process_id": "P10",
+          "target_id": "pressure",
+          "target_order": 2,
+          "metric_id": "pressure_bar",
+          "model_id": "exact",
+          "label": "Tanktrykk",
+          "purpose": "Kald kondisjonering og videre klaring.",
+          "target_value": "0.400000",
+          "minimum_value": null,
+          "maximum_value": null
+        }
+      ],
+      "actions": [
+        {
+          "process_id": "P10",
+          "action_id": "p10-temperature",
+          "action_order": 1,
+          "action_type_id": "set_target",
+          "label": "Sett temperaturområde",
+          "target_id": "beer_temperature",
+          "operator_operation_id": null
+        }
+      ],
+      "criteria": [
+        {
+          "process_id": "P10",
+          "criterion_id": "p10-temperature-range",
+          "criterion_order": 1,
+          "enabled": 1,
+          "metric_id": "beer_temperature_c",
+          "model_id": "window_median_range",
+          "role_id": "required",
+          "label": "Øltemperatur",
+          "exception_allowed": 1,
+          "parameters": {
+            "maximum_value": 3,
+            "minimum_samples": 5,
+            "minimum_value": 2,
+            "window_minutes": 30
+          },
+          "correctable_parameters": [
+            "maximum_age_minutes",
+            "maximum_value",
+            "minimum_samples",
+            "minimum_value",
+            "window_minutes"
+          ],
+          "correction": null
+        }
+      ],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P11",
+      "process_order": 11,
+      "slot_no": 11,
+      "name": "Reservert prosesstrinn P11",
+      "description": "Ledig templateplass.",
+      "enabled": 0,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 11,
+      "targets": [],
+      "actions": [],
+      "criteria": [],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P12",
+      "process_order": 12,
+      "slot_no": 12,
+      "name": "Reservert prosesstrinn P12",
+      "description": "Ledig templateplass.",
+      "enabled": 0,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 12,
+      "targets": [],
+      "actions": [],
+      "criteria": [],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P13",
+      "process_order": 13,
+      "slot_no": 13,
+      "name": "Reservert prosesstrinn P13",
+      "description": "Ledig templateplass.",
+      "enabled": 0,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 13,
+      "targets": [],
+      "actions": [],
+      "criteria": [],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P14",
+      "process_order": 14,
+      "slot_no": 14,
+      "name": "Reservert prosesstrinn P14",
+      "description": "Ledig templateplass.",
+      "enabled": 0,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 14,
+      "targets": [],
+      "actions": [],
+      "criteria": [],
+      "transition_evidence": null
+    },
+    {
+      "process_id": "P15",
+      "process_order": 15,
+      "slot_no": 15,
+      "name": "Reservert prosesstrinn P15",
+      "description": "Ledig templateplass.",
+      "enabled": 0,
+      "anchor_type": null,
+      "anchor_biological_phase_id": null,
+      "anchor_offset_hours": null,
+      "order": 15,
+      "targets": [],
+      "actions": [],
+      "criteria": [],
+      "transition_evidence": null
+    }
+  ],
+  "process_guidance": {
+    "session_id": "20261112223510186-w3470-standard",
+    "evaluation_id": "r12-eval",
+    "raw_readiness": "waiting",
+    "readiness": "waiting",
+    "next_process_id": "P2",
+    "next_process_name": "Kald hovedgjæring",
+    "trigger_summary": "Venter",
+    "reason": "P2 · venter på kriterier",
+    "required_total": "1",
+    "required_met": "0",
+    "required_handled": "0",
+    "blocking_required": "1",
+    "exception_count": "0",
+    "recommended_temperature_c": null,
+    "recommended_pressure_bar": null,
+    "evaluation_status": "present",
+    "recommended_targets": [
+      {
+        "process_id": "P2",
+        "target_id": "beer_temperature",
+        "target_order": 1,
+        "metric_id": "beer_temperature_c",
+        "model_id": "exact",
+        "label": "Øltemperatur",
+        "purpose": "Beholde lav gjæringstemperatur mens aktiviteten etableres.",
+        "target_value": "8.000000",
+        "minimum_value": null,
+        "maximum_value": null
+      },
+      {
+        "process_id": "P2",
+        "target_id": "pressure",
+        "target_order": 2,
+        "metric_id": "pressure_bar",
+        "model_id": "exact",
+        "label": "Tanktrykk",
+        "purpose": "Beholde lav gjæringstemperatur mens aktiviteten etableres.",
+        "target_value": "0.300000",
+        "minimum_value": null,
+        "maximum_value": null
+      }
+    ],
+    "recommended_actions": [],
+    "condition_evaluations": [
+      {
+        "criterion_id": "p2-temperature",
+        "label": "Øltemperatur",
+        "metric": "beer_temperature_c",
+        "model": "window_median_range",
+        "status": "missing_basis",
+        "status_display": "Mangler grunnlag",
+        "role": "required",
+        "required": "Tidsvindu: 30 min · Minimum antall målinger: 5 · Minimum: 7,40 °C · Maksimum: 8,60 °C",
+        "template_required": "Tidsvindu: 30 min · Minimum antall målinger: 5 · Minimum: 7,40 °C · Maksimum: 8,60 °C",
+        "effective_required": "Tidsvindu: 30 min · Minimum antall målinger: 5 · Minimum: 7,40 °C · Maksimum: 8,60 °C",
+        "evaluated_required": null,
+        "criterion_basis_current": 1,
+        "actual": null,
+        "window": "Ikke tidsserie",
+        "explanation": "Venter",
+        "parameters": {
+          "maximum_value": 8.6,
+          "minimum_samples": 5,
+          "minimum_value": 7.4,
+          "window_minutes": 30
+        },
+        "effective_parameters": {
+          "window_minutes": 30,
+          "minimum_value": 7.4,
+          "minimum_samples": 5,
+          "maximum_value": 8.6
+        },
+        "correctable_parameters": [
+          "maximum_age_minutes",
+          "maximum_value",
+          "minimum_samples",
+          "minimum_value",
+          "window_minutes"
+        ],
+        "correction": null,
+        "exception": null,
+        "allowed_actions": [
+          "register_exception"
+        ]
+      }
+    ]
+  },
+  "series": [],
+  "observations": [
+    {
+      "recorded_at": "2026-11-12 21:35:10.166",
+      "corrected_sg": "1.05000",
+      "measured_sg": "1.05000",
+      "manual_temperature_c": "12.000",
+      "pressure_bar": "0.0000",
+      "cooler_setpoint_c": "12.000",
+      "airlock_activity": "none",
+      "acetaldehyde_level": 0,
+      "diacetyl_level": 0,
+      "wort_like_level": 0,
+      "sulfur_so2_level": 0,
+      "sulfur_h2s_level": 0,
+      "clarity_level": 0,
+      "settling_yeast_level": 0,
+      "settling_minutes": "0.000",
+      "user_conclusion": "uncertain",
+      "note": null
+    }
+  ],
+  "notes": [
+    {
+      "note_id": "r12-note",
+      "noted_at": "2026-11-12 22:35:10.407",
+      "note_text": "Kontraktnotat",
+      "operation_id": "r12-note"
+    }
+  ],
+  "recommendation": null,
+  "report_summary": {
+    "session_id": "20261112223510186-w3470-standard",
+    "batch_display": "W-34/70 batch",
+    "yeast_display": "Fermentis SafLager W-34/70",
+    "expected_attenuation_display": "80.0–84.0 %",
+    "expected_fg_display": "1,0080–1,0100",
+    "pitched_display": "12.11.2026 22:35",
+    "biology_display": "B1 · Inokulert og tilpasning",
+    "process_display": "P1 · Klargjøring, pitch og temperaturstabilisering",
+    "latest_tilt_sg_display": null,
+    "attenuation_display": "Utilgjengelig",
+    "sg_rate_display": "Utilgjengelig",
+    "sg_rate_basis_display": "Mangler fersk, godkjent analyseverdi",
+    "attenuation_basis_display": "Mangler fersk, godkjent analyseverdi",
+    "stability_24h_display": "Utilgjengelig",
+    "stability_48h_display": "Utilgjengelig",
+    "stability_24h_basis_display": "Mangler fersk, godkjent analyseverdi",
+    "stability_48h_basis_display": "Mangler fersk, godkjent analyseverdi",
+    "og_volume_display": "1,0500 · 150.000 L",
+    "elapsed_display": "1.0 timer siden pitch",
+    "phase_duration_display": "1.0 timer i fasen",
+    "process_duration_display": "1.0 timer i prosesstrinnet",
+    "abv_now_display": "Utilgjengelig",
+    "abv_basis_display": "Mangler fersk, godkjent analyseverdi",
+    "manual_measurements_display": "1",
+    "latest_manual_sg_display": "1,0500",
+    "notes_display": "1",
+    "datapoints_display": "0",
+    "next_process_display": "P2 · Venter",
+    "process_evaluated_display": "Vurdert 12.11.2026 23:35",
+    "active_report_url": null,
+    "active_report_generated_display": null
+  },
+  "import_coverage": {
+    "session_id": "20261112223510186-w3470-standard",
+    "source_started_at": "2026-11-12 21:35:10.166",
+    "processed_to": "2026-11-12 22:35:00.000",
+    "historical_ended_at": null,
+    "detail_count": "0",
+    "detail_first_at": null,
+    "detail_last_at": null,
+    "hourly_count": "0",
+    "hourly_first_at": null,
+    "hourly_last_at": null,
+    "gap_count": "0",
+    "counts_display": "0 femminuttersbøtter · 0 timepunkter · 0 registrerte rådatagap",
+    "coverage_display": "Ingen måledata funnet i behandlet periode",
+    "summary_display": "Behandlet til 12.11.2026 23:35 · 0 femminuttersbøtter · 0 timepunkter · mangler ordinært målegrunnlag"
+  },
+  "measurement_gaps": [],
+  "overview_axes": [
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "render_scope": "dashboard",
+      "sort_order": 1,
+      "label": "Specific gravity",
+      "description": "Tilt-SG, manuell SG og forventet FG. Ingen interpolering eller estimering.",
+      "unit": "SG",
+      "display_decimals": 4,
+      "y_axis_min": 1,
+      "y_axis_max": 1.06,
+      "y_axis_tick_step": 0.01,
+      "x_axis_started_at": "2026-11-12 21:35:10.166",
+      "x_axis_ended_at": "2026-11-12 22:35:12.853",
+      "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+      "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+      "enabled": 1,
+      "show_biological_bands": 1,
+      "show_process_markers": 1,
+      "show_criterion_markers": 0,
+      "gap_policy": "measurement_gaps",
+      "show_in_overview": 1,
+      "canvas_width": 900,
+      "canvas_height": 420,
+      "compact_height": 280,
+      "margin_left": 68,
+      "margin_right": 20,
+      "margin_top": 46,
+      "margin_bottom": 48,
+      "date_font_size": 11,
+      "axis_font_size": 11,
+      "marker_font_size": 10,
+      "font_family": "sans-serif",
+      "line_width": "2.400",
+      "point_radius": "2.000",
+      "time_marker_spacing": 100
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "render_scope": "dashboard",
+      "sort_order": 2,
+      "label": "Temperatur",
+      "description": "Målt øltemperatur, manuell kontroll, kjølesettpunkt og planmål.",
+      "unit": "°C",
+      "display_decimals": 1,
+      "y_axis_min": 7,
+      "y_axis_max": 13,
+      "y_axis_tick_step": 1,
+      "x_axis_started_at": "2026-11-12 21:35:10.166",
+      "x_axis_ended_at": "2026-11-12 22:35:12.853",
+      "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+      "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+      "enabled": 1,
+      "show_biological_bands": 1,
+      "show_process_markers": 1,
+      "show_criterion_markers": 0,
+      "gap_policy": "measurement_gaps",
+      "show_in_overview": 1,
+      "canvas_width": 900,
+      "canvas_height": 420,
+      "compact_height": 280,
+      "margin_left": 68,
+      "margin_right": 20,
+      "margin_top": 46,
+      "margin_bottom": 48,
+      "date_font_size": 11,
+      "axis_font_size": 11,
+      "marker_font_size": 10,
+      "font_family": "sans-serif",
+      "line_width": "2.400",
+      "point_radius": "2.000",
+      "time_marker_spacing": 100
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "pressure",
+      "render_scope": "dashboard",
+      "sort_order": 3,
+      "label": "Trykk",
+      "description": "Målt og manuelt registrert tanktrykk sammenholdt med planmål.",
+      "unit": "bar",
+      "display_decimals": 2,
+      "y_axis_min": -0.01,
+      "y_axis_max": 0.01,
+      "y_axis_tick_step": 0.01,
+      "x_axis_started_at": "2026-11-12 21:35:10.166",
+      "x_axis_ended_at": "2026-11-12 22:35:12.853",
+      "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+      "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+      "enabled": 1,
+      "show_biological_bands": 1,
+      "show_process_markers": 1,
+      "show_criterion_markers": 0,
+      "gap_policy": "measurement_gaps",
+      "show_in_overview": 1,
+      "canvas_width": 900,
+      "canvas_height": 420,
+      "compact_height": 280,
+      "margin_left": 68,
+      "margin_right": 20,
+      "margin_top": 46,
+      "margin_bottom": 48,
+      "date_font_size": 11,
+      "axis_font_size": 11,
+      "marker_font_size": 10,
+      "font_family": "sans-serif",
+      "line_width": "2.400",
+      "point_radius": "2.000",
+      "time_marker_spacing": 100
+    }
+  ],
+  "overview_ticks": [
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 55,
+      "axis_label": "55,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "pressure",
+      "tick_value": -0.01,
+      "axis_label": "-0,01"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1,
+      "axis_label": "1,0000"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-rate",
+      "tick_value": 0,
+      "axis_label": "0,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-stability",
+      "tick_value": 0,
+      "axis_label": "0,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 7,
+      "axis_label": "7,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 60,
+      "axis_label": "60,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "pressure",
+      "tick_value": 0,
+      "axis_label": "0,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1.01,
+      "axis_label": "1,0100"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-rate",
+      "tick_value": 0.5,
+      "axis_label": "0,50"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-stability",
+      "tick_value": 0.5,
+      "axis_label": "0,50"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 8,
+      "axis_label": "8,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 65,
+      "axis_label": "65,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "pressure",
+      "tick_value": 0.01,
+      "axis_label": "0,01"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1.02,
+      "axis_label": "1,0200"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-rate",
+      "tick_value": 1,
+      "axis_label": "1,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-stability",
+      "tick_value": 1,
+      "axis_label": "1,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 9,
+      "axis_label": "9,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 70,
+      "axis_label": "70,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1.03,
+      "axis_label": "1,0300"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-rate",
+      "tick_value": 1.5,
+      "axis_label": "1,50"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-stability",
+      "tick_value": 1.5,
+      "axis_label": "1,50"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 10,
+      "axis_label": "10,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 75,
+      "axis_label": "75,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1.04,
+      "axis_label": "1,0400"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-rate",
+      "tick_value": 2,
+      "axis_label": "2,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg-stability",
+      "tick_value": 2,
+      "axis_label": "2,00"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 11,
+      "axis_label": "11,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 80,
+      "axis_label": "80,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1.05,
+      "axis_label": "1,0500"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 12,
+      "axis_label": "12,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "attenuation",
+      "tick_value": 85,
+      "axis_label": "85,0"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "sg",
+      "tick_value": 1.06,
+      "axis_label": "1,0600"
+    },
+    {
+      "session_id": "20261112223510186-w3470-standard",
+      "graph_id": "temperature",
+      "tick_value": 13,
+      "axis_label": "13,0"
+    }
+  ],
+  "analysis": {
+    "reference_bands": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "series_id": "fg-target",
+        "label": "Forventet FG",
+        "minimum_value": "1.00800",
+        "maximum_value": "1.01000",
+        "line_color": "#2e7d32",
+        "band_opacity": "0.240"
+      }
+    ],
+    "graphs": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "render_scope": "dashboard",
+        "sort_order": 1,
+        "label": "Specific gravity",
+        "description": "Tilt-SG, manuell SG og forventet FG. Ingen interpolering eller estimering.",
+        "unit": "SG",
+        "display_decimals": 4,
+        "y_axis_min": 1,
+        "y_axis_max": 1.06,
+        "y_axis_tick_step": 0.01,
+        "x_axis_started_at": "2026-11-12 21:35:10.166",
+        "x_axis_ended_at": "2026-11-12 22:35:12.853",
+        "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+        "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+        "enabled": 1,
+        "show_biological_bands": 1,
+        "show_process_markers": 1,
+        "show_criterion_markers": 0,
+        "gap_policy": "measurement_gaps",
+        "show_in_overview": 1,
+        "canvas_width": 900,
+        "canvas_height": 420,
+        "compact_height": 280,
+        "margin_left": 68,
+        "margin_right": 20,
+        "margin_top": 46,
+        "margin_bottom": 48,
+        "date_font_size": 11,
+        "axis_font_size": 11,
+        "marker_font_size": 10,
+        "font_family": "sans-serif",
+        "line_width": "2.400",
+        "point_radius": "2.000",
+        "time_marker_spacing": 100
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "render_scope": "dashboard",
+        "sort_order": 2,
+        "label": "Temperatur",
+        "description": "Målt øltemperatur, manuell kontroll, kjølesettpunkt og planmål.",
+        "unit": "°C",
+        "display_decimals": 1,
+        "y_axis_min": 7,
+        "y_axis_max": 13,
+        "y_axis_tick_step": 1,
+        "x_axis_started_at": "2026-11-12 21:35:10.166",
+        "x_axis_ended_at": "2026-11-12 22:35:12.853",
+        "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+        "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+        "enabled": 1,
+        "show_biological_bands": 1,
+        "show_process_markers": 1,
+        "show_criterion_markers": 0,
+        "gap_policy": "measurement_gaps",
+        "show_in_overview": 1,
+        "canvas_width": 900,
+        "canvas_height": 420,
+        "compact_height": 280,
+        "margin_left": 68,
+        "margin_right": 20,
+        "margin_top": 46,
+        "margin_bottom": 48,
+        "date_font_size": 11,
+        "axis_font_size": 11,
+        "marker_font_size": 10,
+        "font_family": "sans-serif",
+        "line_width": "2.400",
+        "point_radius": "2.000",
+        "time_marker_spacing": 100
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "render_scope": "dashboard",
+        "sort_order": 3,
+        "label": "Trykk",
+        "description": "Målt og manuelt registrert tanktrykk sammenholdt med planmål.",
+        "unit": "bar",
+        "display_decimals": 2,
+        "y_axis_min": -0.01,
+        "y_axis_max": 0.01,
+        "y_axis_tick_step": 0.01,
+        "x_axis_started_at": "2026-11-12 21:35:10.166",
+        "x_axis_ended_at": "2026-11-12 22:35:12.853",
+        "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+        "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+        "enabled": 1,
+        "show_biological_bands": 1,
+        "show_process_markers": 1,
+        "show_criterion_markers": 0,
+        "gap_policy": "measurement_gaps",
+        "show_in_overview": 1,
+        "canvas_width": 900,
+        "canvas_height": 420,
+        "compact_height": 280,
+        "margin_left": 68,
+        "margin_right": 20,
+        "margin_top": 46,
+        "margin_bottom": 48,
+        "date_font_size": 11,
+        "axis_font_size": 11,
+        "marker_font_size": 10,
+        "font_family": "sans-serif",
+        "line_width": "2.400",
+        "point_radius": "2.000",
+        "time_marker_spacing": 100
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "render_scope": "dashboard",
+        "sort_order": 4,
+        "label": "Tilsynelatende utgjæringsgrad",
+        "description": "Faktisk OG sammenholdes med rå Tilt-SG og korrigerte manuelle SG-kontroller. Seriene vises separat uten pitchoffset eller utfylling av manglende data.",
+        "unit": "%",
+        "display_decimals": 1,
+        "y_axis_min": 55,
+        "y_axis_max": 85,
+        "y_axis_tick_step": 5,
+        "x_axis_started_at": "2026-11-12 21:35:10.166",
+        "x_axis_ended_at": "2026-11-12 22:35:12.853",
+        "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+        "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+        "enabled": 1,
+        "show_biological_bands": 1,
+        "show_process_markers": 1,
+        "show_criterion_markers": 1,
+        "gap_policy": "measurement_gaps",
+        "show_in_overview": 0,
+        "canvas_width": 900,
+        "canvas_height": 420,
+        "compact_height": 280,
+        "margin_left": 68,
+        "margin_right": 20,
+        "margin_top": 46,
+        "margin_bottom": 48,
+        "date_font_size": 11,
+        "axis_font_size": 11,
+        "marker_font_size": 10,
+        "font_family": "sans-serif",
+        "line_width": "2.400",
+        "point_radius": "2.000",
+        "time_marker_spacing": 100
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "render_scope": "dashboard",
+        "sort_order": 5,
+        "label": "SG-rate",
+        "description": "SG-fall mellom første og siste godkjente måling i et sammenhengende 24-timersvindu, delt på faktisk tid. Minst 18 timer. Negativ rate betyr SG-økning og beholdes numerisk.",
+        "unit": "SG-poeng/d",
+        "display_decimals": 2,
+        "y_axis_min": 0,
+        "y_axis_max": 2,
+        "y_axis_tick_step": 0.5,
+        "x_axis_started_at": "2026-11-12 21:35:10.166",
+        "x_axis_ended_at": "2026-11-12 22:35:12.853",
+        "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+        "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+        "enabled": 1,
+        "show_biological_bands": 1,
+        "show_process_markers": 1,
+        "show_criterion_markers": 1,
+        "gap_policy": "measurement_gaps",
+        "show_in_overview": 0,
+        "canvas_width": 900,
+        "canvas_height": 420,
+        "compact_height": 280,
+        "margin_left": 68,
+        "margin_right": 20,
+        "margin_top": 46,
+        "margin_bottom": 48,
+        "date_font_size": 11,
+        "axis_font_size": 11,
+        "marker_font_size": 10,
+        "font_family": "sans-serif",
+        "line_width": "2.400",
+        "point_radius": "2.000",
+        "time_marker_spacing": 100
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "render_scope": "dashboard",
+        "sort_order": 6,
+        "label": "SG-stabilitet",
+        "description": "Viser spennet mellom høyeste og laveste godkjente SG i stabilitetsvinduet. Lav verdi betyr at SG er stabil; B6 bruker samme type stabilitetsregel for å avgjøre om forventet utgjæring er nådd og stabil.",
+        "unit": "SG-poeng",
+        "display_decimals": 2,
+        "y_axis_min": 0,
+        "y_axis_max": 2,
+        "y_axis_tick_step": 0.5,
+        "x_axis_started_at": "2026-11-12 21:35:10.166",
+        "x_axis_ended_at": "2026-11-12 22:35:12.853",
+        "x_axis_start_display": "Dag 0.00 · 12.11.2026 22:35",
+        "x_axis_end_display": "Dag 0.04 · 12.11.2026 23:35",
+        "enabled": 1,
+        "show_biological_bands": 1,
+        "show_process_markers": 1,
+        "show_criterion_markers": 1,
+        "gap_policy": "measurement_gaps",
+        "show_in_overview": 0,
+        "canvas_width": 900,
+        "canvas_height": 420,
+        "compact_height": 280,
+        "margin_left": 68,
+        "margin_right": 20,
+        "margin_top": 46,
+        "margin_bottom": 48,
+        "date_font_size": 11,
+        "axis_font_size": 11,
+        "marker_font_size": 10,
+        "font_family": "sans-serif",
+        "line_width": "2.400",
+        "point_radius": "2.000",
+        "time_marker_spacing": 100
+      }
+    ],
+    "axis_ticks": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 55,
+        "axis_label": "55,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "tick_value": -0.01,
+        "axis_label": "-0,01"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1,
+        "axis_label": "1,0000"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "tick_value": 0,
+        "axis_label": "0,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "tick_value": 0,
+        "axis_label": "0,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 7,
+        "axis_label": "7,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 60,
+        "axis_label": "60,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "tick_value": 0,
+        "axis_label": "0,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1.01,
+        "axis_label": "1,0100"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "tick_value": 0.5,
+        "axis_label": "0,50"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "tick_value": 0.5,
+        "axis_label": "0,50"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 8,
+        "axis_label": "8,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 65,
+        "axis_label": "65,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "tick_value": 0.01,
+        "axis_label": "0,01"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1.02,
+        "axis_label": "1,0200"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "tick_value": 1,
+        "axis_label": "1,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "tick_value": 1,
+        "axis_label": "1,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 9,
+        "axis_label": "9,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 70,
+        "axis_label": "70,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1.03,
+        "axis_label": "1,0300"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "tick_value": 1.5,
+        "axis_label": "1,50"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "tick_value": 1.5,
+        "axis_label": "1,50"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 10,
+        "axis_label": "10,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 75,
+        "axis_label": "75,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1.04,
+        "axis_label": "1,0400"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "tick_value": 2,
+        "axis_label": "2,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "tick_value": 2,
+        "axis_label": "2,00"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 11,
+        "axis_label": "11,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 80,
+        "axis_label": "80,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1.05,
+        "axis_label": "1,0500"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 12,
+        "axis_label": "12,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "tick_value": 85,
+        "axis_label": "85,0"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "tick_value": 1.06,
+        "axis_label": "1,0600"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "tick_value": 13,
+        "axis_label": "13,0"
+      }
+    ],
+    "latest": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "series_id": "attenuation",
+        "sort_order": 1,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "series_id": "manual-attenuation",
+        "sort_order": 2,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "series_id": "comparison",
+        "sort_order": 2,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "series_id": "manual",
+        "sort_order": 3,
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 0,
+        "latest_value_display": "Manuell kontroll · 0,00 bar · Manuell registrering · 12.11.2026 22:35"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "series_id": "measured",
+        "sort_order": 1,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "series_id": "plan",
+        "sort_order": 4,
+        "sample_at": "2026-11-12 22:35:12.853",
+        "actual_value": 0,
+        "latest_value_display": "Planmål · 0,00 bar · Tanktrykk · 12.11.2026 23:35"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "series_id": "comparison",
+        "sort_order": 2,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "series_id": "fg-target",
+        "sort_order": 4,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "series_id": "manual",
+        "sort_order": 3,
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 1.05,
+        "latest_value_display": "Manuell kontroll · 1,0500 SG · Manuell registrering · 12.11.2026 22:35"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "series_id": "measured",
+        "sort_order": 1,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "series_id": "sg-rate",
+        "sort_order": 1,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "series_id": "stability-24h",
+        "sort_order": 1,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "series_id": "stability-48h",
+        "sort_order": 2,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "series_id": "comparison",
+        "sort_order": 2,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "series_id": "cooler",
+        "sort_order": 5,
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 12,
+        "latest_value_display": "Kjølesettpunkt · 12,0 °C · Manuell registrering · 12.11.2026 22:35"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "series_id": "manual",
+        "sort_order": 3,
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 12,
+        "latest_value_display": "Manuell kontroll · 12,0 °C · Manuell registrering · 12.11.2026 22:35"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "series_id": "measured",
+        "sort_order": 1,
+        "sample_at": null,
+        "actual_value": null,
+        "latest_value_display": null
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "series_id": "plan",
+        "sort_order": 4,
+        "sample_at": "2026-11-12 22:35:12.853",
+        "actual_value": 8,
+        "latest_value_display": "Planmål · 8,0 °C · Øltemperatur · 12.11.2026 23:35"
+      }
+    ],
+    "series": [
+      {
+        "graph_id": "attenuation",
+        "series_id": "attenuation",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 0
+      },
+      {
+        "graph_id": "attenuation",
+        "series_id": "manual-attenuation",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 1
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "comparison",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 2
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "manual",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 3
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "manual",
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 0,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": "0,00 bar",
+        "basis_display": "Manuell registrering · 12.11.2026 22:35",
+        "segment_id": "manual",
+        "presentation_id": 4
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "measured",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 5
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "plan",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 6
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "plan",
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 0,
+        "range_min_value": "0.000000000",
+        "range_max_value": "0.000000000",
+        "actual_value_display": "0,00 bar",
+        "basis_display": "Tanktrykk · 12.11.2026 22:35",
+        "segment_id": "process-visit-20261112223510186-w3470-standard-1",
+        "presentation_id": 7
+      },
+      {
+        "graph_id": "pressure",
+        "series_id": "plan",
+        "sample_at": "2026-11-12 22:35:12.853",
+        "actual_value": 0,
+        "range_min_value": "0.000000000",
+        "range_max_value": "0.000000000",
+        "actual_value_display": "0,00 bar",
+        "basis_display": "Tanktrykk · 12.11.2026 23:35",
+        "segment_id": "process-visit-20261112223510186-w3470-standard-1",
+        "presentation_id": 7
+      },
+      {
+        "graph_id": "sg",
+        "series_id": "comparison",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 2
+      },
+      {
+        "graph_id": "sg",
+        "series_id": "fg-target",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 8
+      },
+      {
+        "graph_id": "sg",
+        "series_id": "manual",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 3
+      },
+      {
+        "graph_id": "sg",
+        "series_id": "manual",
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 1.05,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": "1,0500 SG",
+        "basis_display": "Manuell registrering · 12.11.2026 22:35",
+        "segment_id": "manual",
+        "presentation_id": 4
+      },
+      {
+        "graph_id": "sg",
+        "series_id": "measured",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 5
+      },
+      {
+        "graph_id": "sg-rate",
+        "series_id": "sg-rate",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 9
+      },
+      {
+        "graph_id": "sg-stability",
+        "series_id": "stability-24h",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 10
+      },
+      {
+        "graph_id": "sg-stability",
+        "series_id": "stability-48h",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 11
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "comparison",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 2
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "cooler",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 12
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "cooler",
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 12,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": "12,0 °C",
+        "basis_display": "Manuell registrering · 12.11.2026 22:35",
+        "segment_id": "manual",
+        "presentation_id": 13
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "manual",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 3
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "manual",
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 12,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": "12,0 °C",
+        "basis_display": "Manuell registrering · 12.11.2026 22:35",
+        "segment_id": "manual",
+        "presentation_id": 4
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "measured",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 5
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "plan",
+        "sample_at": null,
+        "actual_value": null,
+        "range_min_value": null,
+        "range_max_value": null,
+        "actual_value_display": null,
+        "basis_display": null,
+        "segment_id": "1",
+        "presentation_id": 6
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "plan",
+        "sample_at": "2026-11-12 21:35:10.166",
+        "actual_value": 8,
+        "range_min_value": "8.000000000",
+        "range_max_value": "8.000000000",
+        "actual_value_display": "8,0 °C",
+        "basis_display": "Øltemperatur · 12.11.2026 22:35",
+        "segment_id": "process-visit-20261112223510186-w3470-standard-1",
+        "presentation_id": 7
+      },
+      {
+        "graph_id": "temperature",
+        "series_id": "plan",
+        "sample_at": "2026-11-12 22:35:12.853",
+        "actual_value": 8,
+        "range_min_value": "8.000000000",
+        "range_max_value": "8.000000000",
+        "actual_value_display": "8,0 °C",
+        "basis_display": "Øltemperatur · 12.11.2026 23:35",
+        "segment_id": "process-visit-20261112223510186-w3470-standard-1",
+        "presentation_id": 7
+      }
+    ],
+    "time_markers": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "render_scope": "dashboard",
+        "marker_at": "2026-11-12 21:35:10.166",
+        "relative_day": "0",
+        "axis_label": "12.11"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "render_scope": "dashboard",
+        "marker_at": "2026-11-12 21:35:10.166",
+        "relative_day": "0",
+        "axis_label": "12.11"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "render_scope": "dashboard",
+        "marker_at": "2026-11-12 21:35:10.166",
+        "relative_day": "0",
+        "axis_label": "12.11"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "render_scope": "dashboard",
+        "marker_at": "2026-11-12 21:35:10.166",
+        "relative_day": "0",
+        "axis_label": "12.11"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "render_scope": "dashboard",
+        "marker_at": "2026-11-12 21:35:10.166",
+        "relative_day": "0",
+        "axis_label": "12.11"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "render_scope": "dashboard",
+        "marker_at": "2026-11-12 21:35:10.166",
+        "relative_day": "0",
+        "axis_label": "12.11"
+      }
+    ],
+    "requirements": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "owner_type": "biology",
+        "owner_id": "B4",
+        "criterion_id": "b4-attenuation",
+        "label": "Utgjæringsgrad · rå Tilt",
+        "role_id": "required",
+        "minimum_value": "60.000000",
+        "maximum_value": null,
+        "met_at": null,
+        "owner_display": "B4",
+        "owner_type_display": "Biologi",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≥ 60,0 %",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "owner_type": "biology",
+        "owner_id": "B5",
+        "criterion_id": "b5-attenuation",
+        "label": "Utgjæringsgrad · rå Tilt",
+        "role_id": "required",
+        "minimum_value": "75.000000",
+        "maximum_value": null,
+        "met_at": null,
+        "owner_display": "B5",
+        "owner_type_display": "Biologi",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≥ 75,0 %",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "owner_type": "biology",
+        "owner_id": "B6",
+        "criterion_id": "b6-attenuation",
+        "label": "Utgjæringsgrad · rå Tilt",
+        "role_id": "required",
+        "minimum_value": "80.000000",
+        "maximum_value": null,
+        "met_at": null,
+        "owner_display": "B6",
+        "owner_type_display": "Biologi",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≥ 80,0 %",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "owner_type": "biology",
+        "owner_id": "B3",
+        "criterion_id": "b3-sg-rate",
+        "label": "SG-rate",
+        "role_id": "required",
+        "minimum_value": "1.500000",
+        "maximum_value": null,
+        "met_at": null,
+        "owner_display": "B3",
+        "owner_type_display": "Biologi",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≥ 1,50 SG-poeng/d",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "owner_type": "biology",
+        "owner_id": "B4",
+        "criterion_id": "b4-sg-rate",
+        "label": "Avtagende SG-rate",
+        "role_id": "required",
+        "minimum_value": null,
+        "maximum_value": "1.500000",
+        "met_at": null,
+        "owner_display": "B4",
+        "owner_type_display": "Biologi",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≤ 1,50 SG-poeng/d",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "owner_type": "biology",
+        "owner_id": "B6",
+        "criterion_id": "b6-sg-stability",
+        "label": "SG-stabilitet",
+        "role_id": "required",
+        "minimum_value": null,
+        "maximum_value": "1.000000",
+        "met_at": null,
+        "owner_display": "B6",
+        "owner_type_display": "Biologi",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≤ 1,00 SG-poeng",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "owner_type": "process",
+        "owner_id": "P8",
+        "criterion_id": "p8-sg-stability-after-dry-hop",
+        "label": "SG-stabilitet etter tørrhumling",
+        "role_id": "required",
+        "minimum_value": null,
+        "maximum_value": "1.500000",
+        "met_at": null,
+        "owner_display": "P8",
+        "owner_type_display": "Prosesstrinn",
+        "role_display": "Obligatorisk",
+        "requirement_display": "≤ 1,50 SG-poeng",
+        "met_at_display": null,
+        "met_status_display": "Ikke oppfylt"
+      }
+    ],
+    "biological_markers": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "phase_id": "B1",
+        "label": "B1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "phase_id": "B1",
+        "label": "B1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "phase_id": "B1",
+        "label": "B1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "phase_id": "B1",
+        "label": "B1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "phase_id": "B1",
+        "label": "B1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "phase_id": "B1",
+        "label": "B1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      }
+    ],
+    "process_markers": [
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "attenuation",
+        "process_id": "P1",
+        "label": "P1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "pressure",
+        "process_id": "P1",
+        "label": "P1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg",
+        "process_id": "P1",
+        "label": "P1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-rate",
+        "process_id": "P1",
+        "label": "P1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "sg-stability",
+        "process_id": "P1",
+        "label": "P1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      },
+      {
+        "session_id": "20261112223510186-w3470-standard",
+        "graph_id": "temperature",
+        "process_id": "P1",
+        "label": "P1",
+        "started_at": "2026-11-12 21:35:10.166",
+        "ended_at": "2026-11-12 22:35:12.853"
+      }
+    ],
+    "series_definitions": [
+      {
+        "presentation_id": 0,
+        "label": "Rå Tilt",
+        "render_mode": "line",
+        "band_model": "none",
+        "band_description": "Beregnet fra faktiske målinger. Ingen estimering eller følsomhetsbånd.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 1,
+        "label": "Manuell kontroll",
+        "render_mode": "points",
+        "band_model": "none",
+        "band_description": "Punkter fra korrigert manuell SG og faktisk OG. Ingen mellomliggende verdier.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 2,
+        "label": "Sammenligning",
+        "render_mode": "line",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 3,
+        "label": "Manuell kontroll",
+        "render_mode": "points",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 4,
+        "label": "Manuell kontroll",
+        "render_mode": "points",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": "#00897b",
+        "line_dasharray": ""
+      },
+      {
+        "presentation_id": 5,
+        "label": "Målt",
+        "render_mode": "line",
+        "band_model": "sample_range",
+        "band_description": "Bånd viser faktisk min–maks fra målekilden.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 6,
+        "label": "Planmål",
+        "render_mode": "step",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 7,
+        "label": "Planmål",
+        "render_mode": "step",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": "#78909c",
+        "line_dasharray": "6 4"
+      },
+      {
+        "presentation_id": 8,
+        "label": "Forventet FG",
+        "render_mode": "line",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 9,
+        "label": "SG-rate",
+        "render_mode": "line",
+        "band_model": "none",
+        "band_description": "Beregnet fra faktiske målinger. Ingen estimering eller følsomhetsbånd.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 10,
+        "label": "24 timer",
+        "render_mode": "line",
+        "band_model": "none",
+        "band_description": "Beregnet fra faktiske målinger. Ingen estimering eller følsomhetsbånd.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 11,
+        "label": "48 timer",
+        "render_mode": "line",
+        "band_model": "none",
+        "band_description": "Beregnet fra faktiske målinger. Ingen estimering eller følsomhetsbånd.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 12,
+        "label": "Kjølesettpunkt",
+        "render_mode": "step",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": null,
+        "line_dasharray": null
+      },
+      {
+        "presentation_id": 13,
+        "label": "Kjølesettpunkt",
+        "render_mode": "step",
+        "band_model": "none",
+        "band_description": "Ingen estimater.",
+        "band_opacity": "0.240",
+        "line_color": "#8e24aa",
+        "line_dasharray": "3 3"
+      }
+    ]
+  },
+  "historical_comparison": {
+    "status": "none"
+  },
+  "timeline_warnings": [],
+  "active_issue_count": 0
+}

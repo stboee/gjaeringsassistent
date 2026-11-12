@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "requirements_count": 259,
-  "decisions_count": 66,
-  "verification_count": 22,
-  "tests_count": 51,
+  "requirements_count": 264,
+  "decisions_count": 68,
+  "verification_count": 23,
+  "tests_count": 53,
   "test_types": {
     "TECH": 12,
-    "FUNC": 25,
+    "FUNC": 27,
     "UAT": 14
   },
   "requirements": [
@@ -1451,13 +1451,31 @@
       "sort_order": 160
     },
     {
+      "requirement_id": "REQ-MOTOR-079",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Sensorbindinger normaliseres per signal, enhet og konfigurasjonsrevisjon i MariaDB, og fryses per reell sesjon. Livebytte trer i kraft ved en DB-bestemt femminuttersgrense; tidligere bindinger og målinger beholdes. Historisk import endres ikke retroaktivt.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:157",
+      "sort_order": 161
+    },
+    {
+      "requirement_id": "REQ-MOTOR-080",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Trykk er manuelt til en kompatibel HA-sensor er valgt. Sensortrykk omregnes fra deklarert enhet til bar med DB-eide koeffisienter og grenser. Fravær av valgfritt trykk skal ikke blokkere SG/temperatur. B/P-fravik lagres i en felles kort DB-transaksjon med gjeldende evaluering, kriterierevisjon og eksplisitt bekreftelse.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:158",
+      "sort_order": 162
+    },
+    {
       "requirement_id": "REQ-HA-001",
       "document_id": "DOC-03",
       "requirement_class": "ha",
       "status": "active",
       "statement": "Løsningen bruker flow-opprettede HA-entiteter og eget Lovelace-kort; ingen HA-package kreves.",
       "source_ref": "03-KRAV-DASHBOARD.md:45",
-      "sort_order": 161
+      "sort_order": 163
     },
     {
       "requirement_id": "REQ-HA-002",
@@ -1466,7 +1484,7 @@
       "status": "active",
       "statement": "Biologisk fase, biologisk kandidat, aktivt prosesstrinn og anbefalt prosesstrinn skal være tydelig adskilt.",
       "source_ref": "03-KRAV-DASHBOARD.md:46",
-      "sort_order": 162
+      "sort_order": 164
     },
     {
       "requirement_id": "REQ-HA-003",
@@ -1475,7 +1493,7 @@
       "status": "active",
       "statement": "Hovedgrafen åpner med hele aktive forløpet fra pitch til nå.",
       "source_ref": "03-KRAV-DASHBOARD.md:47",
-      "sort_order": 163
+      "sort_order": 165
     },
     {
       "requirement_id": "REQ-HA-004",
@@ -1484,7 +1502,7 @@
       "status": "active",
       "statement": "SG vises som den autoritative validerte 5-minuttersserien med tydelig min–maks-bånd fra samme godkjente prøvesett. Båndet skal synliggjøre målespredning, ikke skjules av unødvendig stor Y-akse.",
       "source_ref": "03-KRAV-DASHBOARD.md:48",
-      "sort_order": 164
+      "sort_order": 166
     },
     {
       "requirement_id": "REQ-HA-005",
@@ -1493,7 +1511,7 @@
       "status": "active",
       "statement": "SG, temperatur og trykk vises som tre vertikalt stablede, synkroniserte grafer med samme tidsutstrekning.",
       "source_ref": "03-KRAV-DASHBOARD.md:49",
-      "sort_order": 165
+      "sort_order": 167
     },
     {
       "requirement_id": "REQ-HA-006",
@@ -1502,7 +1520,7 @@
       "status": "active",
       "statement": "Datagap skal være visuelt synlige og kurver skal brytes.",
       "source_ref": "03-KRAV-DASHBOARD.md:50",
-      "sort_order": 166
+      "sort_order": 168
     },
     {
       "requirement_id": "REQ-HA-007",
@@ -1511,7 +1529,7 @@
       "status": "active",
       "statement": "Historiske forløp skal ha egen sammenligningsvisning.",
       "source_ref": "03-KRAV-DASHBOARD.md:51",
-      "sort_order": 167
+      "sort_order": 169
     },
     {
       "requirement_id": "REQ-HA-008",
@@ -1520,7 +1538,7 @@
       "status": "active",
       "statement": "Historisk tidsanker skal kunne velges mellom pitch og registrert aktivitet.",
       "source_ref": "03-KRAV-DASHBOARD.md:52",
-      "sort_order": 168
+      "sort_order": 170
     },
     {
       "requirement_id": "REQ-HA-009",
@@ -1529,7 +1547,7 @@
       "status": "active",
       "statement": "Dashboardet viser alarm/status, men v1 sender ikke direkte varsler.",
       "source_ref": "03-KRAV-DASHBOARD.md:53",
-      "sort_order": 169
+      "sort_order": 171
     },
     {
       "requirement_id": "REQ-HA-010",
@@ -1538,7 +1556,7 @@
       "status": "active",
       "statement": "Skjemadata registreres i flow-opprettede HA-entiteter og lagres samlet med én knapp.",
       "source_ref": "03-KRAV-DASHBOARD.md:54",
-      "sort_order": 170
+      "sort_order": 172
     },
     {
       "requirement_id": "REQ-HA-011",
@@ -1547,7 +1565,7 @@
       "status": "active",
       "statement": "Node-RED-motoren validerer operatørgrunnlaget mot MariaDB og persisterer atomiske domeneoperasjoner i MariaDB. HA/dashboard er operatør-/presentasjonslag og skal ikke være alternativ domenemotor eller sannhetskilde.",
       "source_ref": "03-KRAV-DASHBOARD.md:55",
-      "sort_order": 171
+      "sort_order": 173
     },
     {
       "requirement_id": "REQ-HA-012",
@@ -1556,7 +1574,7 @@
       "status": "active",
       "statement": "Custom-kortet skal hente en eksplisitt read-model som er avledet fra kvitterte MariaDB-data via Node-RED. Transportformatet kan utvikles videre, men frontendprojeksjonen er aldri persistent autoritet.",
       "source_ref": "03-KRAV-DASHBOARD.md:56",
-      "sort_order": 172
+      "sort_order": 174
     },
     {
       "requirement_id": "REQ-HA-013",
@@ -1565,7 +1583,7 @@
       "status": "active",
       "statement": "Historisk sammenligning skal lese eksplisitt valgt eksport read-only, justere tidsforløp etter lagrede ankere og aldri aktivere eller endre den historiske sesjonen.",
       "source_ref": "03-KRAV-DASHBOARD.md:57",
-      "sort_order": 173
+      "sort_order": 175
     },
     {
       "requirement_id": "REQ-HA-014",
@@ -1574,7 +1592,7 @@
       "status": "active",
       "statement": "Node-RED-status eksponeres som direkte HA-entiteter via WebSocket-integrasjonen, ikke via MQTT Discovery.",
       "source_ref": "03-KRAV-DASHBOARD.md:58",
-      "sort_order": 174
+      "sort_order": 176
     },
     {
       "requirement_id": "REQ-HA-015",
@@ -1583,7 +1601,7 @@
       "status": "active",
       "statement": "Gjæringsmotoren skal ikke bruke MQTT Discovery for sine HA-statusentiteter. Sensoringest kan bruke relevant transport, mens operatør-/statusentiteter opprettes av Node-RED gjennom HA WebSocket-integrasjonen.",
       "source_ref": "03-KRAV-DASHBOARD.md:59",
-      "sort_order": 175
+      "sort_order": 177
     },
     {
       "requirement_id": "REQ-HA-016",
@@ -1592,7 +1610,7 @@
       "status": "active",
       "statement": "Statuslaget omfatter system/sesjon, biologisk fase/kandidat/sikkerhet, aktiv/anbefalt prosess, tilsynelatende utgjæringsgrad, SG-hastighet, datakvalitet, målingsalder, anbefaling og alarm.",
       "source_ref": "03-KRAV-DASHBOARD.md:60",
-      "sort_order": 176
+      "sort_order": 178
     },
     {
       "requirement_id": "REQ-HA-017",
@@ -1601,7 +1619,7 @@
       "status": "active",
       "statement": "Biologiske faser og prosesstrinn vises i separate visninger; førstesiden viser bare en kompakt biologisk tidslinje.",
       "source_ref": "03-KRAV-DASHBOARD.md:61",
-      "sort_order": 177
+      "sort_order": 179
     },
     {
       "requirement_id": "REQ-HA-018",
@@ -1610,7 +1628,7 @@
       "status": "active",
       "statement": "Tidskorrigering for biologiske faser bruker valgt registrering og dato/tid, uten begrunnelseskrav. Originalt, manuelt og effektivt tidspunkt skal kunne vises og overstyringen kunne fjernes.",
       "source_ref": "03-KRAV-DASHBOARD.md:62",
-      "sort_order": 178
+      "sort_order": 180
     },
     {
       "requirement_id": "REQ-HA-019",
@@ -1619,7 +1637,7 @@
       "status": "active",
       "statement": "Dashboardets målstruktur har åtte faner: `Gjæring`, `Biologi`, `Prosesstrinn`, `Analyse`, `Måleresultater`, `Template`, `Verifikasjon` og `Teknisk`.",
       "source_ref": "03-KRAV-DASHBOARD.md:63",
-      "sort_order": 179
+      "sort_order": 181
     },
     {
       "requirement_id": "REQ-HA-020",
@@ -1628,7 +1646,7 @@
       "status": "active",
       "statement": "Biologivisningen viser total tid til stabil utgjæring, tid i aktiv fase, forventet intervall og faktisk varighet per fase.",
       "source_ref": "03-KRAV-DASHBOARD.md:64",
-      "sort_order": 180
+      "sort_order": 182
     },
     {
       "requirement_id": "REQ-HA-021",
@@ -1637,7 +1655,7 @@
       "status": "active",
       "statement": "`Gjæring` skal prioritere oversikt og normalt kreve lite eller ingen vertikal scrolling på bred skjerm.",
       "source_ref": "03-KRAV-DASHBOARD.md:65",
-      "sort_order": 181
+      "sort_order": 183
     },
     {
       "requirement_id": "REQ-HA-022",
@@ -1646,7 +1664,7 @@
       "status": "active",
       "statement": "Dashboardet skal ikke referere til entiteter som ikke opprettes av flowen.",
       "source_ref": "03-KRAV-DASHBOARD.md:66",
-      "sort_order": 182
+      "sort_order": 184
     },
     {
       "requirement_id": "REQ-HA-023",
@@ -1655,7 +1673,7 @@
       "status": "active",
       "statement": "Gjæring- og prosessvisningen viser biologisk utløser, beredskap og estimert mulig start for neste prosesstrinn.",
       "source_ref": "03-KRAV-DASHBOARD.md:67",
-      "sort_order": 183
+      "sort_order": 185
     },
     {
       "requirement_id": "REQ-HA-024",
@@ -1664,7 +1682,7 @@
       "status": "active",
       "statement": "Manuelle observasjoner registreres som komplette målesett; første sett inngår i Start. Prosess-readiness og kaldkrasjvurdering vises under `Prosesstrinn`.",
       "source_ref": "03-KRAV-DASHBOARD.md:68",
-      "sort_order": 184
+      "sort_order": 186
     },
     {
       "requirement_id": "REQ-HA-025",
@@ -1673,7 +1691,7 @@
       "status": "active",
       "statement": "`Start demo` er en flow-opprettet HA-knapp, og demo lastes ikke automatisk.",
       "source_ref": "03-KRAV-DASHBOARD.md:69",
-      "sort_order": 185
+      "sort_order": 187
     },
     {
       "requirement_id": "REQ-HA-026",
@@ -1682,7 +1700,7 @@
       "status": "active",
       "statement": "Før sessionstart skal dashboardet støtte templatevalg, startdata, første komplette målesett og historisk rapport uten å vise misvisende aktive-session-kontroller.",
       "source_ref": "03-KRAV-DASHBOARD.md:70",
-      "sort_order": 186
+      "sort_order": 188
     },
     {
       "requirement_id": "REQ-HA-027",
@@ -1691,7 +1709,7 @@
       "status": "active",
       "statement": "Måleresultater bruker tre kolonner på bred skjerm; målehistorikk bruker full bredde.",
       "source_ref": "03-KRAV-DASHBOARD.md:71",
-      "sort_order": 187
+      "sort_order": 189
     },
     {
       "requirement_id": "REQ-HA-028",
@@ -1700,7 +1718,7 @@
       "status": "active",
       "statement": "Prosesstrinn viser planlagt anker/mål mot faktisk start og varighet.",
       "source_ref": "03-KRAV-DASHBOARD.md:72",
-      "sort_order": 188
+      "sort_order": 190
     },
     {
       "requirement_id": "REQ-HA-029",
@@ -1709,7 +1727,7 @@
       "status": "active",
       "statement": "I `sections`-visninger skal bredde settes på det ytre `conditional`-kortet; kort i Gjæring, Biologi og Prosesstrinn skal ha `grid_options.columns: full` og stables vertikalt.",
       "source_ref": "03-KRAV-DASHBOARD.md:73",
-      "sort_order": 189
+      "sort_order": 191
     },
     {
       "requirement_id": "REQ-HA-030",
@@ -1718,7 +1736,7 @@
       "status": "active",
       "statement": "`Gjæring` skal vise én relevant livsløpsflate om gangen: templatevalg, konfigurert start, aktiv sesjon eller avsluttet sesjon.",
       "source_ref": "03-KRAV-DASHBOARD.md:74",
-      "sort_order": 190
+      "sort_order": 192
     },
     {
       "requirement_id": "REQ-HA-031",
@@ -1727,7 +1745,7 @@
       "status": "active",
       "statement": "`Måleresultater` skal vise tekstlig betydning for valgt 0–5-nivå for hver sensoriske parameter.",
       "source_ref": "03-KRAV-DASHBOARD.md:75",
-      "sort_order": 191
+      "sort_order": 193
     },
     {
       "requirement_id": "REQ-HA-032",
@@ -1736,7 +1754,7 @@
       "status": "active",
       "statement": "Prosessport og kaldkrasjvurdering skal ligge under `Prosesstrinn`, ikke under målingsskjemaet.",
       "source_ref": "03-KRAV-DASHBOARD.md:76",
-      "sort_order": 192
+      "sort_order": 194
     },
     {
       "requirement_id": "REQ-HA-033",
@@ -1745,7 +1763,7 @@
       "status": "active",
       "statement": "Trykk, kjølemaskinens settpunkt og kjølemaskinens kalibreringsverdi skal kunne registreres i observasjonsfanen.",
       "source_ref": "03-KRAV-DASHBOARD.md:77",
-      "sort_order": 193
+      "sort_order": 195
     },
     {
       "requirement_id": "REQ-HA-034",
@@ -1754,7 +1772,7 @@
       "status": "active",
       "statement": "Teknisk-fanen skal vise systemkontroll, runtime, datakvalitet, siste måling, målingsalder og oppmerksomhetsstatus.",
       "source_ref": "03-KRAV-DASHBOARD.md:78",
-      "sort_order": 194
+      "sort_order": 196
     },
     {
       "requirement_id": "REQ-HA-035",
@@ -1763,7 +1781,7 @@
       "status": "active",
       "statement": "Dashboardet skal bruke korte visningsnavn; prefikset «Gjæringsassistent» skal ikke gjentas i hver rad.",
       "source_ref": "03-KRAV-DASHBOARD.md:79",
-      "sort_order": 195
+      "sort_order": 197
     },
     {
       "requirement_id": "REQ-HA-036",
@@ -1772,7 +1790,7 @@
       "status": "active",
       "statement": "Templatefanen skal være grafisk og administrere/redigere normaliserte template-data gjennom Node-RED-motorens MariaDB-operasjoner, ikke et JSON-tre. Registry skal styre tilgjengelige metrics/modeller/parametere, og valideringsfeil skal vises konkret ved relevant felt og samlet før publisering.",
       "source_ref": "03-KRAV-DASHBOARD.md:80",
-      "sort_order": 196
+      "sort_order": 198
     },
     {
       "requirement_id": "REQ-HA-037",
@@ -1781,7 +1799,7 @@
       "status": "active",
       "statement": "Skjulte livsløpskort skal ikke etterlate misvisende tomme kontrollflater; brukeren skal se hvorfor en handling ikke er tilgjengelig.",
       "source_ref": "03-KRAV-DASHBOARD.md:81",
-      "sort_order": 197
+      "sort_order": 199
     },
     {
       "requirement_id": "REQ-HA-038",
@@ -1790,7 +1808,7 @@
       "status": "active",
       "statement": "Graf-/hendelsesmarkører skal vise faktiske observasjoner, anbefalinger og utførte prosesshandlinger med tidspunkt. Frozen plan endres ikke underveis.",
       "source_ref": "03-KRAV-DASHBOARD.md:82",
-      "sort_order": 198
+      "sort_order": 200
     },
     {
       "requirement_id": "REQ-HA-039",
@@ -1799,7 +1817,7 @@
       "status": "active",
       "statement": "Dashboardet prioriteres for stor skjerm. Måle- og prosesskort kan være brede selv om mobilvisningen blir lengre.",
       "source_ref": "03-KRAV-DASHBOARD.md:83",
-      "sort_order": 199
+      "sort_order": 201
     },
     {
       "requirement_id": "REQ-HA-040",
@@ -1808,7 +1826,7 @@
       "status": "active",
       "statement": "Manuell SG vises som diamant ved korrigert verdi, med tynn linje til Tilt-verdien på samme observasjonsrunde.",
       "source_ref": "03-KRAV-DASHBOARD.md:84",
-      "sort_order": 200
+      "sort_order": 202
     },
     {
       "requirement_id": "REQ-HA-041",
@@ -1817,7 +1835,7 @@
       "status": "active",
       "statement": "Manuell temperatur vises ved målt temperatur, kjølesettpunkt som firkant på stiplet observasjonskurve og trykk som punkt ved målt bar.",
       "source_ref": "03-KRAV-DASHBOARD.md:85",
-      "sort_order": 201
+      "sort_order": 203
     },
     {
       "requirement_id": "REQ-HA-042",
@@ -1826,7 +1844,7 @@
       "status": "active",
       "statement": "Sensorikk og kommentarer uten naturlig Y-verdi vises i et smalt hendelsesspor under grafene.",
       "source_ref": "03-KRAV-DASHBOARD.md:86",
-      "sort_order": 202
+      "sort_order": 204
     },
     {
       "requirement_id": "REQ-HA-043",
@@ -1835,7 +1853,7 @@
       "status": "active",
       "statement": "Prosesstart vises med mørk stiplet linje gjennom alle tre grafer og P-flagg i to høyder når markørene ligger tett. Tooltip viser trinn, tidspunkt, inngangsvilkår og advarsler.",
       "source_ref": "03-KRAV-DASHBOARD.md:87",
-      "sort_order": 203
+      "sort_order": 205
     },
     {
       "requirement_id": "REQ-HA-044",
@@ -1844,7 +1862,7 @@
       "status": "active",
       "statement": "Biologiske faser vises som tydelige, vekslende bakgrunnsfelt gjennom grafstakken med fasegrense og B1–B6 i SG-grafen.",
       "source_ref": "03-KRAV-DASHBOARD.md:88",
-      "sort_order": 204
+      "sort_order": 206
     },
     {
       "requirement_id": "REQ-HA-045",
@@ -1853,7 +1871,7 @@
       "status": "active",
       "statement": "Biologitabellen viser regel, parameter, aktuell verdi, terskel, vedvarende tid, datakvalitet, status, venteforklaring, kilde, regeltype og usikkerhet.",
       "source_ref": "03-KRAV-DASHBOARD.md:89",
-      "sort_order": 205
+      "sort_order": 207
     },
     {
       "requirement_id": "REQ-HA-046",
@@ -1862,7 +1880,7 @@
       "status": "active",
       "statement": "Prosesstrinnkortet leser kontrollport, vilkår, vurdering og tillatte handlinger fra en MariaDB-avledet read-model publisert via Node-RED og skal ikke være avhengig av hardkodede status-entity-ID-er for å kunne tegnes.",
       "source_ref": "03-KRAV-DASHBOARD.md:90",
-      "sort_order": 206
+      "sort_order": 208
     },
     {
       "requirement_id": "REQ-HA-047",
@@ -1871,7 +1889,7 @@
       "status": "active",
       "statement": "`Måleresultater` skal ha en tydelig `Lagre målinger`-handling som lagrer ett komplett atomisk målesett; ved valideringsfeil beholdes alle inndata.",
       "source_ref": "03-KRAV-DASHBOARD.md:91",
-      "sort_order": 207
+      "sort_order": 209
     },
     {
       "requirement_id": "REQ-HA-048",
@@ -1880,7 +1898,7 @@
       "status": "active",
       "statement": "Prosesstrinnoversikten skal minst ha kolonnene `P`, `Status` og `Prosesstrinn`, og dessuten vise inngangsvilkår, vurdering, målverdier for temperatur/trykk, faktisk start og faktisk varighet uten at disse blandes sammen.",
       "source_ref": "03-KRAV-DASHBOARD.md:92",
-      "sort_order": 208
+      "sort_order": 210
     },
     {
       "requirement_id": "REQ-HA-049",
@@ -1889,7 +1907,7 @@
       "status": "active",
       "statement": "Kortet for utløser/kontrollport/manuell overgang skal vise hva som utløser vurderingen, hvilke kriterier som er oppfylt/venter/advarer, og hvilke manuelle handlinger som er tillatt.",
       "source_ref": "03-KRAV-DASHBOARD.md:93",
-      "sort_order": 209
+      "sort_order": 211
     },
     {
       "requirement_id": "REQ-HA-050",
@@ -1898,7 +1916,7 @@
       "status": "active",
       "statement": "`Vurdering av neste prosesstrinn` skal vise anbefalt neste trinn og anbefalte temperatur-/trykkmål med begrunnelse og datagrunnlag.",
       "source_ref": "03-KRAV-DASHBOARD.md:94",
-      "sort_order": 210
+      "sort_order": 212
     },
     {
       "requirement_id": "REQ-HA-051",
@@ -1907,7 +1925,7 @@
       "status": "active",
       "statement": "`Teknisk` skal ha en samlet strøm/logg for tekniske feil og avvik fra ulike deler av systemet, med tidspunkt, kilde, alvorlighet, melding og relevant kontekst. Denne fungerer som en lesbar teknisk hendelses-/debugflate og er separat fra aktiv oppmerksomhetsstatus.",
       "source_ref": "03-KRAV-DASHBOARD.md:95",
-      "sort_order": 211
+      "sort_order": 213
     },
     {
       "requirement_id": "REQ-HA-052",
@@ -1916,7 +1934,7 @@
       "status": "active",
       "statement": "Før Start skal `Gjæring` samle templatevalg, startgrunnlag og første målesett i samme livsløpsflate. Første målesett skal ligge nederst i Start-flaten, og alternative tetthetsskalaer skal ikke introduseres; hele brukerflaten er SG-basert.",
       "source_ref": "03-KRAV-DASHBOARD.md:96",
-      "sort_order": 212
+      "sort_order": 214
     },
     {
       "requirement_id": "REQ-HA-053",
@@ -1925,7 +1943,7 @@
       "status": "active",
       "statement": "Ved aktiv session skal `Gjæring` tilby eksplisitt **Avslutt gjæring**. Etter kvittert avslutning skal en egen `completed`-flate vises og nye gjæringsmålinger være utilgjengelige.",
       "source_ref": "03-KRAV-DASHBOARD.md:97",
-      "sort_order": 213
+      "sort_order": 215
     },
     {
       "requirement_id": "REQ-HA-054",
@@ -1934,7 +1952,7 @@
       "status": "active",
       "statement": "Completed-flaten skal tilby **Gjør klar for ny gjæring**. Reell session skal vise/svare på eksportgaten; demo kan frigjøres uten eksport.",
       "source_ref": "03-KRAV-DASHBOARD.md:98",
-      "sort_order": 214
+      "sort_order": 216
     },
     {
       "requirement_id": "REQ-HA-055",
@@ -1943,7 +1961,7 @@
       "status": "active",
       "statement": "Kriterietabellene i Biologi og Prosesstrinn skal vise **Datavindu** som kompakt beskrivelse av faktisk vurderingsgrunnlag. `window_median_range` viser vinduslengde og antall datapunkter; `stability_window` viser vinduslengde, faktisk tidsdekning og antall datapunkter. Rå timestamp skal ikke brukes som erstatning for datavindu.",
       "source_ref": "03-KRAV-DASHBOARD.md:99",
-      "sort_order": 215
+      "sort_order": 217
     },
     {
       "requirement_id": "REQ-HA-056",
@@ -1952,7 +1970,7 @@
       "status": "active",
       "statement": "En akseptert operatørkommando skal ha enkel global gjentakelsesbeskyttelse i 8 sekunder slik at nytt klikk ikke sendes mens GUI/read-model normalt rekker å oppdatere. Beskyttelsen er flyktig UI/runtime-tilstand og erstatter ikke `operation_id`/DB-constraints.",
       "source_ref": "03-KRAV-DASHBOARD.md:100",
-      "sort_order": 216
+      "sort_order": 218
     },
     {
       "requirement_id": "REQ-HA-057",
@@ -1961,7 +1979,7 @@
       "status": "active",
       "statement": "Kriteriestatus skal skille faktisk `Konfigurasjonsfeil` fra `Mangler grunnlag`, `For lite grunnlag`, `Foreldet`, `Ikke oppfylt`, `Oppfylt` og `Ikke vurdert`. Frontend skal bruke persistert evaluatorstatus, ikke utlede alle `valid=0` som konfigurasjonsfeil.",
       "source_ref": "03-KRAV-DASHBOARD.md:101",
-      "sort_order": 217
+      "sort_order": 219
     },
     {
       "requirement_id": "REQ-HA-058",
@@ -1970,7 +1988,7 @@
       "status": "active",
       "statement": "Aktiv kriteriekorreksjon og registrert kriteriefravik skal være tydelig visuelt markert direkte ved kriteriet. Markeringen skal ikke erstatte eller farge om selve oppfylt/ikke-oppfylt-statusen.",
       "source_ref": "03-KRAV-DASHBOARD.md:102",
-      "sort_order": 218
+      "sort_order": 220
     },
     {
       "requirement_id": "REQ-HA-059",
@@ -1979,7 +1997,7 @@
       "status": "active",
       "statement": "Målehistorikken skal vise persistente SG-, temperatur-, prosess- og sensorikkfakta eksplisitt, inkludert nærmeste Tilt-SG og ΔSG for manuell korrigert SG når et tidsmessig relevant Tilt-punkt finnes. Horisontal scrolling er tillatt fremfor sammenslåtte kryptiske kolonner.",
       "source_ref": "03-KRAV-DASHBOARD.md:103",
-      "sort_order": 219
+      "sort_order": 221
     },
     {
       "requirement_id": "REQ-HA-060",
@@ -1988,7 +2006,7 @@
       "status": "active",
       "statement": "Fanen **Analyse** skal ligge mellom Prosesstrinn og Måleresultater og tegne de analysene den aktive sessionens metadata deklarerer. Grafene viser den avledede verdien selv; label, forklaring, enhet, serie, B/P-markører, kriterieterskler og gap-policy leveres fra DB-read-model. Under hver graf skal de B-/P-trinnene som bruker analysen vises med kriterium, rolle, krav og tidspunkt kravet først ble oppfylt. Samme requirements-read-model skal drive både terskellinjer/oppfyllelsesmarkører og tabellen. Frontend skal ikke kjenne W-34/70s graf-ID-er eller beregne analysen.",
       "source_ref": "03-KRAV-DASHBOARD.md:104",
-      "sort_order": 220
+      "sort_order": 222
     },
     {
       "requirement_id": "REQ-HA-061",
@@ -1997,7 +2015,7 @@
       "status": "active",
       "statement": "Template-fanen skal ha et komplett templatebibliotek med lifecycle `draft/published/retired`, statusfilter, åpning av eksisterende versjoner, ny draft/ny template, publisering, forkasting, retire og reaktivering. Template-administrasjonens valgte versjon skal være MariaDB-persistet og uavhengig av Start-valget og aktiv session. Publisering skal ikke implisitt endre Start-valget.",
       "source_ref": "03-KRAV-DASHBOARD.md:105",
-      "sort_order": 221
+      "sort_order": 223
     },
     {
       "requirement_id": "REQ-HA-062",
@@ -2006,7 +2024,7 @@
       "status": "active",
       "statement": "Dashboardet skal ha egen `Verifikasjon`-fane som viser DB-eid status for krav → verifikasjonskrav → test/resultat og kan filtrere TECH/FUNC/UAT.",
       "source_ref": "03-KRAV-DASHBOARD.md:151",
-      "sort_order": 222
+      "sort_order": 224
     },
     {
       "requirement_id": "REQ-HA-063",
@@ -2015,7 +2033,7 @@
       "status": "active",
       "statement": "Teknisk-fanen skal vise et kompakt verifikasjonssammendrag med siste DB-eide status og lenke/henvisning til detaljfanen.",
       "source_ref": "03-KRAV-DASHBOARD.md:152",
-      "sort_order": 223
+      "sort_order": 225
     },
     {
       "requirement_id": "REQ-HA-064",
@@ -2024,7 +2042,7 @@
       "status": "active",
       "statement": "UAT skal kunne registreres fra Verifikasjon-fanen med `pass/fail/blocked/not_run`, operatørnavn, notat og eventuell evidensreferanse. Registreringen skal gi ny DB-kvittert append-only resultatrad.",
       "source_ref": "03-KRAV-DASHBOARD.md:153",
-      "sort_order": 224
+      "sort_order": 226
     },
     {
       "requirement_id": "REQ-HA-065",
@@ -2033,7 +2051,7 @@
       "status": "active",
       "statement": "Verifikasjon-fanen skal kunne bestille eksport av strukturert JSON og lesbar HTML-rapport. Frontend skal bare bestille og vise DB/read-model-resultatet, ikke beregne rapportinnhold.",
       "source_ref": "03-KRAV-DASHBOARD.md:154",
-      "sort_order": 225
+      "sort_order": 227
     },
     {
       "requirement_id": "REQ-HA-066",
@@ -2042,7 +2060,7 @@
       "status": "active",
       "statement": "Startflaten skal vise templateens forventede utgjæringsområde og FG-området som er beregnet fra faktisk OG som read-only informasjon. Operatøren skal ikke måtte beregne eller skrive inn forventet FG.",
       "source_ref": "03-KRAV-DASHBOARD.md:155",
-      "sort_order": 226
+      "sort_order": 228
     },
     {
       "requirement_id": "REQ-HA-067",
@@ -2051,7 +2069,7 @@
       "status": "active",
       "statement": "Analyse-grafer skal bruke DB-eide aksemetadata for vertikal minimum/maksimum/tick-intervall og DB-eid `+dag · dato`-merking horisontalt. Grafbeskrivelsen skal forklare hva verdien måler, hvordan den tolkes og hvorfor den er relevant.",
       "source_ref": "03-KRAV-DASHBOARD.md:156",
-      "sort_order": 227
+      "sort_order": 229
     },
     {
       "requirement_id": "REQ-HA-068",
@@ -2060,7 +2078,7 @@
       "status": "active",
       "statement": "Alle tidsseriegrafer i Gjæring og Analyse skal bruke MariaDB/read-model-eid dynamisk Y-akse beregnet fra faktisk min/maks samt relevante mål-/kriteriegrenser. Aksen skal ha liten normal tegnemargin og skal ikke få kunstig minimumsspenn for å skjule variasjon.",
       "source_ref": "03-KRAV-DASHBOARD.md:157",
-      "sort_order": 228
+      "sort_order": 230
     },
     {
       "requirement_id": "REQ-HA-069",
@@ -2069,7 +2087,7 @@
       "status": "active",
       "statement": "Analyse viser ingen estimerte min–maks-/følsomhetsbånd. Målt variasjon kan vises som faktisk spredning i Gjæringsfanens rådatagrafer. Graphpolicy fryses i MariaDB.",
       "source_ref": "03-KRAV-DASHBOARD.md:158",
-      "sort_order": 229
+      "sort_order": 231
     },
     {
       "requirement_id": "REQ-HA-070",
@@ -2078,7 +2096,7 @@
       "status": "active",
       "statement": "Analysegrafer viser kun ordinære verdier fra godkjente målinger. Manglende grunnlag er synlig; ingen foreløpig kurve, utfylling eller interpolasjon over datagap.",
       "source_ref": "03-KRAV-DASHBOARD.md:159",
-      "sort_order": 230
+      "sort_order": 232
     },
     {
       "requirement_id": "REQ-HA-071",
@@ -2087,7 +2105,7 @@
       "status": "active",
       "statement": "SG-rate vises med DB-eid nedre Y-grense 0 og automatisk øvre grense. Negative målebaserte rater beholdes i databasen og i siste-verdi-feltet; de erstattes ikke med absoluttverdi eller null.",
       "source_ref": "03-KRAV-DASHBOARD.md:160",
-      "sort_order": 231
+      "sort_order": 233
     },
     {
       "requirement_id": "REQ-HA-072",
@@ -2096,7 +2114,7 @@
       "status": "active",
       "statement": "Kriteriekorreksjon og kriteriefravik skal følge p22-arbeidsformen. Notat er valgfritt og tomt notat skal ikke avvise handlingen; korreksjon/fravik skal vises separat fra kriteriets faktiske `met/not_met`-status.",
       "source_ref": "03-KRAV-DASHBOARD.md:161",
-      "sort_order": 232
+      "sort_order": 234
     },
     {
       "requirement_id": "REQ-HA-073",
@@ -2105,7 +2123,7 @@
       "status": "active",
       "statement": "Teknisk-fanen skal tilby separat **Eksporter måledata** for aktiv session. Eksporten bygges fra MariaDB og omfatter sessiongrunnlag, 5-minuttersmålinger med min/middel/median/maks der tilgjengelig samt registrerte datagap.",
       "source_ref": "03-KRAV-DASHBOARD.md:162",
-      "sort_order": 233
+      "sort_order": 235
     },
     {
       "requirement_id": "REQ-HA-074",
@@ -2114,7 +2132,7 @@
       "status": "active",
       "statement": "Manuelle utgjæringskontroller vises som separate punkter i samme graf som rå Tilt-serien, med faktisk måletid. Punktserie bindes ikke sammen til en oppdiktet kontinuerlig manuell kurve.",
       "source_ref": "03-KRAV-DASHBOARD.md:177",
-      "sort_order": 234
+      "sort_order": 236
     },
     {
       "requirement_id": "REQ-HA-075",
@@ -2123,7 +2141,7 @@
       "status": "active",
       "statement": "Dashboard, aktiv rapport og sluttrapport bruker samme DB-eide horisontale tidsakse fra effektivt pitchtidspunkt. Før første beregnbare verdi vises en tom graf med akse. Datagap bryter linjer og bånd.",
       "source_ref": "03-KRAV-DASHBOARD.md:178",
-      "sort_order": 235
+      "sort_order": 237
     },
     {
       "requirement_id": "REQ-HA-076",
@@ -2132,7 +2150,7 @@
       "status": "active",
       "statement": "Aktiv gjæring skal samle batch/gjær, volum/OG, effektiv pitch og varigheter, B/P-status, rå Tilt-SG, én aktuell utgjæringsgrad, estimert ABV nå, fersk 24-timersrate, 24/48-timersstabilitet og neste prosesstrinn med årsak/vurderingstid. Verdier og basis leveres av read-model; rapporthandlinger ligger nederst.",
       "source_ref": "03-KRAV-DASHBOARD.md:184",
-      "sort_order": 236
+      "sort_order": 238
     },
     {
       "requirement_id": "REQ-HA-077",
@@ -2141,7 +2159,7 @@
       "status": "active",
       "statement": "SG-stabilitet har generelle 24-/48-timerskurver på faktiske sammenhengende målinger. Verdien er maks–min i SG-poeng, uten bånd, kortvindu-oppskalering eller faseanker. Minste tidsdekning og dynamiske akser eies av DB.",
       "source_ref": "03-KRAV-DASHBOARD.md:185",
-      "sort_order": 237
+      "sort_order": 239
     },
     {
       "requirement_id": "REQ-HA-078",
@@ -2150,7 +2168,7 @@
       "status": "active",
       "statement": "Over hver analysegraf vises MariaDB-forberedt siste gyldige verdi, enhet og faktisk måletid for hver serie. Manglende grunnlag vises uttrykkelig; siste måling fremstilles ikke som en ny måling nå.",
       "source_ref": "03-KRAV-DASHBOARD.md:187",
-      "sort_order": 238
+      "sort_order": 240
     },
     {
       "requirement_id": "REQ-HA-079",
@@ -2159,7 +2177,7 @@
       "status": "active",
       "statement": "Avsluttet gjæring skal vise DB-eid arkivstatus og støtte nytt arkiveringsforsøk uten ny avslutning. Uverifisert sluttarkiv skal fortsatt blokkere Gjør klar for reell gjæring og inngå vedvarende i Systemkontroll.",
       "source_ref": "03-KRAV-DASHBOARD.md:188",
-      "sort_order": 239
+      "sort_order": 241
     },
     {
       "requirement_id": "REQ-HA-080",
@@ -2168,7 +2186,7 @@
       "status": "active",
       "statement": "Grafene kan sammenligne med et referansedatasett eller en avsluttet gjæring, justert til tid siden pitch og med egne analyseverdier.",
       "source_ref": "03-KRAV-DASHBOARD.md:194",
-      "sort_order": 240
+      "sort_order": 242
     },
     {
       "requirement_id": "REQ-HA-081",
@@ -2177,7 +2195,7 @@
       "status": "active",
       "statement": "Grafvisningen kan velge 5/15/60-minutters detaljvisning og hele gjæringen/siste 24 timer/48 timer/7 dager uten å endre lagrede målinger.",
       "source_ref": "03-KRAV-DASHBOARD.md:195",
-      "sort_order": 241
+      "sort_order": 243
     },
     {
       "requirement_id": "REQ-HA-082",
@@ -2186,7 +2204,7 @@
       "status": "active",
       "statement": "Avsluttet gjæring forblir synlig under arkivering; nytt forsøk vises når arkiv mangler/feiler, og Gjør klar følger DB-verifisert eksport.",
       "source_ref": "03-KRAV-DASHBOARD.md:196",
-      "sort_order": 242
+      "sort_order": 244
     },
     {
       "requirement_id": "REQ-HA-083",
@@ -2195,7 +2213,7 @@
       "status": "active",
       "statement": "Gjæringskortet skal vise DB-eid målekildetekst direkte, og synliggjøre feil ved lasting/tegning.",
       "source_ref": "03-KRAV-DASHBOARD.md:202",
-      "sort_order": 243
+      "sort_order": 245
     },
     {
       "requirement_id": "REQ-HA-084",
@@ -2204,7 +2222,7 @@
       "status": "active",
       "statement": "Graf- og demovalg skal nå DB med operation_id. Grafvalg skal bekreftes med akkurat sendt operation_id; periodisk refresh skal ikke tegne om et ventende valg.",
       "source_ref": "03-KRAV-DASHBOARD.md:203",
-      "sort_order": 244
+      "sort_order": 246
     },
     {
       "requirement_id": "REQ-HA-085",
@@ -2213,7 +2231,7 @@
       "status": "active",
       "statement": "Analyse skal også vise SG, temperatur og trykk med delt sammenligning. Analyse- og rapportgrafer skal være om lag 40 prosent høyere.",
       "source_ref": "03-KRAV-DASHBOARD.md:204",
-      "sort_order": 245
+      "sort_order": 247
     },
     {
       "requirement_id": "REQ-HA-086",
@@ -2222,7 +2240,7 @@
       "status": "active",
       "statement": "Teknisk eksport skal tilby kompakt standarddiagnostikk og eksplisitt utvidet diagnostikk med faktisk publisert dashboardgrunnlag; grafvalg og detalj/timeimportens omfang skal følge eksporten.",
       "source_ref": "03-KRAV-DASHBOARD.md:205",
-      "sort_order": 246
+      "sort_order": 248
     },
     {
       "requirement_id": "REQ-HA-087",
@@ -2231,7 +2249,7 @@
       "status": "active",
       "statement": "Graf- og demovalg skal akseptere direkte kommando, payload.data, payload.event og payload.event.data. Det sendte operation_id skal bevares helt til DB-bekreftelse.",
       "source_ref": "03-KRAV-DASHBOARD.md:211",
-      "sort_order": 247
+      "sort_order": 249
     },
     {
       "requirement_id": "REQ-HA-088",
@@ -2240,7 +2258,7 @@
       "status": "active",
       "statement": "Kravlinjer, kravtekst og oppfylt-markeringer i dashboard/rapport skal følge gjeldende kriterierevisjon. Reset bruker originalparametere, eksplisitt tom grense forblir tom, og korrigert stabilitetsvindu knyttes til rett måleserie.",
       "source_ref": "03-KRAV-DASHBOARD.md:212",
-      "sort_order": 248
+      "sort_order": 250
     },
     {
       "requirement_id": "REQ-HA-089",
@@ -2249,7 +2267,7 @@
       "status": "active",
       "statement": "Template og arkiv tilbyr filvalg, forhåndsvisning, import, eksport og separate system-, egen- og importert-kategorier. Historikk kan skjules fra sammenligning uten sletting.",
       "source_ref": "03-KRAV-DASHBOARD.md:218",
-      "sort_order": 249
+      "sort_order": 251
     },
     {
       "requirement_id": "REQ-HA-090",
@@ -2258,7 +2276,7 @@
       "status": "active",
       "statement": "Arkivkortet ligger øverst i Templatefanen og tilbyr aktiv eksport og bekreftet permanent sletting av historiske sesjoner og ubrukte importerte templates.",
       "source_ref": "03-KRAV-DASHBOARD.md:224",
-      "sort_order": 250
+      "sort_order": 252
     },
     {
       "requirement_id": "REQ-HA-091",
@@ -2267,7 +2285,7 @@
       "status": "active",
       "statement": "Ett samlet filvalg leses av backend til en liste etter template-navn. Deretter velges bare template eller template med gjæringsdata. Valg beholdes ved oppdatering; SHA-advarsler vises før import.",
       "source_ref": "03-KRAV-DASHBOARD.md:225",
-      "sort_order": 251
+      "sort_order": 253
     },
     {
       "requirement_id": "REQ-HA-092",
@@ -2276,7 +2294,34 @@
       "status": "active",
       "statement": "Det vanlige startbildet skal tilby «Importer avsluttet gjæring» med sluttidspunkt. Angitt «Start fra», template og første måleserie gjenbrukes. B/P har etterregistrering av manglende faktisk fasestart; alle viste varigheter kommer fra DB.",
       "source_ref": "03-KRAV-DASHBOARD.md:231",
-      "sort_order": 252
+      "sort_order": 254
+    },
+    {
+      "requirement_id": "REQ-HA-093",
+      "document_id": "DOC-03",
+      "requirement_class": "ha",
+      "status": "active",
+      "statement": "Sensoriske 0–5-felt vises som heltallsslidere fra DB-metadata. Ikke registrert skal skilles fra registrert 0. Manuell temperatur vises med én desimal; lagret presisjon beholdes.",
+      "source_ref": "03-KRAV-DASHBOARD.md:240",
+      "sort_order": 255
+    },
+    {
+      "requirement_id": "REQ-HA-094",
+      "document_id": "DOC-03",
+      "requirement_class": "ha",
+      "status": "active",
+      "statement": "Målekilder og sensorer plasseres øverst i Teknisk, med DB-kvittert les/kontroller/lagre, HA-valg og sist kontrollerte verdier. Startbildet viser et kompakt kildesammendrag. Pågående redigering overskrives ikke ved bakgrunnsoppdatering.",
+      "source_ref": "03-KRAV-DASHBOARD.md:241",
+      "sort_order": 256
+    },
+    {
+      "requirement_id": "REQ-HA-095",
+      "document_id": "DOC-03",
+      "requirement_class": "ha",
+      "status": "active",
+      "statement": "Teknisk Kilde viser DB-registrert komponentnavn; rå node-/rutineidentitet bevares i detaljer/eksport. Prosesstrinn og Biologi tilbyr samme kriteriekorreksjon og tillatte kriterieavvik fra frozen grunnlag.",
+      "source_ref": "03-KRAV-DASHBOARD.md:242",
+      "sort_order": 257
     },
     {
       "requirement_id": "REQ-INST-001",
@@ -2285,7 +2330,7 @@
       "status": "active",
       "statement": "Gjeldende dokumentasjon skal bygges som del av samme releasebygg som kode/SQL/kontrakter. Generert HTML er artefakt, ikke separat vedlikeholdt sannhetskilde.",
       "source_ref": "04-KRAV-INSTALLER.md:38",
-      "sort_order": 253
+      "sort_order": 258
     },
     {
       "requirement_id": "REQ-INST-002",
@@ -2294,7 +2339,7 @@
       "status": "active",
       "statement": "Ordinær releasepakke skal ikke inneholde komplett historisk p19-dokumentasjon. Historikk beholdes bare når den uttrykkelig dokumenterer forlatte løsninger eller funksjonelle referanser som fortsatt er relevante.",
       "source_ref": "04-KRAV-INSTALLER.md:39",
-      "sort_order": 254
+      "sort_order": 259
     },
     {
       "requirement_id": "REQ-INST-003",
@@ -2303,7 +2348,7 @@
       "status": "active",
       "statement": "Releaseporten skal bevare testbarhet og relevante regresjons-/arkitekturkontroller, men skal ikke feile på kunstige minimumstall for dokumenter, REQ, DEC eller OPEN.",
       "source_ref": "04-KRAV-INSTALLER.md:40",
-      "sort_order": 255
+      "sort_order": 260
     },
     {
       "requirement_id": "REQ-INST-004",
@@ -2312,7 +2357,7 @@
       "status": "active",
       "statement": "Etter vellykket releaseport skal strukturerte release-testresultater kunne følge pakken og importeres som verifikasjonsfakta ved installasjon.",
       "source_ref": "04-KRAV-INSTALLER.md:41",
-      "sort_order": 256
+      "sort_order": 261
     },
     {
       "requirement_id": "REQ-INST-005",
@@ -2321,7 +2366,7 @@
       "status": "active",
       "statement": "Før databaseendring eller endring av Node-RED-flow skal installeren lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon skal fremgå av installasjonsrapporten.",
       "source_ref": "04-KRAV-INSTALLER.md:42",
-      "sort_order": 257
+      "sort_order": 262
     },
     {
       "requirement_id": "REQ-INST-006",
@@ -2330,7 +2375,7 @@
       "status": "active",
       "statement": "Eksisterende sesjoner, målinger, korreksjoner, templates, kladder, innstillinger og registrerte testresultater skal bevares ved oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon.",
       "source_ref": "04-KRAV-INSTALLER.md:43",
-      "sort_order": 258
+      "sort_order": 263
     },
     {
       "requirement_id": "REQ-INST-007",
@@ -2339,7 +2384,7 @@
       "status": "active",
       "statement": "Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat verifisert backup og faktisk installasjonsutfall skal være sporbare. Samme målversjon kan reinstallere filer uten å kjøre migreringen på nytt.",
       "source_ref": "04-KRAV-INSTALLER.md:44",
-      "sort_order": 259
+      "sort_order": 264
     }
   ],
   "decisions": [
@@ -2870,6 +2915,22 @@
       "consequence": "Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt og DB-avvisning.",
       "status": "active",
       "source_ref": "14-AKTIVE-BESLUTNINGER.md:103"
+    },
+    {
+      "decision_id": "DEC-SOURCES-001",
+      "decision": "DB-eide reviderte signalbindinger, fryst per sesjon og virkning fra neste DB-bøttegrense ved livebytte.",
+      "rationale": "Kildebytter må være sporbare uten å omskrive tidligere data.",
+      "consequence": "HA-katalog er kontrollert teknisk snapshot; NR transporterer. Valgfritt overtrykk bruker DB-deklarert enhet/konvertering og er manuelt før valg.",
+      "status": "active",
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:109"
+    },
+    {
+      "decision_id": "DEC-OPERATOR-001",
+      "decision": "Feltkontroll og desimaler følger DB-registeret; B/P-avvik bruker samme autoritative transaksjon.",
+      "rationale": "Synlig verdi, mangler og tillatte handlinger må stemme med DB.",
+      "consequence": "Slider har eksplisitt ikke registrert og registrert 0. Kildenavn er lesbare mens rå identitet bevares.",
+      "status": "active",
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:110"
     }
   ],
   "verifications": [
@@ -3251,6 +3312,25 @@
       ],
       "tests": [
         "TEST-FUNC-024",
+        "TEST-FUNC-025"
+      ]
+    },
+    {
+      "verification_id": "VER-FUNC-019",
+      "verification_type": "functional",
+      "title": "DB-eid operatørflate og sporbare sensorer",
+      "acceptance_criterion": "Kontroller/lagre gir DB-kvittering; frozen kilde følger cursor; manglende trykk stopper ikke import; B/P-fravik registreres/trekkes tilbake og UI viser DB-felt.",
+      "requirements": [
+        "REQ-HA-093",
+        "REQ-HA-094",
+        "REQ-HA-095",
+        "REQ-MOTOR-079",
+        "REQ-MOTOR-080"
+      ],
+      "tests": [
+        "TEST-FUNC-026",
+        "TEST-FUNC-027",
+        "TEST-TECH-012",
         "TEST-FUNC-025"
       ]
     }
@@ -3714,6 +3794,24 @@
       "method_type": "node_integration",
       "implementation_ref": "tests/test-install-upgrade-live.js",
       "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-026",
+      "test_type": "FUNC",
+      "title": "Sensoroppsett og felles kriteriefravik",
+      "description": "Faktisk SQL/NR: sensorvalg, kildegrense, enheter, valgfritt trykk og B/P-fravik. Kontrollert HA-transport.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-operator-config-live.js",
+      "automated": true
+    },
+    {
+      "test_id": "TEST-FUNC-027",
+      "test_type": "FUNC",
+      "title": "Operatørflate i Chromium",
+      "description": "Virkelige DOM-kontroller med DB-/NR-feltbane, sliderfravær/0, temperatur, kildevalg og B/P-editorer. Kontrollert HA-skall, ikke mål-UAT.",
+      "method_type": "node_integration",
+      "implementation_ref": "tests/test-operator-ui.js",
+      "automated": true
     }
   ],
   "decision_requirement_links": [
@@ -3855,6 +3953,21 @@
       "requirements": [
         "REQ-MOTOR-072",
         "REQ-HA-091"
+      ]
+    },
+    {
+      "decision_id": "DEC-SOURCES-001",
+      "requirements": [
+        "REQ-HA-094",
+        "REQ-MOTOR-079",
+        "REQ-MOTOR-080"
+      ]
+    },
+    {
+      "decision_id": "DEC-OPERATOR-001",
+      "requirements": [
+        "REQ-HA-093",
+        "REQ-HA-095"
       ]
     }
   ],

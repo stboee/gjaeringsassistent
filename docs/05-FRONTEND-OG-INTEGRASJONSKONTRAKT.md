@@ -136,3 +136,9 @@ Målekildeprojeksjonen har obligatoriske displayfelt import_counts_display, impo
 Startflaten bruker `v_start_fields` via `sensor.gjaeringsassistent_startstatus.attributes.start_fields`. Verdi, fravær, label, valg, grenser og valideringsmelding leveres av MariaDB. `gjaeringsassistent_set_start_field` sender entity-ID og eksplisitt brukerinput til den registrerte DB-bindingen, også når samme tall tidligere stod i HA. Node-RED leser ingen HA-verdi som reservegrunnlag. HA number/text/select-entitetene beholdes som kompatible inputkanaler; deres lagrede state er ikke kvittering for innholdet i en ny kladd.
 
 Startflaten viser `start_ready` og `start_readiness_message` uten egen domenetolkning. Kontrollene viser tom input/«Ikke angitt» ved DB-fravær. Fokusert, ennå usendt brukerinput er bare flyktig redigering; lagret status kommer ved neste DB-projeksjon.
+
+## Målekilder og sensorer
+
+`gjaeringsassistent_source_settings` mottar `action` (read/check/save) og unik `operation_id`. Save krever `source_profile_id`, `expected_configuration_id`, `fields` og valgfritt notat. Hvert felt inneholder signal_id, input_mode, entity_id (NULL ved manual) og unit_id. DB avviser utdaterte foreldre, ukjent sensor og feil enhet. Check henter HA get_states og lagrer et kontrollert katalogsnapshot. Resultat publiseres atomisk som source-settings.json; save er først bekreftet når samme operation_id finnes i DB-kvitteringen.
+
+Nettleseren kan holde en ulagret redigeringskladd. Den er ikke domenefakta, og bakgrunnslesing skal bevare den opprinnelige forventede revisjonen. Lagret konfigurasjon og gjeldende sesjonsbinding vises separat. Sist kontrollert er HA-verdien fra siste eksplisitte kontroll, ikke en påstått løpende måleverdi.

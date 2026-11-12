@@ -5,7 +5,7 @@
     "docs/03-*.md",
     "docs/04-*.md"
   ],
-  "count": 259,
+  "count": 264,
   "requirements": [
     {
       "id": "REQ-COM-001",
@@ -1288,6 +1288,22 @@
       "test_references": 0
     },
     {
+      "id": "REQ-MOTOR-079",
+      "status": "Aktiv",
+      "requirement": "Sensorbindinger normaliseres per signal, enhet og konfigurasjonsrevisjon i MariaDB, og fryses per reell sesjon. Livebytte trer i kraft ved en DB-bestemt femminuttersgrense; tidligere bindinger og målinger beholdes. Historisk import endres ikke retroaktivt.",
+      "source": "02-KRAV-MOTOR-OG-INTEGRASJON.md",
+      "line": 157,
+      "test_references": 0
+    },
+    {
+      "id": "REQ-MOTOR-080",
+      "status": "Aktiv",
+      "requirement": "Trykk er manuelt til en kompatibel HA-sensor er valgt. Sensortrykk omregnes fra deklarert enhet til bar med DB-eide koeffisienter og grenser. Fravær av valgfritt trykk skal ikke blokkere SG/temperatur. B/P-fravik lagres i en felles kort DB-transaksjon med gjeldende evaluering, kriterierevisjon og eksplisitt bekreftelse.",
+      "source": "02-KRAV-MOTOR-OG-INTEGRASJON.md",
+      "line": 158,
+      "test_references": 0
+    },
+    {
       "id": "REQ-HA-001",
       "status": "Fastsatt",
       "requirement": "Løsningen bruker flow-opprettede HA-entiteter og eget Lovelace-kort; ingen HA-package kreves.",
@@ -2021,6 +2037,30 @@
       "requirement": "Det vanlige startbildet skal tilby «Importer avsluttet gjæring» med sluttidspunkt. Angitt «Start fra», template og første måleserie gjenbrukes. B/P har etterregistrering av manglende faktisk fasestart; alle viste varigheter kommer fra DB.",
       "source": "03-KRAV-DASHBOARD.md",
       "line": 231,
+      "test_references": 0
+    },
+    {
+      "id": "REQ-HA-093",
+      "status": "Aktiv",
+      "requirement": "Sensoriske 0–5-felt vises som heltallsslidere fra DB-metadata. Ikke registrert skal skilles fra registrert 0. Manuell temperatur vises med én desimal; lagret presisjon beholdes.",
+      "source": "03-KRAV-DASHBOARD.md",
+      "line": 240,
+      "test_references": 0
+    },
+    {
+      "id": "REQ-HA-094",
+      "status": "Aktiv",
+      "requirement": "Målekilder og sensorer plasseres øverst i Teknisk, med DB-kvittert les/kontroller/lagre, HA-valg og sist kontrollerte verdier. Startbildet viser et kompakt kildesammendrag. Pågående redigering overskrives ikke ved bakgrunnsoppdatering.",
+      "source": "03-KRAV-DASHBOARD.md",
+      "line": 241,
+      "test_references": 0
+    },
+    {
+      "id": "REQ-HA-095",
+      "status": "Aktiv",
+      "requirement": "Teknisk Kilde viser DB-registrert komponentnavn; rå node-/rutineidentitet bevares i detaljer/eksport. Prosesstrinn og Biologi tilbyr samme kriteriekorreksjon og tillatte kriterieavvik fra frozen grunnlag.",
+      "source": "03-KRAV-DASHBOARD.md",
+      "line": 242,
       "test_references": 0
     },
     {

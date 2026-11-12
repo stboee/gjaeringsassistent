@@ -212,3 +212,7 @@ TEST-UAT-014 omfatter også: importer en eldre periode med bare timesstatistikk;
 ## Måltest av databevaring og slurry-start
 
 Oppgrader en kjent kilde med aktiv gjæring, beholdt tidligere sesjon og egne/importerte templates. Kontroller uendret sesjons-ID, målinger, korreksjoner, templateinnhold og kladd etter oppgradering. Kontroller installasjonsrapportens backupsti og migreringskvittering. Ved neste ordinære start: velg Slurry, bekreft at manglende DB-felt vises som manglende, lagre volum/generasjon/kildebatch/oksygenering og start. Samme verdi skal kunne lagres på nytt. Teknisk eksport skal vise startforsøkets faktiske verdier; Systemkontroll skal vise én operativ P-/B-fase selv om gamle sesjoner beholdes. Lokal simulert HA-transport er ikke målmiljø-UAT.
+
+## Operatørflate og kildebytte
+
+Kontroller i mål-HA: manglende slider blir ikke automatisk 0; velg og lagre 0 og 5, og prøv temperatur med én desimal. Kontroller sensorlisten, bevarte ulagrede valg ved refresh, DB-kvittering, trykk manuelt/sensor og historikk ved kildebytte. Prøv registrering og tilbaketrekking av tillatt kriterieavvik i både Biologi og Prosesstrinn og kontroller readiness/rapport. Lokal Chromium-test erstatter ikke denne måltesten.

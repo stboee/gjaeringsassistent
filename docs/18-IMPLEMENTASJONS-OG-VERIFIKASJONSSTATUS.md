@@ -7,7 +7,7 @@ source_format: markdown
 
 # 18 – Implementasjons- og verifikasjonsstatus
 
-**Gjeldende release:** `2026.11.09-2`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
+**Gjeldende release:** `2026.11.12-1`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
 
 Implementert, lokalt release-verifisert og målmiljø-verifisert er forskjellige statusnivåer. TEST-RESULTS.md og faktiske verification_test_runs/verification_test_results viser testbevis; dokument 15/09 viser åpne måltester. Ingen grønn releaseport er alene bevis på fungerende operatørflyt i Home Assistant.
 
@@ -27,7 +27,7 @@ Implementert, lokalt release-verifisert og målmiljø-verifisert er forskjellige
 | DB-eide startfelt/slurry og operativ P/B-kontroll | Ja | TEST-FUNC-024: faktiske DB-feltbindinger/snapshots, begge startkort via dashboardets setConfig og beholdt gammel sesjon | OPEN-016 åpen |
 | Strukturert REQ/DEC/VER/TEST/UAT, registrering og rapport | Ja | Kildemodell, SQL-relasjoner og releaseport | UAT-registrering i målmiljø åpen |
 
-Runtime-schema er 10, template-schema 4. Eksakte tabell-/view-/HA-tall følger genererte fysiske kataloger og releaseforventninger. Katalogdekning alene er ikke et matematisk normalformbevis. Legacy-navn i regresjonsfiler beskriver funksjonens opprinnelse; bevisenes application_version og kildeavtrykk skal være gjeldende release.
+Runtime-schema er 11, template-schema 4. Eksakte tabell-/view-/HA-tall følger genererte fysiske kataloger og releaseforventninger. Katalogdekning alene er ikke et matematisk normalformbevis. Legacy-navn i regresjonsfiler beskriver funksjonens opprinnelse; bevisenes application_version og kildeavtrykk skal være gjeldende release.
 
 S-04/M42 er publiserte normaliserte gjærprofiler. Faktisk gjæring med profilene og faglig kalibrering er ikke utført av programvaretestene. HA-timesstatistikk er grafgrunnlag, ikke oppdiktet ordinært B/P-målegrunnlag.
 
