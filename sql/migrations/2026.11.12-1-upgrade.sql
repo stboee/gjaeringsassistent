@@ -1,0 +1,12 @@
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE ha_entity_number_constraints ADD COLUMN display_decimals TINYINT UNSIGNED NOT NULL DEFAULT 0 CHECK(display_decimals<=6);
+UPDATE ha_entity_number_constraints SET display_decimals=IF(step_value>=1,0,CHAR_LENGTH(TRIM(TRAILING '0' FROM SUBSTRING_INDEX(CAST(step_value AS CHAR),'.',-1))));
+INSERT INTO measurement_source_configurations(source_profile_id,parent_configuration_id,operation_id,note,created_at) SELECT p.source_profile_id,NULL,CONCAT('source-migrated-',p.source_profile_id),'Migrert fra eksisterende DB-bindinger',UTC_TIMESTAMP(3) FROM measurement_source_profiles p;
+INSERT INTO measurement_source_signal_bindings(configuration_id,signal_id,input_mode,entity_id,unit_id)
+SELECT c.configuration_id,s.signal_id,IF(s.signal_id='pressure','manual','sensor'),CASE s.signal_id WHEN 'sg' THEN p.sg_entity_id WHEN 'temperature' THEN p.temperature_entity_id WHEN 'heartbeat' THEN p.heartbeat_entity_id WHEN 'rssi' THEN p.rssi_entity_id ELSE NULL END,u.unit_id
+FROM measurement_source_profiles p JOIN measurement_source_configurations c ON c.source_profile_id=p.source_profile_id CROSS JOIN measurement_source_signals s JOIN measurement_source_units u ON u.signal_id=s.signal_id AND u.is_canonical=1;
+INSERT INTO session_measurement_source_configurations(session_id,configuration_id,effective_from,profile_name,note,created_at)
+SELECT m.session_id,c.configuration_id,m.last_import_cutoff_at,p.name,'Binding kjent fra oppgraderingen; eldre kildebytter er ikke registrert',UTC_TIMESTAMP(3) FROM session_measurement_sources m JOIN measurement_source_profiles p ON p.source_profile_id=m.source_profile_id JOIN measurement_source_configurations c ON c.source_profile_id=m.source_profile_id;
+INSERT INTO session_measurement_signal_bindings(session_id,configuration_id,signal_id,input_mode,entity_id,unit_id,minimum_value,maximum_value)
+SELECT c.session_id,b.configuration_id,b.signal_id,b.input_mode,b.entity_id,b.unit_id,n.minimum_value,n.maximum_value FROM session_measurement_source_configurations c JOIN measurement_source_signal_bindings b ON b.configuration_id=c.configuration_id JOIN measurement_source_signals s ON s.signal_id=b.signal_id LEFT JOIN ha_entity_number_constraints n ON n.entity_id=s.operator_entity_id;
+ALTER TABLE measurement_source_profiles DROP COLUMN sg_entity_id,DROP COLUMN temperature_entity_id,DROP COLUMN heartbeat_entity_id,DROP COLUMN rssi_entity_id;

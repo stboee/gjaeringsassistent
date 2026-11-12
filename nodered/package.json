@@ -1,11 +1,11 @@
 {
   "name": "gjaeringsassistent-nodered",
   "private": true,
-  "version": "2026.11.9-2",
+  "version": "2026.11.12-1",
   "description": "Node-RED runtime-avhengigheter for Gjæringsassistent",
   "dependencies": {
     "node-red-contrib-home-assistant-websocket": "0.80.3",
     "node-red-node-mysql": "3.0.4"
   },
-  "gjaeringsassistentVersion": "2026.11.09-2"
+  "gjaeringsassistentVersion": "2026.11.12-1"
 }

@@ -1,51 +1,72 @@
 {
-  "format_version": 1,
-  "target_version": "2026.11.09-2",
+  "format_version": 2,
+  "target_version": "2026.11.12-1",
   "supported_sources": [
     "0.1.0-prototype24-r16",
     "2026.11.07-1"
   ],
   "baseline_tables": 202,
   "baseline_views": 178,
-  "migration_id": "2026.11.09-2-start-cards",
+  "migration_id": "2026.11.12-1-operator-sources",
   "upgrade_files": [
     "sql/migrations/2026.11.09-1-schema.sql",
-    "sql/11-runtime-routines.sql",
-    "sql/20-views.sql",
     "sql/migrations/2026.11.09-1-metadata.sql",
-    "sql/24-verification-metadata-seed.sql",
-    "sql/migrations/2026.11.09-2-metadata.sql"
+    "sql/12-operator-schema.sql",
+    "sql/26-operator-config-seed.sql",
+    "sql/migrations/2026.11.12-1-upgrade.sql",
+    "sql/11-runtime-routines.sql",
+    "sql/12-operator-routines.sql",
+    "sql/20-views.sql",
+    "sql/migrations/2026.11.12-1-metadata.sql",
+    "sql/24-verification-metadata-seed.sql"
   ],
   "fresh_files": [
     "sql/00-template-schema.sql",
     "sql/01-template-registry-seed.sql",
     "sql/10-runtime-schema.sql",
+    "sql/12-operator-schema.sql",
     "sql/11-runtime-routines.sql",
+    "sql/12-operator-routines.sql",
     "sql/02-runtime-registry-seed.sql",
     "sql/03-w3470-template-seed.sql",
     "sql/04-ale-templates-seed.sql",
     "sql/20-views.sql",
     "sql/21-system-metadata-seed.sql",
+    "sql/26-operator-config-seed.sql",
     "sql/22-demo-reference-seed.sql",
     "sql/23-measurement-source-seed.sql",
     "sql/24-verification-metadata-seed.sql",
     "sql/25-release-verification-results-seed.sql"
   ],
   "baseline_schema_sha256": "c5862c63bc11cf24c6439b565963bb15a637910418f14f0b813af72cb976a7a6",
-  "target_tables": 207,
-  "target_views": 183,
+  "target_tables": 216,
+  "target_views": 193,
   "baseline_schema_version": 9,
-  "target_schema_version": 10,
+  "target_schema_version": 11,
   "template_schema_version": 4,
   "patch_sources": {
     "2026.11.09-1": {
       "migration_id": "2026.11.09-1-start-control",
       "checksum_sha256": "ad08eed5968039bea99eaa029149e524e87fde95c6628d51538c98ac67a0b0e7"
+    },
+    "2026.11.09-2": {
+      "migration_id": "2026.11.09-2-start-cards",
+      "checksum_sha256": "91159b54d5fe274c041a6d4c947939252adce6c5fe1abfeccebe807266a7b154"
     }
   },
   "patch_files": [
-    "sql/migrations/2026.11.09-2-metadata.sql",
+    "sql/12-operator-schema.sql",
+    "sql/26-operator-config-seed.sql",
+    "sql/migrations/2026.11.12-1-upgrade.sql",
+    "sql/11-runtime-routines.sql",
+    "sql/12-operator-routines.sql",
+    "sql/20-views.sql",
+    "sql/migrations/2026.11.12-1-metadata.sql",
     "sql/24-verification-metadata-seed.sql"
   ],
-  "target_schema_sha256": "ed20fe5a24d1d6b8d996af8a0e03dec0a55d524435e2d1bba43ce6db38f8591d"
+  "target_schema_sha256": "pending-native-capture",
+  "patch_tables": 207,
+  "patch_views": 183,
+  "patch_schema_version": 10,
+  "patch_schema_sha256": "ed20fe5a24d1d6b8d996af8a0e03dec0a55d524435e2d1bba43ce6db38f8591d"
 }

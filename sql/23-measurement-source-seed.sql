@@ -1,19 +1,12 @@
 -- Gjæringsassistent p21r13 – Home Assistant measurement source
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-INSERT INTO measurement_source_profiles(
- source_profile_id,name,source_type,sg_entity_id,temperature_entity_id,heartbeat_entity_id,rssi_entity_id,
- poll_interval_seconds,gap_threshold_seconds,fresh_age_minutes,stale_age_minutes,status,description,created_at,updated_at
-) VALUES (
- 'tilt-pro-blue-ha','Tilt Pro Blue · Home Assistant','home_assistant',
- 'sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_sg',
- 'sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_temperatur',
- 'sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_sist_oppdatert',
- 'sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_rssi',
- 300,300,15,60,'active','Primær livekilde. Entity-ID-er er DB-konfigurasjon og skal ikke hardkodes i Node-RED-funksjoner.',UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)
-) ON DUPLICATE KEY UPDATE
- name=VALUES(name),source_type=VALUES(source_type),sg_entity_id=VALUES(sg_entity_id),temperature_entity_id=VALUES(temperature_entity_id),heartbeat_entity_id=VALUES(heartbeat_entity_id),rssi_entity_id=VALUES(rssi_entity_id),
- poll_interval_seconds=VALUES(poll_interval_seconds),gap_threshold_seconds=VALUES(gap_threshold_seconds),fresh_age_minutes=VALUES(fresh_age_minutes),stale_age_minutes=VALUES(stale_age_minutes),status=VALUES(status),description=VALUES(description),updated_at=UTC_TIMESTAMP(3);
-
+INSERT INTO measurement_source_profiles(source_profile_id,name,source_type,poll_interval_seconds,gap_threshold_seconds,fresh_age_minutes,stale_age_minutes,status,description,created_at,updated_at) VALUES('tilt-pro-blue-ha','Tilt Pro Blue · Home Assistant','home_assistant',300,300,15,60,'active','Normaliserte, reviderte bindinger per signal.',UTC_TIMESTAMP(3),UTC_TIMESTAMP(3));
+INSERT INTO measurement_source_configurations(source_profile_id,parent_configuration_id,operation_id,note,created_at) VALUES('tilt-pro-blue-ha',NULL,'source-initial-tilt-pro-blue-ha','Opprinnelig sensorkonfigurasjon',UTC_TIMESTAMP(3));
+INSERT INTO measurement_source_signal_bindings(configuration_id,signal_id,input_mode,entity_id,unit_id) SELECT configuration_id,'sg','sensor','sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_sg','sg' FROM measurement_source_configurations WHERE operation_id='source-initial-tilt-pro-blue-ha';
+INSERT INTO measurement_source_signal_bindings(configuration_id,signal_id,input_mode,entity_id,unit_id) SELECT configuration_id,'temperature','sensor','sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_temperatur','celsius' FROM measurement_source_configurations WHERE operation_id='source-initial-tilt-pro-blue-ha';
+INSERT INTO measurement_source_signal_bindings(configuration_id,signal_id,input_mode,entity_id,unit_id) SELECT configuration_id,'heartbeat','sensor','sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_sist_oppdatert','timestamp' FROM measurement_source_configurations WHERE operation_id='source-initial-tilt-pro-blue-ha';
+INSERT INTO measurement_source_signal_bindings(configuration_id,signal_id,input_mode,entity_id,unit_id) SELECT configuration_id,'rssi','sensor','sensor.bryggeri_tilt_pro_blue_bryggeri_tilt_pro_blue_rssi','dbm' FROM measurement_source_configurations WHERE operation_id='source-initial-tilt-pro-blue-ha';
+INSERT INTO measurement_source_signal_bindings(configuration_id,signal_id,input_mode,entity_id,unit_id) SELECT configuration_id,'pressure','manual',NULL,'bar' FROM measurement_source_configurations WHERE operation_id='source-initial-tilt-pro-blue-ha';
 
 -- p22r7 source-owned validation policy. Invalid samples are rejected, never clamped.
 INSERT INTO measurement_source_validation_rules(source_profile_id,rule_id,signal_id,rule_order,model_id,enabled,created_at) VALUES

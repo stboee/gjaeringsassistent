@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.09-2",
-  "built_at_utc": "2026-11-09T07:10:41Z",
+  "version": "2026.11.12-1",
+  "built_at_utc": "2026-11-12T22:17:28Z",
   "architecture": "Node-RED motor + MariaDB/InnoDB authority; append-only history within retained sessions, explicit atomic archive deletion; HA operator presentation",
   "baseline": "0.1.0-prototype24-r16",
   "baselines": {
@@ -22,7 +22,7 @@
     "mariadb": "12.3.3",
     "node_js_minimum": "24"
   },
-  "scope": "Rettede startkort og databevarende filoppgradering fra 2026.11.09-1",
+  "scope": "Sensoriske kontroller, reviderte målekilder og kriteriefravik",
   "verification_model": {
     "requirements": 259,
     "decisions": 66,

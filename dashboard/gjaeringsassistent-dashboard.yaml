@@ -539,6 +539,12 @@ views:
           - type: custom:gjaeringsassistent-card
             grid_options:
               columns: full
+            title: Målekilder og sensorer
+            view: source-settings
+            source_settings_url: /local/gjaeringsassistent/source-settings.json
+          - type: custom:gjaeringsassistent-card
+            grid_options:
+              columns: full
             title: Teknisk oversikt
             view: system
             systemcheck_entity: button.gjaeringsassistent_kjor_systemkontroll

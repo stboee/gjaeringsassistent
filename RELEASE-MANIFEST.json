@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.09-2",
-  "scope": "Rettede startkort og databevarende filoppgradering fra 2026.11.09-1",
+  "version": "2026.11.12-1",
+  "scope": "Sensoriske kontroller, reviderte målekilder og kriteriefravik",
   "required_files": [
     "VERSION",
     "README.md",

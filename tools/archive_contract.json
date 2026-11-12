@@ -76,7 +76,9 @@
     "measurement_statistics_hourly",
     "measurement_gap_closures",
     "session_demo_sources",
-    "session_history_windows"
+    "session_history_windows",
+    "session_measurement_source_configurations",
+    "session_measurement_signal_bindings"
   ],
   "template_tables": [
     "template_versions",
@@ -153,6 +155,8 @@
     "demo_reference_analysis_values",
     "graph_render_policy",
     "legacy_measurement_graph_models",
-    "legacy_measurement_graph_series_models"
+    "legacy_measurement_graph_series_models",
+    "measurement_source_signals",
+    "measurement_source_units"
   ]
 }

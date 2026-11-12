@@ -1,3 +1,53 @@
+CREATE OR REPLACE VIEW v_current_measurement_source_configuration AS
+SELECT c.* FROM measurement_source_configurations c WHERE NOT EXISTS(SELECT 1 FROM measurement_source_configurations n WHERE n.source_profile_id=c.source_profile_id AND n.configuration_id>c.configuration_id);
+CREATE OR REPLACE VIEW v_source_configuration_values AS
+SELECT b.configuration_id,
+ MAX(CASE WHEN b.signal_id='sg' THEN b.entity_id END) AS sg_entity_id,
+ MAX(CASE WHEN b.signal_id='temperature' THEN b.entity_id END) AS temperature_entity_id,
+ MAX(CASE WHEN b.signal_id='heartbeat' THEN b.entity_id END) AS heartbeat_entity_id,
+ MAX(CASE WHEN b.signal_id='rssi' THEN b.entity_id END) AS rssi_entity_id,
+ MAX(CASE WHEN b.signal_id='pressure' THEN b.entity_id END) AS pressure_entity_id
+FROM measurement_source_signal_bindings b GROUP BY b.configuration_id;
+CREATE OR REPLACE VIEW v_measurement_source_profiles AS
+SELECT p.*,c.configuration_id,v.sg_entity_id,v.temperature_entity_id,v.heartbeat_entity_id,v.rssi_entity_id,v.pressure_entity_id
+FROM measurement_source_profiles p JOIN v_current_measurement_source_configuration c ON c.source_profile_id=p.source_profile_id JOIN v_source_configuration_values v ON v.configuration_id=c.configuration_id;
+CREATE OR REPLACE VIEW v_current_session_measurement_source_configuration AS
+SELECT c.* FROM session_measurement_source_configurations c JOIN session_measurement_sources m ON m.session_id=c.session_id
+WHERE c.effective_from<=m.last_import_cutoff_at AND NOT EXISTS(SELECT 1 FROM session_measurement_source_configurations n WHERE n.session_id=c.session_id AND n.effective_from<=m.last_import_cutoff_at AND(n.effective_from>c.effective_from OR n.effective_from=c.effective_from AND n.configuration_id>c.configuration_id));
+CREATE OR REPLACE VIEW v_session_source_configuration_values AS
+SELECT b.session_id,b.configuration_id,
+ MAX(CASE WHEN b.signal_id='sg' THEN b.entity_id END) AS sg_entity_id,
+ MAX(CASE WHEN b.signal_id='temperature' THEN b.entity_id END) AS temperature_entity_id,
+ MAX(CASE WHEN b.signal_id='heartbeat' THEN b.entity_id END) AS heartbeat_entity_id,
+ MAX(CASE WHEN b.signal_id='rssi' THEN b.entity_id END) AS rssi_entity_id,
+ MAX(CASE WHEN b.signal_id='pressure' THEN b.entity_id END) AS pressure_entity_id,
+ JSON_ARRAYAGG(JSON_OBJECT('signal_id',b.signal_id,'observation_kind',s.observation_kind,'input_mode',b.input_mode,'entity_id',b.entity_id,'unit_id',b.unit_id,'sensor_required',s.sensor_required,'minimum_value',b.minimum_value,'maximum_value',b.maximum_value,'multiplier',u.multiplier,'additive_offset',u.additive_offset) ORDER BY s.display_order) AS signal_bindings
+FROM session_measurement_signal_bindings b JOIN measurement_source_signals s ON s.signal_id=b.signal_id JOIN measurement_source_units u ON u.signal_id=b.signal_id AND u.unit_id=b.unit_id GROUP BY b.session_id,b.configuration_id;
+CREATE OR REPLACE VIEW v_session_measurement_source_profiles AS
+SELECT p.*,m.session_id,c.configuration_id,c.effective_from AS configuration_started_at,v.sg_entity_id,v.temperature_entity_id,v.heartbeat_entity_id,v.rssi_entity_id,v.pressure_entity_id,v.signal_bindings,
+ (SELECT MIN(n.effective_from) FROM session_measurement_source_configurations n WHERE n.session_id=m.session_id AND n.effective_from>m.last_import_cutoff_at) AS next_configuration_at
+FROM measurement_source_profiles p JOIN session_measurement_sources m ON m.source_profile_id=p.source_profile_id JOIN v_current_session_measurement_source_configuration c ON c.session_id=m.session_id JOIN v_session_source_configuration_values v ON v.session_id=c.session_id AND v.configuration_id=c.configuration_id;
+CREATE OR REPLACE VIEW v_source_binding_options AS
+SELECT s.signal_id,c.entity_id,c.friendly_name,u.unit_id,u.label AS unit_display,c.state_text,c.last_updated,c.check_id,
+ CONCAT(c.friendly_name,' · ',c.entity_id,' · ',u.label) AS option_label,IF(c.state_text IN('unknown','unavailable'),'Utilgjengelig','Tilgjengelig') AS availability_display
+FROM measurement_source_signals s JOIN measurement_source_units u ON u.signal_id=s.signal_id JOIN ha_sensor_catalog c ON c.ha_unit=u.ha_unit
+WHERE(s.observation_kind='timestamp' AND(c.device_class='timestamp' OR c.state_text REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}T')) OR(s.observation_kind='number' AND c.device_class<>'timestamp' AND(c.state_text REGEXP '^[-+]?[0-9]+([.][0-9]+)?([eE][-+]?[0-9]+)?$' OR c.state_text IN('unknown','unavailable')));
+CREATE OR REPLACE VIEW v_source_binding_option_sets AS
+SELECT o.signal_id,JSON_ARRAYAGG(JSON_OBJECT('entity_id',o.entity_id,'unit_id',o.unit_id,'label',o.option_label,'status_display',o.availability_display) ORDER BY o.friendly_name,o.entity_id) AS options FROM v_source_binding_options o GROUP BY o.signal_id;
+CREATE OR REPLACE VIEW v_source_configuration_history AS
+SELECT c.configuration_id,c.source_profile_id,c.created_at,c.note,JSON_ARRAYAGG(JSON_OBJECT('label',s.label,'mode',b.input_mode,'entity_id',b.entity_id,'unit',u.label) ORDER BY s.display_order) AS bindings
+FROM measurement_source_configurations c JOIN measurement_source_signal_bindings b ON b.configuration_id=c.configuration_id JOIN measurement_source_signals s ON s.signal_id=b.signal_id JOIN measurement_source_units u ON u.signal_id=b.signal_id AND u.unit_id=b.unit_id GROUP BY c.configuration_id,c.source_profile_id,c.created_at,c.note;
+CREATE OR REPLACE VIEW v_source_configuration_fields AS
+SELECT p.source_profile_id,c.configuration_id,s.signal_id,s.label,s.display_order,s.description,s.sensor_required,s.show_on_start,b.input_mode,b.entity_id,b.unit_id,
+ CASE WHEN b.input_mode='manual' THEN 'Manuell registrering' WHEN h.entity_id IS NULL THEN 'Ikke kontrollert / ikke funnet i siste kontroll' WHEN h.state_text IN('unknown','unavailable') THEN 'Utilgjengelig' ELSE 'Tilgjengelig' END AS status_display,
+ CASE WHEN b.input_mode='manual' THEN 'Ingen automatisk måling' WHEN h.entity_id IS NULL THEN 'Ingen kontrollert måling' ELSE CONCAT(h.state_text,IF(h.ha_unit='','',CONCAT(' ',h.ha_unit))) END AS latest_value_display,
+ IF(h.last_updated IS NULL,'Ikke kontrollert',DATE_FORMAT(CONVERT_TZ(h.last_updated,'+00:00','Europe/Oslo'),'%d.%m.%Y %H:%i:%s')) AS last_updated_display,
+ COALESCE(h.friendly_name,b.entity_id,'Manuell registrering') AS entity_display,u.label AS unit_display,
+ (SELECT canonical.unit_id FROM measurement_source_units canonical WHERE canonical.signal_id=s.signal_id AND canonical.is_canonical=1) AS manual_unit_id,
+ IF(s.sensor_required=1,JSON_ARRAY(JSON_OBJECT('value','sensor','label','HA-sensor')),JSON_ARRAY(JSON_OBJECT('value','manual','label','Manuell registrering'),JSON_OBJECT('value','sensor','label','HA-sensor'))) AS modes,
+ COALESCE(option_set.options,JSON_ARRAY()) AS options
+FROM measurement_source_profiles p JOIN v_current_measurement_source_configuration c ON c.source_profile_id=p.source_profile_id CROSS JOIN measurement_source_signals s JOIN measurement_source_signal_bindings b ON b.configuration_id=c.configuration_id AND b.signal_id=s.signal_id JOIN measurement_source_units u ON u.signal_id=b.signal_id AND u.unit_id=b.unit_id LEFT JOIN ha_sensor_catalog h ON h.entity_id=b.entity_id LEFT JOIN v_source_binding_option_sets option_set ON option_set.signal_id=s.signal_id;
+
 -- Gjæringsassistent – derived views
 -- MariaDB is authoritative. Runtime history is append-only; current state is derived.
 
@@ -1188,7 +1238,7 @@ SELECT
     e.created_at AS evaluation_created_at,
     sc.label,sc.exception_allowed,
     bx.exception_type,bx.note AS exception_note,
-    CASE WHEN sc.exception_allowed=1 AND COALESCE(c.met,0)<>1 AND c.evaluation_status<>'invalid_configuration' THEN 1 ELSE 0 END AS exception_register_allowed,
+    CASE WHEN sc.exception_allowed=1 AND (c.met IS NULL OR c.met<>1) AND c.evaluation_status<>'invalid_configuration' AND (c.criterion_revision_id <=> current_rev.criterion_revision_id) THEN 1 ELSE 0 END AS exception_register_allowed,
     m.label AS metric_label,
     m.unit AS metric_unit,
     r.requirement_display,
@@ -1332,6 +1382,7 @@ SELECT
     c.*,
     e.evaluated_at,
     e.created_at AS evaluation_created_at,
+    CASE WHEN sc.exception_allowed=1 AND (c.met IS NULL OR c.met<>1) AND c.evaluation_status<>'invalid_configuration' AND (c.criterion_revision_id <=> current_rev.criterion_revision_id) THEN 1 ELSE 0 END AS exception_register_allowed,
     sc.label,
     m.label AS metric_label,
     m.unit AS metric_unit,
@@ -1479,7 +1530,7 @@ SELECT
       WHEN s.lifecycle='active' AND sm.session_id IS NOT NULL THEN 'HA-import aktiv'
       ELSE 'Målekilde konfigurert · ingen aktiv gjæring'
     END AS message,
-    p.source_profile_id,p.name,p.source_type,p.sg_entity_id,p.temperature_entity_id,p.heartbeat_entity_id,p.rssi_entity_id,
+    p.source_profile_id,p.name,p.source_type,CASE WHEN sm.session_id IS NULL THEN p.sg_entity_id ELSE active_source.sg_entity_id END AS sg_entity_id,CASE WHEN sm.session_id IS NULL THEN p.temperature_entity_id ELSE active_source.temperature_entity_id END AS temperature_entity_id,CASE WHEN sm.session_id IS NULL THEN p.heartbeat_entity_id ELSE active_source.heartbeat_entity_id END AS heartbeat_entity_id,CASE WHEN sm.session_id IS NULL THEN p.rssi_entity_id ELSE active_source.rssi_entity_id END AS rssi_entity_id,
     p.poll_interval_seconds,p.gap_threshold_seconds,p.fresh_age_minutes,p.stale_age_minutes,
     s.session_id,s.is_demo,s.batch_name,s.lifecycle,
     sm.source_started_at,sm.last_import_cutoff_at,sm.last_success_at,sm.last_error,
@@ -1510,9 +1561,10 @@ SELECT
     CASE WHEN sm.last_error IS NULL OR sm.last_error='' THEN 'Ingen' ELSE sm.last_error END COLLATE utf8mb4_unicode_ci AS last_error_display,
     'MariaDB' AS authority,
  c.counts_display AS import_counts_display,c.coverage_display AS import_coverage_display,c.summary_display AS import_summary_display
-FROM measurement_source_profiles p
+FROM v_measurement_source_profiles p
 LEFT JOIN v_current_session_summary s ON 1=1
 LEFT JOIN session_measurement_sources sm ON sm.session_id=s.session_id
+LEFT JOIN v_session_measurement_source_profiles active_source ON active_source.session_id=s.session_id
 LEFT JOIN measurements_5m m
   ON m.session_id=s.session_id
  AND m.bucket_at=(SELECT MAX(m2.bucket_at) FROM measurements_5m m2 WHERE m2.session_id=s.session_id)
@@ -2041,6 +2093,8 @@ FROM ( SELECT s.session_id,s.pitched_at AS happened_at,CONVERT(('Pitch') USING u
  UNION ALL SELECT e.session_id,e.released_at,CONVERT('Livsløp' USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT('Gjort klar for ny gjæring' USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT(COALESCE(NULL,'–') USING utf8mb4) COLLATE utf8mb4_unicode_ci FROM session_release_events e
  UNION ALL SELECT e.session_id,e.requested_at,CONVERT('Arkivering' USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT(CONCAT('Arkiveringsforsøk ',e.attempt_no) USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT(COALESCE(NULL,'–') USING utf8mb4) COLLATE utf8mb4_unicode_ci FROM session_export_attempts e
  UNION ALL SELECT e.session_id,e.completed_at,CONVERT('Eksport' USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT(CONCAT(CONVERT(e.export_kind USING utf8mb4),' · ',CONVERT(e.status USING utf8mb4),' · forsøk ',e.attempt_no) USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT(COALESCE(e.error_message,'–') USING utf8mb4) COLLATE utf8mb4_unicode_ci FROM session_exports e
+ UNION ALL
+ SELECT c.session_id,c.effective_from,CONVERT('Målekilde' USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT(CONCAT('Sensorbindinger · ',c.profile_name,IF(c.note IS NULL,'',CONCAT(' · ',c.note))) USING utf8mb4) COLLATE utf8mb4_unicode_ci,CONVERT('source_configuration' USING utf8mb4) COLLATE utf8mb4_unicode_ci FROM session_measurement_source_configurations c
 ) t;
 
 
@@ -3497,15 +3551,15 @@ CASE WHEN q.applicable=0 THEN 'Ikke aktuelt for valgt pitchmodus'
  WHEN q.converter_id IN('number','integer') AND (CAST(q.database_value AS DECIMAL(24,8))<q.minimum_value OR CAST(q.database_value AS DECIMAL(24,8))>q.maximum_value OR q.positive_required=1 AND CAST(q.database_value AS DECIMAL(24,8))<=0) THEN CONCAT('Ugyldig verdi: ',q.label)
  WHEN q.converter_id='select' AND NOT EXISTS(SELECT 1 FROM ha_entity_input_value_mappings m WHERE m.entity_id=q.entity_id AND m.database_value=q.database_value) THEN CONCAT('Ugyldig valg: ',q.label)
  ELSE 'Lagret i MariaDB' END AS validation_message,
-IF(q.database_value IS NULL,'Ikke angitt',q.database_value) AS value_display
+CASE WHEN q.database_value IS NULL THEN 'Ikke angitt' WHEN q.converter_id IN('number','integer') THEN REPLACE(q.input_value,'.',',') ELSE q.database_value END AS value_display
 FROM (
- SELECT f.entity_id,b.session_field AS field_name,f.section_id,f.sort_order,REPLACE(r.display_name,'Gjæringsassistent ','') AS label,b.converter_id,
+ SELECT f.entity_id,b.session_field AS field_name,f.section_id,f.sort_order,REPLACE(r.display_name,'Gjæringsassistent ','') AS label,r.description AS help_text,b.converter_id,
  IF(b.session_field='pitched_at',IF(d.pitch_time_mode='specified',1,0),f.required_value) AS required_value,f.positive_required,
  IF(EXISTS(SELECT 1 FROM start_field_pitch_modes m WHERE m.entity_id=f.entity_id),EXISTS(SELECT 1 FROM start_field_pitch_modes m WHERE m.entity_id=f.entity_id AND m.pitch_mode_id=d.pitch_mode_id),1) AS applicable,
  v.database_value,
- CASE b.converter_id WHEN 'select' THEN (SELECT m.ha_value FROM ha_entity_input_value_mappings m WHERE m.entity_id=f.entity_id AND m.database_value=v.database_value) WHEN 'datetime' THEN DATE_FORMAT(CONVERT_TZ(STR_TO_DATE(v.database_value,'%Y-%m-%dT%H:%i:%s.%fZ'),'+00:00','Europe/Oslo'),'%Y-%m-%dT%H:%i:%s') ELSE v.database_value END AS input_value,
- CASE b.converter_id WHEN 'select' THEN 'select' WHEN 'datetime' THEN 'datetime-local' WHEN 'text' THEN 'text' ELSE 'number' END AS input_type,
- c.minimum_value,c.maximum_value,c.step_value,
+ CASE b.converter_id WHEN 'select' THEN (SELECT m.ha_value FROM ha_entity_input_value_mappings m WHERE m.entity_id=f.entity_id AND m.database_value=v.database_value) WHEN 'datetime' THEN DATE_FORMAT(CONVERT_TZ(STR_TO_DATE(v.database_value,'%Y-%m-%dT%H:%i:%s.%fZ'),'+00:00','Europe/Oslo'),'%Y-%m-%dT%H:%i:%s') WHEN 'number' THEN REPLACE(FORMAT(CAST(v.database_value AS DECIMAL(24,8)),c.display_decimals,'en_US'),',','') WHEN 'integer' THEN REPLACE(FORMAT(CAST(v.database_value AS DECIMAL(24,8)),c.display_decimals,'en_US'),',','') ELSE v.database_value END AS input_value,
+ CASE b.converter_id WHEN 'select' THEN 'select' WHEN 'datetime' THEN 'datetime-local' WHEN 'text' THEN 'text' ELSE IF(c.input_mode='slider','range','number') END AS input_type,
+ c.minimum_value,c.maximum_value,c.step_value,c.display_decimals,
  COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('value',m.ha_value,'label',m.ha_value) ORDER BY m.ha_value) FROM ha_entity_input_value_mappings m WHERE m.entity_id=f.entity_id),JSON_ARRAY()) AS options_json
  FROM start_field_rules f JOIN ha_entity_input_bindings b ON b.entity_id=f.entity_id JOIN ha_entity_registry r ON r.entity_id=f.entity_id
  JOIN session_setup_draft d ON d.draft_key='current' JOIN v_start_field_values v ON v.draft_key=d.draft_key AND v.entity_id=f.entity_id
@@ -3553,7 +3607,7 @@ UTC_TIMESTAMP(3) AS database_now
 FROM (SELECT s.session_id,s.lifecycle,s.is_demo,m.source_profile_id,m.source_started_at,m.last_import_cutoff_at,m.last_error,s.is_historical,
 COALESCE(s.historical_ended_at,FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(s.created_at)/p.poll_interval_seconds)*p.poll_interval_seconds)) AS initial_target_at,
 (SELECT COUNT(*) FROM measurements_5m v WHERE v.session_id=s.session_id) AS demo_points
-FROM (SELECT 1 AS singleton) a LEFT JOIN v_current_session s ON 1=1 LEFT JOIN session_measurement_sources m ON m.session_id=s.session_id LEFT JOIN measurement_source_profiles p ON p.source_profile_id=m.source_profile_id) x
+FROM (SELECT 1 AS singleton) a LEFT JOIN v_current_session s ON 1=1 LEFT JOIN session_measurement_sources m ON m.session_id=s.session_id LEFT JOIN v_measurement_source_profiles p ON p.source_profile_id=m.source_profile_id) x
 LEFT JOIN v_session_import_coverage c ON c.session_id=x.session_id;
 
 
@@ -3597,7 +3651,7 @@ CREATE OR REPLACE VIEW v_ha_start_status_payload AS
 SELECT r.projection_id,r.output_slot,
 JSON_OBJECT('state',s.state,'attributes',JSON_MERGE_PATCH(
  JSON_OBJECT('phase',s.state,'message',s.message,'source','MariaDB','updated_at',DATE_FORMAT(s.database_now,'%Y-%m-%dT%H:%i:%s.%fZ'),
- 'progress_percent',s.progress_percent,'start_ready',(SELECT ready_to_start FROM v_start_readiness),'start_readiness_message',(SELECT message FROM v_start_readiness),'start_fields',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('entity_id',f.entity_id,'field_name',f.field_name,'section_id',f.section_id,'label',f.label,'input_type',f.input_type,'value',f.input_value,'value_display',f.value_display,'minimum',f.minimum_value,'maximum',f.maximum_value,'step',f.step_value,'required',f.required_value,'applicable',f.applicable,'validation_status',f.validation_status,'validation_message',f.validation_message,'options',JSON_QUERY(f.options_json,'$')) ORDER BY f.sort_order) FROM v_start_fields f WHERE NOT EXISTS(SELECT 1 FROM v_current_session)),JSON_ARRAY()),'availability',JSON_OBJECT('session_id',IF(s.session_id IS NULL,'not_started','present'),
+ 'progress_percent',s.progress_percent,'start_ready',(SELECT ready_to_start FROM v_start_readiness),'start_readiness_message',(SELECT message FROM v_start_readiness),'start_fields',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('entity_id',f.entity_id,'field_name',f.field_name,'help_text',f.help_text,'section_id',f.section_id,'label',f.label,'input_type',f.input_type,'value',f.input_value,'value_display',f.value_display,'minimum',f.minimum_value,'maximum',f.maximum_value,'step',f.step_value,'required',f.required_value,'applicable',f.applicable,'validation_status',f.validation_status,'validation_message',f.validation_message,'options',JSON_QUERY(f.options_json,'$')) ORDER BY f.sort_order) FROM v_start_fields f WHERE NOT EXISTS(SELECT 1 FROM v_current_session)),JSON_ARRAY()),'availability',JSON_OBJECT('session_id',IF(s.session_id IS NULL,'not_started','present'),
  'processed_to',IF(s.last_import_cutoff_at IS NULL,'not_yet','present'),'target_import_end',IF(s.initial_target_at IS NULL,'not_applicable','present'),
  'source_started_at',IF(s.source_started_at IS NULL,'not_applicable','present'))),
  JSON_OBJECT('session_id',s.session_id,'processed_to',DATE_FORMAT(s.last_import_cutoff_at,'%Y-%m-%dT%H:%i:%s.%fZ'),
@@ -3758,12 +3812,14 @@ FROM v_process_guidance_effective e JOIN v_current_process_visit cp ON cp.sessio
 
 
 CREATE OR REPLACE VIEW v_technical_event_presentation AS
-SELECT e.*,ROW_NUMBER() OVER(ORDER BY e.occurred_at DESC,e.created_at DESC,e.event_seq DESC) AS event_order,
+SELECT e.*,COALESCE(component.display_name,node_component.display_name,'Kilde ikke registrert') AS source_display,
+COALESCE(NULLIF(CONCAT_WS(' · ',e.source_component,e.source_node_id,e.source_node_name,e.source_type),''),'Ingen rå kildeidentitet registrert') AS source_identity_display,
+ROW_NUMBER() OVER(ORDER BY e.occurred_at DESC,e.created_at DESC,e.event_seq DESC) AS event_order,
 DATE_FORMAT(CONVERT_TZ(e.occurred_at,'+00:00','Europe/Oslo'),'%d.%m.%Y %H:%i:%s') AS occurred_at_local,
 IF(CHAR_LENGTH(CONCAT(UPPER(e.severity),' · ',e.code,' · ',e.message))>240,CONCAT(LEFT(CONCAT(UPPER(e.severity),' · ',e.code,' · ',e.message),237),'…'),CONCAT(UPPER(e.severity),' · ',e.code,' · ',e.message)) AS event_state,
 JSON_OBJECT('event_id',e.event_id,'event_seq',e.event_seq,'severity',e.severity,'event_type',e.event_type,'code',e.code,'subsystem',e.subsystem,'message',e.message,'occurred_at',e.occurred_at,
-'occurred_at_local',DATE_FORMAT(CONVERT_TZ(e.occurred_at,'+00:00','Europe/Oslo'),'%d.%m.%Y %H:%i:%s'),'source_component',e.source_component,'source_node_id',e.source_node_id,'issue_key',e.issue_key) AS event_payload
-FROM technical_events e;
+'occurred_at_local',DATE_FORMAT(CONVERT_TZ(e.occurred_at,'+00:00','Europe/Oslo'),'%d.%m.%Y %H:%i:%s'),'source_display',COALESCE(component.display_name,node_component.display_name,'Kilde ikke registrert'),'source_component',e.source_component,'source_node_id',e.source_node_id,'issue_key',e.issue_key) AS event_payload
+FROM technical_events e LEFT JOIN technical_components component ON component.component_id=e.source_component LEFT JOIN technical_components node_component ON node_component.component_id=e.source_node_id;
 
 
 

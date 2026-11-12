@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS ha_entity_number_constraints (
     maximum_value DECIMAL(18,6) NOT NULL,
     step_value DECIMAL(18,6) NOT NULL CHECK (step_value > 0),
     input_mode VARCHAR(16) NOT NULL CHECK (input_mode IN ('box','slider')),
+    display_decimals TINYINT UNSIGNED NOT NULL CHECK(display_decimals<=6),
     created_at DATETIME(3) NOT NULL,
     CONSTRAINT fk_ha_entity_number_constraints__entity FOREIGN KEY(entity_id) REFERENCES ha_entity_registry(entity_id) ON DELETE CASCADE,
     CHECK (minimum_value <= maximum_value)
