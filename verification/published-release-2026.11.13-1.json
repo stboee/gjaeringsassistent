@@ -1,0 +1,20 @@
+{
+  "application_version": "2026.11.13-1",
+  "verified_at_utc": "2026-11-13T09:36:34.291208+00:00",
+  "source_commit": "309625238899dce6a69c7f4b2536ae8f1cb3e9a7",
+  "tag": "v2026.11.13-1",
+  "release_url": "https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.13-1",
+  "workflow_run_id": 43402451122,
+  "workflow_conclusion": "success",
+  "artifact": "gjaeringsassistent-2026.11.13-1.zip",
+  "artifact_bytes": 1844278,
+  "artifact_sha256": "06cb567d3e155cd0249fd07705e92b6cf17ae104fe820f9e4d8800c02a64a6ec",
+  "downloaded_asset_verified": true,
+  "sidecar_verified": true,
+  "zip_crc_verified": true,
+  "internal_sha256_files_verified": 239,
+  "build_source_commit_matches_tag": true,
+  "automated_release_results": 39,
+  "target_ha_uat": "not_run",
+  "status": "pass"
+}

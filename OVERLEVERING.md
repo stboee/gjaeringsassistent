@@ -37,3 +37,9 @@ Append-only gjelder fakta/revisjoner i hver beholdt sesjon. Hele historiske sesj
 ## Publisering
 
 Datoversjon ÅÅÅÅ.MM.DD-N med v-prefiks på tag og kort releasebeskrivelse. Releasejobben ved VERSION-endring bygger og kontrollerer samme kildecommit før ZIP/SHA publiseres. Kontroller Actions, tag og nedlastet pakke; et lokalt forberedelsesbygg har en annen hash enn CI-pakken. Eksisterende tag/artefakt skal ikke omskrives.
+
+## Bekreftet publisering
+
+Publisert 13.11.2026 som [v2026.11.13-1](https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.13-1), kildecommit `309625238899dce6a69c7f4b2536ae8f1cb3e9a7`. [Actions 43402451122](https://github.com/stboee/gjaeringsassistent/actions/runs/43402451122) bestod. Den faktisk nedlastede CI-pakken er 1 844 278 byte og har SHA-256 `06cb567d3e155cd0249fd07705e92b6cf17ae104fe820f9e4d8800c02a64a6ec`. Sidefil, ZIP-integritet, alle 239 interne filsjekksummer og pakkens source_commit er kontrollert.
+
+Se verification/published-release-2026.11.13-1.json. Denne publiseringskvitteringen er dokumentert på main etter taggen og endrer ikke den publiserte pakken. Målmiljøinstallasjon og de 14 UAT er fortsatt ikke bekreftet.
