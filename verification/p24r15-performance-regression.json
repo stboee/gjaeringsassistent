@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.09-2",
+  "application_version": "2026.11.13-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "fixture": {
@@ -13,59 +13,59 @@
     {
       "view": "v_graph_definitions",
       "rows": 6,
-      "elapsed_ms": 1830,
-      "rows_read": 78790,
+      "elapsed_ms": 11886,
+      "rows_read": 79787,
       "cpu_ms": null
     },
     {
       "view": "v_graph_series",
       "rows": 26374,
-      "elapsed_ms": 1800,
-      "rows_read": 72010,
+      "elapsed_ms": 6628,
+      "rows_read": 71989,
       "cpu_ms": null
     },
     {
       "view": "v_graph_latest",
       "rows": 18,
-      "elapsed_ms": 1897,
-      "rows_read": 72010,
+      "elapsed_ms": 3831,
+      "rows_read": 71989,
       "cpu_ms": null
     },
     {
       "view": "v_graph_axis_ticks",
       "rows": 41,
-      "elapsed_ms": 1620,
-      "rows_read": 72768,
+      "elapsed_ms": 3658,
+      "rows_read": 73765,
       "cpu_ms": null
     },
     {
       "view": "v_graph_time_markers",
       "rows": 48,
-      "elapsed_ms": 1745,
-      "rows_read": 88781,
+      "elapsed_ms": 3716,
+      "rows_read": 89778,
       "cpu_ms": null
     }
   ],
   "baseline_graph_total": {
-    "elapsed_ms": 8892,
-    "rows_read": 384359
+    "elapsed_ms": 29719,
+    "rows_read": 387308
   },
   "full_overview": {
-    "elapsed_ms": 13472,
-    "rows_read": 54523,
+    "elapsed_ms": 29777,
+    "rows_read": 54553,
     "cpu_ms": null
   },
   "with_three_historical_series": {
-    "elapsed_ms": 12906,
-    "rows_read": 54568,
+    "elapsed_ms": 19755,
+    "rows_read": 54598,
     "cpu_ms": null
   },
   "unchanged_poll": {
-    "elapsed_ms": 8,
-    "rows_read": 371,
+    "elapsed_ms": 25,
+    "rows_read": 372,
     "cpu_ms": null
   },
-  "concurrent_write_ms": 2.317258999995829,
+  "concurrent_write_ms": 2.644692000001669,
   "checks": [
     "21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages",
     "three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot",

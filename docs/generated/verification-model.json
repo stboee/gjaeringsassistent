@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "requirements_count": 264,
   "decisions_count": 68,
-  "verification_count": 23,
+  "verification_count": 22,
   "tests_count": 53,
   "test_types": {
     "TECH": 12,
@@ -3010,7 +3010,8 @@
       ],
       "tests": [
         "TEST-FUNC-001",
-        "TEST-FUNC-020"
+        "TEST-FUNC-020",
+        "TEST-FUNC-024"
       ]
     },
     {
@@ -3074,7 +3075,9 @@
       ],
       "tests": [
         "TEST-FUNC-009",
-        "TEST-UAT-003"
+        "TEST-UAT-003",
+        "TEST-FUNC-026",
+        "TEST-FUNC-027"
       ]
     },
     {
@@ -3189,7 +3192,9 @@
         "TEST-TECH-006",
         "TEST-UAT-008",
         "TEST-FUNC-012",
-        "TEST-UAT-013"
+        "TEST-UAT-013",
+        "TEST-FUNC-026",
+        "TEST-FUNC-027"
       ]
     },
     {
@@ -3312,26 +3317,9 @@
       ],
       "tests": [
         "TEST-FUNC-024",
-        "TEST-FUNC-025"
-      ]
-    },
-    {
-      "verification_id": "VER-FUNC-019",
-      "verification_type": "functional",
-      "title": "DB-eid operatørflate og sporbare sensorer",
-      "acceptance_criterion": "Kontroller/lagre gir DB-kvittering; frozen kilde følger cursor; manglende trykk stopper ikke import; B/P-fravik registreres/trekkes tilbake og UI viser DB-felt.",
-      "requirements": [
-        "REQ-HA-093",
-        "REQ-HA-094",
-        "REQ-HA-095",
-        "REQ-MOTOR-079",
-        "REQ-MOTOR-080"
-      ],
-      "tests": [
+        "TEST-FUNC-025",
         "TEST-FUNC-026",
-        "TEST-FUNC-027",
-        "TEST-TECH-012",
-        "TEST-FUNC-025"
+        "TEST-FUNC-027"
       ]
     }
   ],
@@ -3781,7 +3769,7 @@
       "test_id": "TEST-FUNC-024",
       "test_type": "FUNC",
       "title": "DB-eid slurry-start og operativ P/B-kontroll",
-      "description": "Faktisk SQL og NR-feltbane: NULL, eksplisitt samme-verdi-lagring, slurry, snapshot og beholdt gammel sesjon. Simulert HA-transport.",
+      "description": "Faktisk SQL/NR-feltbane: komplett første målesett og sen rollback, NULL og registrert 0, bevart startobservasjon, slurry, snapshot/samtidig redigering, B/P-fravik ved manglende tidsserier og operativ kontroll med beholdt gammel sesjon. HA-transport er kontrollert.",
       "method_type": "node_integration",
       "implementation_ref": "tests/test-start-control-live.js",
       "automated": true
@@ -3798,8 +3786,8 @@
     {
       "test_id": "TEST-FUNC-026",
       "test_type": "FUNC",
-      "title": "Sensoroppsett og felles kriteriefravik",
-      "description": "Faktisk SQL/NR: sensorvalg, kildegrense, enheter, valgfritt trykk og B/P-fravik. Kontrollert HA-transport.",
+      "title": "Reviderte målekilder og operatorgrunnlag gjennom faktisk DB",
+      "description": "Faktisk MariaDB/NR: slidere og presisjon fra register, kontrollert HA-katalog, kvittering, avvisning, valgfritt trykk, kPa til bar, frosne bindinger, live kildegrense og tekniske kildenavn.",
       "method_type": "node_integration",
       "implementation_ref": "tests/test-operator-config-live.js",
       "automated": true
@@ -3807,8 +3795,8 @@
     {
       "test_id": "TEST-FUNC-027",
       "test_type": "FUNC",
-      "title": "Operatørflate i Chromium",
-      "description": "Virkelige DOM-kontroller med DB-/NR-feltbane, sliderfravær/0, temperatur, kildevalg og B/P-editorer. Kontrollert HA-skall, ikke mål-UAT.",
+      "title": "Operatørkontroller i faktisk Chromium",
+      "description": "Faktisk kortkode i Chromium med kontrollert HA-skall og reelle DB-/NR-kommandoer: slider 0/5, temperatur, sensorvalg, beholdt redigering, DB-kvittering, SQL-genererte B/P-kontroller og mobilbredde. Dette er ikke installert HA-UAT.",
       "method_type": "node_integration",
       "implementation_ref": "tests/test-operator-ui.js",
       "automated": true
@@ -3953,21 +3941,6 @@
       "requirements": [
         "REQ-MOTOR-072",
         "REQ-HA-091"
-      ]
-    },
-    {
-      "decision_id": "DEC-SOURCES-001",
-      "requirements": [
-        "REQ-HA-094",
-        "REQ-MOTOR-079",
-        "REQ-MOTOR-080"
-      ]
-    },
-    {
-      "decision_id": "DEC-OPERATOR-001",
-      "requirements": [
-        "REQ-HA-093",
-        "REQ-HA-095"
       ]
     }
   ],

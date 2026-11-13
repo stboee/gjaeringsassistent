@@ -1,0 +1,84 @@
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-install-upgrade-live.js
+SOURCE 0.1.0-prototype24-r16 sql/00-template-schema.sql
+SOURCE 0.1.0-prototype24-r16 sql/01-template-registry-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/10-runtime-schema.sql
+SOURCE 0.1.0-prototype24-r16 sql/11-runtime-routines.sql
+SOURCE 0.1.0-prototype24-r16 sql/02-runtime-registry-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/03-w3470-template-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/04-ale-templates-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/20-views.sql
+SOURCE 0.1.0-prototype24-r16 sql/21-system-metadata-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/22-demo-reference-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/23-measurement-source-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/24-verification-metadata-seed.sql
+SOURCE 0.1.0-prototype24-r16 sql/25-release-verification-results-seed.sql
+PASS changed source structure and failed backup prevent migration and preserve all existing domain rows
+PASS 0.1.0-prototype24-r16: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
+PASS 0.1.0-prototype24-r16: reinstall keeps data and matching migration receipts; version expectations agree
+SOURCE 2026.11.07-1 sql/00-template-schema.sql
+SOURCE 2026.11.07-1 sql/01-template-registry-seed.sql
+SOURCE 2026.11.07-1 sql/10-runtime-schema.sql
+SOURCE 2026.11.07-1 sql/11-runtime-routines.sql
+SOURCE 2026.11.07-1 sql/02-runtime-registry-seed.sql
+SOURCE 2026.11.07-1 sql/03-w3470-template-seed.sql
+SOURCE 2026.11.07-1 sql/04-ale-templates-seed.sql
+SOURCE 2026.11.07-1 sql/20-views.sql
+SOURCE 2026.11.07-1 sql/21-system-metadata-seed.sql
+SOURCE 2026.11.07-1 sql/22-demo-reference-seed.sql
+SOURCE 2026.11.07-1 sql/23-measurement-source-seed.sql
+SOURCE 2026.11.07-1 sql/24-verification-metadata-seed.sql
+SOURCE 2026.11.07-1 sql/25-release-verification-results-seed.sql
+PASS 2026.11.07-1: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
+PASS 2026.11.07-1: reinstall keeps data and matching migration receipts; version expectations agree
+SOURCE 2026.11.09-1 sql/00-template-schema.sql
+SOURCE 2026.11.09-1 sql/01-template-registry-seed.sql
+SOURCE 2026.11.09-1 sql/10-runtime-schema.sql
+SOURCE 2026.11.09-1 sql/11-runtime-routines.sql
+SOURCE 2026.11.09-1 sql/02-runtime-registry-seed.sql
+SOURCE 2026.11.09-1 sql/03-w3470-template-seed.sql
+SOURCE 2026.11.09-1 sql/04-ale-templates-seed.sql
+SOURCE 2026.11.09-1 sql/20-views.sql
+SOURCE 2026.11.09-1 sql/21-system-metadata-seed.sql
+SOURCE 2026.11.09-1 sql/22-demo-reference-seed.sql
+SOURCE 2026.11.09-1 sql/23-measurement-source-seed.sql
+SOURCE 2026.11.09-1 sql/24-verification-metadata-seed.sql
+SOURCE 2026.11.09-1 sql/25-release-verification-results-seed.sql
+PASS 2026.11.09-1: invalid prior receipt and altered schema reject file upgrade before stopping Node-RED
+PASS 2026.11.09-1: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
+PASS 2026.11.09-1: reinstall keeps data and matching migration receipts; version expectations agree
+SOURCE 2026.11.09-2 sql/00-template-schema.sql
+SOURCE 2026.11.09-2 sql/01-template-registry-seed.sql
+SOURCE 2026.11.09-2 sql/10-runtime-schema.sql
+SOURCE 2026.11.09-2 sql/11-runtime-routines.sql
+SOURCE 2026.11.09-2 sql/02-runtime-registry-seed.sql
+SOURCE 2026.11.09-2 sql/03-w3470-template-seed.sql
+SOURCE 2026.11.09-2 sql/04-ale-templates-seed.sql
+SOURCE 2026.11.09-2 sql/20-views.sql
+SOURCE 2026.11.09-2 sql/21-system-metadata-seed.sql
+SOURCE 2026.11.09-2 sql/22-demo-reference-seed.sql
+SOURCE 2026.11.09-2 sql/23-measurement-source-seed.sql
+SOURCE 2026.11.09-2 sql/24-verification-metadata-seed.sql
+SOURCE 2026.11.09-2 sql/25-release-verification-results-seed.sql
+PASS 2026.11.09-2: invalid prior receipt and altered schema reject file upgrade before stopping Node-RED
+PASS 2026.11.09-2: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
+PASS 2026.11.09-2: reinstall keeps data and matching migration receipts; version expectations agree
+PASS unknown source is rejected before stopping Node-RED or changing user data
+PASS fresh installation initializes an empty database without a synthetic session or reset

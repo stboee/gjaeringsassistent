@@ -1,7 +1,7 @@
 {
   "schema_version": "2.5",
-  "application_version": "2026.11.12-1",
-  "generated_at": "2026-11-12 22:34:54.563",
+  "application_version": "2026.11.13-1",
+  "generated_at": "2026-11-13 09:20:20.093",
   "time_zone": "Europe/Oslo",
   "demo_data": false,
   "demo_options": [
@@ -22,7 +22,7 @@
     "selection_seq": 2,
     "profile_id": "ipl-synthetic-p17r12",
     "operation_id": "r10-initial-demo",
-    "selected_at": "2026-11-12 22:34:31.731"
+    "selected_at": "2026-11-13 09:20:17.671"
   },
   "comparison_options": [
     {
@@ -49,7 +49,7 @@
     "interval_seconds": 1800,
     "window_hours": null,
     "operation_id": "initial-graph-selection",
-    "selected_at": "2026-11-12 22:34:30.693"
+    "selected_at": "2026-11-13 09:20:17.572"
   },
   "selection_seq": 1,
   "graph_basis_display": "Detaljdata lagres hvert 5. minutt. Timesstatistikk fra HA beholder sin oppløsning.",
@@ -101,15 +101,15 @@
   "session": {
     "is_historical": 0,
     "historical_ended_at": null,
-    "domain_now": "2026-11-12 22:34:54.336",
-    "session_id": "20261112223452152-w3470-standard",
+    "domain_now": "2026-11-13 09:20:19.852",
+    "session_id": "20261113092018232-w3470-standard",
     "batch_name": "W-34/70 batch",
     "is_demo": 0,
-    "pitched_at": "2026-11-12 22:14:51.645",
+    "pitched_at": "2026-11-13 09:00:18.217",
     "activity_started_at": null,
     "completed_at": null,
     "lifecycle": "active",
-    "lifecycle_at": "2026-11-12 22:34:52.152",
+    "lifecycle_at": "2026-11-13 09:20:18.232",
     "archive_status": "not_applicable",
     "archive_status_display": "Sluttarkiv opprettes ved Avslutt gjæring",
     "archive_error_message": null,
@@ -125,32 +125,32 @@
     "expected_fg_max": "1.01000",
     "expected_attenuation_display": "80.0–84.0 %",
     "expected_fg_display": "1,008–1,010",
-    "current_process_visit_id": "process-visit-20261112223452152-w3470-standard-1",
+    "current_process_visit_id": "process-visit-20261113092018232-w3470-standard-1",
     "current_process_id": "P1",
     "current_process_order": 1,
     "current_process_name": "Klargjøring, pitch og temperaturstabilisering",
-    "current_process_started_at": "2026-11-12 22:14:51.645",
+    "current_process_started_at": "2026-11-13 09:00:18.217",
     "current_process_ended_at": null,
-    "current_biological_visit_id": "biological-visit-20261112223452152-w3470-standard-1",
+    "current_biological_visit_id": "biological-visit-20261113092018232-w3470-standard-1",
     "current_biological_phase_id": "B1",
     "current_biological_phase_order": 1,
     "current_biological_phase_name": "Inokulert og tilpasning",
-    "current_biological_started_at": "2026-11-12 22:14:51.645",
+    "current_biological_started_at": "2026-11-13 09:00:18.217",
     "current_biological_ended_at": null,
-    "latest_observation_id": "observation-20261112223452152-w3470-standard-start",
-    "latest_observation_at": "2026-11-12 22:14:51.645",
+    "latest_observation_id": "observation-20261113092018232-w3470-standard-start",
+    "latest_observation_at": "2026-11-13 09:00:18.217",
     "latest_manual_sg": "1.05000",
     "latest_process_evaluation_id": null,
     "latest_process_readiness": null,
     "recommended_next_process_id": null,
     "recommended_temperature_c": null,
     "recommended_pressure_bar": null,
-    "latest_biological_evaluation_id": "bioeval-47637b8fdee911f1b24caa28c66abf7f-1-current-B2",
+    "latest_biological_evaluation_id": "bioeval-7172d981df4311f18f996ce12205b57d-1-current-B2",
     "latest_biological_candidate_phase_id": "B2",
     "latest_biological_confidence": "incomplete_data",
     "yeast_profile_id": "fermentis-w3470",
     "yeast_name": "Fermentis SafLager W-34/70",
-    "original_pitched_at": "2026-11-12 22:14:51.645",
+    "original_pitched_at": "2026-11-13 09:00:18.217",
     "pitch_timing_revision_no": 1,
     "pitch_timing_source": "start",
     "manual_pitched_at": null,
@@ -160,7 +160,7 @@
     "template_name": "W-34/70 standardprosess – biologisk styrt",
     "version_label": "3.0",
     "active_issue_count": 0,
-    "database_now": "2026-11-12 22:34:54.563",
+    "database_now": "2026-11-13 09:20:20.093",
     "yeast": "Fermentis SafLager W-34/70",
     "attention": false,
     "active_process_order": 1,
@@ -184,8 +184,8 @@
       {
         "evidence_kind": "current",
         "transition_id": null,
-        "evaluation_id": "bioeval-47637b8fdee911f1b24caa28c66abf7f-1-current-B2",
-        "evaluated_at": "2026-11-12 22:34:53.159",
+        "evaluation_id": "bioeval-7172d981df4311f18f996ce12205b57d-1-current-B2",
+        "evaluated_at": "2026-11-13 09:20:18.429",
         "phase_id": "B2",
         "phase_order": 2,
         "phase_name": "Aktivitetsstart og tidlig vekst",
@@ -206,7 +206,7 @@
             "evaluated_required": "Minimum: 1,50 SG-poeng",
             "criterion_basis_current": 1,
             "actual": "0,00 SG-poeng",
-            "window": "Siste verdi · 12.11.2026 23:19",
+            "window": "Siste verdi · 13.11.2026 10:05",
             "explanation": "Verdien oppfyller ikke templatekriteriet.",
             "parameters": {
               "minimum_value": 1.5
@@ -231,8 +231,8 @@
   },
   "biological_duration": {
     "active_phase_duration_display": "0 dager, 00:20",
-    "active_phase_elapsed_hours": "0.3341",
-    "elapsed_hours": "0.3341",
+    "active_phase_elapsed_hours": "0.3338",
+    "elapsed_hours": "0.3338",
     "completed_at": null
   },
   "biological_phases": [
@@ -275,63 +275,63 @@
   ],
   "phase_durations": [
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "kind": "biological",
       "owner_id": "B1",
-      "duration_seconds": "1202",
+      "duration_seconds": "1201",
       "duration_display": "0 dager, 00:20"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "kind": "process",
       "owner_id": "P1",
-      "duration_seconds": "1202",
+      "duration_seconds": "1201",
       "duration_display": "0 dager, 00:20"
     }
   ],
   "historical_phase_options": [],
   "biological_timeline": [
     {
-      "visit_id": "biological-visit-20261112223452152-w3470-standard-1",
+      "visit_id": "biological-visit-20261113092018232-w3470-standard-1",
       "phase_id": "B1",
       "phase_order": 1,
       "name": "Inokulert og tilpasning",
       "description": "Etter pitch; gjæren tilpasser seg før målbar aktivitet.",
-      "visit_revision_id": "biological-visit-20261112223452152-w3470-standard-1-r1",
+      "visit_revision_id": "biological-visit-20261113092018232-w3470-standard-1-r1",
       "revision_no": 1,
-      "started_at": "2026-11-12 22:14:51.645",
-      "ended_at": "2026-11-12 22:34:54.336",
+      "started_at": "2026-11-13 09:00:18.217",
+      "ended_at": "2026-11-13 09:20:19.852",
       "timing_source": "pitch",
       "confidence": "pitch",
       "revision_reason": null,
       "duration_display": "0 dager, 00:20",
-      "duration_seconds": 1202,
-      "started_display": "12.11.2026 23:14",
-      "ended_display": "12.11.2026 23:34",
-      "original_started_at": "2026-11-12 22:14:51.645",
+      "duration_seconds": 1201,
+      "started_display": "13.11.2026 10:00",
+      "ended_display": "13.11.2026 10:20",
+      "original_started_at": "2026-11-13 09:00:18.217",
       "manual_started_at": null
     }
   ],
   "process_timeline": [
     {
-      "visit_id": "process-visit-20261112223452152-w3470-standard-1",
+      "visit_id": "process-visit-20261113092018232-w3470-standard-1",
       "process_id": "P1",
       "process_order": 1,
       "name": "Klargjøring, pitch og temperaturstabilisering",
       "anchor_type": null,
       "anchor_biological_phase_id": null,
       "anchor_offset_hours": null,
-      "visit_revision_id": "process-visit-20261112223452152-w3470-standard-1-r1",
+      "visit_revision_id": "process-visit-20261113092018232-w3470-standard-1-r1",
       "revision_no": 1,
-      "started_at": "2026-11-12 22:14:51.645",
-      "ended_at": "2026-11-12 22:34:54.336",
+      "started_at": "2026-11-13 09:00:18.217",
+      "ended_at": "2026-11-13 09:20:19.852",
       "timing_source": "start",
       "revision_reason": null,
       "duration_display": "0 dager, 00:20",
-      "duration_seconds": 1202,
-      "started_display": "12.11.2026 23:14",
-      "ended_display": "12.11.2026 23:34",
-      "original_started_at": "2026-11-12 22:14:51.645",
+      "duration_seconds": 1201,
+      "started_display": "13.11.2026 10:00",
+      "ended_display": "13.11.2026 10:20",
+      "original_started_at": "2026-11-13 09:00:18.217",
       "manual_started_at": null,
       "target_temperature_c": "8.000000",
       "target_pressure_bar": "0.000000"
@@ -339,11 +339,11 @@
   ],
   "measurement_history": [
     {
-      "observation_id": "observation-20261112223452152-w3470-standard-start",
-      "observation_revision_id": "observation-20261112223452152-w3470-standard-start-r1",
+      "observation_id": "observation-20261113092018232-w3470-standard-start",
+      "observation_revision_id": "observation-20261113092018232-w3470-standard-start-r1",
       "revision_no": 1,
       "status": "active",
-      "recorded_at": "2026-11-12 22:14:51.645",
+      "recorded_at": "2026-11-13 09:00:18.217",
       "measurement_method": "refractometer",
       "measured_sg": "1.05000",
       "sample_temperature_c": "20.000",
@@ -364,7 +364,7 @@
       "settling_minutes": "0.000",
       "user_conclusion": "uncertain",
       "note": null,
-      "original_recorded_at": "2026-11-12 22:14:51.645",
+      "original_recorded_at": "2026-11-13 09:00:18.217",
       "manual_recorded_at": null
     }
   ],
@@ -1369,7 +1369,7 @@
     }
   ],
   "process_guidance": {
-    "session_id": "20261112223452152-w3470-standard",
+    "session_id": "20261113092018232-w3470-standard",
     "evaluation_id": null,
     "raw_readiness": "not_evaluated",
     "readiness": "not_evaluated",
@@ -1416,7 +1416,7 @@
   },
   "series": [
     {
-      "at": "2026-11-12 22:14:51.645",
+      "at": "2026-11-13 09:00:18.217",
       "sg": 1.05,
       "sg_display": "1,0500",
       "sg_min": 1.05,
@@ -1438,7 +1438,7 @@
   ],
   "observations": [
     {
-      "recorded_at": "2026-11-12 22:14:51.645",
+      "recorded_at": "2026-11-13 09:00:18.217",
       "corrected_sg": "1.05000",
       "measured_sg": "1.05000",
       "manual_temperature_c": "12.300",
@@ -1460,12 +1460,12 @@
   "notes": [],
   "recommendation": null,
   "report_summary": {
-    "session_id": "20261112223452152-w3470-standard",
+    "session_id": "20261113092018232-w3470-standard",
     "batch_display": "W-34/70 batch",
     "yeast_display": "Fermentis SafLager W-34/70",
     "expected_attenuation_display": "80.0–84.0 %",
     "expected_fg_display": "1,0080–1,0100",
-    "pitched_display": "12.11.2026 23:14",
+    "pitched_display": "13.11.2026 10:00",
     "biology_display": "B1 · Inokulert og tilpasning",
     "process_display": "P1 · Klargjøring, pitch og temperaturstabilisering",
     "latest_tilt_sg_display": "1,0500",
@@ -1493,25 +1493,25 @@
     "active_report_generated_display": null
   },
   "import_coverage": {
-    "session_id": "20261112223452152-w3470-standard",
-    "source_started_at": "2026-11-12 22:14:51.645",
-    "processed_to": "2026-11-12 22:39:51.645",
+    "session_id": "20261113092018232-w3470-standard",
+    "source_started_at": "2026-11-13 09:00:18.217",
+    "processed_to": "2026-11-13 09:25:18.217",
     "historical_ended_at": null,
     "detail_count": 2,
-    "detail_first_at": "2026-11-12 22:14:51.645",
-    "detail_last_at": "2026-11-12 22:19:51.645",
+    "detail_first_at": "2026-11-13 09:00:18.217",
+    "detail_last_at": "2026-11-13 09:05:18.217",
     "hourly_count": 0,
     "hourly_first_at": null,
     "hourly_last_at": null,
     "gap_count": 0,
     "counts_display": "2 femminuttersbøtter · 0 timepunkter · 0 registrerte rådatagap",
     "coverage_display": "Femminuttersmålinger tilgjengelige",
-    "summary_display": "Behandlet til 12.11.2026 23:39 · 2 femminuttersbøtter · 0 timepunkter"
+    "summary_display": "Behandlet til 13.11.2026 10:25 · 2 femminuttersbøtter · 0 timepunkter"
   },
   "measurement_gaps": [],
   "overview_axes": [
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "render_scope": "dashboard",
       "sort_order": 1,
@@ -1522,10 +1522,10 @@
       "y_axis_min": 1,
       "y_axis_max": 1.06,
       "y_axis_tick_step": 0.01,
-      "x_axis_started_at": "2026-11-12 22:14:51.645",
-      "x_axis_ended_at": "2026-11-12 22:34:54.336",
-      "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-      "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+      "x_axis_started_at": "2026-11-13 09:00:18.217",
+      "x_axis_ended_at": "2026-11-13 09:20:19.852",
+      "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+      "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
       "enabled": 1,
       "show_biological_bands": 1,
       "show_process_markers": 1,
@@ -1548,7 +1548,7 @@
       "time_marker_spacing": 100
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "render_scope": "dashboard",
       "sort_order": 2,
@@ -1559,10 +1559,10 @@
       "y_axis_min": 7,
       "y_axis_max": 13,
       "y_axis_tick_step": 1,
-      "x_axis_started_at": "2026-11-12 22:14:51.645",
-      "x_axis_ended_at": "2026-11-12 22:34:54.336",
-      "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-      "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+      "x_axis_started_at": "2026-11-13 09:00:18.217",
+      "x_axis_ended_at": "2026-11-13 09:20:19.852",
+      "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+      "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
       "enabled": 1,
       "show_biological_bands": 1,
       "show_process_markers": 1,
@@ -1585,7 +1585,7 @@
       "time_marker_spacing": 100
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "render_scope": "dashboard",
       "sort_order": 3,
@@ -1596,10 +1596,10 @@
       "y_axis_min": -0.2,
       "y_axis_max": 1.2000000000000002,
       "y_axis_tick_step": 0.2,
-      "x_axis_started_at": "2026-11-12 22:14:51.645",
-      "x_axis_ended_at": "2026-11-12 22:34:54.336",
-      "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-      "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+      "x_axis_started_at": "2026-11-13 09:00:18.217",
+      "x_axis_ended_at": "2026-11-13 09:20:19.852",
+      "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+      "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
       "enabled": 1,
       "show_biological_bands": 1,
       "show_process_markers": 1,
@@ -1624,235 +1624,235 @@
   ],
   "overview_ticks": [
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 55,
       "axis_label": "55,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": -0.2,
       "axis_label": "-0,20"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1,
       "axis_label": "1,0000"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-rate",
       "tick_value": 0,
       "axis_label": "0,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-stability",
       "tick_value": 0,
       "axis_label": "0,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 7,
       "axis_label": "7,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 60,
       "axis_label": "60,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 0,
       "axis_label": "0,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1.01,
       "axis_label": "1,0100"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-rate",
       "tick_value": 0.5,
       "axis_label": "0,50"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-stability",
       "tick_value": 0.5,
       "axis_label": "0,50"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 8,
       "axis_label": "8,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 65,
       "axis_label": "65,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 0.2,
       "axis_label": "0,20"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1.02,
       "axis_label": "1,0200"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-rate",
       "tick_value": 1,
       "axis_label": "1,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-stability",
       "tick_value": 1,
       "axis_label": "1,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 9,
       "axis_label": "9,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 70,
       "axis_label": "70,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 0.4000000000000001,
       "axis_label": "0,40"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1.03,
       "axis_label": "1,0300"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-rate",
       "tick_value": 1.5,
       "axis_label": "1,50"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-stability",
       "tick_value": 1.5,
       "axis_label": "1,50"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 10,
       "axis_label": "10,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 75,
       "axis_label": "75,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 0.6000000000000001,
       "axis_label": "0,60"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1.04,
       "axis_label": "1,0400"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-rate",
       "tick_value": 2,
       "axis_label": "2,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg-stability",
       "tick_value": 2,
       "axis_label": "2,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 11,
       "axis_label": "11,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 80,
       "axis_label": "80,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 0.8,
       "axis_label": "0,80"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1.05,
       "axis_label": "1,0500"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 12,
       "axis_label": "12,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "attenuation",
       "tick_value": 85,
       "axis_label": "85,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 1.0000000000000002,
       "axis_label": "1,00"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "sg",
       "tick_value": 1.06,
       "axis_label": "1,0600"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "temperature",
       "tick_value": 13,
       "axis_label": "13,0"
     },
     {
-      "session_id": "20261112223452152-w3470-standard",
+      "session_id": "20261113092018232-w3470-standard",
       "graph_id": "pressure",
       "tick_value": 1.2000000000000002,
       "axis_label": "1,20"
@@ -1861,7 +1861,7 @@
   "analysis": {
     "reference_bands": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "series_id": "fg-target",
         "label": "Forventet FG",
@@ -1873,7 +1873,7 @@
     ],
     "graphs": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "render_scope": "dashboard",
         "sort_order": 1,
@@ -1884,10 +1884,10 @@
         "y_axis_min": 1,
         "y_axis_max": 1.06,
         "y_axis_tick_step": 0.01,
-        "x_axis_started_at": "2026-11-12 22:14:51.645",
-        "x_axis_ended_at": "2026-11-12 22:34:54.336",
-        "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-        "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+        "x_axis_started_at": "2026-11-13 09:00:18.217",
+        "x_axis_ended_at": "2026-11-13 09:20:19.852",
+        "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+        "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
         "enabled": 1,
         "show_biological_bands": 1,
         "show_process_markers": 1,
@@ -1910,7 +1910,7 @@
         "time_marker_spacing": 100
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "render_scope": "dashboard",
         "sort_order": 2,
@@ -1921,10 +1921,10 @@
         "y_axis_min": 7,
         "y_axis_max": 13,
         "y_axis_tick_step": 1,
-        "x_axis_started_at": "2026-11-12 22:14:51.645",
-        "x_axis_ended_at": "2026-11-12 22:34:54.336",
-        "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-        "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+        "x_axis_started_at": "2026-11-13 09:00:18.217",
+        "x_axis_ended_at": "2026-11-13 09:20:19.852",
+        "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+        "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
         "enabled": 1,
         "show_biological_bands": 1,
         "show_process_markers": 1,
@@ -1947,7 +1947,7 @@
         "time_marker_spacing": 100
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "render_scope": "dashboard",
         "sort_order": 3,
@@ -1958,10 +1958,10 @@
         "y_axis_min": -0.2,
         "y_axis_max": 1.2000000000000002,
         "y_axis_tick_step": 0.2,
-        "x_axis_started_at": "2026-11-12 22:14:51.645",
-        "x_axis_ended_at": "2026-11-12 22:34:54.336",
-        "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-        "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+        "x_axis_started_at": "2026-11-13 09:00:18.217",
+        "x_axis_ended_at": "2026-11-13 09:20:19.852",
+        "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+        "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
         "enabled": 1,
         "show_biological_bands": 1,
         "show_process_markers": 1,
@@ -1984,7 +1984,7 @@
         "time_marker_spacing": 100
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "render_scope": "dashboard",
         "sort_order": 4,
@@ -1995,10 +1995,10 @@
         "y_axis_min": 55,
         "y_axis_max": 85,
         "y_axis_tick_step": 5,
-        "x_axis_started_at": "2026-11-12 22:14:51.645",
-        "x_axis_ended_at": "2026-11-12 22:34:54.336",
-        "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-        "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+        "x_axis_started_at": "2026-11-13 09:00:18.217",
+        "x_axis_ended_at": "2026-11-13 09:20:19.852",
+        "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+        "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
         "enabled": 1,
         "show_biological_bands": 1,
         "show_process_markers": 1,
@@ -2021,7 +2021,7 @@
         "time_marker_spacing": 100
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "render_scope": "dashboard",
         "sort_order": 5,
@@ -2032,10 +2032,10 @@
         "y_axis_min": 0,
         "y_axis_max": 2,
         "y_axis_tick_step": 0.5,
-        "x_axis_started_at": "2026-11-12 22:14:51.645",
-        "x_axis_ended_at": "2026-11-12 22:34:54.336",
-        "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-        "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+        "x_axis_started_at": "2026-11-13 09:00:18.217",
+        "x_axis_ended_at": "2026-11-13 09:20:19.852",
+        "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+        "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
         "enabled": 1,
         "show_biological_bands": 1,
         "show_process_markers": 1,
@@ -2058,7 +2058,7 @@
         "time_marker_spacing": 100
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "render_scope": "dashboard",
         "sort_order": 6,
@@ -2069,10 +2069,10 @@
         "y_axis_min": 0,
         "y_axis_max": 2,
         "y_axis_tick_step": 0.5,
-        "x_axis_started_at": "2026-11-12 22:14:51.645",
-        "x_axis_ended_at": "2026-11-12 22:34:54.336",
-        "x_axis_start_display": "Dag 0.00 · 12.11.2026 23:14",
-        "x_axis_end_display": "Dag 0.01 · 12.11.2026 23:34",
+        "x_axis_started_at": "2026-11-13 09:00:18.217",
+        "x_axis_ended_at": "2026-11-13 09:20:19.852",
+        "x_axis_start_display": "Dag 0.00 · 13.11.2026 10:00",
+        "x_axis_end_display": "Dag 0.01 · 13.11.2026 10:20",
         "enabled": 1,
         "show_biological_bands": 1,
         "show_process_markers": 1,
@@ -2097,235 +2097,235 @@
     ],
     "axis_ticks": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 55,
         "axis_label": "55,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": -0.2,
         "axis_label": "-0,20"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1,
         "axis_label": "1,0000"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "tick_value": 0,
         "axis_label": "0,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "tick_value": 0,
         "axis_label": "0,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 7,
         "axis_label": "7,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 60,
         "axis_label": "60,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 0,
         "axis_label": "0,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1.01,
         "axis_label": "1,0100"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "tick_value": 0.5,
         "axis_label": "0,50"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "tick_value": 0.5,
         "axis_label": "0,50"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 8,
         "axis_label": "8,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 65,
         "axis_label": "65,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 0.2,
         "axis_label": "0,20"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1.02,
         "axis_label": "1,0200"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "tick_value": 1,
         "axis_label": "1,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "tick_value": 1,
         "axis_label": "1,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 9,
         "axis_label": "9,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 70,
         "axis_label": "70,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 0.4000000000000001,
         "axis_label": "0,40"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1.03,
         "axis_label": "1,0300"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "tick_value": 1.5,
         "axis_label": "1,50"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "tick_value": 1.5,
         "axis_label": "1,50"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 10,
         "axis_label": "10,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 75,
         "axis_label": "75,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 0.6000000000000001,
         "axis_label": "0,60"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1.04,
         "axis_label": "1,0400"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "tick_value": 2,
         "axis_label": "2,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "tick_value": 2,
         "axis_label": "2,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 11,
         "axis_label": "11,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 80,
         "axis_label": "80,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 0.8,
         "axis_label": "0,80"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1.05,
         "axis_label": "1,0500"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 12,
         "axis_label": "12,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "tick_value": 85,
         "axis_label": "85,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 1.0000000000000002,
         "axis_label": "1,00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "tick_value": 1.06,
         "axis_label": "1,0600"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "tick_value": 13,
         "axis_label": "13,0"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "tick_value": 1.2000000000000002,
         "axis_label": "1,20"
@@ -2333,7 +2333,7 @@
     ],
     "latest": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "series_id": "attenuation",
         "sort_order": 1,
@@ -2342,7 +2342,7 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "series_id": "manual-attenuation",
         "sort_order": 2,
@@ -2351,7 +2351,7 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "series_id": "comparison",
         "sort_order": 2,
@@ -2360,34 +2360,34 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "series_id": "manual",
         "sort_order": 3,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 0,
-        "latest_value_display": "Manuell kontroll · 0,00 bar · Manuell registrering · 12.11.2026 23:14"
+        "latest_value_display": "Manuell kontroll · 0,00 bar · Manuell registrering · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "series_id": "measured",
         "sort_order": 1,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 1,
-        "latest_value_display": "Målt · 1,00 bar · Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 12.11.2026 23:14"
+        "latest_value_display": "Målt · 1,00 bar · Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "series_id": "plan",
         "sort_order": 4,
-        "sample_at": "2026-11-12 22:34:54.336",
+        "sample_at": "2026-11-13 09:20:19.852",
         "actual_value": 0,
-        "latest_value_display": "Planmål · 0,00 bar · Tanktrykk · 12.11.2026 23:34"
+        "latest_value_display": "Planmål · 0,00 bar · Tanktrykk · 13.11.2026 10:20"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "series_id": "comparison",
         "sort_order": 2,
@@ -2396,7 +2396,7 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "series_id": "fg-target",
         "sort_order": 4,
@@ -2405,25 +2405,25 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "series_id": "manual",
         "sort_order": 3,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 1.05,
-        "latest_value_display": "Manuell kontroll · 1,0500 SG · Manuell registrering · 12.11.2026 23:14"
+        "latest_value_display": "Manuell kontroll · 1,0500 SG · Manuell registrering · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "series_id": "measured",
         "sort_order": 1,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 1.05,
-        "latest_value_display": "Målt · 1,0500 SG · Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 12.11.2026 23:14"
+        "latest_value_display": "Målt · 1,0500 SG · Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "series_id": "sg-rate",
         "sort_order": 1,
@@ -2432,7 +2432,7 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "series_id": "stability-24h",
         "sort_order": 1,
@@ -2441,7 +2441,7 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "series_id": "stability-48h",
         "sort_order": 2,
@@ -2450,7 +2450,7 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "series_id": "comparison",
         "sort_order": 2,
@@ -2459,40 +2459,40 @@
         "latest_value_display": null
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "series_id": "cooler",
         "sort_order": 5,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 12,
-        "latest_value_display": "Kjølesettpunkt · 12,0 °C · Manuell registrering · 12.11.2026 23:14"
+        "latest_value_display": "Kjølesettpunkt · 12,0 °C · Manuell registrering · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "series_id": "manual",
         "sort_order": 3,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 12.3,
-        "latest_value_display": "Manuell kontroll · 12,3 °C · Manuell registrering · 12.11.2026 23:14"
+        "latest_value_display": "Manuell kontroll · 12,3 °C · Manuell registrering · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "series_id": "measured",
         "sort_order": 1,
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 12.3,
-        "latest_value_display": "Målt · 12,3 °C · Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 12.11.2026 23:14"
+        "latest_value_display": "Målt · 12,3 °C · Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 13.11.2026 10:00"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "series_id": "plan",
         "sort_order": 4,
-        "sample_at": "2026-11-12 22:34:54.336",
+        "sample_at": "2026-11-13 09:20:19.852",
         "actual_value": 8,
-        "latest_value_display": "Planmål · 8,0 °C · Øltemperatur · 12.11.2026 23:34"
+        "latest_value_display": "Planmål · 8,0 °C · Øltemperatur · 13.11.2026 10:20"
       }
     ],
     "series": [
@@ -2547,12 +2547,12 @@
       {
         "graph_id": "pressure",
         "series_id": "manual",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 0,
         "range_min_value": null,
         "range_max_value": null,
         "actual_value_display": "0,00 bar",
-        "basis_display": "Manuell registrering · 12.11.2026 23:14",
+        "basis_display": "Manuell registrering · 13.11.2026 10:00",
         "segment_id": "manual",
         "presentation_id": 4
       },
@@ -2571,12 +2571,12 @@
       {
         "graph_id": "pressure",
         "series_id": "measured",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 1,
         "range_min_value": "1.000000000",
         "range_max_value": "1.000000000",
         "actual_value_display": "1,00 bar",
-        "basis_display": "Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 12.11.2026 23:14",
+        "basis_display": "Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 13.11.2026 10:00",
         "segment_id": "0",
         "presentation_id": 6
       },
@@ -2595,25 +2595,25 @@
       {
         "graph_id": "pressure",
         "series_id": "plan",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 0,
         "range_min_value": "0.000000000",
         "range_max_value": "0.000000000",
         "actual_value_display": "0,00 bar",
-        "basis_display": "Tanktrykk · 12.11.2026 23:14",
-        "segment_id": "process-visit-20261112223452152-w3470-standard-1",
+        "basis_display": "Tanktrykk · 13.11.2026 10:00",
+        "segment_id": "process-visit-20261113092018232-w3470-standard-1",
         "presentation_id": 8
       },
       {
         "graph_id": "pressure",
         "series_id": "plan",
-        "sample_at": "2026-11-12 22:34:54.336",
+        "sample_at": "2026-11-13 09:20:19.852",
         "actual_value": 0,
         "range_min_value": "0.000000000",
         "range_max_value": "0.000000000",
         "actual_value_display": "0,00 bar",
-        "basis_display": "Tanktrykk · 12.11.2026 23:34",
-        "segment_id": "process-visit-20261112223452152-w3470-standard-1",
+        "basis_display": "Tanktrykk · 13.11.2026 10:20",
+        "segment_id": "process-visit-20261113092018232-w3470-standard-1",
         "presentation_id": 8
       },
       {
@@ -2655,12 +2655,12 @@
       {
         "graph_id": "sg",
         "series_id": "manual",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 1.05,
         "range_min_value": null,
         "range_max_value": null,
         "actual_value_display": "1,0500 SG",
-        "basis_display": "Manuell registrering · 12.11.2026 23:14",
+        "basis_display": "Manuell registrering · 13.11.2026 10:00",
         "segment_id": "manual",
         "presentation_id": 4
       },
@@ -2679,12 +2679,12 @@
       {
         "graph_id": "sg",
         "series_id": "measured",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 1.05,
         "range_min_value": "1.050000000",
         "range_max_value": "1.050000000",
         "actual_value_display": "1,0500 SG",
-        "basis_display": "Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 12.11.2026 23:14",
+        "basis_display": "Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 13.11.2026 10:00",
         "segment_id": "0",
         "presentation_id": 6
       },
@@ -2751,12 +2751,12 @@
       {
         "graph_id": "temperature",
         "series_id": "cooler",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 12,
         "range_min_value": null,
         "range_max_value": null,
         "actual_value_display": "12,0 °C",
-        "basis_display": "Manuell registrering · 12.11.2026 23:14",
+        "basis_display": "Manuell registrering · 13.11.2026 10:00",
         "segment_id": "manual",
         "presentation_id": 14
       },
@@ -2775,12 +2775,12 @@
       {
         "graph_id": "temperature",
         "series_id": "manual",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 12.3,
         "range_min_value": null,
         "range_max_value": null,
         "actual_value_display": "12,3 °C",
-        "basis_display": "Manuell registrering · 12.11.2026 23:14",
+        "basis_display": "Manuell registrering · 13.11.2026 10:00",
         "segment_id": "manual",
         "presentation_id": 4
       },
@@ -2799,12 +2799,12 @@
       {
         "graph_id": "temperature",
         "series_id": "measured",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 12.3,
         "range_min_value": "12.300000000",
         "range_max_value": "12.300000000",
         "actual_value_display": "12,3 °C",
-        "basis_display": "Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 12.11.2026 23:14",
+        "basis_display": "Samlet detaljdata · 30.0000 minutter · SG middelverdi og min/maks · 13.11.2026 10:00",
         "segment_id": "0",
         "presentation_id": 6
       },
@@ -2823,81 +2823,81 @@
       {
         "graph_id": "temperature",
         "series_id": "plan",
-        "sample_at": "2026-11-12 22:14:51.645",
+        "sample_at": "2026-11-13 09:00:18.217",
         "actual_value": 8,
         "range_min_value": "8.000000000",
         "range_max_value": "8.000000000",
         "actual_value_display": "8,0 °C",
-        "basis_display": "Øltemperatur · 12.11.2026 23:14",
-        "segment_id": "process-visit-20261112223452152-w3470-standard-1",
+        "basis_display": "Øltemperatur · 13.11.2026 10:00",
+        "segment_id": "process-visit-20261113092018232-w3470-standard-1",
         "presentation_id": 8
       },
       {
         "graph_id": "temperature",
         "series_id": "plan",
-        "sample_at": "2026-11-12 22:34:54.336",
+        "sample_at": "2026-11-13 09:20:19.852",
         "actual_value": 8,
         "range_min_value": "8.000000000",
         "range_max_value": "8.000000000",
         "actual_value_display": "8,0 °C",
-        "basis_display": "Øltemperatur · 12.11.2026 23:34",
-        "segment_id": "process-visit-20261112223452152-w3470-standard-1",
+        "basis_display": "Øltemperatur · 13.11.2026 10:20",
+        "segment_id": "process-visit-20261113092018232-w3470-standard-1",
         "presentation_id": 8
       }
     ],
     "time_markers": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "render_scope": "dashboard",
-        "marker_at": "2026-11-12 22:14:51.645",
+        "marker_at": "2026-11-13 09:00:18.217",
         "relative_day": 0,
-        "axis_label": "12.11"
+        "axis_label": "13.11"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "render_scope": "dashboard",
-        "marker_at": "2026-11-12 22:14:51.645",
+        "marker_at": "2026-11-13 09:00:18.217",
         "relative_day": 0,
-        "axis_label": "12.11"
+        "axis_label": "13.11"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "render_scope": "dashboard",
-        "marker_at": "2026-11-12 22:14:51.645",
+        "marker_at": "2026-11-13 09:00:18.217",
         "relative_day": 0,
-        "axis_label": "12.11"
+        "axis_label": "13.11"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "render_scope": "dashboard",
-        "marker_at": "2026-11-12 22:14:51.645",
+        "marker_at": "2026-11-13 09:00:18.217",
         "relative_day": 0,
-        "axis_label": "12.11"
+        "axis_label": "13.11"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "render_scope": "dashboard",
-        "marker_at": "2026-11-12 22:14:51.645",
+        "marker_at": "2026-11-13 09:00:18.217",
         "relative_day": 0,
-        "axis_label": "12.11"
+        "axis_label": "13.11"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "render_scope": "dashboard",
-        "marker_at": "2026-11-12 22:14:51.645",
+        "marker_at": "2026-11-13 09:00:18.217",
         "relative_day": 0,
-        "axis_label": "12.11"
+        "axis_label": "13.11"
       }
     ],
     "requirements": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "owner_type": "biology",
         "owner_id": "B4",
@@ -2915,7 +2915,7 @@
         "met_status_display": "Ikke oppfylt"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "owner_type": "biology",
         "owner_id": "B5",
@@ -2933,7 +2933,7 @@
         "met_status_display": "Ikke oppfylt"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "owner_type": "biology",
         "owner_id": "B6",
@@ -2951,7 +2951,7 @@
         "met_status_display": "Ikke oppfylt"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "owner_type": "biology",
         "owner_id": "B3",
@@ -2969,7 +2969,7 @@
         "met_status_display": "Ikke oppfylt"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "owner_type": "biology",
         "owner_id": "B4",
@@ -2987,7 +2987,7 @@
         "met_status_display": "Ikke oppfylt"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "owner_type": "biology",
         "owner_id": "B6",
@@ -3005,7 +3005,7 @@
         "met_status_display": "Ikke oppfylt"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "owner_type": "process",
         "owner_id": "P8",
@@ -3025,102 +3025,102 @@
     ],
     "biological_markers": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "phase_id": "B1",
         "label": "B1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "phase_id": "B1",
         "label": "B1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "phase_id": "B1",
         "label": "B1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "phase_id": "B1",
         "label": "B1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "phase_id": "B1",
         "label": "B1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "phase_id": "B1",
         "label": "B1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       }
     ],
     "process_markers": [
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "attenuation",
         "process_id": "P1",
         "label": "P1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "pressure",
         "process_id": "P1",
         "label": "P1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg",
         "process_id": "P1",
         "label": "P1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-rate",
         "process_id": "P1",
         "label": "P1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "sg-stability",
         "process_id": "P1",
         "label": "P1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       },
       {
-        "session_id": "20261112223452152-w3470-standard",
+        "session_id": "20261113092018232-w3470-standard",
         "graph_id": "temperature",
         "process_id": "P1",
         "label": "P1",
-        "started_at": "2026-11-12 22:14:51.645",
-        "ended_at": "2026-11-12 22:34:54.336"
+        "started_at": "2026-11-13 09:00:18.217",
+        "ended_at": "2026-11-13 09:20:19.852"
       }
     ],
     "series_definitions": [

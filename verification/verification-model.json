@@ -77,7 +77,8 @@
       ],
       "tests": [
         "TEST-FUNC-001",
-        "TEST-FUNC-020"
+        "TEST-FUNC-020",
+        "TEST-FUNC-024"
       ]
     },
     {
@@ -141,7 +142,9 @@
       ],
       "tests": [
         "TEST-FUNC-009",
-        "TEST-UAT-003"
+        "TEST-UAT-003",
+        "TEST-FUNC-026",
+        "TEST-FUNC-027"
       ]
     },
     {
@@ -256,7 +259,9 @@
         "TEST-TECH-006",
         "TEST-UAT-008",
         "TEST-FUNC-012",
-        "TEST-UAT-013"
+        "TEST-UAT-013",
+        "TEST-FUNC-026",
+        "TEST-FUNC-027"
       ]
     },
     {
@@ -379,7 +384,9 @@
       ],
       "tests": [
         "TEST-FUNC-024",
-        "TEST-FUNC-025"
+        "TEST-FUNC-025",
+        "TEST-FUNC-026",
+        "TEST-FUNC-027"
       ]
     }
   ],

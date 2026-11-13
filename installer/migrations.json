@@ -1,23 +1,23 @@
 {
   "format_version": 2,
-  "target_version": "2026.11.12-1",
+  "target_version": "2026.11.13-1",
   "supported_sources": [
     "0.1.0-prototype24-r16",
     "2026.11.07-1"
   ],
   "baseline_tables": 202,
   "baseline_views": 178,
-  "migration_id": "2026.11.12-1-operator-sources",
+  "migration_id": "2026.11.13-1-operator-sources",
   "upgrade_files": [
     "sql/migrations/2026.11.09-1-schema.sql",
     "sql/migrations/2026.11.09-1-metadata.sql",
     "sql/12-operator-schema.sql",
     "sql/26-operator-config-seed.sql",
-    "sql/migrations/2026.11.12-1-upgrade.sql",
+    "sql/migrations/2026.11.13-1-upgrade.sql",
     "sql/11-runtime-routines.sql",
     "sql/12-operator-routines.sql",
     "sql/20-views.sql",
-    "sql/migrations/2026.11.12-1-metadata.sql",
+    "sql/migrations/2026.11.13-1-metadata.sql",
     "sql/24-verification-metadata-seed.sql"
   ],
   "fresh_files": [
@@ -57,11 +57,11 @@
   "patch_files": [
     "sql/12-operator-schema.sql",
     "sql/26-operator-config-seed.sql",
-    "sql/migrations/2026.11.12-1-upgrade.sql",
+    "sql/migrations/2026.11.13-1-upgrade.sql",
     "sql/11-runtime-routines.sql",
     "sql/12-operator-routines.sql",
     "sql/20-views.sql",
-    "sql/migrations/2026.11.12-1-metadata.sql",
+    "sql/migrations/2026.11.13-1-metadata.sql",
     "sql/24-verification-metadata-seed.sql"
   ],
   "target_schema_sha256": "4373e5ae8c5603829db193d9b769b3270ab2f9371a43d56334eea0620d99647f",

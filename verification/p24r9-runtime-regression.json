@@ -1,6 +1,6 @@
 {
-  "application_version": "2026.11.09-2",
-  "server_version": "/workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
+  "application_version": "2026.11.13-1",
+  "server_version": "/workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
   "status": "pass",
   "graph_selection": {
     "source_kind": "reference",

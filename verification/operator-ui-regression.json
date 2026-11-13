@@ -1,0 +1,24 @@
+{
+  "application_version": "2026.11.13-1",
+  "server_version": "12.3.3-MariaDB-ubu2404",
+  "browser_version": "157.0.8103.78",
+  "status": "pass",
+  "ha_shell": "controlled",
+  "target_ha_uat": "not_run",
+  "checks": [
+    "actual Chromium range: no write on mount, endpoints 5 and 0 persist; temperature has one decimal and uses DB field binding",
+    "source check, compatible pressure picker, unsaved draft survives refresh, save waits for actual DB receipt",
+    "actual SQL-generated B/P fixtures render both correction and exception controls in shipping component",
+    "mobile source card fits viewport; no uncaught browser errors"
+  ],
+  "source_fingerprints": {
+    "tests/test-operator-ui.js": "c1b742b92ad60bfa4e0d892ace79e48e6514a2bd02a0093362dbc40eb263fc62",
+    "dashboard/gjaeringsassistent-card.js": "b55078c6e36ff731eb8140a844a760d0aef4f7bcd3350f44fdb16bcc75f51986",
+    "dashboard/gjaeringsassistent-dashboard.yaml": "ff0ffb4a3eaaaa51d917ecb8659f4bd6ae25613769a032aea373ef2b4110f656",
+    "nodered/flows.template.json": "8e5fb803ef68b945f15f1c5c557a3f9a74f5cdd8fe675f7e6d6f18960b37276c",
+    "sql/12-operator-routines.sql": "417bcd0c22912679a280a0511a4409056c61c8f68c96d83c1faf8f5aeb274da3",
+    "sql/20-views.sql": "217c754cb254e54b9f7f82c5ef288494c739f6fa65ec11d3bd14f7c2cb47d38a",
+    "tests/fixtures/operator-criteria-overview.json": "f6be00c2a9a83c720b5081fd6749b285fe2000456d36920b68e04fa170f5fce6",
+    "tests/fixtures/operator-biology-overview.json": "638d4aab6aff6a627a228cd011a5bce962ff369e2c15f304bd4a61a6381add7f"
+  }
+}

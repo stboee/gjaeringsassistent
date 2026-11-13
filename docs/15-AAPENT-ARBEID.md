@@ -44,6 +44,6 @@ Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal na
 | ID | Type | Status | Område | Exit-kriterium |
 |---|---|---|---|---|
 | OPEN-015 | Måltest | Åpen | Oppgradering med databevaring | Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling. |
-| OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den nye DB-baserte startflaten, samme-verdi-lagring, presise avvisninger og P/B-kontroll bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; installert retting er ikke bekreftet. |
+| OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; installert retting er ikke bekreftet. |
 
-Databevarende migrering fra p24r16 / 2026.11.07-1 er implementert med native tester og simulert Docker-transport. Faktisk oppgradering på gangpc er ikke bekreftet. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.
+Databevarende migrering fra p24r16 / 2026.11.07-1 / 2026.11.09-1 / 2026.11.09-2 er implementert med native tester og simulert Docker-transport. Faktisk oppgradering på gangpc er ikke bekreftet. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.

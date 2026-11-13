@@ -25,10 +25,13 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    await db.query('SET FOREIGN_KEY_CHECKS=1');
   };
   const allowed=new Set(['database_metadata','template_database_metadata','ha_event_registry','ha_projection_fields','information_objects','function_information_dependencies','system_functions','schema_relation_semantics','schema_absence_semantics','system_check_expectations','verification_requirements_catalog','verification_decisions_catalog','verification_verifications','verification_requirements','verification_test_definitions','verification_verification_requirements','verification_verification_tests','verification_decision_requirements','verification_uat_steps']);
+  const sensoryHelp=Object.fromEntries(['acetaldehyd','diacetyl','vorteraktig_preg','svovel_so2','svovel_h2s'].map(id=>['number.gjaeringsassistent_'+id,'0 = ikke merkbart · 5 = svært tydelig.']));
+  sensoryHelp['number.gjaeringsassistent_klarhet']='0 = klar prøve · 5 = svært uklar prøve.';
+  sensoryHelp['number.gjaeringsassistent_utfelling_i_prove']='0 = ingen synlig utfelling · 5 = svært mye utfelling.';
   const hash=async(connection=db)=>{
    const [tables]=await connection.query("SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA=DATABASE() AND TABLE_TYPE='BASE TABLE' ORDER BY TABLE_NAME");const out={};if(!originalShape){originalShape={};for(const {TABLE_NAME:t} of tables){originalShape[t]=(await connection.query('SHOW COLUMNS FROM `'+t+'`'))[0].map(c=>c.Field);}}
    for(const {TABLE_NAME:name} of tables){if(!originalShape[name]||allowed.has(name)||(name.startsWith('verification_')&&!['verification_test_runs','verification_test_results'].includes(name))||name==='database_migrations'||name.startsWith('start_field_')||name.startsWith('session_start_attempt'))continue;
-    let sourceTable=name;if(name==='measurement_source_profiles'&&!(await connection.query('SHOW COLUMNS FROM measurement_source_profiles'))[0].some(c=>c.Field==='sg_entity_id'))sourceTable='v_measurement_source_profiles';const [rows]=await connection.query('SELECT '+originalShape[name].map(c=>'`'+c+'`').join(',')+' FROM `'+sourceTable+'`');const serial=rows.map(r=>JSON.stringify(r)).sort();out[name]=crypto.createHash('sha256').update(JSON.stringify(serial)).digest('hex');
+    let sourceTable=name;if(name==='measurement_source_profiles'&&!(await connection.query('SHOW COLUMNS FROM measurement_source_profiles'))[0].some(c=>c.Field==='sg_entity_id'))sourceTable='v_measurement_source_profiles';const [rows]=await connection.query('SELECT '+originalShape[name].map(c=>'`'+c+'`').join(',')+' FROM `'+sourceTable+'`');const serial=rows.map(r=>{const value={...r};if(name==='ha_entity_registry'&&Object.hasOwn(sensoryHelp,r.entity_id))delete value.description;return JSON.stringify(value);}).sort();out[name]=crypto.createHash('sha256').update(JSON.stringify(serial)).digest('hex');
    }return out;
   };
   const input=(folder,env)=>{
@@ -56,6 +59,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    await db.query("UPDATE session_setup_draft SET slurry_volume_ml=4000,slurry_generation=2,slurry_source_batch='IPL',oxygenation_note='Bevar dette';INSERT INTO session_notes(note_id,session_id,noted_at,note_text,operation_id,created_at) VALUES('upgrade-note',?,UTC_TIMESTAMP(3),'Bevar øæå 🍺','upgrade-note',UTC_TIMESTAMP(3))",[active]);
    if(patch)await db.query("CALL ga_read_start_context('upgrade-retained-attempt',NULL)");
    const before=await hash();assert.ok(Object.keys(before).length>180);
+   const originalEntityRegistry=(await db.query('SELECT * FROM ha_entity_registry ORDER BY entity_id'))[0];
    const folder=path.join(temporary,source);fs.mkdirSync(folder);const env=input(folder,{});
    const startRows=patch?JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]):null;
    if(patch){
@@ -76,6 +80,10 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    const output=run(env);assert.match(output,/RESULTAT: PASS/);assert.ok(output.includes('Databaseplan: '+(patch?'patch':'upgrade')));
    if(patch){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);assert.match(output,/12-operator-schema/);}
    assert.deepEqual(await hash(),before,'every existing user/domain table must retain byte-equivalent rows');
+   for(const [entity,description]of Object.entries(sensoryHelp))assert.equal((await db.query('SELECT description FROM ha_entity_registry WHERE entity_id=?',[entity]))[0][0].description,description,'only the declared sensory help text changes');
+   const expectedMetadata=JSON.parse(fs.readFileSync(path.join(root,'docs/generated/verification-model.json')));
+   assert.deepEqual((await db.query('SELECT requirement_id,document_id,requirement_class,status,statement,source_ref,sort_order FROM verification_requirements_catalog ORDER BY sort_order'))[0],expectedMetadata.requirements,'new requirement insertion must preserve stable IDs and correct presentation order');
+   assert.deepEqual((await db.query('SELECT test_id,sort_order FROM verification_tests ORDER BY sort_order'))[0],expectedMetadata.tests.map((t,i)=>({test_id:t.test_id,sort_order:i+1})));
    assert.equal(Number((await db.query('SELECT COUNT(*) n FROM session_measurement_signal_bindings'))[0][0].n),10);assert.equal((await db.query('SELECT session_id FROM v_active_session'))[0][0].session_id,active);
    assert.equal((await db.query('SELECT check_status FROM v_system_check_session'))[0][0].check_status,'ok');assert.equal(Number((await db.query('SELECT COUNT(*) n FROM v_metadata_lineage_gaps'))[0][0].n),0);if(!patch)assert.equal((await db.query("SELECT status FROM verification_decisions_catalog WHERE decision_id='DEC-GA-006'"))[0][0].status,'deprecated');
    const reports=fs.readdirSync(path.join(root,'install-reports')).filter(f=>f.endsWith('.json')).sort();const report=JSON.parse(fs.readFileSync(path.join(root,'install-reports',reports.at(-1))));
@@ -94,6 +102,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
     assert.ok(restored,'isolated restore server ready');await restored.query('CREATE DATABASE `'+database+'` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;USE `'+database+'`;');
     const restore=spawnSync(process.env.GA_MARIADB_CLIENT,['--no-defaults','--host=127.0.0.1','--port=13311','-uroot',database],{input:dump.stdout,maxBuffer:20e6});assert.equal(restore.status,0,String(restore.stderr));
     assert.deepEqual(await hash(restored),before,'the actual backup must restore all preserved rows');
+    assert.deepEqual((await restored.query('SELECT * FROM ha_entity_registry ORDER BY entity_id'))[0],originalEntityRegistry,'backup also restores the original sensory descriptions byte-for-byte');
     assert.equal((await restored.query('SELECT session_id FROM v_active_session'))[0][0].session_id,active);
    }finally{if(restored)await restored.end();if(server.exitCode===null){const stopped=new Promise(resolve=>server.once('exit',resolve));server.kill('SIGTERM');await stopped;}fs.closeSync(restoreLog);}
    pass(source+': actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically');
@@ -107,7 +116,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
   await db.query("UPDATE database_metadata SET application_version='unknown';UPDATE template_database_metadata SET application_version='unknown'");run(env,1);assert.equal(fs.readFileSync(env.GA_INSTALLER_SIMULATOR_STATE,'utf8'),'running');assert.deepEqual(await hash(),before);
   pass('unknown source is rejected before stopping Node-RED or changing user data');
   database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';originalShape=null;await fresh();const freshFolder=path.join(temporary,'fresh');fs.mkdirSync(freshFolder);const freshEnv=input(freshFolder,{});const installed=run(freshEnv);assert.match(installed,/Databaseplan: fresh/);assert.equal((await db.query('SELECT COUNT(*) n FROM sessions'))[0][0].n,0);assert.equal((await db.query('SELECT COUNT(*) n FROM database_migrations'))[0][0].n,1);pass('fresh installation initializes an empty database without a synthetic session or reset');
-  const sources=[...new Set(['installer/install.sh','installer/database-plan.py','installer/backup-database.py','installer/migrations.json',...manifest.upgrade_files,...manifest.patch_files,'tests/test-install-upgrade-live.js','tests/docker-install-simulator.py'])];
+  const sources=[...new Set(['installer/install.sh','installer/database-plan.py','installer/backup-database.py','installer/migrations.json',...manifest.upgrade_files,...manifest.patch_files,'tools/build_verification_registry.py','tests/test-install-upgrade-live.js','tests/docker-install-simulator.py'])];
   fs.writeFileSync(path.join(root,'verification/install-upgrade-regression.json'),JSON.stringify({application_version:version,server_version:(await db.query('SELECT VERSION() v'))[0][0].v,status:'pass',docker_transport:'simulated',target_ha_uat:'not_run',supported_sources:[...manifest.supported_sources,...Object.keys(manifest.patch_sources)],fixture_provenance:'p24r16/2026.11.07-1: complete Git tag v2026.11.07-1; physical DDL verified byte-identical to retained p24r16 source; application markers varied explicitly. Later sources: exact Git tags.',checks,source_fingerprints:Object.fromEntries(sources.map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')]))},null,2)+'\n');
  }finally{await db.end();fs.rmSync(temporary,{recursive:true,force:true});}
 })().catch(e=>{console.error(e.code||'ASSERT',e.sqlMessage||e.stack);process.exitCode=1;});

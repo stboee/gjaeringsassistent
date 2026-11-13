@@ -128,7 +128,7 @@ Importert original er skrivebeskyttet i sin egen kategori. Bruk **Opprett ny tem
 
 Import er tillatt mens gjæring pågår. Filkontroll og SQLite kjører i en worker thread; en egen forbindelse til den samme MariaDB-instansen eier hele importtransaksjonen. Den ordinære motorens mysql-node og autoritative dataflyt beholdes. Dette er en avgrenset filoverføringsadapter, ikke en ny beregnings- eller rapportmotor. Ingen manuell kø, fil-lås eller lokal domenestate innføres.
 
-Midlertidig filopplasting går som autentiserte HA-hendelser med 64 KiB deler og DB-kvittering. Disse byte-delene er transport, ikke domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir tilgjengelig i sammenligningslisten etter import; **Skjul fra sammenligning** legger til en synlighetshendelse og sletter ingen data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.
+Midlertidig filopplasting går som autentiserte HA-hendelser med 64 KiB deler og DB-kvittering. Disse byte-delene er transport, ikke domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir tilgjengelig i sammenligningslisten etter import; **Skjul fra sammenligning** legger til en synlighetshendelse og sletter ingen data. Bare eksplisitt støttede eldre SQLite-skjemaer konverteres; ukjente, uvedkommende og fremtidige formater avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.
 
 Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn, men gir ingen garanti om en bestemt komprimeringsfaktor. Alle eksisterende målepunkter beholdes i arkivet.
 

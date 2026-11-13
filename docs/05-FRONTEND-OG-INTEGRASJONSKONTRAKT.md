@@ -142,3 +142,7 @@ Startflaten viser `start_ready` og `start_readiness_message` uten egen domenetol
 `gjaeringsassistent_source_settings` mottar `action` (read/check/save) og unik `operation_id`. Save krever `source_profile_id`, `expected_configuration_id`, `fields` og valgfritt notat. Hvert felt inneholder signal_id, input_mode, entity_id (NULL ved manual) og unit_id. DB avviser utdaterte foreldre, ukjent sensor og feil enhet. Check henter HA get_states og lagrer et kontrollert katalogsnapshot. Resultat publiseres atomisk som source-settings.json; save er først bekreftet når samme operation_id finnes i DB-kvitteringen.
 
 Nettleseren kan holde en ulagret redigeringskladd. Den er ikke domenefakta, og bakgrunnslesing skal bevare den opprinnelige forventede revisjonen. Lagret konfigurasjon og gjeldende sesjonsbinding vises separat. Sist kontrollert er HA-verdien fra siste eksplisitte kontroll, ikke en påstått løpende måleverdi.
+
+## Første komplette målesett
+
+Start lagrer ett komplett første målesett i samme transaksjon som sesjon og frosset grunnlag: metode/SG, prøve- og kalibreringstemperatur, manuell temperatur, trykk, kjølemål/-offset, gjærlås, alle sensoriske felt, utfellingstid, konklusjon og notat. Måletid er pitch; faktisk registreringstid og operation-ID beholdes. En senere kladdendring omskriver ikke startobservasjonen. Et komplett manuelt målesett erstatter ikke kontinuerlig tidsseriedekning for et vinduskriterium.

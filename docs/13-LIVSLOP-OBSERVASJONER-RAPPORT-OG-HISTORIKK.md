@@ -98,7 +98,7 @@ Importert original er skrivebeskyttet i sin egen kategori. Bruk **Opprett ny tem
 
 Import er tillatt mens gjæring pågår. Filkontroll og SQLite kjører i en worker thread; en egen forbindelse til den samme MariaDB-instansen eier hele importtransaksjonen. Den ordinære motorens mysql-node og autoritative dataflyt beholdes. Dette er en avgrenset filoverføringsadapter, ikke en ny beregnings- eller rapportmotor. Ingen manuell kø, fil-lås eller lokal domenestate innføres.
 
-Midlertidig filopplasting går som autentiserte HA-hendelser med 64 KiB deler og DB-kvittering. Disse byte-delene er transport, ikke domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir tilgjengelig i sammenligningslisten etter import; **Skjul fra sammenligning** legger til en synlighetshendelse og sletter ingen data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.
+Midlertidig filopplasting går som autentiserte HA-hendelser med 64 KiB deler og DB-kvittering. Disse byte-delene er transport, ikke domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir tilgjengelig i sammenligningslisten etter import; **Skjul fra sammenligning** legger til en synlighetshendelse og sletter ingen data. Bare eksplisitt støttede eldre SQLite-skjemaer konverteres; ukjente, uvedkommende og fremtidige formater avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.
 
 Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn, men gir ingen garanti om en bestemt komprimeringsfaktor. Alle eksisterende målepunkter beholdes i arkivet.
 
@@ -111,3 +111,7 @@ Eksport av aktiv gjæring er tilgjengelig i samme kort. SQLite-par og HTML bygge
 Hver SQLite-fil får en sidefil med navnet `<fil>.sqlite.sha`, SHA-256 og filnavn. Manglende, uleselig eller avvikende sidefil vises som advarsel i forhåndsvisning og arkivloggen, men import er tillatt. Skadde eller uvedkommende SQLite-filer, feil skjema og feil eksportpar avvises. Intern transportkontrollsum valideres uavhengig av sidefilen.
 
 **Slett gjæring fra MariaDB** fjerner hele den historiske sesjonen etter bekreftelse. En ubrukt importert originaltemplate kan tas med via avkrysning. Importerte templates vises separat med bruksreferanser og egen sletteknapp når de er ubrukte.
+
+## Eldre sensorprofiler i arkiver
+
+Det eksakte eldre skjemaet med fire entity-ID-er i measurement_source_profiles konverteres til en fryst sesjonskonfigurasjon ved arkivets last_import_cutoff_at. ID-ene kommer fra arkivet, enhetene fra DB-registerets kanoniske enheter. Trykk forblir manuelt. Eldre kildebytter og kontrollgrenser er ikke registrert og oppgis som fravær; konverteringen tillegger dem ingen historikk. Dagens globale sensorkonfigurasjon endres ikke. Ukjent kolonneoppsett og blanding av gammelt profilskjema og nyere kildehistorikk avvises. Hele konverteringen inngår i samme importtransaksjon og rulles tilbake ved feil.

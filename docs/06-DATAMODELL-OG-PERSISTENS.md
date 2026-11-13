@@ -130,7 +130,7 @@ Importert original er skrivebeskyttet i sin egen kategori. Bruk **Opprett ny tem
 
 Import er tillatt mens gjæring pågår. Filkontroll og SQLite kjører i en worker thread; en egen forbindelse til den samme MariaDB-instansen eier hele importtransaksjonen. Den ordinære motorens mysql-node og autoritative dataflyt beholdes. Dette er en avgrenset filoverføringsadapter, ikke en ny beregnings- eller rapportmotor. Ingen manuell kø, fil-lås eller lokal domenestate innføres.
 
-Midlertidig filopplasting går som autentiserte HA-hendelser med 64 KiB deler og DB-kvittering. Disse byte-delene er transport, ikke domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir tilgjengelig i sammenligningslisten etter import; **Skjul fra sammenligning** legger til en synlighetshendelse og sletter ingen data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.
+Midlertidig filopplasting går som autentiserte HA-hendelser med 64 KiB deler og DB-kvittering. Disse byte-delene er transport, ikke domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir tilgjengelig i sammenligningslisten etter import; **Skjul fra sammenligning** legger til en synlighetshendelse og sletter ingen data. Bare eksplisitt støttede eldre SQLite-skjemaer konverteres; ukjente, uvedkommende og fremtidige formater avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.
 
 Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn, men gir ingen garanti om en bestemt komprimeringsfaktor. Alle eksisterende målepunkter beholdes i arkivet.
 
@@ -165,7 +165,7 @@ Lesepolicy og publiseringskvitteringer er tekniske fakta: policyverdier tilhøre
 
 ## P24r15: historisk vindu og fasetid
 
-Runtime-schema er 9, template-schema er 4. session_history_windows er et valgfritt sesjonssubtypefaktum med obligatorisk ended_at, operation_id og created_at. Start finnes bare som sessionens pitchfaktum/revisjon. En ordinær sesjon har ingen historisk subtype, ikke en oppdiktet sluttdato. 202 basetabeller, 178 views og full relasjons-/fraværsmetadata følger leveransen.
+Runtime-schema er 11, template-schema er 4. session_history_windows er et valgfritt sesjonssubtypefaktum med obligatorisk ended_at, operation_id og created_at. Start finnes bare som sessionens pitchfaktum/revisjon. En ordinær sesjon har ingen historisk subtype, ikke en oppdiktet sluttdato. Gjeldende tabell-/viewantall følger migreringsmanifestet og faktisk native katalogopptak.
 
 v_all_session.domain_now er historisk slutt, faktisk ferdigstilling for avsluttet ordinær sesjon, ellers DB-klokken. Importcursor bestemmer hvor langt en uferdig historisk import kan vurderes. v_process_visit_timing og v_biological_visit_timing bruker gjeldende startrevisjoner og neste start som slutt. ended_at i rå visitrevisjoner er det registrerte lukkefaktumet på revisjonstidspunktet; effektiv tidslinje leses fra timing-views og kan derfor endres uten omskriving av gamle lukkefakta. DB-korreksjonen avviser kryssing av naboer og sesjonsgrenser. v_phase_duration_presentation summerer visits per B/P-eier, også gjentatte prosesstrinn.
 

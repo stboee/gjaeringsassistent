@@ -1,0 +1,76 @@
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-operator-config-live.js
+PASS DB-owned sensory ranges/help and explicit zero; manual temperature travels through actual HA field binding
+PASS controlled HA catalog through transport, DB save receipt, stale revision and wrong-unit rejection
+PASS frozen binding drives kPa to bar import; absent optional pressure does not drop SG/temperature
+PASS live change remains scheduled until DB boundary; old configuration and measurements remain immutable
+PASS technical label comes from DB component registry and original identity survives in details
+PASS biological exception register/withdraw uses same transactional DB operation as process
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r15-live.js
+PASS idle payload from actual SQL accepts plugin 0.80.3; old empty/null payload rejects; required fields cannot disappear
+PASS published template selection and reverse labels/numeric availability use actual DB bindings
+PASS real start path, no null-to-zero acceptance, normalized dry subtype, wrong subtype rejected, DB start time and import status
+PASS SQL effective readiness, counts, pending evaluation and persisted recommendation agree with overview; withdrawal blocks again
+PASS actual Systemkontroll SQL detects stale HA start status; DB technical defaults, event arrays and Oslo time validate in plugin
+PASS real finish, verified-archive gate, prepare, restore and next normal start selection
+PASS slurry Start stores only the required slurry facts, dry Start stores only dry facts
+PASS all physical table/nullable-column metadata covered, typed catalog and key/constraint snapshot, synchronized release markers
+RESULT: PASS – p24r15 actual SQL→Node-RED→HA input contracts and lifecycle on MariaDB 12.3.3
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-operator-ui.js
+PASS actual Chromium range: no write on mount, endpoints 5 and 0 persist; temperature has one decimal and uses DB field binding
+PASS source check, compatible pressure picker, unsaved draft survives refresh, save waits for actual DB receipt
+PASS actual SQL-generated B/P fixtures render both correction and exception controls in shipping component
+PASS mobile source card fits viewport; no uncaught browser errors

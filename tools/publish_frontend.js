@@ -3,7 +3,7 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
-const VERSION='2026.11.12-1';
+const VERSION='2026.11.13-1';
 const SOURCE_DIR='/data/gjaeringsassistent/frontend-source';
 const PUBLIC_DIR='/data/gjaeringsassistent/ha-public';
 const STATUS_FILE='/data/gjaeringsassistent/runtime/frontend-publication-status.json';

@@ -54,7 +54,7 @@ INSERT INTO function_information_dependencies(function_id,object_id,relation_typ
 INSERT INTO function_information_dependencies(function_id,object_id,relation_type,required,created_at) VALUES ('ingest_home_assistant_measurements','table:measurement_source_units','reads',1,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE required=VALUES(required);
 UPDATE system_check_expectations SET expected_number=216 WHERE check_id='schema' AND expectation_key IN('base_tables','innodb_tables');
 UPDATE system_check_expectations SET expected_number=193 WHERE check_id='schema' AND expectation_key='views';
-UPDATE system_check_expectations SET expected_text='2026.11.12-1' WHERE expectation_key='application_version';
+UPDATE system_check_expectations SET expected_text='2026.11.13-1' WHERE expectation_key='application_version';
 UPDATE ha_entity_registry SET description='0 = ikke merkbart · 5 = svært tydelig.' WHERE entity_id IN('number.gjaeringsassistent_acetaldehyd','number.gjaeringsassistent_diacetyl','number.gjaeringsassistent_vorteraktig_preg','number.gjaeringsassistent_svovel_so2','number.gjaeringsassistent_svovel_h2s');
 UPDATE ha_entity_registry SET description='0 = klar prøve · 5 = svært uklar prøve.' WHERE entity_id='number.gjaeringsassistent_klarhet';
 UPDATE ha_entity_registry SET description='0 = ingen synlig utfelling · 5 = svært mye utfelling.' WHERE entity_id='number.gjaeringsassistent_utfelling_i_prove';

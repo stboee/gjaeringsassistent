@@ -7,7 +7,7 @@ source_format: markdown
 
 # 18 – Implementasjons- og verifikasjonsstatus
 
-**Gjeldende release:** `2026.11.12-1`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
+**Gjeldende release:** `2026.11.13-1`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
 
 Implementert, lokalt release-verifisert og målmiljø-verifisert er forskjellige statusnivåer. TEST-RESULTS.md og faktiske verification_test_runs/verification_test_results viser testbevis; dokument 15/09 viser åpne måltester. Ingen grønn releaseport er alene bevis på fungerende operatørflyt i Home Assistant.
 
@@ -24,7 +24,8 @@ Implementert, lokalt release-verifisert og målmiljø-verifisert er forskjellige
 | DB-klassifisert Systemkontroll og faktisk importdekning | Ja | TEST-FUNC-023: rapporttilfelle med 215 timepunkter/0 detaljbøtter, policyendring og manglende metadata | Datoversjonens målmiljøtest åpen |
 | HA-publisering uten feilsirkel, ferskt DB-retry og utgangskvittering | Ja | TEST-FUNC-023 med faktisk plugin-controller og simulert transport | Reell HA-gjenoppkobling åpen |
 | Databevarende oppgradering og backup | Ja | TEST-FUNC-025: faktisk installer/dump/restore, baseline- og filoppgradering samt feiltilfeller; Docker-transport simulert | OPEN-015 åpen |
-| DB-eide startfelt/slurry og operativ P/B-kontroll | Ja | TEST-FUNC-024: faktiske DB-feltbindinger/snapshots, begge startkort via dashboardets setConfig og beholdt gammel sesjon | OPEN-016 åpen |
+| DB-eide startfelt/slurry og operativ P/B-kontroll | Ja | TEST-FUNC-024: alle 19 startmålefelt i én observasjon, sen rollback, B/P-fravik ved manglende tidsserie, faktiske feltbindinger og beholdt gammel sesjon | OPEN-016 åpen |
+| Sensoriske slidere, temperaturpresisjon, sensorvalg og lesbare kilder | Ja | TEST-FUNC-026/027: faktisk SQL/NR og Chromium med kontrollert HA-skall | Faktisk HA-brukertest åpen |
 | Strukturert REQ/DEC/VER/TEST/UAT, registrering og rapport | Ja | Kildemodell, SQL-relasjoner og releaseport | UAT-registrering i målmiljø åpen |
 
 Runtime-schema er 11, template-schema 4. Eksakte tabell-/view-/HA-tall følger genererte fysiske kataloger og releaseforventninger. Katalogdekning alene er ikke et matematisk normalformbevis. Legacy-navn i regresjonsfiler beskriver funksjonens opprinnelse; bevisenes application_version og kildeavtrykk skal være gjeldende release.
@@ -33,4 +34,4 @@ S-04/M42 er publiserte normaliserte gjærprofiler. Faktisk gjæring med profilen
 
 Siste vedlagte målrapport er fra p24r16 08.11.2026 kl. 22:57. Den nye leveransen er ikke bekreftet installert i målmiljøet. Tidligere generell bekreftelse av p24r16 lukker ikke de ferske konkrete avvikene eller de enkelte UAT-testene.
 
-Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning av `startfields` i kortets konfigurasjonskontroll, rettet i denne utgaven. Faktisk HA-/nettleserbekreftelse gjenstår.
+Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning av `startfields` i kortets konfigurasjonskontroll, rettet i 2026.11.09-2. Faktisk HA-/nettleserbekreftelse gjenstår.

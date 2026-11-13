@@ -1,9 +1,12 @@
-# 2026.11.12-1 – Sensoroppsett og kriterieavvik
+# 2026.11.13-1 – Målesett, sensorer og kriteriefravik
 
+- Start lagrer ett komplett første målesett atomisk med sesjonen. Utvidet regresjon prøver alle inputfelter, registrert 0, Unicode, sen rollback og B/P-fravik ved manglende kontinuerlig grunnlag.
 - Sensoriske 0–5-slidere viser eksplisitt manglende verdi og registrert 0. Temperaturfelt bruker én desimal fra DB.
 - Målekilder og sensorer øverst i Teknisk, med HA-kontroll, sensorvalg, lagring, DB-kvittering og fryst kildehistorikk. Valgfritt overtrykk støtter flere enheter i detaljimporten.
+- SQLite-import gjenkjenner det eksakte eldre sensorprofilskjemaet og bevarer arkiverte bindinger ved importcursor, uten å endre dagens sensorvalg.
 - Lesbare tekniske kildenavn; rå node-/rutineidentitet beholdes i detaljer/eksport.
 - Kriterieavvik i Prosesstrinn er tilbake, også ved manglende målegrunnlag. Biologi/Prosesstrinn bruker samme DB-transaksjon og beholder revisjoner.
+- Verifikasjonskatalogen oppdateres atomisk uten sorteringskollisjon når nye krav legges til.
 - Databevarende oppgradering fra p24r16, 2026.11.07-1, 2026.11.09-1 og 2026.11.09-2. Runtime-schema 11, template-schema 4, 216 tabeller og 193 views.
 
 Se TEST-RESULTS.md for faktisk testbevis og åpne måltester. Installer med ./installer/install.sh og last dashboardet på nytt med Ctrl+F5.

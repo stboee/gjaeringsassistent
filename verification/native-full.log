@@ -1,0 +1,327 @@
+RUN python3 tests/test-mariadb-p24.py --binary /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd --basedir /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr --datadir /tmp/ga-native-test-pxcgcati/data --port 13310
+SERVER /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)
+PASS Oslo timezone fixture
+PASS clean schema, routines, views and all seeds
+PASS actual p20_restore_query SQL before Start
+PASS actual p20_systemcheck_query SQL before Start
+PASS actual p20_template_editor_query SQL before Start
+PASS actual p20_technical_export_query SQL before Start
+PASS actual p20_overview_query SQL before Start
+PASS actual p23_verification_read_query SQL before Start
+PASS actual template selection SQL creates the pre-start draft
+PASS Start freezes session through real transaction routine
+PASS actual p20_restore_query SQL with active session
+PASS actual p20_systemcheck_query SQL with active session
+PASS actual p20_template_editor_query SQL with active session
+PASS actual p20_technical_export_query SQL with active session
+PASS actual p20_overview_query SQL with active session
+PASS actual p23_verification_read_query SQL with active session
+PASS clone full fields, injected rollback, policy freeze, counts and lineage
+PASS all 193 actual view queries
+PASS lineage filters with declared, legacy client and MariaDB 11.8 default collations
+PASS actual 12.3.3 read_only=ON through shipping Systemkontroll query
+PASS actual 12.3.3 read_only=NO_LOCK through shipping Systemkontroll query
+PASS actual 12.3.3 read_only=NO_LOCK_NO_ADMIN through shipping Systemkontroll query
+PASS actual 12.3.3 read_only=OFF through shipping Systemkontroll query
+PASS actual Systemkontroll write SQL with real ON row and all 15 results
+PASS real OFF row is writable and clears prior issue without rewriting history
+PASS persisted status/style, shared effective-pitch axes and biological handling across evaluations
+PASS read frozen calculation/metric/publication policies
+PASS actual measured analysis transaction, live zero, 24/48 curves, AA/ABV and idempotence
+PASS saved calibration survives history loss and stale current values are unavailable
+PASS actual bio correction transaction with unset optional bounds
+PASS actual process correction transaction with unset optional bounds
+PASS pitch correction appends a new analysis basis and retains historical facts
+PASS read actual Start observation revision
+PASS persist real manual observation with FK revision basis
+PASS append corrected manual SG/time without altering first revision
+PASS corrected manual AA/current latest excludes former revision
+PASS actual Avslutt write transaction; archive required
+PASS archive attempt is persisted before files are built
+PASS read first actual DB-generated archive attempt
+PASS archive failure is registered as terminal append-only metadata
+PASS Gjør klar retains completed session until file verification
+PASS retry on completed session appends attempt without a new lifecycle end
+PASS read retry attempt identity
+PASS actual >19 MB helper verification registered in MariaDB by compact SQL
+PASS actual Gjør klar releases only after SQLite pair and HTML verification
+PASS actual Start freezes s04-cool@1.0 targets, final manual/sensory controls and analysis policies
+PASS release isolated demo fixture
+PASS actual Start freezes m42-cool@1.0 targets, final manual/sensory controls and analysis policies
+PASS release isolated demo fixture
+PASS actual editor draft-save retains endpoint model/window configuration
+RESULT: PASS – actual MariaDB 12.3.3 SQL integration, revision-aware manual AA, >19 MB file metadata, failure/retry/release and ale freeze; target HA/Node-RED UAT remains separate
+PASS persist demo choice and actual preparation tilt-pro-blue-20260925
+PASS r7 actual Start r7-ipl
+PASS r7 seed tilt-pro-blue-20260925 with exact original values
+PASS release isolated r7 fixture r7-ipl
+PASS persist demo choice and actual preparation gyllen-pils-20260925
+PASS r7 actual Start r7-gyllen
+PASS r7 seed gyllen-pils-20260925 with exact original values
+PASS release isolated r7 fixture r7-gyllen
+PASS r7 actual Start r7-hourly
+PASS hourly imports/replay, actual means and a missing-hour segment
+PASS hourly analysis preserves endpoint/range calculations
+PASS ingestion transaction rollback with an injected later failure
+PASS persistent comparison selector, elapsed alignment and independent analysis
+PASS r8 half-hour display and unchanged source data
+PASS r7 actual p20_overview_query with hourly primary and detailed comparison
+PASS r7 actual p22_active_report_query with hourly primary and detailed comparison
+PASS r7 actual p23_measurement_export_query with hourly primary and detailed comparison
+PASS r7 complete check fixture
+PASS rapid unique atomic Systemkontroll runs
+PASS Systemkontroll rollback with an injected middle-result failure
+PASS technical recovery ordering with identical timestamps
+PASS report time range independent of dashboard selection
+PASS actual completed archive/report SQL with hourly source and full chronology
+PASS prior data/lifecycle/statistics/comparison/atomic regressions
+PASS r8 clock and schema expectation regressions
+PASS r8 direct event data persist shared 30-minute choice
+PASS r8 actual technical diagnostic query
+PASS r8 actual Systemkontroll clock expression in Oslo timezone
+RESULT: PASS – r8 native MariaDB data/lifecycle/statistics/comparison/diagnostics/clock checks
+PASS release isolated r7 fixture r7-hourly
+PASS r7 actual Start r9-criteria
+PASS r9 graph/demo event envelope 0
+PASS r9 graph/demo event envelope 1
+PASS r9 graph/demo event envelope 2
+PASS r9 graph/demo event envelope 3
+PASS r9 actual DB statistics decision after 300 seconds
+PASS r9 actual DB statistics decision after 3599 seconds
+PASS r9 actual DB statistics decision after 3600 seconds
+PASS r9 actual DB statistics decision after 86400 seconds
+PASS r9 initial statistics decision
+PASS r9 actual warning/recovery transaction and no healthy-success spam
+PASS r9 fixture series columns
+PASS r9 isolated direct process criterion graph binding
+PASS r9 read graph-bound bio threshold
+PASS r9 read frozen bio parameters
+PASS r9 read frozen correction policy bio
+PASS r9 original graph requirements bio
+PASS r9 append explicit bio met evidence 0
+PASS r9 read correction head bio
+PASS r9 real bio override transaction 1
+PASS r9 read persisted revision id bio
+PASS r9 effective bound addition and obsolete marker bio
+PASS r9 append explicit bio met evidence 1
+PASS r9 current graph/report requirements bio
+PASS r9 read correction head bio
+PASS r9 real bio override transaction 2
+PASS r9 read persisted revision id bio
+PASS r9 explicit unset bound bio
+PASS r9 read correction head bio
+PASS r9 real bio reset transaction 3
+PASS r9 read persisted revision id bio
+PASS r9 reset graph requirements bio
+PASS r9 append explicit bio met evidence 3
+PASS r9 reset marker revision bio
+PASS r9 unchanged frozen bio parameters
+PASS r9 read graph-bound process threshold
+PASS r9 read frozen process parameters
+PASS r9 read frozen correction policy process
+PASS r9 original graph requirements process
+PASS r9 append explicit process met evidence 0
+PASS r9 read correction head process
+PASS r9 real process override transaction 1
+PASS r9 read persisted revision id process
+PASS r9 effective bound addition and obsolete marker process
+PASS r9 append explicit process met evidence 1
+PASS r9 current graph/report requirements process
+PASS r9 read correction head process
+PASS r9 real process override transaction 2
+PASS r9 read persisted revision id process
+PASS r9 explicit unset bound process
+PASS r9 read correction head process
+PASS r9 real process reset transaction 3
+PASS r9 read persisted revision id process
+PASS r9 reset graph requirements process
+PASS r9 append explicit process met evidence 3
+PASS r9 reset marker revision process
+PASS r9 unchanged frozen process parameters
+PASS r9 read frozen graph columns session_analysis_graphs
+PASS r9 isolated 24-hour graph fixture session_analysis_graphs
+PASS r9 isolated 48-hour graph fixture session_analysis_graphs
+PASS r9 read frozen graph columns session_analysis_graph_series
+PASS r9 isolated 24-hour graph fixture session_analysis_graph_series
+PASS r9 isolated 48-hour graph fixture session_analysis_graph_series
+PASS r9 read bio 24-hour stability criterion
+PASS r9 stability frozen bio
+PASS r9 stability correction policy bio
+PASS r9 original stability window association bio
+PASS r9 read correction head bio
+PASS r9 real bio override transaction 4
+PASS r9 read persisted revision id bio
+PASS r9 effective stability window association bio
+PASS r9 read correction head bio
+PASS r9 real bio reset transaction 5
+PASS r9 read persisted revision id bio
+PASS r9 reset stability window association bio
+PASS r9 read process 24-hour stability criterion
+PASS r9 stability frozen process
+PASS r9 stability correction policy process
+PASS r9 original stability window association process
+PASS r9 read correction head process
+PASS r9 real process override transaction 4
+PASS r9 read persisted revision id process
+PASS r9 effective stability window association process
+PASS r9 read correction head process
+PASS r9 real process reset transaction 5
+PASS r9 read persisted revision id process
+PASS r9 reset stability window association process
+PASS r9 actual published selection values
+PASS r9 actual comparison read-model
+RESULT: PASS – r9 native event/import/current-criterion regressions
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-start-control-live.js
+PASS empty DB fields are explicitly missing despite stale HA numbers; rejected Start persists exact field snapshots
+PASS concurrent draft edit cannot change the exact validated/returned/recorded start snapshot and does not require an application lock
+PASS late initial-round failure rolls back the session, frozen plan and measurement draft while preserving pre-start input
+PASS Start persists exactly one complete first measurement round at pitch with SG, temperature, pressure, cooling, airlock, all sensory fields, settling and Unicode note; later draft edits preserve it
+PASS actual B/P evaluation after a complete Start preserves missing time-series basis and allows registered/withdrawn exceptions through HA events without rewriting original evidence
+PASS same-value explicit HA event persists through actual DB binding and complete slurry Start stores only slurry pitch facts
+PASS retained old session plus active fermentation yields process=1/biology=1 through actual Systemkontroll query and consumer
+PASS unregistered start binding fails visibly in the DB contract
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-operator-config-live.js
+PASS DB-owned sensory ranges/help and explicit zero; manual temperature travels through actual HA field binding
+PASS controlled HA catalog through transport, DB save receipt, stale revision and wrong-unit rejection
+PASS frozen binding drives kPa to bar import; absent optional pressure does not drop SG/temperature
+PASS live change remains scheduled until DB boundary; old configuration and measurements remain immutable
+PASS technical label comes from DB component registry and original identity survives in details
+PASS biological exception register/withdraw uses same transactional DB operation as process
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-operator-ui.js
+PASS actual Chromium range: no write on mount, endpoints 5 and 0 persist; temperature has one decimal and uses DB field binding
+PASS source check, compatible pressure picker, unsaved draft survives refresh, save waits for actual DB receipt
+PASS actual SQL-generated B/P fixtures render both correction and exception controls in shipping component
+PASS mobile source card fits viewport; no uncaught browser errors
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r16-system-live.js
+PASS processed empty period remains explicit missing data rather than successful data coverage
+PASS reported historical-only case: ready import, 215 hourly records, zero detail and DB-owned coverage warning without false error
+PASS real system-check query/consumer obeys DB policy changes and fails visibly for unknown state policy or missing DB result
+PASS same coverage appears unchanged in the HA source and actual bounded overview
+PASS transport failures are deduplicated while open, cannot recurse, wait for plugin telemetry and reread current DB facts rather than queued domain payloads
+CHECK actual plugin controller
+CHECK controller initialized
+CHECK disconnected and unloaded rejected
+PASS actual plugin 0.80.3 controller rejects disconnected/unloaded integration and only successful node output clears the matching DB issue once
+PASS payload defects remain real errors and a failed technical writer does not recursively publish through the same broken path
+RESULT: PASS – p24r16 system check, historical coverage and HA publication recovery
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r15-graphs-live.js
+PASS effective B/P requirements update immediately after reset; stale assessment blocks Next; old facts remain; receipt waits for exact revised evaluation
+PASS B and P: actual correction, explicit unset, actual evaluation history, reset and numeric bounds refresh without contract errors
+PASS all six actual SQL graphs share geometry and typography; manual points, plans, FG band, gaps and real comparison render identically in dashboard/report
+PASS report retains full measurements and dates while dashboard uses the selected last-24-hour window
+PASS B and P use the same correction/exception styles and separate handling cells
+PASS SQLite preserves explicit unset history; old typed-zero history remains zero; missing legacy facts reject
+RUN node tests/test-sqlite-live.js
+PASS 209 original IPL values, pressure, hourly segments and P5/B4 history
+PASS normalized SQLite pair, manifest match and complete measurement history
+PASS legacy SQLite v1 layout converts and imports exact existing pitch facts; missing pitch facts reject
+PASS legacy raw graph policies convert through DB catalog for session and template-only imports; ambiguous IDs roll back
+PASS import during real measurement writes; active session unchanged; atomic historical release; own copy and idempotence
+PASS late rollback, wrong pair rejection, unique template imports and imported comparison/date labels
+PASS 12 concurrent active reports and replay without duplicate primary keys
+PASS chunk upload checksum, actual Node-RED adapter, palette driver and worker preview
+PASS one archive catalogue from manifests; missing/mismatched SHA warnings; import still succeeds
+PASS active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+193 !== 183
+
+    at /workspace/scratch/2ea3d328f7d1/gjaeringsassistent/tests/test-sqlite-live.js:149:119
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 193,
+  expected: 183,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

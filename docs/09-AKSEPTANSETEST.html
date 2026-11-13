@@ -33,8 +33,9 @@
 release og reelle integrasjoner.</p>
 <h2 id="1-installasjon-og-oppstart">1. Installasjon og oppstart</h2>
 <ol type="1">
-<li>Installer på ren prototypebase. Schema, seed, flow og frontend skal
-fullføre uten FK-/SQL-feil.</li>
+<li>Installer på tom database eller oppgrader en støttet kilde med
+databevaring. Schema, seed, flow og frontend skal fullføre uten
+FK-/SQL-feil.</li>
 <li>Node-RED skal starte uten vedvarende Technical-feil.</li>
 <li>Automatisk Systemkontroll skal fullføre etter oppstart og vise
 eksplisitt resultat for database, schema, HA-kontrakt, konfigurasjon,
@@ -332,9 +333,10 @@ lykkes etter verified. Registrer TEST-UAT-012/013.</li>
 </ol>
 <h2 id="p24r7-målmiljøkontroll-1">P24r7 målmiljøkontroll</h2>
 <ol type="1">
-<li>Installer rent, kjør Systemkontroll to ganger raskt og bekreft 186
-tabeller / 139 views / 186 InnoDB-tabeller og 15 resultater per kjøring.
-Fersk HA-entitetskontroll skal finne arkiveringsknappen.</li>
+<li>Installer rent, kjør Systemkontroll to ganger raskt og bekreft
+tabell-/view-/InnoDB-antall fra gjeldende migreringsmanifest og 15
+resultater per kjøring. Fersk HA-entitetskontroll skal finne
+arkiveringsknappen.</li>
 <li>Start fra 25.09.2026 kl. 22:00. Bekreft at eldre timer fra
 HA-statistikk vises også uten tidsstempelsensorens gamle historie. Ingen
 kunstige femminuttspunkter skal oppstå. Fjern tilgang til statistikk
@@ -492,5 +494,11 @@ manuelt/sensor og historikk ved kildebytte. Prøv registrering og
 tilbaketrekking av tillatt kriterieavvik i både Biologi og Prosesstrinn
 og kontroller readiness/rapport. Lokal Chromium-test erstatter ikke
 denne måltesten.</p>
+<p>Ved ordinær Start kontrolleres at hele første målesettet vises i
+historikken, inkludert sensorisk 0 og notat. Senere kladdendringer skal
+ikke omskrive det. Manglende kontinuerlig grunnlag skal fortsatt være
+synlig, og tillatt B/P-fravik skal kunne registreres og trekkes tilbake.
+Dette er målmiljø-UAT, separat fra native test og kontrollert
+Chromium-skall.</p>
 </body>
 </html>

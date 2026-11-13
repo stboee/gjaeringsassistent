@@ -1,6 +1,6 @@
 {
-  "application_version": "2026.11.09-2",
-  "server_version": "/workspace/scratch/1ddb593c676d/release-test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
+  "application_version": "2026.11.13-1",
+  "server_version": "/workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)",
   "sql_transport": "native isolated MariaDB bootstrap; actual query rows passed to shipping Function source",
   "variable_query": "SELECT @@read_only AS read_only, @@global.read_only AS global_read_only, CASE WHEN @@global.read_only='OFF' THEN 1 ELSE 0 END AS database_writable, UNIX_TIMESTAMP() AS database_epoch",
   "cases": [
@@ -9,7 +9,7 @@
         "read_only": "ON",
         "global_read_only": "ON",
         "database_writable": 0,
-        "database_epoch": 1794208327.0
+        "database_epoch": 1794558840.0
       },
       "function_result": {
         "id": "writable",
@@ -25,7 +25,7 @@
         "read_only": "NO_LOCK",
         "global_read_only": "NO_LOCK",
         "database_writable": 0,
-        "database_epoch": 1794208327.0
+        "database_epoch": 1794558841.0
       },
       "function_result": {
         "id": "writable",
@@ -41,7 +41,7 @@
         "read_only": "NO_LOCK_NO_ADMIN",
         "global_read_only": "NO_LOCK_NO_ADMIN",
         "database_writable": 0,
-        "database_epoch": 1794208328.0
+        "database_epoch": 1794558841.0
       },
       "function_result": {
         "id": "writable",
@@ -57,7 +57,7 @@
         "read_only": "OFF",
         "global_read_only": "OFF",
         "database_writable": 1,
-        "database_epoch": 1794208329.0
+        "database_epoch": 1794558842.0
       },
       "function_result": {
         "id": "writable",

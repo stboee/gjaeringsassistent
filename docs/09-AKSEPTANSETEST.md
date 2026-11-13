@@ -11,7 +11,7 @@ source_format: markdown
 
 ## 1. Installasjon og oppstart
 
-1. Installer på ren prototypebase. Schema, seed, flow og frontend skal fullføre uten FK-/SQL-feil.
+1. Installer på tom database eller oppgrader en støttet kilde med databevaring. Schema, seed, flow og frontend skal fullføre uten FK-/SQL-feil.
 2. Node-RED skal starte uten vedvarende Technical-feil.
 3. Automatisk Systemkontroll skal fullføre etter oppstart og vise eksplisitt resultat for database, schema, HA-kontrakt, konfigurasjon, lineage og frontendpublisering.
 
@@ -147,7 +147,7 @@ Minstekontroll for p23r2:
 
 ## P24r7 målmiljøkontroll
 
-1. Installer rent, kjør Systemkontroll to ganger raskt og bekreft 186 tabeller / 139 views / 186 InnoDB-tabeller og 15 resultater per kjøring. Fersk HA-entitetskontroll skal finne arkiveringsknappen.
+1. Installer rent, kjør Systemkontroll to ganger raskt og bekreft tabell-/view-/InnoDB-antall fra gjeldende migreringsmanifest og 15 resultater per kjøring. Fersk HA-entitetskontroll skal finne arkiveringsknappen.
 2. Start fra 25.09.2026 kl. 22:00. Bekreft at eldre timer fra HA-statistikk vises også uten tidsstempelsensorens gamle historie. Ingen kunstige femminuttspunkter skal oppstå. Fjern tilgang til statistikk midlertidig: rådata skal fortsette, og feilmeldingen skal lukkes når tilgangen kommer tilbake.
 3. Velg hver demo, kontroller navn og start. Sammenlign med det andre datasettet og en avsluttet gjæring. Bekreft dag-0-justering, kildemerking, egne analysetall, delte/persistente valg og 24/48 timer/7 dager/hele gjæringen.
 4. Avslutt: visningen skal umiddelbart gå til Gjæring avsluttet. Ved verifisert eksport skal retry-knappen være skjult. Ved eksportfeil skal nytt forsøk være tilgjengelig og Gjør klar sperret. Etter verifisering skal Gjør klar fungere.
@@ -216,3 +216,5 @@ Oppgrader en kjent kilde med aktiv gjæring, beholdt tidligere sesjon og egne/im
 ## Operatørflate og kildebytte
 
 Kontroller i mål-HA: manglende slider blir ikke automatisk 0; velg og lagre 0 og 5, og prøv temperatur med én desimal. Kontroller sensorlisten, bevarte ulagrede valg ved refresh, DB-kvittering, trykk manuelt/sensor og historikk ved kildebytte. Prøv registrering og tilbaketrekking av tillatt kriterieavvik i både Biologi og Prosesstrinn og kontroller readiness/rapport. Lokal Chromium-test erstatter ikke denne måltesten.
+
+Ved ordinær Start kontrolleres at hele første målesettet vises i historikken, inkludert sensorisk 0 og notat. Senere kladdendringer skal ikke omskrive det. Manglende kontinuerlig grunnlag skal fortsatt være synlig, og tillatt B/P-fravik skal kunne registreres og trekkes tilbake. Dette er målmiljø-UAT, separat fra native test og kontrollert Chromium-skall.

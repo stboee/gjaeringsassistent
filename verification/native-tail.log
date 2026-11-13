@@ -1,0 +1,79 @@
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r15-performance-live.js
+READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":11886,"rows_read":79787,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":6628,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":3831,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":3658,"rows_read":73765,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":3716,"rows_read":89778,"cpu_ms":null}],"after":{"elapsed_ms":29777,"rows_read":54553,"cpu_ms":null},"poll":{"elapsed_ms":25,"rows_read":372,"cpu_ms":null}}
+MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":11886,"rows_read":79787,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":6628,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":3831,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":3658,"rows_read":73765,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":3716,"rows_read":89778,"cpu_ms":null}],"after":{"elapsed_ms":29777,"rows_read":54553,"cpu_ms":null},"poll":{"elapsed_ms":25,"rows_read":372,"cpu_ms":null}}
+PASS 21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages
+PASS three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot
+PASS measurement change and DB clock deadline each trigger fresh publication; receipt is idempotent and unchanged polls remain cheap
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r15-historical-live.js
+PASS ordinary start fields and first observation create a finite historical DB window
+PASS five bounded chunks, exact partial final bucket, hour boundary, late HA record rejection, failed-write retry basis and restart without live polling
+PASS manual missing B/P phases, shared neighboring boundary, both duration changes, chronological rejection, reset and append-only revisions
+PASS frozen evaluation clock, distinct after-registered observations with historical measured_at and current audit time
+PASS real overview and both cards render DB durations; all graph ends stay fixed when the DB wall clock advances
+PASS actual post-import analyses and B/P assessments use the frozen horizon; a later recorded biological exception is applied
+PASS completion uses historical end; SQLite pair, both SHA files, common report and reimport preserve the fixed window
+RESULT: PASS – p24r15 historical import, phase boundaries, after-registration and SQLite export
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r15-live.js
+PASS idle payload from actual SQL accepts plugin 0.80.3; old empty/null payload rejects; required fields cannot disappear
+PASS published template selection and reverse labels/numeric availability use actual DB bindings
+PASS real start path, no null-to-zero acceptance, normalized dry subtype, wrong subtype rejected, DB start time and import status
+PASS SQL effective readiness, counts, pending evaluation and persisted recommendation agree with overview; withdrawal blocks again
+PASS actual Systemkontroll SQL detects stale HA start status; DB technical defaults, event arrays and Oslo time validate in plugin
+PASS real finish, verified-archive gate, prepare, restore and next normal start selection
+PASS slurry Start stores only the required slurry facts, dry Start stores only dry facts
+PASS all physical table/nullable-column metadata covered, typed catalog and key/constraint snapshot, synchronized release markers
+RESULT: PASS – p24r15 actual SQL→Node-RED→HA input contracts and lifecycle on MariaDB 12.3.3

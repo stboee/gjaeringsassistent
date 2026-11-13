@@ -23,8 +23,10 @@ const cpu=()=>{if(!process.env.GA_TEST_SERVER_PID)return null;try{const fields=f
  const readCount=async()=>Number((await db.query("SHOW SESSION STATUS LIKE 'Rows_read'"))[0][0].Value);
  const measure=async(sql,args=[])=>{const count=await readCount(),c=cpu(),t=performance.now();const [sets]=await db.query(sql,args);const elapsed=performance.now()-t;return {sets,elapsed_ms:elapsed,rows_read:(await readCount())-count,cpu_ms:c===null?null:cpu()-c};};
  const compact=m=>({elapsed_ms:Math.round(m.elapsed_ms),rows_read:m.rows_read,cpu_ms:m.cpu_ms});
- // Actual p24r13 baseline on precisely the same base-table fixture.
- const views=fs.readFileSync(path.join(root,'sql/20-views.sql'),'utf8'),old=fs.readFileSync(path.join(root,'tests/fixtures/p24r13-views-baseline.sql'),'utf8'),before=[];let expectedLatest;
+ // Actual p24r13 read plan on the same data. Its removed physical entity-ID
+ // columns are supplied by the declared compatibility view; the old graph
+ // algorithms/query shapes remain unchanged. This adapter is test-only.
+ const views=fs.readFileSync(path.join(root,'sql/20-views.sql'),'utf8'),old=fs.readFileSync(path.join(root,'tests/fixtures/p24r13-views-baseline.sql'),'utf8').replace(/FROM measurement_source_profiles p/g,'FROM v_measurement_source_profiles p'),before=[];let expectedLatest;
  try{await db.query(old);for(const name of ['v_graph_definitions','v_graph_series','v_graph_latest','v_graph_axis_ticks','v_graph_time_markers']){const scope=['v_graph_definitions','v_graph_time_markers'].includes(name)?" AND render_scope='dashboard'":'';const m=await measure('SELECT * FROM '+name+' WHERE session_id=?'+scope,[sid]);before.push({view:name,rows:m.sets.length,...compact(m)});if(name==='v_graph_latest')expectedLatest=m.sets;}}finally{await db.query(views);}
  const after=await measure('CALL ga_read_overview()'),flat=after.sets.filter(Array.isArray).flat(),groups=Object.groupBy(flat,r=>r._set),basis=groups.overview_publication_basis[0];
  assert.ok(groups.analysis_series.length<before.find(x=>x.view==='v_graph_series').rows);assert.equal(groups.analysis_graphs.length,6);

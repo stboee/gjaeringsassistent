@@ -1,0 +1,27 @@
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-start-control-live.js
+PASS empty DB fields are explicitly missing despite stale HA numbers; rejected Start persists exact field snapshots
+PASS concurrent draft edit cannot change the exact validated/returned/recorded start snapshot and does not require an application lock
+PASS late initial-round failure rolls back the session, frozen plan and measurement draft while preserving pre-start input
+PASS Start persists exactly one complete first measurement round at pitch with SG, temperature, pressure, cooling, airlock, all sensory fields, settling and Unicode note; later draft edits preserve it
+PASS actual B/P evaluation after a complete Start preserves missing time-series basis and allows registered/withdrawn exceptions through HA events without rewriting original evidence
+PASS same-value explicit HA event persists through actual DB binding and complete slurry Start stores only slurry pitch facts
+PASS retained old session plus active fermentation yields process=1/biology=1 through actual Systemkontroll query and consumer
+PASS unregistered start binding fails visibly in the DB contract

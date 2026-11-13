@@ -44,3 +44,7 @@ for name in ['start-control-regression.json','install-upgrade-regression.json','
     for source, expected in result['source_fingerprints'].items():
         assert hashlib.sha256((root/source).read_bytes()).hexdigest()==expected, 'Stale native proof: '+source
 print('PASS current native start/upgrade/backup proof, migration planner and absence of installer reset')
+
+ui=json.loads((root/'verification/operator-ui-regression.json').read_text())
+assert ui['ha_shell']=='controlled' and len(ui['checks'])>=4 and ui['browser_version']
+print('PASS current native sensor and actual Chromium evidence; installed HA UAT remains open')

@@ -202,8 +202,9 @@ KiB deler og DB-kvittering. Disse byte-delene er transport, ikke
 domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir
 tilgjengelig i sammenligningslisten etter import; <strong>Skjul fra
 sammenligning</strong> legger til en synlighetshendelse og sletter ingen
-data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater
-avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.</p>
+data. Bare eksplisitt støttede eldre SQLite-skjemaer konverteres;
+ukjente, uvedkommende og fremtidige formater avvises. Tidligere
+JSON-arkiver konverteres ikke i denne versjonen.</p>
 <p>Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen
 bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn,
 men gir ingen garanti om en bestemt komprimeringsfaktor. Alle
@@ -232,5 +233,17 @@ transportkontrollsum valideres uavhengig av sidefilen.</p>
 historiske sesjonen etter bekreftelse. En ubrukt importert
 originaltemplate kan tas med via avkrysning. Importerte templates vises
 separat med bruksreferanser og egen sletteknapp når de er ubrukte.</p>
+<h2 id="eldre-sensorprofiler-i-arkiver">Eldre sensorprofiler i
+arkiver</h2>
+<p>Det eksakte eldre skjemaet med fire entity-ID-er i
+measurement_source_profiles konverteres til en fryst
+sesjonskonfigurasjon ved arkivets last_import_cutoff_at. ID-ene kommer
+fra arkivet, enhetene fra DB-registerets kanoniske enheter. Trykk
+forblir manuelt. Eldre kildebytter og kontrollgrenser er ikke registrert
+og oppgis som fravær; konverteringen tillegger dem ingen historikk.
+Dagens globale sensorkonfigurasjon endres ikke. Ukjent kolonneoppsett og
+blanding av gammelt profilskjema og nyere kildehistorikk avvises. Hele
+konverteringen inngår i samme importtransaksjon og rulles tilbake ved
+feil.</p>
 </body>
 </html>

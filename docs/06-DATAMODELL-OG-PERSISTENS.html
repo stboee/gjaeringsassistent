@@ -271,8 +271,9 @@ KiB deler og DB-kvittering. Disse byte-delene er transport, ikke
 domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir
 tilgjengelig i sammenligningslisten etter import; <strong>Skjul fra
 sammenligning</strong> legger til en synlighetshendelse og sletter ingen
-data. SQLite-filer fra eldre, uvedkommende eller fremtidige formater
-avvises. Tidligere JSON-arkiver konverteres ikke i denne versjonen.</p>
+data. Bare eksplisitt støttede eldre SQLite-skjemaer konverteres;
+ukjente, uvedkommende og fremtidige formater avvises. Tidligere
+JSON-arkiver konverteres ikke i denne versjonen.</p>
 <p>Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen
 bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn,
 men gir ingen garanti om en bestemt komprimeringsfaktor. Alle
@@ -352,12 +353,12 @@ publiseringsoperasjonen. Kvitteringene inneholder ingen domeneverdier
 eller kopier av grafer.</p>
 <h2 id="p24r15-historisk-vindu-og-fasetid">P24r15: historisk vindu og
 fasetid</h2>
-<p>Runtime-schema er 9, template-schema er 4. session_history_windows er
-et valgfritt sesjonssubtypefaktum med obligatorisk ended_at,
+<p>Runtime-schema er 11, template-schema er 4. session_history_windows
+er et valgfritt sesjonssubtypefaktum med obligatorisk ended_at,
 operation_id og created_at. Start finnes bare som sessionens
 pitchfaktum/revisjon. En ordinær sesjon har ingen historisk subtype,
-ikke en oppdiktet sluttdato. 202 basetabeller, 178 views og full
-relasjons-/fraværsmetadata følger leveransen.</p>
+ikke en oppdiktet sluttdato. Gjeldende tabell-/viewantall følger
+migreringsmanifestet og faktisk native katalogopptak.</p>
 <p>v_all_session.domain_now er historisk slutt, faktisk ferdigstilling
 for avsluttet ordinær sesjon, ellers DB-klokken. Importcursor bestemmer
 hvor langt en uferdig historisk import kan vurderes.

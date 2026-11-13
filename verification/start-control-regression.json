@@ -1,26 +1,35 @@
 {
-  "application_version": "2026.11.09-2",
+  "application_version": "2026.11.13-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "target_ha_uat": "not_run",
   "checks": [
     "empty DB fields are explicitly missing despite stale HA numbers; rejected Start persists exact field snapshots",
     "concurrent draft edit cannot change the exact validated/returned/recorded start snapshot and does not require an application lock",
+    "late initial-round failure rolls back the session, frozen plan and measurement draft while preserving pre-start input",
+    "Start persists exactly one complete first measurement round at pitch with SG, temperature, pressure, cooling, airlock, all sensory fields, settling and Unicode note; later draft edits preserve it",
+    "actual B/P evaluation after a complete Start preserves missing time-series basis and allows registered/withdrawn exceptions through HA events without rewriting original evidence",
     "same-value explicit HA event persists through actual DB binding and complete slurry Start stores only slurry pitch facts",
     "retained old session plus active fermentation yields process=1/biology=1 through actual Systemkontroll query and consumer",
     "unregistered start binding fails visibly in the DB contract"
   ],
   "source_fingerprints": {
     "installer/install.sh": "d570e88cba2f368e883cd361aa3ec48de594c7bc636736a0ee8f64d2331f3050",
-    "installer/database-plan.py": "bec599acb1161fb7830d918e23751afc7d60c5e332b8b8fa1bfaa1d6a92f1bae",
-    "installer/migrations.json": "c28479ea7b4827a6e09de0a727c8548a2bc62bb26cb23021a0465ae6ad4a1c3e",
-    "sql/10-runtime-schema.sql": "e1d216aef68c5d9ed9c2566e29e353766e376ffbc5497de7176799ab49b060f9",
-    "sql/11-runtime-routines.sql": "8a886a169ac60af55c337d0759aea848f91bfc6cfb832c0aa2a8a777a5408f0c",
-    "sql/20-views.sql": "90fe539a79622fc35eb6d81f0cfedc02be48ed919355971c02569855509c8330",
-    "sql/21-system-metadata-seed.sql": "ed489d869a5633bf397148c747f2e007d487ef8923b69073b73622b69928bd90",
-    "nodered/flows.template.json": "9b58e03b29e9d86ee6eeb04bd2c51035c493b5b7a28b49a039efa80581a788a7",
-    "dashboard/gjaeringsassistent-card.js": "e587867de995b3a3eb22d6c7f3319bd9979a57ed69968e66fcd56f3734d11a7c",
-    "dashboard/gjaeringsassistent-dashboard.yaml": "bab6eb2666c406e365e6e5694985276517736f6283c26a7aca4b24c2d9666f88",
-    "tests/test-start-control-live.js": "93cf98bb2c1d0d6b433249394db722636854d619f512ed2b72418c6cde138763"
+    "installer/database-plan.py": "b4ddbc2376f140a33105c0d518a4afb1b8e8c1772487c93f580faad80847a5e8",
+    "installer/migrations.json": "8d47f6b6edf5bdf27e111cff417c6bf98b9c873a86dbb909869fce0ea9f7a11a",
+    "sql/00-template-schema.sql": "5e8f14d3eac67acc71c8b369a02d4c14021b034875853680661ea8d40ea12536",
+    "sql/10-runtime-schema.sql": "83159b460a8433d77644f729c004ce8cc61c03dade83e0a01a721d01f5044002",
+    "sql/12-operator-schema.sql": "723ff54f81ddcdd55b4761140523a183e21b8ea35565edc01a6f09ee0b46dc74",
+    "sql/12-operator-routines.sql": "417bcd0c22912679a280a0511a4409056c61c8f68c96d83c1faf8f5aeb274da3",
+    "sql/26-operator-config-seed.sql": "ba84466ed5aceecc151d4f9593afedd9efdfedd262c8d639f8a0a639de0ce2f2",
+    "sql/23-measurement-source-seed.sql": "7b3362f733ee39fb8573fa19c6c3d5756a29504ec52918cae1b2eca222476096",
+    "tools/overview_reads.sql": "ebc7a633e91cbd36c6fc16a239237b69006670b79c0a276a6f27b35bed09bb09",
+    "sql/11-runtime-routines.sql": "d095194a17e4889b8769bb9f1f6f73e78a06cf20a3043199078211aa00555bd9",
+    "sql/20-views.sql": "217c754cb254e54b9f7f82c5ef288494c739f6fa65ec11d3bd14f7c2cb47d38a",
+    "sql/21-system-metadata-seed.sql": "661c1cce08bbb0882026c915335542d7c6945e6cd3627864785035275c6699e8",
+    "nodered/flows.template.json": "8e5fb803ef68b945f15f1c5c557a3f9a74f5cdd8fe675f7e6d6f18960b37276c",
+    "dashboard/gjaeringsassistent-card.js": "b55078c6e36ff731eb8140a844a760d0aef4f7bcd3350f44fdb16bcc75f51986",
+    "dashboard/gjaeringsassistent-dashboard.yaml": "ff0ffb4a3eaaaa51d917ecb8659f4bd6ae25613769a032aea373ef2b4110f656",
+    "tests/test-start-control-live.js": "4d0cd6add23536ce1fde357b57464cfe62d08dff784d4a6b72eb902f933f23b1"
   }
 }

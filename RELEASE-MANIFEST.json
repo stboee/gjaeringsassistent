@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.12-1",
+  "version": "2026.11.13-1",
   "scope": "Sensoriske kontroller, reviderte målekilder og kriteriefravik",
   "required_files": [
     "VERSION",
@@ -84,7 +84,17 @@
     "tests/test-install-upgrade-live.js",
     "tests/docker-install-simulator.py",
     "verification/start-control-regression.json",
-    "verification/install-upgrade-regression.json"
+    "verification/install-upgrade-regression.json",
+    "sql/12-operator-schema.sql",
+    "sql/12-operator-routines.sql",
+    "sql/26-operator-config-seed.sql",
+    "sql/migrations/2026.11.13-1-upgrade.sql",
+    "sql/migrations/2026.11.13-1-metadata.sql",
+    "tools/run-native-tests.py",
+    "tests/test-operator-config-live.js",
+    "tests/test-operator-ui.js",
+    "verification/operator-config-regression.json",
+    "verification/operator-ui-regression.json"
   ],
   "component_groups": {
     "runtime": [
