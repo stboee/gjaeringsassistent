@@ -82,7 +82,7 @@ function readSqlite(filename,expectedRole,meta){
   if(file.prepare('PRAGMA integrity_check').get().integrity_check!=='ok')throw Error('SQLite integritetskontroll feilet');
   const manifest=Object.fromEntries(file.prepare('SELECT key,value FROM archive_manifest').all().map(r=>[r.key,r.value]));
   if(manifest.format!==contract.format||!['1',String(contract.version)].includes(manifest.version)||manifest.role!==expectedRole)throw Error('Ukjent arkivformat, versjon eller filrolle');
-  const rows={};
+  const rows={},legacySourceProfiles=[];
   for(const item of file.prepare("SELECT name,type FROM sqlite_master WHERE name NOT LIKE 'sqlite_%'").all()){
    if(item.name==='archive_manifest')continue;
    if(item.type!=='table'||!meta[item.name])throw Error('Arkivet inneholder en ukjent tabell eller et SQL-objekt');
@@ -95,9 +95,15 @@ function readSqlite(filename,expectedRole,meta){
    const oldPitch=['yeast_amount_g','slurry_volume_ml','slurry_source_batch','slurry_generation'];
    if(legacyPitch)expected.splice(expected.indexOf('oxygenation_note'),0,...oldPitch);
    const sourceExpected=legacyCriterion?expected.filter(c=>c!=='is_unset'):expected;
-   if(actual.join('|')!==sourceExpected.join('|'))throw Error('Arkivskjema passer ikke til installert versjon: '+item.name);
+   // Exact released source-profile layout only. Preserve its four archived
+   // identities separately; they are session provenance, never live settings.
+   const oldSourceFields=['sg_entity_id','temperature_entity_id','heartbeat_entity_id','rssi_entity_id'];
+   const oldSourceExpected=[...sourceExpected];oldSourceExpected.splice(oldSourceExpected.indexOf('source_type')+1,0,...oldSourceFields);
+   const legacySource=item.name==='measurement_source_profiles'&&actual.join('|')===oldSourceExpected.join('|');
+   if(!legacySource&&actual.join('|')!==sourceExpected.join('|'))throw Error('Arkivskjema passer ikke til installert versjon: '+item.name);
    const stmt=file.prepare(`SELECT * FROM ${q(item.name)}`);stmt.setReadBigInts(true);
    rows[item.name]=stmt.all().map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,typeof v==='bigint'?v.toString():v])));
+   if(legacySource)for(const row of rows[item.name]){legacySourceProfiles.push({...row});for(const field of oldSourceFields)delete row[field];}
    if(legacyCriterion)for(const row of rows[item.name]){if(['real_value','integer_value','boolean_value','text_value'].filter(k=>row[k]!==null).length!==1)throw Error('Eldre kriteriearkiv har ugyldig verdi');row.is_unset=0;}
    if(legacyPitch){
     rows.session_dry_pitches=[];rows.session_slurry_pitches=[];
@@ -109,7 +115,8 @@ function readSqlite(filename,expectedRole,meta){
     }
    }
   }
-  return {manifest,rows};
+  if(legacySourceProfiles.length&&['session_measurement_source_configurations','session_measurement_signal_bindings'].some(t=>rows[t]?.length))throw Error('Arkivet blander eldre sensorprofil og nyere kildehistorikk');
+  return {manifest,rows,legacySourceProfiles};
  }finally{file.close();}
 }
 async function exportArchive(db,job){
@@ -227,6 +234,21 @@ async function importArchive(db,files,operationId){
    await db.query('INSERT INTO archive_imports(import_id,operation_id,session_id,template_id,original_session_id,source_export_id,archive_sha256,template_sha256,imported_at) VALUES(?,?,?,?,?,?,?,?,?)',['import-'+uuid(),operationId,newSession,newTemplate,m.session_id,m.export_id,p.sessionDigest.sha256,p.templateDigest.sha256,now]);
   }
   await db.query('CALL ga_convert_legacy_archive_graphs(?,?)',[newVersion,newSession]);
+  if(newSession&&p.session.legacySourceProfiles.length){
+   // Technical conversion of the known old archive layout. The DB chooses
+   // the archived cursor, canonical units and identity of the frozen revision.
+   // Earlier source switches and validation bounds were not archived.
+   const legacy=JSON.stringify(p.session.legacySourceProfiles);
+   const [snapshot]=await db.query(`INSERT INTO session_measurement_source_configurations(session_id,configuration_id,effective_from,profile_name,note,created_at)
+    SELECT m.session_id,1,m.last_import_cutoff_at,j.name,'Binding kjent fra eldre SQLite-arkiv ved importcursor; eldre kildebytter og kontrollgrenser er ikke registrert',UTC_TIMESTAMP(3)
+    FROM session_measurement_sources m JOIN JSON_TABLE(?, '$[*]' COLUMNS(source_profile_id VARCHAR(128) PATH '$.source_profile_id',name VARCHAR(255) PATH '$.name')) j ON j.source_profile_id=m.source_profile_id WHERE m.session_id=?`,[legacy,newSession]);
+   if(snapshot.affectedRows!==1)throw Error('Eldre arkiv mangler entydig sensorprofil for sesjonen');
+   await db.query(`INSERT INTO session_measurement_signal_bindings(session_id,configuration_id,signal_id,input_mode,entity_id,unit_id,minimum_value,maximum_value)
+    SELECT m.session_id,1,u.signal_id,IF(u.signal_id='pressure','manual','sensor'),
+     CASE u.signal_id WHEN 'sg' THEN j.sg WHEN 'temperature' THEN j.temperature WHEN 'heartbeat' THEN j.heartbeat WHEN 'rssi' THEN j.rssi END,u.unit_id,NULL,NULL
+    FROM session_measurement_sources m JOIN JSON_TABLE(?, '$[*]' COLUMNS(source_profile_id VARCHAR(128) PATH '$.source_profile_id',sg VARCHAR(255) PATH '$.sg_entity_id',temperature VARCHAR(255) PATH '$.temperature_entity_id',heartbeat VARCHAR(255) PATH '$.heartbeat_entity_id',rssi VARCHAR(255) PATH '$.rssi_entity_id')) j ON j.source_profile_id=m.source_profile_id
+    CROSS JOIN measurement_source_units u WHERE m.session_id=? AND u.is_canonical=1 AND u.signal_id IN('sg','temperature','heartbeat','rssi','pressure')`,[legacy,newSession]);
+  }
   await db.commit();return {session_id:newSession,template_id:newTemplate,version_id:newVersion,idempotent:false};
  }catch(e){await db.rollback();
   // Concurrent requests can race on the unique archive identity. The losing

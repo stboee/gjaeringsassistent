@@ -35,6 +35,40 @@ const checks=[];function pass(name){checks.push(name);console.log('PASS',name);}
   const p=await core.preview(db,files);assert.equal(p.session.rows.measurements_5m.length,209);assert.ok(!p.session.rows.template_versions);assert.equal(p.template.rows.template_versions.length,1);
   const repeated=await core.exportArchive(db,{session_id:'r10-original-ipl',export_id:'r10-native-pair',output_dir:dir});assert.equal(repeated.session.sha256,pair.session.sha256);assert.equal(repeated.template.sha256,pair.template.sha256);
   pass('normalized SQLite pair, manifest match and complete measurement history');
+  // Construct the exact released 09-2 profile layout, without newer source
+  // history/registries. This is an old-format fixture, not a captured user file.
+  const sourceVars={...vars,session_id:'old-source-original',is_demo:0,operation_id:'old-source-start'},sourceParams=[];
+  const sourceStart=startSql.replace(/SET @ga_([a-z0-9_]+)=\?;/g,(match,key)=>{sourceParams.push(sourceVars[key]??null);return match;});await db.query(sourceStart,sourceParams);
+  await db.query("INSERT INTO session_lifecycle_events(lifecycle_event_id,session_id,lifecycle,occurred_at,note,operation_id,created_at) VALUES('old-source-end','old-source-original','completed','2026-06-07 20:00:00','Fixture','old-source-end',UTC_TIMESTAMP(3)); INSERT INTO session_release_events(release_event_id,session_id,released_at,operation_id,created_at) VALUES('old-source-release','old-source-original',UTC_TIMESTAMP(3),'old-source-release',UTC_TIMESTAMP(3))");
+  const sourcePair=await core.exportArchive(db,{session_id:'old-source-original',export_id:'old-source-original-export',output_dir:dir});
+  const oldSourceFiles={session:path.join(dir,'old-source-session.sqlite'),template:path.join(dir,'old-source-template.sqlite')};
+  const oldSourceFields=['sg_entity_id','temperature_entity_id','heartbeat_entity_id','rssi_entity_id'];
+  const oldSourceIds=['sensor.archive_sg','sensor.archive_temperature','sensor.archive_heartbeat','sensor.archive_rssi'];
+  const liveSourcesBefore=(await db.query('SELECT * FROM measurement_source_signal_bindings ORDER BY configuration_id,signal_id'))[0];
+  for(const role of ['session','template']){
+   fs.copyFileSync(sourcePair[role].path,oldSourceFiles[role]);const old=new DatabaseSync(oldSourceFiles[role]);
+   for(const t of ['session_measurement_source_configurations','session_measurement_signal_bindings','measurement_source_signals','measurement_source_units'])old.exec('DROP TABLE IF EXISTS '+t);
+   old.exec("UPDATE archive_manifest SET value='old-source-layout-09-2' WHERE key='export_id'");
+   if(!old.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='measurement_source_profiles'").get()){old.close();continue;}
+   const profileRows=old.prepare('SELECT * FROM measurement_source_profiles').all(),cols=p.meta.measurement_source_profiles.columns.map(c=>c.name);cols.splice(cols.indexOf('source_type')+1,0,...oldSourceFields);
+   old.exec('DROP TABLE measurement_source_profiles; CREATE TABLE measurement_source_profiles ('+cols.map(c=>'"'+c+'" '+(['int','integer','bigint','tinyint','smallint'].includes(p.meta.measurement_source_profiles.columns.find(v=>v.name===c)?.type)?'INTEGER':'TEXT')).join(',')+')');
+   for(const row of profileRows){oldSourceFields.forEach((c,i)=>row[c]=oldSourceIds[i]);old.prepare('INSERT INTO measurement_source_profiles VALUES('+cols.map(()=>'?').join(',')+')').run(...cols.map(c=>row[c]));}old.close();
+  }
+  const oldSourceImport=await core.importArchive(db,oldSourceFiles,'old-source-import');
+  const frozen=(await db.query('SELECT c.*,m.last_import_cutoff_at FROM session_measurement_source_configurations c JOIN session_measurement_sources m USING(session_id) WHERE c.session_id=?',[oldSourceImport.session_id]))[0];
+  assert.equal(frozen.length,1);assert.equal(frozen[0].effective_from,frozen[0].last_import_cutoff_at);assert.match(frozen[0].note,/eldre kildebytter og kontrollgrenser er ikke registrert/);
+  const frozenBindings=(await db.query('SELECT signal_id,input_mode,entity_id,unit_id,minimum_value,maximum_value FROM session_measurement_signal_bindings WHERE session_id=? ORDER BY signal_id',[oldSourceImport.session_id]))[0];
+  assert.equal(frozenBindings.length,5);for(const [i,signal]of ['sg','temperature','heartbeat','rssi'].entries())assert.equal(frozenBindings.find(r=>r.signal_id===signal).entity_id,oldSourceIds[i]);
+  const pressure=frozenBindings.find(r=>r.signal_id==='pressure');assert.equal(pressure.input_mode,'manual');assert.equal(pressure.entity_id,null);assert.ok(frozenBindings.every(r=>r.minimum_value===null&&r.maximum_value===null));
+  assert.deepEqual((await db.query('SELECT * FROM measurement_source_signal_bindings ORDER BY configuration_id,signal_id'))[0],liveSourcesBefore);
+  const oldRoundtrip=await core.exportArchive(db,{session_id:oldSourceImport.session_id,export_id:'old-source-roundtrip',output_dir:dir});
+  const roundtripPreview=await core.preview(db,{session:oldRoundtrip.session.path,template:oldRoundtrip.template.path});assert.equal(roundtripPreview.session.legacySourceProfiles.length,0);
+  assert.deepEqual(roundtripPreview.session.rows.session_measurement_signal_bindings.map(({session_id,configuration_id,...r})=>r).sort((a,b)=>a.signal_id.localeCompare(b.signal_id)),frozenBindings);
+  const unknownSource=path.join(dir,'unknown-source.sqlite');fs.copyFileSync(oldSourceFiles.session,unknownSource);const unknownDb=new DatabaseSync(unknownSource);unknownDb.exec('ALTER TABLE measurement_source_profiles ADD COLUMN unknown_sensor TEXT');unknownDb.close();
+  await assert.rejects(core.importArchive(db,{session:unknownSource,template:oldSourceFiles.template},'unknown-source-import'),/Arkivskjema/);
+  const invalidSource=path.join(dir,'invalid-source.sqlite');fs.copyFileSync(oldSourceFiles.session,invalidSource);const invalidDb=new DatabaseSync(invalidSource);invalidDb.exec("UPDATE measurement_source_profiles SET sg_entity_id='invalid.entity'");invalidDb.close();
+  const beforeInvalid=(await db.query('SELECT COUNT(*) n FROM templates'))[0][0].n;await assert.rejects(core.importArchive(db,{session:invalidSource,template:oldSourceFiles.template},'invalid-source-import'));assert.equal((await db.query('SELECT COUNT(*) n FROM templates'))[0][0].n,beforeInvalid);
+  pass('exact old SQLite source layout preserves archived identities at cursor, manual pressure, roundtrip and live settings; unknown layout and invalid binding reject atomically');
   // A genuine v1 column layout must convert before import, without inventing pitch facts.
   const legacyFiles={session:path.join(dir,'legacy-gjaering.sqlite'),template:path.join(dir,'legacy-template.sqlite')};
   fs.copyFileSync(files.session,legacyFiles.session);fs.copyFileSync(files.template,legacyFiles.template);
@@ -119,7 +153,8 @@ const checks=[];function pass(name){checks.push(name);console.log('PASS',name);}
   const candidateImport=await worker.run({database:config,userDir:process.env.GA_PALETTE_DIR},{action:'import_template',operation_id:'r11-warning-import',candidate_id:candidates[0].candidate_id});assert.ok(candidateImport.template_id);
   assert.ok((await db.query("SELECT message FROM archive_transfer_events WHERE operation_id='r11-warning-import' AND status='done'"))[0][0].message.includes('Advarsel'));
   pass('one archive catalogue from manifests; missing/mismatched SHA warnings; import still succeeds');
-  let snapshotStop=false,snapshotWrites=0;const writingSnapshot=(async()=>{while(!snapshotStop){const at=new Date(Date.parse('2026-10-10T00:00:00Z')+snapshotWrites*300000).toISOString().replace('T',' ').replace('Z','');await live.query('INSERT INTO measurements_5m(session_id,bucket_at,sample_count,sg_min,sg_mean,sg_median,sg_max,temperature_min_c,temperature_mean_c,temperature_max_c,created_at,updated_at) VALUES(?,?,1,1.012,1.012,1.012,1.012,12,12,12,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3))',[activeId,at]);snapshotWrites++;await new Promise(r=>setTimeout(r,10));}})();let activePair;try{activePair=await core.exportArchive(db,{session_id:activeId,export_id:'r11-active',output_dir:dir});}finally{snapshotStop=true;await writingSnapshot;}assert.ok(snapshotWrites>0);assert.equal(activePair.manifest.snapshot_kind,'active_snapshot');assert.ok(fs.readFileSync(activePair.report.path,'utf8').includes('Øyeblikksbilde av aktiv gjæring'));
+  const snapshotBase=Number((await db.query('SELECT UNIX_TIMESTAMP(MAX(bucket_at))+300 AS t FROM measurements_5m WHERE session_id=?',[activeId]))[0][0].t)*1000;
+  let snapshotStop=false,snapshotWrites=0;const writingSnapshot=(async()=>{while(!snapshotStop){const at=new Date(snapshotBase+snapshotWrites*300000).toISOString().replace('T',' ').replace('Z','');await live.query('INSERT INTO measurements_5m(session_id,bucket_at,sample_count,sg_min,sg_mean,sg_median,sg_max,temperature_min_c,temperature_mean_c,temperature_max_c,created_at,updated_at) VALUES(?,?,1,1.012,1.012,1.012,1.012,12,12,12,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3))',[activeId,at]);snapshotWrites++;await new Promise(r=>setTimeout(r,10));}})();let activePair;try{activePair=await core.exportArchive(db,{session_id:activeId,export_id:'r11-active',output_dir:dir});}finally{snapshotStop=true;await writingSnapshot;}assert.ok(snapshotWrites>0);assert.equal(activePair.manifest.snapshot_kind,'active_snapshot');assert.ok(fs.readFileSync(activePair.report.path,'utf8').includes('Øyeblikksbilde av aktiv gjæring'));
   for(const role of ['session','template'])assert.equal(fs.readFileSync(activePair[role].sha_path,'utf8'),activePair[role].sha256+'  '+path.basename(activePair[role].path)+'\n');
   assert.equal(activePair.report.sha256,activePair.manifest.report_sha256);
   const activePreview=await core.preview(db,{session:activePair.session.path,template:activePair.template.path});assert.equal(activePreview.session.rows.measurements_5m.length,String(activePair.manifest.measurement_count)==='0'?0:Number(activePair.manifest.measurement_count));
@@ -146,7 +181,7 @@ const checks=[];function pass(name){checks.push(name);console.log('PASS',name);}
   pass('active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection');
   fs.writeFileSync(path.join(root,'verification/p24r15-archive-regression.json'),JSON.stringify({application_version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim(),server_version:version[0].version,status:'pass',checks,deleted_rows:deleted.deleted_rows,active_export_sha256:activePair.session.sha256,concurrent_snapshot_writes:snapshotWrites},null,2)+'\n');
   const [viewColumns]=await db.query("SELECT c.TABLE_NAME,c.COLUMN_NAME FROM information_schema.COLUMNS c JOIN information_schema.VIEWS v ON v.TABLE_SCHEMA=c.TABLE_SCHEMA AND v.TABLE_NAME=c.TABLE_NAME WHERE c.TABLE_SCHEMA=DATABASE() ORDER BY c.TABLE_NAME,c.ORDINAL_POSITION");
-  const viewContract={};for(const row of viewColumns)(viewContract[row.TABLE_NAME]??=[]).push(row.COLUMN_NAME);assert.equal(Object.keys(viewContract).length,183);
+  const viewContract={};for(const row of viewColumns)(viewContract[row.TABLE_NAME]??=[]).push(row.COLUMN_NAME);assert.equal(Object.keys(viewContract).length,JSON.parse(fs.readFileSync(path.join(root,'installer/migrations.json'))).target_views);
   fs.writeFileSync(path.join(root,'contracts/read-model-columns.json'),JSON.stringify(viewContract,null,2)+'\n');
   const library=run('p24_archive_library_query');await db.query(library.topic,library.payload);
   fs.writeFileSync(path.join(root,'verification/p24r10-sqlite-regression.json'),JSON.stringify({application_version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim(),server_version:version[0].version,status:'pass',checks,concurrent_measurement_writes:writes,session_archive_bytes:pair.session.bytes,template_archive_bytes:pair.template.bytes},null,2)+'\n');
