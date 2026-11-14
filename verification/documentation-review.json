@@ -132,5 +132,11 @@
     "cause": "CI used Pandoc 3.1.3; local Debian 3.1.11.1 also differs from the upstream build in print CSS. Two syntax-highlighted HTML pages differed.",
     "resolution": "Both workflows use the same upstream package and binary SHA-256; local regeneration and complete gate passed with that exact binary.",
     "native_retests_required_for_formatter_only_change": false
+  },
+  "ci_verification": {
+    "run_id": 43604799252,
+    "source_commit": "3fd200fca70454eb7e77815e67405e4764e7874b",
+    "conclusion": "success",
+    "url": "https://github.com/stboee/gjaeringsassistent/actions/runs/43604799252"
   }
 }
