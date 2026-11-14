@@ -15,6 +15,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-install-upgrade-live.js
 SOURCE 0.1.0-prototype24-r16 sql/00-template-schema.sql
@@ -80,5 +81,25 @@ SOURCE 2026.11.09-2 sql/25-release-verification-results-seed.sql
 PASS 2026.11.09-2: invalid prior receipt and altered schema reject file upgrade before stopping Node-RED
 PASS 2026.11.09-2: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
 PASS 2026.11.09-2: reinstall keeps data and matching migration receipts; version expectations agree
+SOURCE 2026.11.13-1 sql/00-template-schema.sql
+SOURCE 2026.11.13-1 sql/01-template-registry-seed.sql
+SOURCE 2026.11.13-1 sql/10-runtime-schema.sql
+SOURCE 2026.11.13-1 sql/12-operator-schema.sql
+SOURCE 2026.11.13-1 sql/11-runtime-routines.sql
+SOURCE 2026.11.13-1 sql/12-operator-routines.sql
+SOURCE 2026.11.13-1 sql/02-runtime-registry-seed.sql
+SOURCE 2026.11.13-1 sql/03-w3470-template-seed.sql
+SOURCE 2026.11.13-1 sql/04-ale-templates-seed.sql
+SOURCE 2026.11.13-1 sql/20-views.sql
+SOURCE 2026.11.13-1 sql/21-system-metadata-seed.sql
+SOURCE 2026.11.13-1 sql/26-operator-config-seed.sql
+SOURCE 2026.11.13-1 sql/22-demo-reference-seed.sql
+SOURCE 2026.11.13-1 sql/23-measurement-source-seed.sql
+SOURCE 2026.11.13-1 sql/24-verification-metadata-seed.sql
+SOURCE 2026.11.13-1 sql/25-release-verification-results-seed.sql
+PASS 2026.11.13-1: invalid prior receipt and altered schema reject file upgrade before stopping Node-RED
+PASS 2026.11.13-1: same-schema file plan applies no domain DDL or seed
+PASS 2026.11.13-1: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
+PASS 2026.11.13-1: reinstall keeps data and matching migration receipts; version expectations agree
 PASS unknown source is rejected before stopping Node-RED or changing user data
 PASS fresh installation initializes an empty database without a synthetic session or reset

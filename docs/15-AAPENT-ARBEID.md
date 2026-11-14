@@ -52,6 +52,6 @@ Databevarende migrering fra p24r16 / 2026.11.07-1 / 2026.11.09-1 / 2026.11.09-2 
 
 | ID | Type | Status | Område | Exit-kriterium |
 |---|---|---|---|---|
-| OPEN-017 | Feilretting/måltest | Rettet i kilde; måltest åpen | Sensorinnstillinger gir HTTP 404 | Publisering bruker stage_path, JSON/gzip kan leses tilbake, publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i brukerens HA. Rettet kilde inngår i en verifisert pakket utgave. |
+| OPEN-017 | Feilretting/måltest | Pakket retting; måltest åpen | Sensorinnstillinger gir HTTP 404 | Publisering bruker stage_path, JSON/gzip kan leses tilbake, publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i brukerens HA. Den pakkede rettingen bekreftes i brukerens HA. |
 
-14.11.2026: Ny kortkode laster, men source-settings.json mangler. Feil argumentnavn source_path i flowen er reprodusert og rettet til stage_path på main. Exec-resultat/stderr bruker nå felles feilrapportering. Målrettet publiseringstest bestod etter at den først reproduserte feilen. Den publiserte ZIP-en er uendret; full releaseport/native regresjon for endret flow er ikke kjørt på nytt.
+14.11.2026: Ny kortkode laster, men source-settings.json mangler. Feil argumentnavn source_path i flowen er reprodusert og rettet til stage_path på main. Exec-resultat/stderr bruker nå felles feilrapportering. Målrettet publiseringstest bestod etter at den først reproduserte feilen. Rettelsen inngår i 2026.11.14-1. Brukerbekreftelse på den nye pakkens funksjon står fortsatt åpen.

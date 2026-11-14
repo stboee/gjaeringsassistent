@@ -1,13 +1,13 @@
 {
-  "format_version": 2,
-  "target_version": "2026.11.13-1",
+  "format_version": 3,
+  "target_version": "2026.11.14-1",
   "supported_sources": [
     "0.1.0-prototype24-r16",
     "2026.11.07-1"
   ],
   "baseline_tables": 202,
   "baseline_views": 178,
-  "migration_id": "2026.11.13-1-operator-sources",
+  "migration_id": "2026.11.14-1-source-publication",
   "upgrade_files": [
     "sql/migrations/2026.11.09-1-schema.sql",
     "sql/migrations/2026.11.09-1-metadata.sql",
@@ -18,7 +18,8 @@
     "sql/12-operator-routines.sql",
     "sql/20-views.sql",
     "sql/migrations/2026.11.13-1-metadata.sql",
-    "sql/24-verification-metadata-seed.sql"
+    "sql/24-verification-metadata-seed.sql",
+    "sql/migrations/2026.11.14-1-version.sql"
   ],
   "fresh_files": [
     "sql/00-template-schema.sql",
@@ -36,7 +37,8 @@
     "sql/22-demo-reference-seed.sql",
     "sql/23-measurement-source-seed.sql",
     "sql/24-verification-metadata-seed.sql",
-    "sql/25-release-verification-results-seed.sql"
+    "sql/25-release-verification-results-seed.sql",
+    "sql/migrations/2026.11.14-1-version.sql"
   ],
   "baseline_schema_sha256": "c5862c63bc11cf24c6439b565963bb15a637910418f14f0b813af72cb976a7a6",
   "target_tables": 216,
@@ -62,11 +64,21 @@
     "sql/12-operator-routines.sql",
     "sql/20-views.sql",
     "sql/migrations/2026.11.13-1-metadata.sql",
-    "sql/24-verification-metadata-seed.sql"
+    "sql/24-verification-metadata-seed.sql",
+    "sql/migrations/2026.11.14-1-version.sql"
   ],
   "target_schema_sha256": "4373e5ae8c5603829db193d9b769b3270ab2f9371a43d56334eea0620d99647f",
   "patch_tables": 207,
   "patch_views": 183,
   "patch_schema_version": 10,
-  "patch_schema_sha256": "ed20fe5a24d1d6b8d996af8a0e03dec0a55d524435e2d1bba43ce6db38f8591d"
+  "patch_schema_sha256": "ed20fe5a24d1d6b8d996af8a0e03dec0a55d524435e2d1bba43ce6db38f8591d",
+  "file_sources": {
+    "2026.11.13-1": {
+      "migration_id": "2026.11.13-1-operator-sources",
+      "checksum_sha256": "5d99a4e4c05d613c6c885d3eb43885e2f921f1236d6e23fd8fc40ca14b0a979e"
+    }
+  },
+  "file_files": [
+    "sql/migrations/2026.11.14-1-version.sql"
+  ]
 }

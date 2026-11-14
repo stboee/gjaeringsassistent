@@ -1,14 +1,12 @@
-# Gjæringsassistent 2026.11.13-1
+# Gjæringsassistent 2026.11.14-1
 
-> Main har en senere, upublisert retting av HTTP 404 for sensorinnstillinger (OPEN-017). Den publiserte pakken er uendret. Se [overleveringen](OVERLEVERING.md) for avgrensning, målrettet test og retting i eksisterende installasjon.
-
-**Målesett, sensorer og kriteriefravik**, med databevarende oppgradering fra p24r16, 2026.11.07-1, 2026.11.09-1 og 2026.11.09-2. Gjæringsassistent gir råd, oversikt og historikk for gjæring i Home Assistant: templates, biologiske faser, prosesstrinn, målinger, sammenlignbare grafer, rapporter og SQLite-arkiver.
+**Rettet publisering av sensorinnstillinger**, med databevarende oppgradering fra p24r16, 2026.11.07-1, 2026.11.09-1, 2026.11.09-2 og 2026.11.13-1. Gjæringsassistent gir råd, oversikt og historikk for gjæring i Home Assistant: templates, biologiske faser, prosesstrinn, målinger, sammenlignbare grafer, rapporter og SQLite-arkiver.
 
 MariaDB/InnoDB er eneste autoritative persistente domenekilde. Node-RED er generisk motor/orchestrator; HA er operatør- og presentasjonsflate. Feil eller mangler rettes ved kilden, uten lokale defaults eller frontend-workarounds.
 
 ## Installasjon og databevaring
 
-Installeren bevarer eksisterende sesjoner, målinger, korreksjoner, templates, kladder og innstillinger. Støttede kildeversjoner er `0.1.0-prototype24-r16` samt `2026.11.07-1`, `2026.11.09-1` og `2026.11.09-2`. Tom database initialiseres; samme målversjon kan installeres på nytt med samsvarende migreringskvittering. Ukjent versjon eller struktur avvises før database-/flowendringer.
+Installeren bevarer eksisterende sesjoner, målinger, korreksjoner, templates, kladder og innstillinger. Støttede kildeversjoner er `0.1.0-prototype24-r16` samt `2026.11.07-1`, `2026.11.09-1`, `2026.11.09-2` og `2026.11.13-1`. Tom database initialiseres; samme målversjon kan installeres på nytt med samsvarende migreringskvittering. Ukjent versjon eller struktur avvises før database-/flowendringer.
 
 Last ned versjonert ZIP og SHA-256 fra [GitHub Releases](https://github.com/stboee/gjaeringsassistent/releases), kontroller SHA, pakk ut og kjør `./installer/install.sh` som root. Følg [driftsveiledningen](docs/08-DRIFTSVEILEDNING.md) og [compose-referansen](compose/README.md). Før en eksisterende installasjon endres, stoppes Node-RED kort og en komprimert databasebackup med rutiner/triggere samt flow/credentials sikres privat under Node-RED `/data/gjaeringsassistent/backups/`. Databasen resettes ikke.
 

@@ -1,3 +1,15 @@
+# 2026.11.14-1 – Rettet publisering av sensorinnstillinger
+
+- Retter HTTP 404 i «Målekilder og sensorer»: publiseringsjobben bruker eksisterende `stage_path`-kontrakt. `source_path` var et feil argumentnavn i den nye produsenten.
+- Publiseringsresultat og stderr følger den felles feilrapporteringen til Teknisk hendelseslogg.
+- Regresjonstesten prøver produsent, argumenter, fysiske koblinger, shell-rundtur, faktisk JSON/gzip-publisering, tilbake-lesing og feilrapportering.
+- Dokumenterer den tekniske publiseringskontrakten eksplisitt. Domenedata og faglige beregninger er uendret.
+- Installer støtter databevarende filoppgradering fra 2026.11.13-1 med kjent fysisk struktur og verifisert tidligere migreringskvittering. Denne banen endrer versjonsmetadata og leverte filer; domenetabeller, rutiner og views beholdes. Eldre støttede oppgraderingsbaner videreføres.
+
+Leveres som samlet ZIP/SHA med ordinær installer. Kjør `./installer/install.sh` fra den utpakkede pakken. Målmiljøbekreftelse gjenstår; se TEST-RESULTS.md og dokument 09/15.
+
+## Tidligere utgaver
+
 # 2026.11.13-1 – Målesett, sensorer og kriteriefravik
 
 - Start lagrer ett komplett første målesett atomisk med sesjonen. Utvidet regresjon prøver alle inputfelter, registrert 0, Unicode, sen rollback og B/P-fravik ved manglende kontinuerlig grunnlag.

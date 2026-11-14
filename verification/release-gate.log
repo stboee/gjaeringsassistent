@@ -1,4 +1,4 @@
-RESULT: PASS – dokumentasjon: 22 aktive kilder, 264 REQ, 68 DEC/ADR, 15 OPEN; HTML/maskinmetadata reproduserbare
+RESULT: PASS – dokumentasjon: 22 aktive kilder, 264 REQ, 68 DEC/ADR, 16 OPEN; HTML/maskinmetadata reproduserbare
 RESULT: PASS – komplett p24-releasepakke uten historisk p19-dokumentsett; versjon/SHA/artefakter konsistente
 RESULT: PASS – MariaDB HA-metadata: 75 aktive entiteter, 24 events, 64 bootstrap-states; JSON/flow/dashboard konsistente
 PASS all HA entity registry statuses satisfy DDL CHECK constraint
@@ -560,6 +560,7 @@ RESULT: PASS – tested config-node IDs are preserved and all references are pat
 RESULT: PASS – pinned MariaDB version and stopped Node-RED; actual installer rejects before database or flow mutation
 PASS current native start/upgrade/backup proof, migration planner and absence of installer reset
 PASS current native sensor and actual Chromium evidence; installed HA UAT remains open
+PASS source-settings producer/publisher contract, actual JSON/gzip readback and visible publication failures
 RESULT: PASS – Start/SG contract, late-template regression, Systemkontroll and Technical Event SQL
 RESULT: PASS – Technical rich read-model and local-time output regression
 RESULT: PASS – p18 Technical Notes path persisted/read-model contract

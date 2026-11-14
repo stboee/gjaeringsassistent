@@ -23,7 +23,7 @@ Vent til containeren er healthy og versjonsspørringen viser `12.3.3-MariaDB...`
 
 Node-RED-containeren må kjøre for at installeren skal kontrollere installerpakker og lese faktisk UID/GID. Hvis den er stoppet, kjør `docker start gjaeringsassistent-nodered` først. Installeren avviser stoppet/restarting container før database- og flowendringer, med egen diagnose.
 
-Oppgradering fra 2026.11.09-1 er en fil-/metadataoppdatering: kjent fysisk struktur og tidligere migreringskvittering kontrolleres, domenetabeller/rutiner/views beholdes, og privat backup tas før endring.
+Oppgradering fra 2026.11.13-1 til 2026.11.14-1 er en fil-/versjonsoppdatering: kjent fysisk struktur og tidligere migreringskvittering kontrolleres, domenetabeller/rutiner/views beholdes, og privat backup tas før endring. Eldre støttede kildeversjoner følger sine deklarerte migreringer i installer/migrations.json.
 
 Kjør `./installer/install.sh` fra den utpakkede releasepakken. Eksisterende data bevares; baseline/seeds brukes bare på tom database. Installeren installerer schema/seeds/views, Node-RED-flow og frontendkilde, men kjører ikke syntetisk Start, Systemkontroll eller andre runtime-akseptansetester.
 
@@ -172,3 +172,5 @@ Den nye startflaten forutsetter oppdatert dashboard-YAML. Når Home Assistant le
 Åpne Teknisk → Målekilder og sensorer → Kontroller sensorer. Velg SG, temperatur, siste MQTT-oppdatering og RSSI; trykk kan stå Manuell registrering. En trykksensor må levere overtrykk i en støttet enhet (bar, kPa, hPa/mbar, Pa eller psi). Absolutt trykk må ikke velges som overtrykk. Temperaturkilden i denne versjonen må levere °C.
 
 Lagre og vent på databasekvittering. Endringer under en reell livegjæring får virkning ved den oppgitte DB-grensen. Konfigurasjonshistorikken viser tidligere valg; feltverdier er merket sist kontrollert. Arkiverte/historiske sesjoner endres ikke av et nytt globalt valg. Trykk fra HA-timesstatistikk er ikke lagt til; trykkimport gjelder detaljgrunnlag i femminuttersbøtter.
+
+Ved HTTP 404 for sensorinnstillinger i 2026.11.13-1: installer den komplette 2026.11.14-1-pakken med ordinær installer. Den retter publiseringsprodusenten og feilrapporteringen samlet. Etter oppstart skal «Les innstillinger» vise DB-feltene; ved ny publiseringsfeil kontrolleres Teknisk hendelseslogg.

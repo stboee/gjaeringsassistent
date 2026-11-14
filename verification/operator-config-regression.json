@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.13-1",
+  "application_version": "2026.11.14-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "target_ha_uat": "not_run",
@@ -22,7 +22,7 @@
     "sql/12-operator-routines.sql": "417bcd0c22912679a280a0511a4409056c61c8f68c96d83c1faf8f5aeb274da3",
     "sql/12-operator-schema.sql": "723ff54f81ddcdd55b4761140523a183e21b8ea35565edc01a6f09ee0b46dc74",
     "sql/20-views.sql": "217c754cb254e54b9f7f82c5ef288494c739f6fa65ec11d3bd14f7c2cb47d38a",
-    "sql/21-system-metadata-seed.sql": "661c1cce08bbb0882026c915335542d7c6945e6cd3627864785035275c6699e8",
+    "sql/21-system-metadata-seed.sql": "1d489ab949217b3f52720f0299f44ce6d36fc471141b2fb7789672dbb7e79928",
     "sql/22-demo-reference-seed.sql": "e8b4c2f91fc06a4423daa90b72e93ddab74f32fcf503d00d159fe8fd2c0e9daa",
     "sql/23-measurement-source-seed.sql": "7b3362f733ee39fb8573fa19c6c3d5756a29504ec52918cae1b2eca222476096",
     "sql/24-verification-metadata-seed.sql": "268bfff9444126ae4fb2291f7e12454a469127ed924340f885e775f657128850",
@@ -31,7 +31,7 @@
     "sql/91-runtime-smoke-test.sql": "bfe0bf785044df156bfc3a6c96261fb9ef449eb4b12d9c9e03ef208738af1304",
     "sql/92-negative-fk-test.sql": "732caa7b1bc7ae9344d50cd3f10ae2c418d566b9c4ef7e9eebb6479a4d0b0ef7",
     "sql/start-session.sql": "fc2fa7922e4d1163406b5297a5ac505a50206cce79015a8e9ac0bde3b6ddca64",
-    "nodered/flows.template.json": "8e5fb803ef68b945f15f1c5c557a3f9a74f5cdd8fe675f7e6d6f18960b37276c",
+    "nodered/flows.template.json": "14c0675065a2a0352f6c5820d09b6d58e3155da4adfc3ce8f2863e67ad7085f1",
     "dashboard/gjaeringsassistent-card.js": "b55078c6e36ff731eb8140a844a760d0aef4f7bcd3350f44fdb16bcc75f51986",
     "tests/test-operator-config-live.js": "39706a1572eb158e6b9603df46189db25d7898462d00334a9b980619b41cc68d"
   }

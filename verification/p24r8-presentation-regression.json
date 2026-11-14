@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.13-1",
+  "application_version": "2026.11.14-1",
   "status": "pass",
   "source_publication": {
     "argument_contract": [
@@ -10,16 +10,16 @@
     "publication_errors_visible": true
   },
   "source_fingerprints": {
-    "nodered/flows.template.json": "fe9700df8ce30dd7fce2eb639de6e32fe1b8a43b8ad564dcc8c95d7b46abf78d",
+    "nodered/flows.template.json": "14c0675065a2a0352f6c5820d09b6d58e3155da4adfc3ce8f2863e67ad7085f1",
     "tools/publish_payload.js": "5a5be5b3660c8844709351f6185e26e926a2034c73582bfbe9426ee49c92b47e",
     "tests/test-p24r8.js": "0515470724cf433bb129217a77212138a113012f34888dbfe706d10783a13514"
   },
   "source_fixture": "tests/fixtures/p24r15-overview-regression.json.gz",
   "original_bytes": 19898199,
-  "compact_bytes": 511460,
-  "gzip_bytes": 35785,
-  "original_points": 947,
-  "preserved_points": 947,
+  "compact_bytes": 511096,
+  "gzip_bytes": 35824,
+  "original_points": 946,
+  "preserved_points": 946,
   "presentation_definitions": 17,
   "tests": [
     "original overview rendering",

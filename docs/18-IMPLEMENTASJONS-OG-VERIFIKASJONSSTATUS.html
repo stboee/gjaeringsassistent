@@ -30,7 +30,7 @@
 </header>
 <h1 id="18--implementasjons--og-verifikasjonsstatus">18 –
 Implementasjons- og verifikasjonsstatus</h1>
-<p><strong>Gjeldende release:</strong> <code>2026.11.13-1</code>.
+<p><strong>Gjeldende release:</strong> <code>2026.11.14-1</code>.
 Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i
 RELEASE-NOTES.md.</p>
 <p>Implementert, lokalt release-verifisert og målmiljø-verifisert er
@@ -166,15 +166,15 @@ står fortsatt åpne.</p>
 er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning
 av <code>startfields</code> i kortets konfigurasjonskontroll, rettet i
 2026.11.09-2. Faktisk HA-/nettleserbekreftelse gjenstår.</p>
-<h2 id="senere-transportretting-på-main">Senere transportretting på
-main</h2>
+<h2 id="rettet-publisering-av-sensorinnstillinger">Rettet publisering av
+sensorinnstillinger</h2>
 <p>OPEN-017: Brukerens målmiljø viser HTTP 404 for source-settings.json
 etter installasjon av 2026.11.13-1. Feil parameter source_path er rettet
 til stage_path i DB-resultatets publiseringsjobb. Publiseringsresultat
 og stderr er koblet til den eksisterende felles feilrapporteringen. Den
 utvidede tests/test-p24r8.js prøver produsent/publiserer-grensen og
-faktisk JSON/gzip-tilbake-lesing og har bestått. Rettelsen er ikke
-publisert som ny pakke; full releaseport/native regresjon for endret
-flow og målmiljøbekreftelse gjenstår.</p>
+faktisk JSON/gzip-tilbake-lesing og har bestått. Rettelsen inngår i
+2026.11.14-1. TEST-RESULTS.md angir faktisk releaseverifikasjon;
+målmiljøbekreftelse av den nye pakken gjenstår.</p>
 </body>
 </html>

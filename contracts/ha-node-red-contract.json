@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "version": "2026.11.13-1",
+  "version": "2026.11.14-1",
   "normative": false,
   "source_baseline": "0.1.0-prototype22-r4-revised1",
   "change_rule": "HA metadata is changed in the MariaDB registry seed; flow/dashboard/generated contract/tests must remain consistent with that registry.",

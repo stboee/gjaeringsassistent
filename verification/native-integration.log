@@ -1,4 +1,4 @@
-RUN python3 tests/test-mariadb-p24.py --binary /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd --basedir /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr --datadir /tmp/ga-native-test-pxcgcati/data --port 13310
+RUN python3 tests/test-mariadb-p24.py --binary /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd --basedir /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr --datadir /tmp/ga-native-test-p6p212y9/data --port 13310
 SERVER /workspace/scratch/2ea3d328f7d1/test-env/mariadb/usr/sbin/mariadbd  Ver 12.3.3-MariaDB-ubu2404 for debian-linux-gnu on x86_64 (mariadb.org binary distribution)
 PASS Oslo timezone fixture
 PASS clean schema, routines, views and all seeds
@@ -188,6 +188,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-start-control-live.js
 PASS empty DB fields are explicitly missing despite stale HA numbers; rejected Start persists exact field snapshots
@@ -215,6 +216,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-operator-config-live.js
 PASS DB-owned sensory ranges/help and explicit zero; manual temperature travels through actual HA field binding
@@ -240,29 +242,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-operator-ui.js
-PASS actual Chromium range: no write on mount, endpoints 5 and 0 persist; temperature has one decimal and uses DB field binding
-PASS source check, compatible pressure picker, unsaved draft survives refresh, save waits for actual DB receipt
-PASS actual SQL-generated B/P fixtures render both correction and exception controls in shipping component
-PASS mobile source card fits viewport; no uncaught browser errors
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r16-system-live.js
 PASS processed empty period remains explicit missing data rather than successful data coverage
@@ -293,6 +273,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r15-graphs-live.js
 PASS effective B/P requirements update immediately after reset; stale assessment blocks Next; old facts remain; receipt waits for exact revised evaluation
@@ -301,190 +282,6 @@ PASS all six actual SQL graphs share geometry and typography; manual points, pla
 PASS report retains full measurements and dates while dashboard uses the selected last-24-hour window
 PASS B and P use the same correction/exception styles and separate handling cells
 PASS SQLite preserves explicit unset history; old typed-zero history remains zero; missing legacy facts reject
-RUN node tests/test-sqlite-live.js
-PASS 209 original IPL values, pressure, hourly segments and P5/B4 history
-PASS normalized SQLite pair, manifest match and complete measurement history
-PASS legacy SQLite v1 layout converts and imports exact existing pitch facts; missing pitch facts reject
-PASS legacy raw graph policies convert through DB catalog for session and template-only imports; ambiguous IDs roll back
-PASS import during real measurement writes; active session unchanged; atomic historical release; own copy and idempotence
-PASS late rollback, wrong pair rejection, unique template imports and imported comparison/date labels
-PASS 12 concurrent active reports and replay without duplicate primary keys
-PASS chunk upload checksum, actual Node-RED adapter, palette driver and worker preview
-PASS one archive catalogue from manifests; missing/mismatched SHA warnings; import still succeeds
-PASS active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection
-AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
-
-193 !== 183
-
-    at /workspace/scratch/2ea3d328f7d1/gjaeringsassistent/tests/test-sqlite-live.js:149:119
-    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
-  generatedMessage: true,
-  code: 'ERR_ASSERTION',
-  actual: 193,
-  expected: 183,
-  operator: 'strictEqual',
-  diff: 'simple'
-}
-
-FOLLOWUP NATIVE GROUP
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-graphs-live.js
-PASS effective B/P requirements update immediately after reset; stale assessment blocks Next; old facts remain; receipt waits for exact revised evaluation
-PASS B and P: actual correction, explicit unset, actual evaluation history, reset and numeric bounds refresh without contract errors
-PASS all six actual SQL graphs share geometry and typography; manual points, plans, FG band, gaps and real comparison render identically in dashboard/report
-PASS report retains full measurements and dates while dashboard uses the selected last-24-hour window
-PASS B and P use the same correction/exception styles and separate handling cells
-PASS SQLite preserves explicit unset history; old typed-zero history remains zero; missing legacy facts reject
-RUN node tests/test-sqlite-live.js
-PASS 209 original IPL values, pressure, hourly segments and P5/B4 history
-PASS normalized SQLite pair, manifest match and complete measurement history
-PASS legacy SQLite v1 layout converts and imports exact existing pitch facts; missing pitch facts reject
-PASS legacy raw graph policies convert through DB catalog for session and template-only imports; ambiguous IDs roll back
-PASS import during real measurement writes; active session unchanged; atomic historical release; own copy and idempotence
-PASS late rollback, wrong pair rejection, unique template imports and imported comparison/date labels
-PASS 12 concurrent active reports and replay without duplicate primary keys
-PASS chunk upload checksum, actual Node-RED adapter, palette driver and worker preview
-PASS one archive catalogue from manifests; missing/mismatched SHA warnings; import still succeeds
-PASS active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection
-RESULT: PASS – SQLite transfer and concurrency on actual MariaDB 12.3.3
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-performance-live.js
-ER_BAD_FIELD_ERROR Unknown column 'p.sg_entity_id' in 'SELECT'
-
-FOLLOWUP NATIVE GROUP
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-performance-live.js
-READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":11886,"rows_read":79787,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":6628,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":3831,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":3658,"rows_read":73765,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":3716,"rows_read":89778,"cpu_ms":null}],"after":{"elapsed_ms":29777,"rows_read":54553,"cpu_ms":null},"poll":{"elapsed_ms":25,"rows_read":372,"cpu_ms":null}}
-MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":11886,"rows_read":79787,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":6628,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":3831,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":3658,"rows_read":73765,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":3716,"rows_read":89778,"cpu_ms":null}],"after":{"elapsed_ms":29777,"rows_read":54553,"cpu_ms":null},"poll":{"elapsed_ms":25,"rows_read":372,"cpu_ms":null}}
-PASS 21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages
-PASS three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot
-PASS measurement change and DB clock deadline each trigger fresh publication; receipt is idempotent and unchanged polls remain cheap
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-historical-live.js
-PASS ordinary start fields and first observation create a finite historical DB window
-PASS five bounded chunks, exact partial final bucket, hour boundary, late HA record rejection, failed-write retry basis and restart without live polling
-PASS manual missing B/P phases, shared neighboring boundary, both duration changes, chronological rejection, reset and append-only revisions
-PASS frozen evaluation clock, distinct after-registered observations with historical measured_at and current audit time
-PASS real overview and both cards render DB durations; all graph ends stay fixed when the DB wall clock advances
-PASS actual post-import analyses and B/P assessments use the frozen horizon; a later recorded biological exception is applied
-PASS completion uses historical end; SQLite pair, both SHA files, common report and reimport preserve the fixed window
-RESULT: PASS – p24r15 historical import, phase boundaries, after-registration and SQLite export
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-live.js
-PASS idle payload from actual SQL accepts plugin 0.80.3; old empty/null payload rejects; required fields cannot disappear
-PASS published template selection and reverse labels/numeric availability use actual DB bindings
-PASS real start path, no null-to-zero acceptance, normalized dry subtype, wrong subtype rejected, DB start time and import status
-PASS SQL effective readiness, counts, pending evaluation and persisted recommendation agree with overview; withdrawal blocks again
-PASS actual Systemkontroll SQL detects stale HA start status; DB technical defaults, event arrays and Oslo time validate in plugin
-PASS real finish, verified-archive gate, prepare, restore and next normal start selection
-PASS slurry Start stores only the required slurry facts, dry Start stores only dry facts
-PASS all physical table/nullable-column metadata covered, typed catalog and key/constraint snapshot, synchronized release markers
-RESULT: PASS – p24r15 actual SQL→Node-RED→HA input contracts and lifecycle on MariaDB 12.3.3
-
-FOLLOWUP NATIVE GROUP
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
 RUN node tests/test-sqlite-live.js
 PASS 209 original IPL values, pressure, hourly segments and P5/B4 history
 PASS normalized SQLite pair, manifest match and complete measurement history
@@ -515,6 +312,32 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
+PASS clean isolated database through actual installer SQL order
+RUN node tests/test-p24r15-performance-live.js
+READ METRICS {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1293,"rows_read":79467,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1245,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1316,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1251,"rows_read":73445,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":1336,"rows_read":89458,"cpu_ms":null}],"after":{"elapsed_ms":9244,"rows_read":54553,"cpu_ms":null},"poll":{"elapsed_ms":5,"rows_read":372,"cpu_ms":null}}
+MEASURED {"before":[{"view":"v_graph_definitions","rows":6,"elapsed_ms":1293,"rows_read":79467,"cpu_ms":null},{"view":"v_graph_series","rows":26374,"elapsed_ms":1245,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_latest","rows":18,"elapsed_ms":1316,"rows_read":71989,"cpu_ms":null},{"view":"v_graph_axis_ticks","rows":41,"elapsed_ms":1251,"rows_read":73445,"cpu_ms":null},{"view":"v_graph_time_markers","rows":48,"elapsed_ms":1336,"rows_read":89458,"cpu_ms":null}],"after":{"elapsed_ms":9244,"rows_read":54553,"cpu_ms":null},"poll":{"elapsed_ms":5,"rows_read":372,"cpu_ms":null}}
+PASS 21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages
+PASS three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot
+PASS measurement change and DB clock deadline each trigger fresh publication; receipt is idempotent and unchanged polls remain cheap
+RUN node tests/reset-isolated-db.js
+LOAD sql/00-template-schema.sql
+LOAD sql/01-template-registry-seed.sql
+LOAD sql/10-runtime-schema.sql
+LOAD sql/12-operator-schema.sql
+LOAD sql/11-runtime-routines.sql
+LOAD sql/12-operator-routines.sql
+LOAD sql/02-runtime-registry-seed.sql
+LOAD sql/03-w3470-template-seed.sql
+LOAD sql/04-ale-templates-seed.sql
+LOAD sql/20-views.sql
+LOAD sql/21-system-metadata-seed.sql
+LOAD sql/26-operator-config-seed.sql
+LOAD sql/22-demo-reference-seed.sql
+LOAD sql/23-measurement-source-seed.sql
+LOAD sql/24-verification-metadata-seed.sql
+LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r15-historical-live.js
 PASS ordinary start fields and first observation create a finite historical DB window
@@ -542,6 +365,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-p24r15-live.js
 PASS idle payload from actual SQL accepts plugin 0.80.3; old empty/null payload rejects; required fields cannot disappear
@@ -570,84 +394,7 @@ LOAD sql/22-demo-reference-seed.sql
 LOAD sql/23-measurement-source-seed.sql
 LOAD sql/24-verification-metadata-seed.sql
 LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-operator-ui.js
-PASS actual Chromium range: no write on mount, endpoints 5 and 0 persist; temperature has one decimal and uses DB field binding
-PASS source check, compatible pressure picker, unsaved draft survives refresh, save waits for actual DB receipt
-PASS actual SQL-generated B/P fixtures render both correction and exception controls in shipping component
-PASS mobile source card fits viewport; no uncaught browser errors
-
-FOLLOWUP NATIVE GROUP
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-operator-config-live.js
-PASS DB-owned sensory ranges/help and explicit zero; manual temperature travels through actual HA field binding
-PASS controlled HA catalog through transport, DB save receipt, stale revision and wrong-unit rejection
-PASS frozen binding drives kPa to bar import; absent optional pressure does not drop SG/temperature
-PASS live change remains scheduled until DB boundary; old configuration and measurements remain immutable
-PASS technical label comes from DB component registry and original identity survives in details
-PASS biological exception register/withdraw uses same transactional DB operation as process
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
-PASS clean isolated database through actual installer SQL order
-RUN node tests/test-p24r15-live.js
-PASS idle payload from actual SQL accepts plugin 0.80.3; old empty/null payload rejects; required fields cannot disappear
-PASS published template selection and reverse labels/numeric availability use actual DB bindings
-PASS real start path, no null-to-zero acceptance, normalized dry subtype, wrong subtype rejected, DB start time and import status
-PASS SQL effective readiness, counts, pending evaluation and persisted recommendation agree with overview; withdrawal blocks again
-PASS actual Systemkontroll SQL detects stale HA start status; DB technical defaults, event arrays and Oslo time validate in plugin
-PASS real finish, verified-archive gate, prepare, restore and next normal start selection
-PASS slurry Start stores only the required slurry facts, dry Start stores only dry facts
-PASS all physical table/nullable-column metadata covered, typed catalog and key/constraint snapshot, synchronized release markers
-RESULT: PASS – p24r15 actual SQL→Node-RED→HA input contracts and lifecycle on MariaDB 12.3.3
-RUN node tests/reset-isolated-db.js
-LOAD sql/00-template-schema.sql
-LOAD sql/01-template-registry-seed.sql
-LOAD sql/10-runtime-schema.sql
-LOAD sql/12-operator-schema.sql
-LOAD sql/11-runtime-routines.sql
-LOAD sql/12-operator-routines.sql
-LOAD sql/02-runtime-registry-seed.sql
-LOAD sql/03-w3470-template-seed.sql
-LOAD sql/04-ale-templates-seed.sql
-LOAD sql/20-views.sql
-LOAD sql/21-system-metadata-seed.sql
-LOAD sql/26-operator-config-seed.sql
-LOAD sql/22-demo-reference-seed.sql
-LOAD sql/23-measurement-source-seed.sql
-LOAD sql/24-verification-metadata-seed.sql
-LOAD sql/25-release-verification-results-seed.sql
+LOAD sql/migrations/2026.11.14-1-version.sql
 PASS clean isolated database through actual installer SQL order
 RUN node tests/test-operator-ui.js
 PASS actual Chromium range: no write on mount, endpoints 5 and 0 persist; temperature has one decimal and uses DB field binding

@@ -22,6 +22,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--mariadb-basedir', required=True, type=Path)
 parser.add_argument('--palette-dir', required=True, type=Path)
 parser.add_argument('--chromium', type=Path)
+parser.add_argument('--log-dir', type=Path, help='External log directory for testing an immutable installer package')
 parser.add_argument('--suite', choices=['start', 'operator', 'full', 'remainder', 'tail', 'archive', 'metadata', 'ui', 'upgrade'], default='full')
 args = parser.parse_args()
 base = args.mariadb_basedir.resolve()
@@ -44,7 +45,9 @@ env.update({
 if args.chromium:
     env['GA_CHROMIUM_BINARY'] = str(args.chromium.resolve())
 server = None
-log_path = ROOT/'verification'/('native-'+args.suite+'.log')
+log_dir = (args.log_dir or ROOT/'verification').resolve()
+log_dir.mkdir(parents=True, exist_ok=True)
+log_path = log_dir/('native-'+args.suite+'.log')
 
 def limits():
     resource.setrlimit(resource.RLIMIT_AS, (4*1024**3, 4*1024**3))
@@ -127,5 +130,5 @@ finally:
         except subprocess.TimeoutExpired:
             server.kill(); server.wait()
         if (scratch/'server.log').exists():
-            shutil.copyfile(scratch/'server.log', ROOT/'verification'/('native-'+args.suite+'-server.log'))
+            shutil.copyfile(scratch/'server.log', log_dir/('native-'+args.suite+'-server.log'))
     shutil.rmtree(scratch, ignore_errors=True)

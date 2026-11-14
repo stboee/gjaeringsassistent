@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.13-1",
-  "scope": "Sensoriske kontroller, reviderte målekilder og kriteriefravik",
+  "version": "2026.11.14-1",
+  "scope": "Rettet publiseringskontrakt og synlige publiseringsfeil",
   "required_files": [
     "VERSION",
     "README.md",
@@ -94,7 +94,8 @@
     "tests/test-operator-config-live.js",
     "tests/test-operator-ui.js",
     "verification/operator-config-regression.json",
-    "verification/operator-ui-regression.json"
+    "verification/operator-ui-regression.json",
+    "sql/migrations/2026.11.14-1-version.sql"
   ],
   "component_groups": {
     "runtime": [

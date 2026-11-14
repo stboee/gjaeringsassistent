@@ -7,7 +7,7 @@ source_format: markdown
 
 # 18 – Implementasjons- og verifikasjonsstatus
 
-**Gjeldende release:** `2026.11.13-1`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
+**Gjeldende release:** `2026.11.14-1`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
 
 Implementert, lokalt release-verifisert og målmiljø-verifisert er forskjellige statusnivåer. TEST-RESULTS.md og faktiske verification_test_runs/verification_test_results viser testbevis; dokument 15/09 viser åpne måltester. Ingen grønn releaseport er alene bevis på fungerende operatørflyt i Home Assistant.
 
@@ -36,6 +36,6 @@ Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert i målmiljøet. 
 
 Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning av `startfields` i kortets konfigurasjonskontroll, rettet i 2026.11.09-2. Faktisk HA-/nettleserbekreftelse gjenstår.
 
-## Senere transportretting på main
+## Rettet publisering av sensorinnstillinger
 
-OPEN-017: Brukerens målmiljø viser HTTP 404 for source-settings.json etter installasjon av 2026.11.13-1. Feil parameter source_path er rettet til stage_path i DB-resultatets publiseringsjobb. Publiseringsresultat og stderr er koblet til den eksisterende felles feilrapporteringen. Den utvidede tests/test-p24r8.js prøver produsent/publiserer-grensen og faktisk JSON/gzip-tilbake-lesing og har bestått. Rettelsen er ikke publisert som ny pakke; full releaseport/native regresjon for endret flow og målmiljøbekreftelse gjenstår.
+OPEN-017: Brukerens målmiljø viser HTTP 404 for source-settings.json etter installasjon av 2026.11.13-1. Feil parameter source_path er rettet til stage_path i DB-resultatets publiseringsjobb. Publiseringsresultat og stderr er koblet til den eksisterende felles feilrapporteringen. Den utvidede tests/test-p24r8.js prøver produsent/publiserer-grensen og faktisk JSON/gzip-tilbake-lesing og har bestått. Rettelsen inngår i 2026.11.14-1. TEST-RESULTS.md angir faktisk releaseverifikasjon; målmiljøbekreftelse av den nye pakken gjenstår.

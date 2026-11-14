@@ -146,3 +146,15 @@ Nettleseren kan holde en ulagret redigeringskladd. Den er ikke domenefakta, og b
 ## Første komplette målesett
 
 Start lagrer ett komplett første målesett i samme transaksjon som sesjon og frosset grunnlag: metode/SG, prøve- og kalibreringstemperatur, manuell temperatur, trykk, kjølemål/-offset, gjærlås, alle sensoriske felt, utfellingstid, konklusjon og notat. Måletid er pitch; faktisk registreringstid og operation-ID beholdes. En senere kladdendring omskriver ikke startobservasjonen. Et komplett manuelt målesett erstatter ikke kontinuerlig tidsseriedekning for et vinduskriterium.
+
+## Teknisk kontrakt for read-model-publisering
+
+Node-RED skriver først DB-read-modellen til en stagingfil. Den eksisterende felles tools/publish_payload.js mottar én JSON-kodet jobb som kommandolinjeargument. Dette er transport av avledede filer; domenefakta forvaltes fortsatt i MariaDB.
+
+| Felt | Betydning | Krav |
+|---|---|---|
+| stage_path | Absolutt sti til ferdig skrevet stagingfil i runtime/staged | Påkrevd |
+| target_path | Absolutt JSON-mål i ha-public | Påkrevd |
+| diagnostics_level | summary eller full for teknisk eksport | Valgfritt |
+
+Samme kontrakt brukes for gjæringsoversikt, teknisk eksport og sensorinnstillinger. source_path er ikke et argument i dette grensesnittet. Produsenten skal levere stage_path; publisereren velger ingen alternativ kildefil ved manglende argument. JSON og gzip publiseres og leses tilbake før suksess. Resultatfeil og stderr skal gå til felles feilrapportering slik at de blir synlige i Teknisk hendelseslogg. Den tekniske kontrakten og dens kobling til produsentene prøves i tests/test-p24r8.js.

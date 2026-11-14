@@ -41,13 +41,13 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    return {...process.env,...env,PATH:bin+path.delimiter+process.env.PATH,GA_INSTALLER_SIMULATOR_DATABASE:database,GA_INSTALLER_SIMULATOR_DATA:data,GA_INSTALLER_SIMULATOR_STATE:state};
   };
   const run=(env,expected=0)=>{const result=spawnSync('bash',[path.join(root,'installer/install.sh')],{cwd:root,env,encoding:'utf8',maxBuffer:2e6});assert.equal(result.status,expected,result.stdout+'\n'+result.stderr);return result.stdout;};
-  for(const source of [...manifest.supported_sources,...Object.keys(manifest.patch_sources)]){
-   const patch=Object.hasOwn(manifest.patch_sources,source),fixture=patch?path.join(path.dirname(previous),'previous-'+source):baseline;
-   const fixtureManifest=patch?JSON.parse(fs.readFileSync(path.join(fixture,'installer/migrations.json'),'utf8')):null;
+  for(const source of [...manifest.supported_sources,...Object.keys(manifest.patch_sources),...Object.keys(manifest.file_sources||{})]){
+   const patch=Object.hasOwn(manifest.patch_sources,source),files=Object.hasOwn(manifest.file_sources||{},source),known=patch||files,expectedReceipt=files?manifest.file_sources[source]:manifest.patch_sources[source],fixture=known?path.join(path.dirname(previous),'previous-'+source):baseline;
+   const fixtureManifest=known?JSON.parse(fs.readFileSync(path.join(fixture,'installer/migrations.json'),'utf8')):null;
    database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';
-   originalShape=null;await fresh();const fixtureFiles=fixtureManifest?fixtureManifest.fresh_files:manifest.fresh_files.filter(f=>!f.includes('12-operator-')&&!f.includes('26-operator-'));for(const f of fixtureFiles){console.log('SOURCE',source,f);try{await db.query(ddl(fs.readFileSync(path.join(fixture,f),'utf8')));}catch(e){console.error('SOURCE SQL FAILED',f,e.sql?.slice(-300));throw e;}}
+   originalShape=null;await fresh();const fixtureFiles=fixtureManifest?fixtureManifest.fresh_files:manifest.fresh_files.filter(f=>!f.includes('12-operator-')&&!f.includes('26-operator-')&&!f.startsWith('sql/migrations/'));for(const f of fixtureFiles){console.log('SOURCE',source,f);try{await db.query(ddl(fs.readFileSync(path.join(fixture,f),'utf8')));}catch(e){console.error('SOURCE SQL FAILED',f,e.sql?.slice(-300));throw e;}}
    await db.query('UPDATE database_metadata SET application_version=?;UPDATE template_database_metadata SET application_version=?',[source,source]);
-   if(patch){const receipt=manifest.patch_sources[source],h=crypto.createHash('sha256');for(const f of fixtureManifest.upgrade_files)h.update(f+'\0').update(fs.readFileSync(path.join(fixture,f))).update('\0');assert.equal(h.digest('hex'),receipt.checksum_sha256);await db.query('INSERT INTO database_migrations VALUES(?,?,?,?,UTC_TIMESTAMP(3))',[receipt.migration_id,receipt.checksum_sha256,'empty',source]);}
+   if(known){const receipt=expectedReceipt,h=crypto.createHash('sha256');for(const f of new Set([...fixtureManifest.upgrade_files,...(fixtureManifest.patch_files||[])]))h.update(f+'\0').update(fs.readFileSync(path.join(fixture,f))).update('\0');assert.equal(h.digest('hex'),receipt.checksum_sha256);await db.query('INSERT INTO database_migrations VALUES(?,?,?,?,UTC_TIMESTAMP(3))',[receipt.migration_id,receipt.checksum_sha256,'empty',source]);}
    const by=Object.fromEntries(JSON.parse(fs.readFileSync(path.join(baseline,'nodered/flows.template.json'))).map(n=>[n.id,n]));
    const call=(id,msg={})=>new Function('msg','node',by[id].func)(msg,{warn(){},error(e){throw Error(e)}});
    const execute=async msg=>{if(Array.isArray(msg))msg=msg[0];return {...msg,payload:(await db.query(msg.topic,msg.payload))[0]};};
@@ -57,14 +57,14 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    const active=await start('Aktiv gjæring under oppgradering');
    // Retain a new mutable draft alongside an active session, plus manual history.
    await db.query("UPDATE session_setup_draft SET slurry_volume_ml=4000,slurry_generation=2,slurry_source_batch='IPL',oxygenation_note='Bevar dette';INSERT INTO session_notes(note_id,session_id,noted_at,note_text,operation_id,created_at) VALUES('upgrade-note',?,UTC_TIMESTAMP(3),'Bevar øæå 🍺','upgrade-note',UTC_TIMESTAMP(3))",[active]);
-   if(patch)await db.query("CALL ga_read_start_context('upgrade-retained-attempt',NULL)");
+   if(known)await db.query("CALL ga_read_start_context('upgrade-retained-attempt',NULL)");
    const before=await hash();assert.ok(Object.keys(before).length>180);
    const originalEntityRegistry=(await db.query('SELECT * FROM ha_entity_registry ORDER BY entity_id'))[0];
    const folder=path.join(temporary,source);fs.mkdirSync(folder);const env=input(folder,{});
-   const startRows=patch?JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]):null;
-   if(patch){
+   const startRows=known?JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]):null;
+   if(known){
     await db.query('UPDATE database_migrations SET checksum_sha256=REPEAT(\'0\',64)');run(env,1);assert.equal(fs.readFileSync(env.GA_INSTALLER_SIMULATOR_STATE,'utf8'),'running');
-    await db.query('UPDATE database_migrations SET checksum_sha256=?',[manifest.patch_sources[source].checksum_sha256]);
+    await db.query('UPDATE database_migrations SET checksum_sha256=?',[expectedReceipt.checksum_sha256]);
     await db.query('ALTER TABLE session_setup_draft ADD COLUMN unknown_column INTEGER');run(env,1);assert.equal(fs.readFileSync(env.GA_INSTALLER_SIMULATOR_STATE,'utf8'),'running');await db.query('ALTER TABLE session_setup_draft DROP COLUMN unknown_column');
     pass(source+': invalid prior receipt and altered schema reject file upgrade before stopping Node-RED');
    }
@@ -77,15 +77,15 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
     fs.writeFileSync(env.GA_INSTALLER_SIMULATOR_STATE,'running');
     pass('changed source structure and failed backup prevent migration and preserve all existing domain rows');
    }
-   const output=run(env);assert.match(output,/RESULTAT: PASS/);assert.ok(output.includes('Databaseplan: '+(patch?'patch':'upgrade')));
-   if(patch){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);assert.match(output,/12-operator-schema/);}
+   const output=run(env);assert.match(output,/RESULTAT: PASS/);assert.ok(output.includes('Databaseplan: '+(files?'files':patch?'patch':'upgrade')));
+   if(known){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);if(patch)assert.match(output,/12-operator-schema/);if(files){assert.doesNotMatch(output,/-> 12-operator-schema|-> 11-runtime-routines|-> 20-views/);pass(source+': same-schema file plan applies no domain DDL or seed');}}
    assert.deepEqual(await hash(),before,'every existing user/domain table must retain byte-equivalent rows');
    for(const [entity,description]of Object.entries(sensoryHelp))assert.equal((await db.query('SELECT description FROM ha_entity_registry WHERE entity_id=?',[entity]))[0][0].description,description,'only the declared sensory help text changes');
    const expectedMetadata=JSON.parse(fs.readFileSync(path.join(root,'docs/generated/verification-model.json')));
    assert.deepEqual((await db.query('SELECT requirement_id,document_id,requirement_class,status,statement,source_ref,sort_order FROM verification_requirements_catalog ORDER BY sort_order'))[0],expectedMetadata.requirements,'new requirement insertion must preserve stable IDs and correct presentation order');
    assert.deepEqual((await db.query('SELECT test_id,sort_order FROM verification_tests ORDER BY sort_order'))[0],expectedMetadata.tests.map((t,i)=>({test_id:t.test_id,sort_order:i+1})));
    assert.equal(Number((await db.query('SELECT COUNT(*) n FROM session_measurement_signal_bindings'))[0][0].n),10);assert.equal((await db.query('SELECT session_id FROM v_active_session'))[0][0].session_id,active);
-   assert.equal((await db.query('SELECT check_status FROM v_system_check_session'))[0][0].check_status,'ok');assert.equal(Number((await db.query('SELECT COUNT(*) n FROM v_metadata_lineage_gaps'))[0][0].n),0);if(!patch)assert.equal((await db.query("SELECT status FROM verification_decisions_catalog WHERE decision_id='DEC-GA-006'"))[0][0].status,'deprecated');
+   assert.equal((await db.query('SELECT check_status FROM v_system_check_session'))[0][0].check_status,'ok');assert.equal(Number((await db.query('SELECT COUNT(*) n FROM v_metadata_lineage_gaps'))[0][0].n),0);if(!known)assert.equal((await db.query("SELECT status FROM verification_decisions_catalog WHERE decision_id='DEC-GA-006'"))[0][0].status,'deprecated');
    const reports=fs.readdirSync(path.join(root,'install-reports')).filter(f=>f.endsWith('.json')).sort();const report=JSON.parse(fs.readFileSync(path.join(root,'install-reports',reports.at(-1))));
    assert.equal(report.prototype_database_reset,false);assert.equal(report.backup_verified,true);assert.equal(report.database_source_version,source);assert.ok(fs.statSync(path.join(report.backup_directory,'database.sql.gz')).size>0);
    const dump=spawnSync('gzip',['-dc',path.join(report.backup_directory,'database.sql.gz')],{maxBuffer:64e6});assert.equal(dump.status,0);
@@ -107,7 +107,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
    }finally{if(restored)await restored.end();if(server.exitCode===null){const stopped=new Promise(resolve=>server.once('exit',resolve));server.kill('SIGTERM');await stopped;}fs.closeSync(restoreLog);}
    pass(source+': actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically');
    // Reinstall the same target without replaying migration SQL.
-   run(env);const after=await hash();run(env);assert.deepEqual(await hash(),after);assert.equal((await db.query('SELECT COUNT(*) n FROM database_migrations'))[0][0].n,patch?2:1);
+   run(env);const after=await hash();run(env);assert.deepEqual(await hash(),after);assert.equal((await db.query('SELECT COUNT(*) n FROM database_migrations'))[0][0].n,known?2:1);
    const [expectations]=await db.query("SELECT expected_text FROM system_check_expectations WHERE expectation_key='application_version'");assert.ok(expectations.length>=2);assert.ok(expectations.every(e=>e.expected_text===version));
    pass(source+': reinstall keeps data and matching migration receipts; version expectations agree');
   }
@@ -116,7 +116,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
   await db.query("UPDATE database_metadata SET application_version='unknown';UPDATE template_database_metadata SET application_version='unknown'");run(env,1);assert.equal(fs.readFileSync(env.GA_INSTALLER_SIMULATOR_STATE,'utf8'),'running');assert.deepEqual(await hash(),before);
   pass('unknown source is rejected before stopping Node-RED or changing user data');
   database='ga_upgrade_'+crypto.randomBytes(6).toString('hex')+'_test';originalShape=null;await fresh();const freshFolder=path.join(temporary,'fresh');fs.mkdirSync(freshFolder);const freshEnv=input(freshFolder,{});const installed=run(freshEnv);assert.match(installed,/Databaseplan: fresh/);assert.equal((await db.query('SELECT COUNT(*) n FROM sessions'))[0][0].n,0);assert.equal((await db.query('SELECT COUNT(*) n FROM database_migrations'))[0][0].n,1);pass('fresh installation initializes an empty database without a synthetic session or reset');
-  const sources=[...new Set(['installer/install.sh','installer/database-plan.py','installer/backup-database.py','installer/migrations.json',...manifest.upgrade_files,...manifest.patch_files,'tools/build_verification_registry.py','tests/test-install-upgrade-live.js','tests/docker-install-simulator.py'])];
-  fs.writeFileSync(path.join(root,'verification/install-upgrade-regression.json'),JSON.stringify({application_version:version,server_version:(await db.query('SELECT VERSION() v'))[0][0].v,status:'pass',docker_transport:'simulated',target_ha_uat:'not_run',supported_sources:[...manifest.supported_sources,...Object.keys(manifest.patch_sources)],fixture_provenance:'p24r16/2026.11.07-1: complete Git tag v2026.11.07-1; physical DDL verified byte-identical to retained p24r16 source; application markers varied explicitly. Later sources: exact Git tags.',checks,source_fingerprints:Object.fromEntries(sources.map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')]))},null,2)+'\n');
+  const sources=[...new Set(['installer/install.sh','installer/database-plan.py','installer/backup-database.py','installer/migrations.json',...manifest.upgrade_files,...manifest.patch_files,...manifest.file_files,'tools/build_verification_registry.py','tests/test-install-upgrade-live.js','tests/docker-install-simulator.py'])];
+  fs.writeFileSync(path.join(root,'verification/install-upgrade-regression.json'),JSON.stringify({application_version:version,server_version:(await db.query('SELECT VERSION() v'))[0][0].v,status:'pass',docker_transport:'simulated',target_ha_uat:'not_run',supported_sources:[...manifest.supported_sources,...Object.keys(manifest.patch_sources),...Object.keys(manifest.file_sources||{})],fixture_provenance:'p24r16/2026.11.07-1: complete Git tag v2026.11.07-1; physical DDL verified byte-identical to retained p24r16 source; application markers varied explicitly. Later sources: exact Git tags.',checks,source_fingerprints:Object.fromEntries(sources.map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')]))},null,2)+'\n');
  }finally{await db.end();fs.rmSync(temporary,{recursive:true,force:true});}
 })().catch(e=>{console.error(e.code||'ASSERT',e.sqlMessage||e.stack);process.exitCode=1;});

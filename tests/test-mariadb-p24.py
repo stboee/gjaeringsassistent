@@ -86,8 +86,10 @@ def execute(sql, label):
 
 # Load the installer's actual dependency order; a separate test-only order
 # would miss routines needed by seed-time template cloning.
-files=[Path(f).stem for f in json.loads((ROOT/'installer/migrations.json').read_text())['fresh_files']]
-assert len(files)==16 and len(set(files))==16,files
+file_paths=json.loads((ROOT/'installer/migrations.json').read_text())['fresh_files']
+files=[Path(f).stem for f in file_paths]
+assert len(file_paths)==len(set(file_paths)),file_paths
+assert {'00-template-schema','10-runtime-schema','12-operator-schema','11-runtime-routines','12-operator-routines','20-views','21-system-metadata-seed','24-verification-metadata-seed','25-release-verification-results-seed'} <= set(files),files
 assert files.index('11-runtime-routines')<files.index('04-ale-templates-seed'),files
 # Isolated fixture from the host's zoneinfo; this never touches the user's DB.
 from zoneinfo import ZoneInfo
@@ -102,7 +104,7 @@ for stamp,kind in transitions:sqltz+=f"INSERT INTO mysql.time_zone_transition VA
 execute(sqltz,'Oslo timezone fixture')
 db = 'ga_p24_release_test'
 execute(f'DROP DATABASE IF EXISTS {db};\nCREATE DATABASE {db} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\nUSE {db};\n' +
-    '\n'.join((ROOT / 'sql' / (f + '.sql')).read_text() for f in files), 'clean schema, routines, views and all seeds')
+    '\n'.join((ROOT / f).read_text() for f in file_paths), 'clean schema, routines, views and all seeds')
 
 def literal(value):
     if value is None: return 'NULL'

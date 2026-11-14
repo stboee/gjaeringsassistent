@@ -33,6 +33,15 @@ for source, expected in manifest['patch_sources'].items():
             pass
         else:
             raise AssertionError('File upgrade accepted without a verified previous receipt')
+for source, expected in manifest.get('file_sources', {}).items():
+    assert module.choose_plan(root, manifest, source, 216, 193, [expected])['mode'] == 'files'
+    for tables, views, history in [(207,183,[expected]),(216,193,[]),(216,193,[{**expected,'checksum_sha256':'0'*64}])]:
+        try:
+            module.choose_plan(root, manifest, source, tables, views, history)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError('Same-schema file upgrade accepted unknown structure or receipt')
 installer = (root/'installer/install.sh').read_text()
 assert 'DROP DATABASE' not in installer and 'reset_database' not in installer
 assert installer.index('DATABASE_PLAN=') < installer.index('docker stop')
@@ -48,3 +57,10 @@ print('PASS current native start/upgrade/backup proof, migration planner and abs
 ui=json.loads((root/'verification/operator-ui-regression.json').read_text())
 assert ui['ha_shell']=='controlled' and len(ui['checks'])>=4 and ui['browser_version']
 print('PASS current native sensor and actual Chromium evidence; installed HA UAT remains open')
+
+publication=json.loads((root/'verification/p24r8-presentation-regression.json').read_text())
+assert publication['application_version']==version and publication['status']=='pass'
+assert publication['source_publication']=={'argument_contract':['stage_path','target_path'],'json_and_gzip_readback':True,'publication_errors_visible':True}
+for source, expected in publication['source_fingerprints'].items():
+    assert hashlib.sha256((root/source).read_bytes()).hexdigest()==expected, 'Stale source-settings publication proof: '+source
+print('PASS source-settings producer/publisher contract, actual JSON/gzip readback and visible publication failures')

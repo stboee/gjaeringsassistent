@@ -1,5 +1,5 @@
 {
-  "application_version": "2026.11.13-1",
+  "application_version": "2026.11.14-1",
   "server_version": "12.3.3-MariaDB-ubu2404",
   "status": "pass",
   "target_ha_uat": "not_run",
@@ -14,9 +14,9 @@
     "unregistered start binding fails visibly in the DB contract"
   ],
   "source_fingerprints": {
-    "installer/install.sh": "d570e88cba2f368e883cd361aa3ec48de594c7bc636736a0ee8f64d2331f3050",
-    "installer/database-plan.py": "b4ddbc2376f140a33105c0d518a4afb1b8e8c1772487c93f580faad80847a5e8",
-    "installer/migrations.json": "8d47f6b6edf5bdf27e111cff417c6bf98b9c873a86dbb909869fce0ea9f7a11a",
+    "installer/install.sh": "8e2a67dd5b53cb9c2f34db2f23b55bf824b030797418e14f5ee72c890f49bef0",
+    "installer/database-plan.py": "e806802bace54ae372e58c2450e903758df773836d31cf6fe9cefe687fb1fe23",
+    "installer/migrations.json": "500852d59eaa430aebc1bfd5f7f5383f3ab428e160c67dbb259b58d62b57d2c1",
     "sql/00-template-schema.sql": "5e8f14d3eac67acc71c8b369a02d4c14021b034875853680661ea8d40ea12536",
     "sql/10-runtime-schema.sql": "83159b460a8433d77644f729c004ce8cc61c03dade83e0a01a721d01f5044002",
     "sql/12-operator-schema.sql": "723ff54f81ddcdd55b4761140523a183e21b8ea35565edc01a6f09ee0b46dc74",
@@ -26,8 +26,8 @@
     "tools/overview_reads.sql": "ebc7a633e91cbd36c6fc16a239237b69006670b79c0a276a6f27b35bed09bb09",
     "sql/11-runtime-routines.sql": "d095194a17e4889b8769bb9f1f6f73e78a06cf20a3043199078211aa00555bd9",
     "sql/20-views.sql": "217c754cb254e54b9f7f82c5ef288494c739f6fa65ec11d3bd14f7c2cb47d38a",
-    "sql/21-system-metadata-seed.sql": "661c1cce08bbb0882026c915335542d7c6945e6cd3627864785035275c6699e8",
-    "nodered/flows.template.json": "8e5fb803ef68b945f15f1c5c557a3f9a74f5cdd8fe675f7e6d6f18960b37276c",
+    "sql/21-system-metadata-seed.sql": "1d489ab949217b3f52720f0299f44ce6d36fc471141b2fb7789672dbb7e79928",
+    "nodered/flows.template.json": "14c0675065a2a0352f6c5820d09b6d58e3155da4adfc3ce8f2863e67ad7085f1",
     "dashboard/gjaeringsassistent-card.js": "b55078c6e36ff731eb8140a844a760d0aef4f7bcd3350f44fdb16bcc75f51986",
     "dashboard/gjaeringsassistent-dashboard.yaml": "ff0ffb4a3eaaaa51d917ecb8659f4bd6ae25613769a032aea373ef2b4110f656",
     "tests/test-start-control-live.js": "4d0cd6add23536ce1fde357b57464cfe62d08dff784d4a6b72eb902f933f23b1"
