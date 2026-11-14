@@ -28,9 +28,7 @@ jobs:
           node-version: '24'
           package-manager-cache: false
       - name: Installer dokumentbygger
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends pandoc
+        run: python3 tools/install_doc_builder.py
       - name: Bygg og kontroller samme kilde
         env:
           PYTHONDONTWRITEBYTECODE: '1'

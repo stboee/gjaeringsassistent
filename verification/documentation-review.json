@@ -26,7 +26,7 @@
     "Retrieved historical chat summaries are not verbatim original conversations.",
     "No production installation or restart was performed."
   ],
-  "completed_at_utc": "2026-11-14T14:09:46.384993+00:00",
+  "completed_at_utc": "2026-11-14T14:24:07.730565+00:00",
   "active_documents": 24,
   "rendered_html_documents": 27,
   "guardrail_copies": 27,
@@ -64,8 +64,8 @@
     "verification/install-upgrade-regression.json": "ac4f5a17783a779645cf4a7a35592d6465a88e40f316351676cecc34d9aceea3"
   },
   "source_fingerprints": {
-    ".github/workflows/documentation.yml": "e438783f9bfccd8a0d5cad98e5a7d813c533a00e8d9f1198ba6d7714ae8cae7c",
-    ".github/workflows/release.yml": "3e33164e926e3e805f25d2f4e24bb56f1aeccb94a05d4ee46fbd72ed2fecb3aa",
+    ".github/workflows/documentation.yml": "72af62bdbbd5e73750ccb1e8dafd4da6a3e0911481a4eeedbc99ff56f4233b65",
+    ".github/workflows/release.yml": "6ff015b302696fdb91cac1a25ff78fc179e124915e53ae58dc41d45a56029c0f",
     "AGENTS.md": "068e65258a7abdad7966b6a8493e5bc4ec6ed6eed4d60b230c017a15d23e9489",
     "OVERLEVERING.md": "e078c79eff829b969ee6ced0879b0305714b04276ec6c310b1a2eb076628b2b3",
     "README.md": "85224a733818ea84043857e4b009a6ce22362a62d8de329d1e4a1f83b3d4e96f",
@@ -93,7 +93,7 @@
     "docs/18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.md": "5b6f5efdc5e60c4c0d3fb0f310a6b52cf0b971fe00cdbc54bbeb137bf51c861d",
     "docs/19-TEKNISK-FANE-OG-DRIFTSMELDINGER.md": "81d87ce3c0753646f198921a443b4884f76ba8bbb73f65095e034a901cee95f4",
     "docs/20-OPERATOERVEILEDNING.md": "0c4c03424c997cdedff75b2ad110066b8c26b842fc12036bb90fc8ab8a92e914",
-    "docs/21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.md": "9d87005285870b1e571f28d92ca1866bc248acf16eff45b69f7e778afa3ce2ab",
+    "docs/21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.md": "03c4f57ab1dea0e4e9af9cdea81a871e11ad967ed21cdbadcb043b64f24d758d",
     "docs/ONBOARDING-NY-CHAT.md": "60cd2d4b4074e0d0a9930cb5576271b67dfc996eddfac9be3993e3464920b60d",
     "docs/index.md": "2132843de28447e78edd4a2c46842fe4f93ea9296fdb28b6bbebadac5b2c5eae",
     "docs/sources/architecture-guardrails.md": "61866d0af6f53d40feb8d9ce76d7281cbb381dc9ecd51905abac3032a7cdbc97",
@@ -109,13 +109,28 @@
     "tests/verify-docs-current.py": "24d5b5f13d438e947098d9605227b37e073f0f529355b38448defad8417a11e9",
     "tests/verify-document-preservation.py": "7cfffb68c110da4b8324d2aac347f28766c1a8f72f6a1d2ef0c4a4391ef2ccd0",
     "tests/verify-interface-contracts.py": "0f817831fedad92597ec3642b3479fff6247d606343f53b3bdc63a450fbcdcb3",
-    "tests/verify-package.py": "1bc9e6d9e9294c8d16e26936f905e0d5e64a7ec37baaec45e32152e7769bec39",
+    "tests/verify-package.py": "8353a15df95ce535b7e3eb804ea8ad0f38a6937a9648508b57a901cfafb850c1",
     "tests/verify-verification-model.py": "6ff787a20821138219369ccd2fd9672e64d82a7ba54fc081314509947cb0f357",
     "tools/build-package.py": "6674abf2420fedca4e39258c96bb252486d046348a1f19a6e9765dd2fef14863",
-    "tools/build_docs.py": "334d6628e75c1e9aec2e47bfeac0265acf5ce43c073002fa4be1db12065139b0",
+    "tools/build_docs.py": "2d3628f5232fdd3fe4a63d2206bc0b44d90610c09918e169e427d9c4b5c9f3a0",
     "tools/build_runtime.py": "7097af1d26967a069e2f5ecf53673d91f281090285dfe9c2975a35c4819d3a28",
     "tools/build_verification_registry.py": "e1191ffa105a81587dbce43cfb2439b92e0fcbaa1ca747de2c16fd5436e25365",
+    "tools/doc-builder.json": "6fecfe6f73ce77b6bdeecfd816951ddb16cc45c211f3a787bb65b39bc6a48b0a",
     "tools/documentation_metadata.py": "392822d5544028fc8a8a3f1b15bae3b09d4dad2b5ed67206f7a5afbde5d49ea6",
+    "tools/install_doc_builder.py": "13e0ec15bd99f471ec9165faa3e8f30ac6257ed8b0bdb04572a0e28b529ad722",
     "tools/release_notes.py": "d08b860331bebf160f66d0a47dce93211497efc8628be23ac457c5077e63c98d"
+  },
+  "doc_builder_pin": {
+    "pandoc_version": "3.1.11.1",
+    "ubuntu_amd64_asset": "https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-1-amd64.deb",
+    "sha256": "ab0ac0aa1c3f9b23243d14e43023e06cbce51a52420aba17d27bd0d9c28f73ac",
+    "ubuntu_amd64_binary_sha256": "3768fba7eaffb658d6485cd968e9e83c4d4642f95c84fd0f334796f53d19d069"
+  },
+  "ci_reproducibility_followup": {
+    "first_run_id": 43603720793,
+    "first_conclusion": "failure",
+    "cause": "CI used Pandoc 3.1.3; local Debian 3.1.11.1 also differs from the upstream build in print CSS. Two syntax-highlighted HTML pages differed.",
+    "resolution": "Both workflows use the same upstream package and binary SHA-256; local regeneration and complete gate passed with that exact binary.",
+    "native_retests_required_for_formatter_only_change": false
   }
 }

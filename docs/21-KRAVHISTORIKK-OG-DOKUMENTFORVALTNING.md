@@ -53,3 +53,5 @@ God forklaring, begrunnelse, konkrete eksempler, kontrakter og kildehenvisninger
 [Revisjonsregnskapet](sources/document-revision.json) knytter kildeavsnitt før revisjonen til bevart innhold eller begrunnet behandling. Krav- og beslutningstekst kontrolleres eksakt mot historikksnapshotet. Dokumentkontroll prøver gjentatte grunnregler, overskrifter, lenker, dokumentkart og reproduksjon. Grensesnittkontroll prøver faktiske register-/flow-/mottakergrenser og negative kontrakttilfeller. Dette lukker ingen målmiljø-UAT.
 
 Releasejobben bruker tools/release_notes.py til å hente bare den aktuelle utgavens avsnitt fra RELEASE-NOTES.md. Tidligere releasebeskrivelser og publiserte pakker omskrives ikke av denne revisjonen.
+
+Dokumentbygg krever Pandoc-versjonen i tools/doc-builder.json. Begge GitHub-jobber installerer samme offisielle pakke med kontrollert SHA-256; formatteringsforskjeller mellom verktøyversjoner skal ikke skjules ved å svekke reproduksjonskontrollen.

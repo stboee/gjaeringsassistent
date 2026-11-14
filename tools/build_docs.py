@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json,re,subprocess,sys,html
+import json,re,subprocess,sys,html,hashlib,shutil,platform
 ROOT=Path(__file__).resolve().parents[1]
+builder_pin=json.loads((ROOT/'tools/doc-builder.json').read_text())
+if subprocess.check_output(['pandoc','--version'],text=True).splitlines()[0]!='pandoc '+builder_pin['pandoc_version']:
+    raise SystemExit('Dokumentbygget krever Pandoc '+builder_pin['pandoc_version']+' fra tools/doc-builder.json')
+if platform.system()=='Linux' and platform.machine()=='x86_64':
+    binary=Path(shutil.which('pandoc'))
+    if hashlib.sha256(binary.read_bytes()).hexdigest()!=builder_pin['ubuntu_amd64_binary_sha256']:
+        raise SystemExit('Dokumentbygget krever den SHA-låste offisielle Pandoc-binæren; se tools/doc-builder.json')
 DOCS=ROOT/'docs'
 GEN=DOCS/'generated'
 GEN.mkdir(exist_ok=True)

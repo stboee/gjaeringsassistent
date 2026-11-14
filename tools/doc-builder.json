@@ -1,0 +1,6 @@
+{
+  "pandoc_version": "3.1.11.1",
+  "ubuntu_amd64_asset": "https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-1-amd64.deb",
+  "sha256": "ab0ac0aa1c3f9b23243d14e43023e06cbce51a52420aba17d27bd0d9c28f73ac",
+  "ubuntu_amd64_binary_sha256": "3768fba7eaffb658d6485cd968e9e83c4d4642f95c84fd0f334796f53d19d069"
+}
