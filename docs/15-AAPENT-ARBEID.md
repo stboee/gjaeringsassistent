@@ -35,7 +35,7 @@ Bevar rå HA-historikk lenger og hold HA/Raspberry Pi i drift under oppstart. Te
 
 ## Gjeldende målmiljøstatus
 
-Siste vedlagte målrapport er fra p24r16 den 08.11.2026 kl. 22:57. Den dokumenterer slurryfelter som avviker mellom HA og ny databasekladd; tidligere rapport viser feil P/B-telling når gamle sesjoner beholdes. Brukeren rapporterer nå to konfigurasjonsfeil i den nye startflaten etter templatevalg. Begge er reprodusert i 2026.11.09-1 og rettet i 2026.11.09-2; faktisk versjonsidentitet er ikke bekreftet med en nyere rapport. Startflyt og databevaring er fortsatt ikke målmiljøbekreftet. De 14 UAT-testene beholder sine faktiske statuser.
+Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert. Siste vedlagte tekniske målrapport er fra p24r16 den 08.11.2026 kl. 22:57. Fersk Systemkontrollrapport og konkrete funksjonstestresultater fra den nye installasjonen foreligger ikke i chatten. Startflyt og databevaring er derfor fortsatt ikke målmiljøverifisert, og de 14 UAT-testene beholder sine faktiske statuser.
 
 Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal native integrasjon dokumenterer leseavgrensning og samtidighet, ikke garantert responstid på gangpc. Reell HA Recorder/time-statistikk, nettverksfeil, nettleser/tidssoner, B/P-korreksjoner, faste akser, arkiv/ny start og HA-gjenoppkobling er fortsatt måltester der konkrete bevis mangler.
 
@@ -44,6 +44,6 @@ Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal na
 | ID | Type | Status | Område | Exit-kriterium |
 |---|---|---|---|---|
 | OPEN-015 | Måltest | Åpen | Oppgradering med databevaring | Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling. |
-| OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; installert retting er ikke bekreftet. |
+| OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; funksjonen i installert versjon er ikke bekreftet. |
 
-Databevarende migrering fra p24r16 / 2026.11.07-1 / 2026.11.09-1 / 2026.11.09-2 er implementert med native tester og simulert Docker-transport. Faktisk oppgradering på gangpc er ikke bekreftet. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.
+Databevarende migrering fra p24r16 / 2026.11.07-1 / 2026.11.09-1 / 2026.11.09-2 er implementert med native tester og simulert Docker-transport. Installasjonen er brukerbekreftet 14.11.2026; databevaring og teknisk status er ikke dokumentert med en fersk målrapport. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.

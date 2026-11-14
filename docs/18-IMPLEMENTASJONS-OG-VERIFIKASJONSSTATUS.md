@@ -32,6 +32,6 @@ Runtime-schema er 11, template-schema 4. Eksakte tabell-/view-/HA-tall følger g
 
 S-04/M42 er publiserte normaliserte gjærprofiler. Faktisk gjæring med profilene og faglig kalibrering er ikke utført av programvaretestene. HA-timesstatistikk er grafgrunnlag, ikke oppdiktet ordinært B/P-målegrunnlag.
 
-Siste vedlagte målrapport er fra p24r16 08.11.2026 kl. 22:57. Den nye leveransen er ikke bekreftet installert i målmiljøet. Tidligere generell bekreftelse av p24r16 lukker ikke de ferske konkrete avvikene eller de enkelte UAT-testene.
+Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert i målmiljøet. Siste vedlagte tekniske målrapport er fortsatt fra p24r16 08.11.2026 kl. 22:57. Installasjonsbekreftelsen dokumenterer ikke funksjon, databevaring eller de enkelte UAT-testene; konkrete måltester står fortsatt åpne.
 
 Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning av `startfields` i kortets konfigurasjonskontroll, rettet i 2026.11.09-2. Faktisk HA-/nettleserbekreftelse gjenstår.

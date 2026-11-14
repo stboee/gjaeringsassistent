@@ -1,4 +1,4 @@
-# Gjæringsassistent – videreføring 13.11.2026
+# Gjæringsassistent – videreføring 14.11.2026
 
 Versjon **2026.11.13-1 – Målesett, sensorer og kriteriefravik**. Teknisk utgangspunkt er p24r16 / første GitHub-utgave 2026.11.07-1; forrige publiserte utgave var 2026.11.09-2. VERSION, BUILD-INFO.json, tag og bygget releasepakke fastslår identiteten. Main kan ha nyere dokumentasjon enn siste publiserte pakke.
 
@@ -24,9 +24,9 @@ Se [TEST-RESULTS.md](TEST-RESULTS.md), verification/release-results.json og kild
 
 Oppgraderingstesten bruker den faktiske installeren fra en uendret bygget pakkekopi, simulert Docker-transport og native MariaDB. Komprimert backup gjenopprettes på en separat isolert server. Ingen installasjon, migrering eller restart er kjørt på brukerens server i denne arbeidsøkten. Produksjonskjøring omfattes ikke av bestillingen om bygg/publisering.
 
-Siste vedlagte målrapport er fortsatt fra p24r16 08.11.2026 kl. 22:57. Brukeren har senere rapportert visningsmangler og bortfalt kriteriefravik; aktuell installert identitet er ikke bekreftet med en nyere rapport. Ingen av de 14 UAT er automatisk lukket av lokale tester eller tidligere generell bekreftelse.
+Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert. Siste vedlagte tekniske målrapport er fortsatt fra p24r16 08.11.2026 kl. 22:57; ingen nyere Systemkontrollrapport eller konkrete funksjonstestresultater er gitt i chatten. Installasjonen er brukerbekreftet, og ingen av de 14 UAT er automatisk lukket av denne bekreftelsen.
 
-Neste måltest etter tilsiktet installasjon: kontroller Systemkontroll/versjonsidentitet, hele første målesett, slidere 0/5, temperaturpresisjon, sensorvalg/kvittering, kildebytte og B/P-fravik. Dokument 09/15 inneholder øvrige åpne måltester og faglig kalibrering.
+Neste måltest i den installerte versjonen: kontroller Systemkontroll/versjonsidentitet, hele første målesett, slidere 0/5, temperaturpresisjon, sensorvalg/kvittering, kildebytte og B/P-fravik. Dokument 09/15 inneholder øvrige åpne måltester og faglig kalibrering.
 
 ## Arkitektursperrer
 
@@ -42,4 +42,8 @@ Datoversjon ÅÅÅÅ.MM.DD-N med v-prefiks på tag og kort releasebeskrivelse. R
 
 Publisert 13.11.2026 som [v2026.11.13-1](https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.13-1), kildecommit `309625238899dce6a69c7f4b2536ae8f1cb3e9a7`. [Actions 43402451122](https://github.com/stboee/gjaeringsassistent/actions/runs/43402451122) bestod. Den faktisk nedlastede CI-pakken er 1 844 278 byte og har SHA-256 `06cb567d3e155cd0249fd07705e92b6cf17ae104fe820f9e4d8800c02a64a6ec`. Sidefil, ZIP-integritet, alle 239 interne filsjekksummer og pakkens source_commit er kontrollert.
 
-Se verification/published-release-2026.11.13-1.json. Denne publiseringskvitteringen er dokumentert på main etter taggen og endrer ikke den publiserte pakken. Målmiljøinstallasjon og de 14 UAT er fortsatt ikke bekreftet.
+Se verification/published-release-2026.11.13-1.json. Denne publiseringskvitteringen er dokumentert på main etter taggen og endrer ikke den publiserte pakken. Installasjonen er brukerbekreftet 14.11.2026; de 14 UAT er fortsatt åpne der konkrete bevis mangler.
+
+## Avslutningsstatus 14.11.2026
+
+Utvikling, bygg, publisering, pakkekontroll og overlevering er fullført. Det gjenstår ingen påbegynt implementasjon fra denne leveransen. Installasjonsbekreftelsen er ført inn uten å endre programversjon eller publisert pakke. Videre arbeid tar utgangspunkt i konkrete observasjoner fra den installerte versjonen.

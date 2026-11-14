@@ -132,7 +132,7 @@
       "type": "Måltest",
       "status": "Åpen",
       "subject": "Slurry/startfelt",
-      "exit_criterion": "Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; installert retting er ikke bekreftet.",
+      "exit_criterion": "Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; funksjonen i installert versjon er ikke bekreftet.",
       "source": "15-AAPENT-ARBEID.md",
       "line": 47
     }
