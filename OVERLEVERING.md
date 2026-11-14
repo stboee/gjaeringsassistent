@@ -1,12 +1,12 @@
 # Gjæringsassistent – videreføring 14.11.2026
 
-Versjon **2026.11.14-1 – Rettet publisering av sensorinnstillinger**. Forrige publiserte utgave er 2026.11.13-1, kildecommit 309625238899dce6a69c7f4b2536ae8f1cb3e9a7. VERSION, BUILD-INFO.json, tag og bygget releasepakke fastslår leveranseidentiteten. Main kan ha nyere dokumentasjon enn publisert pakke.
+Versjon **2026.11.14-1 – Rettet publisering av sensorinnstillinger**. Publisert som v2026.11.14-1 fra kildecommit 2212b5c2ded8c44371fb61088ea3b9c858d9379c. Forrige brukerbekreftede installasjon er 2026.11.13-1. VERSION, BUILD-INFO.json, tag og bygget releasepakke fastslår leveranseidentiteten. Main kan ha nyere dokumentasjon enn publisert pakke.
 
 ## Ny chat og arbeidsmåte
 
 Følg [onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md), AGENTS.md og dokumentkart 00. Les relevante normative dokumenter og de faktiske SQL-/registry-kildene. Arbeid direkte på main uten issues/PR. Allerede godkjent arbeid videreføres uten en ny «start»-runde.
 
-Brukeren har bedt om ny samlet ZIP, tag og GitHub Release for denne rettingen. Bestillingen er startet og omfatter bygg/publisering, ikke installasjon eller restart på brukerens server.
+Brukeren har bedt om ny samlet ZIP, tag og GitHub Release for denne rettingen. Bestillingen om bygg/publisering er fullført; installasjon eller restart på brukerens server inngikk ikke.
 
 ## Rettelsen og den eksisterende kontrakten
 
@@ -43,3 +43,9 @@ Append-only gjelder fakta/revisjoner i hver beholdt sesjon. Hele historiske sesj
 ## Publisering
 
 Datoversjon ÅÅÅÅ.MM.DD-N med v-prefiks på tag og kort releasebeskrivelse. Releasejobben bygger og kontrollerer samme kildecommit før ZIP/SHA publiseres. Kontroller Actions, tag og nedlastet pakke; et lokalt forberedelsesbygg har en annen hash enn CI-pakken. Eksisterende tag/artefakt skal ikke omskrives. Publiseringskvitteringer i verification/published-release-*.json føres etter faktisk nedlasting og kontroll.
+
+## Kontrollert publisering 14.11.2026
+
+GitHub Actions [43595618068](https://github.com/stboee/gjaeringsassistent/actions/runs/43595618068) bestod. [Release v2026.11.14-1](https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.14-1) og tag peker på 2212b5c2ded8c44371fb61088ea3b9c858d9379c. Den faktisk nedlastede CI-pakken er 1 850 000 byte, SHA-256 77a595abe88b46940a7cb7c3c9996e46af95e7b889c0f2dd8d4b6aeaee1339be. Sidecar, GitHub-digest, ZIP-CRC, alle 241 interne SHA-256 og BUILD-INFO-kildecommit er kontrollert. 39 automatiserte PASS og kritiske filer samsvarer med testet kilde. Kvittering: verification/published-release-2026.11.14-1.json.
+
+Denne kvitteringen og oppdatert videreføringsstatus ligger på main etter releasecommitten; de omskriver ikke den publiserte ZIP-en. Installasjon og målmiljøtest av denne utgaven gjenstår.

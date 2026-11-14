@@ -1,0 +1,30 @@
+{
+  "application_version": "2026.11.14-1",
+  "verified_at_utc": "2026-11-14T12:37:38.994539+00:00",
+  "source_commit": "2212b5c2ded8c44371fb61088ea3b9c858d9379c",
+  "tag": "v2026.11.14-1",
+  "release_url": "https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.14-1",
+  "workflow_run_id": 43595618068,
+  "workflow_conclusion": "success",
+  "artifact": "gjaeringsassistent-2026.11.14-1.zip",
+  "artifact_bytes": 1850000,
+  "artifact_sha256": "77a595abe88b46940a7cb7c3c9996e46af95e7b889c0f2dd8d4b6aeaee1339be",
+  "downloaded_asset_verified": true,
+  "sidecar_verified": true,
+  "zip_crc_verified": true,
+  "internal_sha256_files_verified": 241,
+  "build_source_commit_matches_tag": true,
+  "critical_tested_files_verified": [
+    "nodered/flows.template.json",
+    "tools/publish_payload.js",
+    "installer/install.sh",
+    "installer/database-plan.py",
+    "installer/migrations.json",
+    "sql/21-system-metadata-seed.sql",
+    "sql/migrations/2026.11.14-1-version.sql",
+    "tests/test-p24r8.js"
+  ],
+  "automated_release_results": 39,
+  "target_ha_uat": "not_run",
+  "status": "pass"
+}

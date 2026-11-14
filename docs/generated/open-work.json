@@ -139,7 +139,7 @@
     {
       "id": "OPEN-017",
       "type": "Feilretting/måltest",
-      "status": "Pakket retting; måltest åpen",
+      "status": "Publisert retting; måltest åpen",
       "subject": "Sensorinnstillinger gir HTTP 404",
       "exit_criterion": "Publisering bruker stage_path, JSON/gzip kan leses tilbake, publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i brukerens HA. Den pakkede rettingen bekreftes i brukerens HA.",
       "source": "15-AAPENT-ARBEID.md",
