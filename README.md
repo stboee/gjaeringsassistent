@@ -1,5 +1,7 @@
 # Gjæringsassistent 2026.11.13-1
 
+> Main har en senere, upublisert retting av HTTP 404 for sensorinnstillinger (OPEN-017). Den publiserte pakken er uendret. Se [overleveringen](OVERLEVERING.md) for avgrensning, målrettet test og retting i eksisterende installasjon.
+
 **Målesett, sensorer og kriteriefravik**, med databevarende oppgradering fra p24r16, 2026.11.07-1, 2026.11.09-1 og 2026.11.09-2. Gjæringsassistent gir råd, oversikt og historikk for gjæring i Home Assistant: templates, biologiske faser, prosesstrinn, målinger, sammenlignbare grafer, rapporter og SQLite-arkiver.
 
 MariaDB/InnoDB er eneste autoritative persistente domenekilde. Node-RED er generisk motor/orchestrator; HA er operatør- og presentasjonsflate. Feil eller mangler rettes ved kilden, uten lokale defaults eller frontend-workarounds.

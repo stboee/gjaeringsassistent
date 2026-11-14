@@ -1,6 +1,19 @@
 {
   "application_version": "2026.11.13-1",
   "status": "pass",
+  "source_publication": {
+    "argument_contract": [
+      "stage_path",
+      "target_path"
+    ],
+    "json_and_gzip_readback": true,
+    "publication_errors_visible": true
+  },
+  "source_fingerprints": {
+    "nodered/flows.template.json": "fe9700df8ce30dd7fce2eb639de6e32fe1b8a43b8ad564dcc8c95d7b46abf78d",
+    "tools/publish_payload.js": "5a5be5b3660c8844709351f6185e26e926a2034c73582bfbe9426ee49c92b47e",
+    "tests/test-p24r8.js": "0515470724cf433bb129217a77212138a113012f34888dbfe706d10783a13514"
+  },
   "source_fixture": "tests/fixtures/p24r15-overview-regression.json.gz",
   "original_bytes": 19898199,
   "compact_bytes": 511460,
@@ -15,6 +28,7 @@
     "direct/wrapped HA event inputs",
     "exact operation acknowledgement, pending refresh and late HTTP reply",
     "shell argument round-trip",
+    "actual source-settings producer/publisher arguments, JSON/gzip readback and visible errors",
     "concurrent JSON/gzip publication and obsolete snapshot rejection",
     "summary and full diagnostics",
     "visible rendering failure"

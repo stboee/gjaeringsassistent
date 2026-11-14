@@ -12315,7 +12315,7 @@
     "type": "function",
     "z": "tab_gjaering_p20r1",
     "name": "Målekilder · publiser DB-read-model",
-    "func": "const sets=Array.isArray(msg.payload)?msg.payload:[],rows=sets.some(Array.isArray)?sets.filter(Array.isArray).flat():sets,row=rows.find(r=>r&&Object.hasOwn(r,'payload'));if(!row){node.error('DB-kontrakt: sensorinnstillinger mangler',msg);return null;}\nconst data=typeof row.payload==='string'?JSON.parse(row.payload):row.payload;if(data.schema_version!=='1.0'||!Array.isArray(data.fields)||data.fields.some(f=>!Array.isArray(f.options)||!Array.isArray(f.modes))){node.error('DB-kontrakt: sensorfeltene er ufullstendige',msg);return null;}\nmsg.filename='/data/gjaeringsassistent/runtime/staged/source-settings-'+msg._msgid+'-'+Date.now()+'.json';msg.ga_publication_target='/data/gjaeringsassistent/ha-public/source-settings.json';msg.ga_publication_args=JSON.stringify({source_path:msg.filename,target_path:msg.ga_publication_target});msg.payload=JSON.stringify(data);return [msg,msg.ga_source_action==='save'?{}:null];",
+    "func": "const sets=Array.isArray(msg.payload)?msg.payload:[],rows=sets.some(Array.isArray)?sets.filter(Array.isArray).flat():sets,row=rows.find(r=>r&&Object.hasOwn(r,'payload'));if(!row){node.error('DB-kontrakt: sensorinnstillinger mangler',msg);return null;}\nconst data=typeof row.payload==='string'?JSON.parse(row.payload):row.payload;if(data.schema_version!=='1.0'||!Array.isArray(data.fields)||data.fields.some(f=>!Array.isArray(f.options)||!Array.isArray(f.modes))){node.error('DB-kontrakt: sensorfeltene er ufullstendige',msg);return null;}\nmsg.filename='/data/gjaeringsassistent/runtime/staged/source-settings-'+msg._msgid+'-'+Date.now()+'.json';msg.ga_publication_target='/data/gjaeringsassistent/ha-public/source-settings.json';msg.ga_publication_args=JSON.stringify({stage_path:msg.filename,target_path:msg.ga_publication_target});msg.payload=JSON.stringify(data);return [msg,msg.ga_source_action==='save'?{}:null];",
     "outputs": 2,
     "x": 1260,
     "y": 6650,
@@ -12378,8 +12378,12 @@
     "x": 1990,
     "y": 6650,
     "wires": [
-      [],
-      [],
+      [
+        "p24r8_publication_result"
+      ],
+      [
+        "p24r8_publication_stderr"
+      ],
       []
     ]
   }

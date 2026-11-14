@@ -47,3 +47,11 @@ Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal na
 | OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; funksjonen i installert versjon er ikke bekreftet. |
 
 Databevarende migrering fra p24r16 / 2026.11.07-1 / 2026.11.09-1 / 2026.11.09-2 er implementert med native tester og simulert Docker-transport. Installasjonen er brukerbekreftet 14.11.2026; databevaring og teknisk status er ikke dokumentert med en fersk målrapport. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.
+
+## Sensorinnstillinger etter 2026.11.13-1
+
+| ID | Type | Status | Område | Exit-kriterium |
+|---|---|---|---|---|
+| OPEN-017 | Feilretting/måltest | Rettet i kilde; måltest åpen | Sensorinnstillinger gir HTTP 404 | Publisering bruker stage_path, JSON/gzip kan leses tilbake, publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i brukerens HA. Rettet kilde inngår i en verifisert pakket utgave. |
+
+14.11.2026: Ny kortkode laster, men source-settings.json mangler. Feil argumentnavn source_path i flowen er reprodusert og rettet til stage_path på main. Exec-resultat/stderr bruker nå felles feilrapportering. Målrettet publiseringstest bestod etter at den først reproduserte feilen. Den publiserte ZIP-en er uendret; full releaseport/native regresjon for endret flow er ikke kjørt på nytt.

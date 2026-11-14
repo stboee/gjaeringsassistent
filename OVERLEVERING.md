@@ -1,5 +1,7 @@
 # Gjæringsassistent – videreføring 14.11.2026
 
+> Etter publisering er HTTP 404 for sensorinnstillinger påvist i målmiljøet. Main inneholder en målrettet transportretting; den publiserte v2026.11.13-1-pakken er uendret. Se feilen og testavgrensningen nedenfor.
+
 Versjon **2026.11.13-1 – Målesett, sensorer og kriteriefravik**. Teknisk utgangspunkt er p24r16 / første GitHub-utgave 2026.11.07-1; forrige publiserte utgave var 2026.11.09-2. VERSION, BUILD-INFO.json, tag og bygget releasepakke fastslår identiteten. Main kan ha nyere dokumentasjon enn siste publiserte pakke.
 
 ## Ny chat
@@ -47,3 +49,15 @@ Se verification/published-release-2026.11.13-1.json. Denne publiseringskvitterin
 ## Avslutningsstatus 14.11.2026
 
 Utvikling, bygg, publisering, pakkekontroll og overlevering er fullført. Det gjenstår ingen påbegynt implementasjon fra denne leveransen. Installasjonsbekreftelsen er ført inn uten å endre programversjon eller publisert pakke. Videre arbeid tar utgangspunkt i konkrete observasjoner fra den installerte versjonen.
+
+## Sensorinnstillinger – HTTP 404 etter installasjon
+
+14.11.2026 viser brukerens skjermbilde at «Målekilder og sensorer» laster ny kortkode, men GET /local/gjaeringsassistent/source-settings.json gir HTTP 404. Systemkontroll vises samtidig som OK.
+
+Årsaken er reprodusert: source_settings_result_v1 sendte source_path, mens tools/publish_payload.js leser stage_path. Publisering feilet med «The paths[0] argument must be of type string. Received undefined». Main bruker nå stage_path. Exec-utgangene er også koblet til den eksisterende felles resultat-/stderr-kontrollen slik at publiseringsfeil blir synlige i Teknisk hendelseslogg. Ingen DB-/domenemodell er endret.
+
+Den eksisterende tests/test-p24r8.js er utvidet med den faktiske produsentens argumenter, fysiske flowkoblinger, shell-rundtur, JSON/gzip-publisering og tilbake-lesing samt feilrapportering. Testen feilet på source_path før rettingen og bestod etterpå. Den bruker et uttrykkelig transportfixture, ikke konstruert faglig målegrunnlag. Beviset står i verification/p24r8-presentation-regression.json med kildeavtrykk.
+
+**Dette er ikke en ny release:** Ingen ny ZIP/tag er publisert. Full releaseport og native MariaDB-/HA-tester er ikke kjørt på nytt for denne transportendringen; tidligere native bevis gjelder den publiserte kilden og er ikke ommerket som ferske bevis for endret main. OPEN-017 står åpen for bekreftelse i målmiljøet og en senere pakket utgave.
+
+Umiddelbar retting i eksisterende installasjon: i Node-RED-funksjonen «Målekilder · publiser DB-read-model» (source_settings_result_v1) byttes source_path til stage_path i msg.ga_publication_args. Deploy kun endrede noder og bruk deretter «Les innstillinger». Kontroll: source-settings.json blir tilgjengelig og sensorfeltene vises. Dette krever ingen SQL-migrering.

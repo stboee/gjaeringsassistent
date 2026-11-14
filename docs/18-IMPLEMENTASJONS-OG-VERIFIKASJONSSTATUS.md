@@ -35,3 +35,7 @@ S-04/M42 er publiserte normaliserte gjærprofiler. Faktisk gjæring med profilen
 Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert i målmiljøet. Siste vedlagte tekniske målrapport er fortsatt fra p24r16 08.11.2026 kl. 22:57. Installasjonsbekreftelsen dokumenterer ikke funksjon, databevaring eller de enkelte UAT-testene; konkrete måltester står fortsatt åpne.
 
 Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning av `startfields` i kortets konfigurasjonskontroll, rettet i 2026.11.09-2. Faktisk HA-/nettleserbekreftelse gjenstår.
+
+## Senere transportretting på main
+
+OPEN-017: Brukerens målmiljø viser HTTP 404 for source-settings.json etter installasjon av 2026.11.13-1. Feil parameter source_path er rettet til stage_path i DB-resultatets publiseringsjobb. Publiseringsresultat og stderr er koblet til den eksisterende felles feilrapporteringen. Den utvidede tests/test-p24r8.js prøver produsent/publiserer-grensen og faktisk JSON/gzip-tilbake-lesing og har bestått. Rettelsen er ikke publisert som ny pakke; full releaseport/native regresjon for endret flow og målmiljøbekreftelse gjenstår.

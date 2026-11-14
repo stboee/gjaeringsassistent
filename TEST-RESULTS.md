@@ -1,5 +1,7 @@
 # Testresultater for 2026.11.13-1
 
+> Den komplette releaseporten nedenfor gjelder publisert v2026.11.13-1. Etterpå er OPEN-017 (HTTP 404 for sensorinnstillinger) rettet på main og prøvd med utvidet tests/test-p24r8.js. Full releaseport/native regresjon er ikke gjentatt for den endrede flowen; tidligere native bevis er ikke ommerket. Se OVERLEVERING.md.
+
 Alle 39 automatiserte TEST har bestått den komplette releaseporten. Modellen har i tillegg 14 UAT. Den komplette releaseporten kontrollerer både kildekode/pakke og kildebundne native bevis. De 14 UAT beholder sine faktiske målmiljøstatuser; de er ikke gjennomført i brukerens installasjon som del av denne leveransen.
 
 ## Utført native verifikasjon

@@ -214,5 +214,35 @@ Docker-transport. Installasjonen er brukerbekreftet 14.11.2026;
 databevaring og teknisk status er ikke dokumentert med en fersk
 målrapport. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid
 dokumenteres i gjeldende kilder og føres direkte på main.</p>
+<h2 id="sensorinnstillinger-etter-20261113-1">Sensorinnstillinger etter
+2026.11.13-1</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Type</th>
+<th>Status</th>
+<th>Område</th>
+<th>Exit-kriterium</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OPEN-017</td>
+<td>Feilretting/måltest</td>
+<td>Rettet i kilde; måltest åpen</td>
+<td>Sensorinnstillinger gir HTTP 404</td>
+<td>Publisering bruker stage_path, JSON/gzip kan leses tilbake,
+publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i
+brukerens HA. Rettet kilde inngår i en verifisert pakket utgave.</td>
+</tr>
+</tbody>
+</table>
+<p>14.11.2026: Ny kortkode laster, men source-settings.json mangler.
+Feil argumentnavn source_path i flowen er reprodusert og rettet til
+stage_path på main. Exec-resultat/stderr bruker nå felles
+feilrapportering. Målrettet publiseringstest bestod etter at den først
+reproduserte feilen. Den publiserte ZIP-en er uendret; full
+releaseport/native regresjon for endret flow er ikke kjørt på nytt.</p>
 </body>
 </html>
