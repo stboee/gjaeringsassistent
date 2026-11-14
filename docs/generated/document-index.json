@@ -5,9 +5,9 @@
       "file": "00-DOKUMENTKART-OG-STATUS.md",
       "doc_id": "DOC-00",
       "role": "governance",
-      "status": "normative",
+      "status": "current",
       "source_format": "markdown",
-      "title": "00 – Dokumentkart og status"
+      "title": "00 – Dokumentkart og kildeeierskap"
     },
     {
       "file": "01-KRAV-FELLES.md",
@@ -127,7 +127,7 @@
       "role": "open-work",
       "status": "current",
       "source_format": "markdown",
-      "title": "15 – Åpent arbeid"
+      "title": "15 – Åpent arbeid og målmiljøstatus"
     },
     {
       "file": "16-W3470-FAGGRUNNLAG-OG-PROSESSMODELL.md",
@@ -162,6 +162,22 @@
       "title": "19 – Teknisk diagnostikk og Systemkontroll"
     },
     {
+      "file": "20-OPERATOERVEILEDNING.md",
+      "doc_id": "DOC-20",
+      "role": "operator-guide",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "20 – Operatørveiledning"
+    },
+    {
+      "file": "21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.md",
+      "doc_id": "DOC-21",
+      "role": "history",
+      "status": "current",
+      "source_format": "markdown",
+      "title": "21 – Kravhistorikk og dokumentforvaltning"
+    },
+    {
       "file": "ONBOARDING-NY-CHAT.md",
       "doc_id": "DOC-ONBOARDING",
       "role": "governance",
@@ -175,7 +191,7 @@
       "role": "entrypoint",
       "status": "current",
       "source_format": "markdown",
-      "title": "Gjæringsassistent – gjeldende dokumentasjon"
+      "title": "Gjæringsassistent – dokumentasjon"
     }
   ]
 }

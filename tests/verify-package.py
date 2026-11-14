@@ -10,7 +10,7 @@ required=[
 'dashboard/gjaeringsassistent-dashboard.yaml','dashboard/gjaeringsassistent-card.js','dashboard/gjaeringsassistent-card-loader.js',
 'nodered/flows.template.json','nodered/package.json','installer/install.sh','installer/build-installed-flow.py',
 'tests/verify-static.py','tests/verify-architecture-conformance.py','tests/verify-read-model-contract.py','tests/verify-package.py','tests/verify-ha-contract.py','tests/verify-system-metadata.py','tests/verify-docs-current.py','tests/verify-verification-model.py','tests/test-build-flow.py','tests/test-runtime-functions.js',
-'tools/run-tests.sh','tools/build-package.py','tools/build_docs.py','tools/build_verification_registry.py','tools/write_release_verification_results.py','tools/publish_frontend.js','tools/system_metadata.py',
+'tools/build_runtime.py','tools/documentation_metadata.py','tests/verify-document-preservation.py','tests/verify-interface-contracts.py','tests/test-interface-contracts.js','contracts/interface-catalog.json','contracts/publication-job.schema.json','docs/sources/document-policy.json','docs/sources/requirements-history.json','docs/sources/document-revision.json','tools/run-tests.sh','tools/build-package.py','tools/build_docs.py','tools/build_verification_registry.py','tools/write_release_verification_results.py','tools/publish_frontend.js','tools/system_metadata.py',
 'compose/mariadb-service.yaml','reference/BASELINES.json','contracts/ha-node-red-contract.json',
 'verification/test-catalog.json','verification/verification-model.json','verification/release-results.json',
 'sql/11-runtime-routines.sql','sql/24-verification-metadata-seed.sql','sql/25-release-verification-results-seed.sql',
@@ -50,7 +50,8 @@ if not m or m.group(1)!=version: errors.append('publish_frontend.js VERSION sams
 seed=(ROOT/'sql/21-system-metadata-seed.sql').read_text(encoding='utf-8')
 for check in ('configuration','frontend_publishing'):
     if f"('{check}','application_version','{version}'" not in seed: errors.append(f'system_check_expectations {check}.application_version samsvarer ikke med VERSION')
-if version not in (ROOT/'README.md').read_text(encoding='utf-8').splitlines()[0]: errors.append('README-tittel samsvarer ikke med VERSION')
+readme=(ROOT/'README.md').read_text(encoding='utf-8')
+if '[VERSION](VERSION)' not in readme or '[BUILD-INFO](BUILD-INFO.json)' not in readme: errors.append('README må lenke til autoritativ leveranseidentitet')
 
 for group in ['dashboard','nodered','installer','sql','tests','tools','docs','compose','reference','contracts','verification']:
     d=ROOT/group

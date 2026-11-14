@@ -30,9 +30,46 @@
 </header>
 <h1 id="11--template-livsløp-og-editormodell">11 – Template-livsløp og
 editormodell</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normativ domene-/operatørmodell for
 template-livsløp og editor.</p>
-<h2 id="1-hva-en-template-er">1. Hva en template er</h2>
+<h2 id="hva-en-template-er">Hva en template er</h2>
 <p>En template er <strong>ikke en <code>.json</code>-fil</strong>. Den
 er et versjonert, normalisert domeneaggregat i MariaDB. JSON som
 <code>template-editor.json</code> er kun
@@ -42,7 +79,7 @@ Regelsemantikken for metric calculation, kriterier, targets og actions
 beskrives i dokument 10. Dette dokumentet beskriver livsløpet og
 operatørarbeidsflyten. En template skal inneholde nok deklarativ
 informasjon til at motoren ikke trenger å finne opp egne fagregler.</p>
-<h2 id="2-livsløp">2. Livsløp</h2>
+<h2 id="livsløp">Livsløp</h2>
 <p><code>templatebibliotek → draft → valider → publiser immutable versjon ↔︎ retired → Start velger published → Start/freeze</code></p>
 <ul>
 <li><code>templates</code> er den stabile templateidentiteten.</li>
@@ -65,7 +102,7 @@ versjon.</li>
 er aktiv; frozen sessiondata endres aldri av senere
 templateadministrasjon.</li>
 </ul>
-<h2 id="3-templatebibliotek-og-administrasjon">3. Templatebibliotek og
+<h2 id="templatebibliotek-og-administrasjon">Templatebibliotek og
 administrasjon</h2>
 <p>Template-fanen skal først vise et samlet
 <strong>Templatebibliotek</strong> uavhengig av runtime. Biblioteket
@@ -95,7 +132,7 @@ fjernes fordi retired versjon ikke er startbar.</p>
 kildeversjon. Dette sikrer at registry-eide og templateeide deklarative
 data kopieres normalisert uten å introdusere en alternativ
 JSON-sannhetskilde.</p>
-<h2 id="4-grafisk-editor">4. Grafisk editor</h2>
+<h2 id="grafisk-editor">Grafisk editor</h2>
 <p>Template-fanen er domenespesifikk og grafisk. Registry bestemmer
 gyldige metrics, modeller, parametere og operasjoner. Operatøren kan
 arbeide med:</p>
@@ -133,7 +170,7 @@ defaultmodell/-parametere. Når siste faktiske bruk av kriterietypen
 slettes, skal raden igjen kunne forsvinne og typen returnere til listen
 over ubrukte kriterietyper. Deaktivert kriterium er fortsatt en faktisk
 templateforekomst og skal derfor forbli synlig.</p>
-<h2 id="5-read-model-og-kommandoer">5. Read-model og kommandoer</h2>
+<h2 id="read-model-og-kommandoer">Read-model og kommandoer</h2>
 <p>Node-RED genererer
 <code>/data/gjaeringsassistent/ha-public/template-editor.json</code>.
 Dashboardet leser denne read-modelen, men endringer sendes tilbake som
@@ -148,7 +185,7 @@ publiseringsetikett skal bevares ved rerender. <strong>Oppdater</strong>
 leser read-model og skal ikke forkaste ulagrede endringer.</p>
 <p>Frontendvalidering er operatørhjelp. Node-RED/MariaDB er den faktiske
 validerings- og integritetsgrensen.</p>
-<h2 id="6-publiseringsvalidering">6. Publiseringsvalidering</h2>
+<h2 id="publiseringsvalidering">Publiseringsvalidering</h2>
 <p>Publisering er domenets kompileringstrinn. Før en draft kan bli
 immutable skal motoren/DB validere minst:</p>
 <ul>
@@ -174,7 +211,7 @@ registrerte generiske valideringsmodeller og typed parametere.</li>
 <p>Ugyldig eller manglende regelgrunnlag skal stoppe publisering.
 Motoren skal ikke gjøre en ugyldig template kjørbar med hardkodede
 terskler eller fallbackverdier.</p>
-<h2 id="7-startgrense">7. Startgrense</h2>
+<h2 id="startgrense">Startgrense</h2>
 <ol type="1">
 <li>Operatør velger publisert template.</li>
 <li>Valget lagres i <code>session_setup_draft</code>.</li>
@@ -186,12 +223,12 @@ kan fortsette under aktiv session.</li>
 <li>Senere draft-, publish-, retire- eller reactivate-operasjoner
 påvirker ikke frozen sessiondata.</li>
 </ol>
-<h2 id="8-importeksport">8. Import/eksport</h2>
+<h2 id="importeksport">Import/eksport</h2>
 <p>JSON-templatefiler er ikke persistent autoritativ modell. Eventuell
 senere import/eksport kan innføres som transportfunksjon, men skal mappe
 til/fra normalisert template og skal ikke bli alternativ
 runtime-store.</p>
-<h2 id="forventet-utgjæring-er-templateinput">forventet utgjæring er
+<h2 id="forventet-utgjæring-som-templateinput">Forventet utgjæring som
 templateinput</h2>
 <p>Template angir <code>expected_attenuation_min_percent</code> og
 <code>expected_attenuation_max_percent</code>. Forventet FG er avledet

@@ -30,7 +30,44 @@
 </header>
 <h1 id="17--aletemplater-og-faggrunnlag">17 – Aletemplater og
 faggrunnlag</h1>
-<p>P24r7 leverer egne publiserte profiler <code>s04-cool@1.0</code> og
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+<p>Det finnes egne publiserte profiler <code>s04-cool@1.0</code> og
 <code>m42-cool@1.0</code>. Temperatur, gjærmengde, forventet utgjæring
 og sluttkriterier er template-/sessiondata; motoren har ingen
 gjærsort-spesialkode.</p>

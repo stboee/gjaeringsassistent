@@ -30,6 +30,43 @@
 </header>
 <h1 id="03--krav-home-assistant-dashboard">03 – Krav: Home
 Assistant-dashboard</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normative krav til operatørflaten. Frontend
 er ren visning/interaction; domeneberegning, fallback og
 kriterietolkning hører ikke hjemme her.</p>
@@ -778,8 +815,8 @@ ikke som en ny måling nå. | | REQ-HA-079 | Fastsatt | Avsluttet gjæring
 skal vise DB-eid arkivstatus og støtte nytt arkiveringsforsøk uten ny
 avslutning. Uverifisert sluttarkiv skal fortsatt blokkere Gjør klar for
 reell gjæring og inngå vedvarende i Systemkontroll. |</p>
-<h2 id="historikk-og-grafer-i-gjeldende-release">Historikk og grafer i
-gjeldende release</h2>
+<h2 id="grafer-visningsvalg-og-diagnostikk">Grafer, visningsvalg og
+diagnostikk</h2>
 <table>
 <thead>
 <tr class="header">
@@ -811,7 +848,6 @@ eksport.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r8-visning-og-diagnostikk">P24r8 visning og diagnostikk</h2>
 <table>
 <thead>
 <tr class="header">
@@ -850,8 +886,6 @@ detalj/timeimportens omfang skal følge eksporten.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r9-grafvalg-og-gjeldende-krav">P24r9 grafvalg og gjeldende
-krav</h2>
 <table>
 <thead>
 <tr class="header">
@@ -878,7 +912,8 @@ til rett måleserie.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r10-arkivutveksling">P24r10 arkivutveksling</h2>
+<h2 id="arkivutveksling-og-administrasjon">Arkivutveksling og
+administrasjon</h2>
 <table>
 <thead>
 <tr class="header">
@@ -897,7 +932,6 @@ skjules fra sammenligning uten sletting.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r11-arkivvalg">P24r11 arkivvalg</h2>
 <table>
 <thead>
 <tr class="header">
@@ -924,7 +958,7 @@ import.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="historisk-import-p24r15">Historisk import (p24r15)</h2>
+<h2 id="historisk-import">Historisk import</h2>
 <table>
 <thead>
 <tr class="header">

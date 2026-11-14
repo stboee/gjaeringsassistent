@@ -7,15 +7,30 @@ source_format: markdown
 
 # 11 – Template-livsløp og editormodell
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normativ domene-/operatørmodell for template-livsløp og editor.
 
-## 1. Hva en template er
+## Hva en template er
 
 En template er **ikke en `.json`-fil**. Den er et versjonert, normalisert domeneaggregat i MariaDB. JSON som `template-editor.json` er kun frontend-read-model/transport.
 
 Den fysiske persistensen beskrives i dokument 06/SQL. Regelsemantikken for metric calculation, kriterier, targets og actions beskrives i dokument 10. Dette dokumentet beskriver livsløpet og operatørarbeidsflyten. En template skal inneholde nok deklarativ informasjon til at motoren ikke trenger å finne opp egne fagregler.
 
-## 2. Livsløp
+## Livsløp
 
 `templatebibliotek → draft → valider → publiser immutable versjon ↔ retired → Start velger published → Start/freeze`
 
@@ -28,8 +43,7 @@ Den fysiske persistensen beskrives i dokument 06/SQL. Regelsemantikken for metri
 - Ved Start fryses valgt publisert versjon til normaliserte `session_*`-tabeller med snapshotmetadata/SHA-256.
 - Templatebibliotek og drafts kan administreres også mens en session er aktiv; frozen sessiondata endres aldri av senere templateadministrasjon.
 
-
-## 3. Templatebibliotek og administrasjon
+## Templatebibliotek og administrasjon
 
 Template-fanen skal først vise et samlet **Templatebibliotek** uavhengig av runtime. Biblioteket viser alle templateidentiteter og versjoner med status, kildeversjon og relevante markører for Start-valg eller bruk i aktiv session.
 
@@ -47,7 +61,7 @@ Publisering av en ny versjon skal **ikke** automatisk endre templatevalget på S
 
 Ny template opprettes fra en eksisterende publisert/retired kildeversjon. Dette sikrer at registry-eide og templateeide deklarative data kopieres normalisert uten å introdusere en alternativ JSON-sannhetskilde.
 
-## 4. Grafisk editor
+## Grafisk editor
 
 Template-fanen er domenespesifikk og grafisk. Registry bestemmer gyldige metrics, modeller, parametere og operasjoner. Operatøren kan arbeide med:
 
@@ -65,7 +79,7 @@ B1–B6 og P1–P15 er stabile slots; innholdet kan endres gjennom ny templateve
 
 Kriteriematrisene skal være kompakte: bare kriterietyper som faktisk brukes i minst én B-fase/P-slot, eller som operatøren midlertidig har valgt å vise, skal være synlige som rader. Ubrukte registry-metrics samles i en nedtrekksboks **Ubrukte kriterietyper** under henholdsvis B- og P-matrisen. `Vis kriterietype` gjør raden synlig uten å endre templaten; `+` i en celle oppretter kriteriet i akkurat den fasen/trinnet fra registryets defaultmodell/-parametere. Når siste faktiske bruk av kriterietypen slettes, skal raden igjen kunne forsvinne og typen returnere til listen over ubrukte kriterietyper. Deaktivert kriterium er fortsatt en faktisk templateforekomst og skal derfor forbli synlig.
 
-## 5. Read-model og kommandoer
+## Read-model og kommandoer
 
 Node-RED genererer `/data/gjaeringsassistent/ha-public/template-editor.json`. Dashboardet leser denne read-modelen, men endringer sendes tilbake som eksplisitte HA-eventkanaler til Node-RED. Node-RED validerer og skriver normaliserte MariaDB-rader.
 
@@ -73,7 +87,7 @@ Inntasting skal registreres i flyktig lokal UI-kladd ved `input`, før feltet mi
 
 Frontendvalidering er operatørhjelp. Node-RED/MariaDB er den faktiske validerings- og integritetsgrensen.
 
-## 6. Publiseringsvalidering
+## Publiseringsvalidering
 
 Publisering er domenets kompileringstrinn. Før en draft kan bli immutable skal motoren/DB validere minst:
 
@@ -90,7 +104,7 @@ Publisering er domenets kompileringstrinn. Før en draft kan bli immutable skal 
 
 Ugyldig eller manglende regelgrunnlag skal stoppe publisering. Motoren skal ikke gjøre en ugyldig template kjørbar med hardkodede terskler eller fallbackverdier.
 
-## 7. Startgrense
+## Startgrense
 
 1. Operatør velger publisert template.
 2. Valget lagres i `session_setup_draft`.
@@ -99,11 +113,11 @@ Ugyldig eller manglende regelgrunnlag skal stoppe publisering. Motoren skal ikke
 5. Sessionmotoren bruker frozen `session_*`-data.
 6. Senere draft-, publish-, retire- eller reactivate-operasjoner påvirker ikke frozen sessiondata.
 
-## 8. Import/eksport
+## Import/eksport
 
 JSON-templatefiler er ikke persistent autoritativ modell. Eventuell senere import/eksport kan innføres som transportfunksjon, men skal mappe til/fra normalisert template og skal ikke bli alternativ runtime-store.
 
-## forventet utgjæring er templateinput
+## Forventet utgjæring som templateinput
 
 Template angir `expected_attenuation_min_percent` og `expected_attenuation_max_percent`. Forventet FG er avledet og skal ikke redigeres manuelt. Ved Start kombineres faktisk korrigert OG med templateens forventede utgjæringsområde; sessionen lagrer både det normative utgjæringsområdet og den beregnede FG-projeksjonen som frosne fakta.
 

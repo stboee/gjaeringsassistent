@@ -30,6 +30,43 @@
 </header>
 <h1 id="02--krav-gjæringsmotor-og-integrasjon">02 – Krav: gjæringsmotor
 og integrasjon</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normative krav til motor, persistens og
 integrasjon i gjeldende arkitektur.</p>
 <h2 id="ansvarsdeling">Ansvarsdeling</h2>
@@ -359,8 +396,7 @@ publiserte normaliserte profiler med kjølig hovedgjæring innen
 produsentområdet, gradvis opprydding ved 20 °C og eksplisitte
 sluttkontroller. 21 dager er planleggingsramme, ikke automatisk
 ferdigregel. |</p>
-<h2 id="historikk-og-grafer-i-gjeldende-release">Historikk og grafer i
-gjeldende release</h2>
+<h2 id="historikk-grafer-og-import">Historikk, grafer og import</h2>
 <table>
 <thead>
 <tr class="header">
@@ -397,7 +433,6 @@ demoidentiteten fryses ved Start.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r8-graftransport">P24r8 graftransport</h2>
 <table>
 <thead>
 <tr class="header">
@@ -417,8 +452,6 @@ femminuttersoppløsning; standard visningsintervall er 30 minutter.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r9-historisk-statistikkimport">P24r9 historisk
-statistikkimport</h2>
 <table>
 <thead>
 <tr class="header">
@@ -439,76 +472,6 @@ aktiv.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r10-arkivutveksling">P24r10 arkivutveksling</h2>
-<table>
-<thead>
-<tr class="header">
-<th>ID</th>
-<th>Status</th>
-<th>Krav</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>REQ-MOTOR-067</td>
-<td>implemented</td>
-<td>Import av gjæring og tilhørende template skjer atomisk med ny lokal
-identitet og historisk frigivelse. Feil ruller tilbake hele importen;
-aktiv gjæring og måleskriving påvirkes ikke.</td>
-</tr>
-<tr class="even">
-<td>REQ-MOTOR-068</td>
-<td>implemented</td>
-<td>Importert template får alltid en egen unik ID og kildeproveniens;
-den sammenlignes, dedupliseres eller flettes ikke med eksisterende
-templates. Redigering krever egen kopi.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="p24r11-start-og-arkivadministrasjon">P24r11 start og
-arkivadministrasjon</h2>
-<table>
-<thead>
-<tr class="header">
-<th>ID</th>
-<th>Status</th>
-<th>Krav</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>REQ-MOTOR-069</td>
-<td>implemented</td>
-<td>Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning,
-klargjøring og omstart. Systemkontroll skal oppdage vedvarende
-motstridende HA-status.</td>
-</tr>
-<tr class="even">
-<td>REQ-MOTOR-070</td>
-<td>implemented</td>
-<td>Hele historiske sesjoner kan slettes atomisk med alle tilhørende
-data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg
-nullstilles ved sletting. Append-only gjelder innenfor beholdte
-sesjoner.</td>
-</tr>
-<tr class="odd">
-<td>REQ-MOTOR-071</td>
-<td>implemented</td>
-<td>Aktiv eksport produserer et merket konsistent øyeblikksbilde av
-gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge
-SQLite-filer får SHA-256-sidefil.</td>
-</tr>
-<tr class="even">
-<td>REQ-MOTOR-072</td>
-<td>implemented</td>
-<td>Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten
-å blokkere import. SQLite-integritet, skjema, eksportpar og
-transportkontrollsum valideres fortsatt.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="historisk-ha-import-og-felles-fasetid-p24r15">Historisk
-HA-import og felles fasetid (p24r15)</h2>
 <table>
 <thead>
 <tr class="header">
@@ -552,6 +515,73 @@ løpende innhenting. Den bruker samme ene operative arbeidsøkt som
 eksisterende løsning. «Avslutt gjæring» ferdigstiller ved det historiske
 sluttidspunktet og bruker ordinær arkiv- og klargjøringsflyt. Ingen
 fysisk tank eller MQTT-sender stoppes.</p>
+<h2 id="arkivutveksling">Arkivutveksling</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Status</th>
+<th>Krav</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>REQ-MOTOR-067</td>
+<td>implemented</td>
+<td>Import av gjæring og tilhørende template skjer atomisk med ny lokal
+identitet og historisk frigivelse. Feil ruller tilbake hele importen;
+aktiv gjæring og måleskriving påvirkes ikke.</td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-068</td>
+<td>implemented</td>
+<td>Importert template får alltid en egen unik ID og kildeproveniens;
+den sammenlignes, dedupliseres eller flettes ikke med eksisterende
+templates. Redigering krever egen kopi.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="start-og-arkivadministrasjon">Start og arkivadministrasjon</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Status</th>
+<th>Krav</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>REQ-MOTOR-069</td>
+<td>implemented</td>
+<td>Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning,
+klargjøring og omstart. Systemkontroll skal oppdage vedvarende
+motstridende HA-status.</td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-070</td>
+<td>implemented</td>
+<td>Hele historiske sesjoner kan slettes atomisk med alle tilhørende
+data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg
+nullstilles ved sletting. Append-only gjelder innenfor beholdte
+sesjoner.</td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-071</td>
+<td>implemented</td>
+<td>Aktiv eksport produserer et merket konsistent øyeblikksbilde av
+gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge
+SQLite-filer får SHA-256-sidefil.</td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-072</td>
+<td>implemented</td>
+<td>Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten
+å blokkere import. SQLite-integritet, skjema, eksportpar og
+transportkontrollsum valideres fortsatt.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="systemkontroll-og-ha-publisering">Systemkontroll og
 HA-publisering</h2>
 <table>
@@ -590,7 +620,8 @@ være feil.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="reviderte-målekilder">Reviderte målekilder</h2>
+<h2 id="målekilder-og-konfigurasjonsrevisjoner">Målekilder og
+konfigurasjonsrevisjoner</h2>
 <table>
 <thead>
 <tr class="header">

@@ -88,3 +88,13 @@ if errors:
     for e in errors: print('FAIL',e)
     raise SystemExit(1)
 print(f'RESULT: PASS – strukturert verifikasjonsmodell: {checks} kontroller, {len(tests)} TEST, {len(model["verifications"])} VER')
+
+# Installable metadata and document inspection must describe the same stable catalog.
+import sys
+sys.path.insert(0,str(ROOT/'tools'))
+from system_metadata import insert_rows
+inspection=json.loads((ROOT/'docs/generated/verification-model.json').read_text())
+installed=insert_rows(ROOT/'sql/24-verification-metadata-seed.sql','verification_requirements_catalog')
+fields=['requirement_id','document_id','requirement_class','status','statement','source_ref','sort_order']
+assert [{k:r[k] for k in fields} for r in installed]==inspection['requirements'], 'Installer SQL requirement catalog differs from document sources'
+print('PASS installable requirement catalog matches current document IDs, statements, source references and order')

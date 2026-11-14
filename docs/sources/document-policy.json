@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "baseline_commit": "a69a78394a3997705152d1253f68ceef3be85a6f",
+  "guardrail_source": "docs/sources/architecture-guardrails.md",
+  "guardrail_targets": [
+    "docs/00-DOKUMENTKART-OG-STATUS.md",
+    "docs/01-KRAV-FELLES.md",
+    "docs/02-KRAV-MOTOR-OG-INTEGRASJON.md",
+    "docs/03-KRAV-DASHBOARD.md",
+    "docs/04-KRAV-INSTALLER.md",
+    "docs/05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+    "docs/06-DATAMODELL-OG-PERSISTENS.md",
+    "docs/07-SYSTEMARKITEKTUR-OG-DATAFLYT.md",
+    "docs/08-DRIFTSVEILEDNING.md",
+    "docs/09-AKSEPTANSETEST.md",
+    "docs/10-REGEL-OG-EVALUERINGSMODELL.md",
+    "docs/11-TEMPLATE-OG-EDITOR-MODELL.md",
+    "docs/12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md",
+    "docs/13-LIVSLOP-OBSERVASJONER-RAPPORT-OG-HISTORIKK.md",
+    "docs/14-AKTIVE-BESLUTNINGER.md",
+    "docs/15-AAPENT-ARBEID.md",
+    "docs/16-W3470-FAGGRUNNLAG-OG-PROSESSMODELL.md",
+    "docs/17-ALE-TEMPLATER-OG-FAKTA.md",
+    "docs/18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.md",
+    "docs/19-TEKNISK-FANE-OG-DRIFTSMELDINGER.md",
+    "docs/20-OPERATOERVEILEDNING.md",
+    "docs/21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.md",
+    "docs/ONBOARDING-NY-CHAT.md",
+    "docs/index.md",
+    "AGENTS.md",
+    "README.md",
+    "OVERLEVERING.md"
+  ],
+  "groups": [
+    {
+      "title": "Inngang og styring",
+      "documents": [
+        "00-DOKUMENTKART-OG-STATUS.md",
+        "ONBOARDING-NY-CHAT.md",
+        "21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.md"
+      ]
+    },
+    {
+      "title": "Krav og beslutninger",
+      "documents": [
+        "01-KRAV-FELLES.md",
+        "02-KRAV-MOTOR-OG-INTEGRASJON.md",
+        "03-KRAV-DASHBOARD.md",
+        "04-KRAV-INSTALLER.md",
+        "14-AKTIVE-BESLUTNINGER.md"
+      ]
+    },
+    {
+      "title": "Arkitektur og modeller",
+      "documents": [
+        "07-SYSTEMARKITEKTUR-OG-DATAFLYT.md",
+        "06-DATAMODELL-OG-PERSISTENS.md",
+        "10-REGEL-OG-EVALUERINGSMODELL.md",
+        "11-TEMPLATE-OG-EDITOR-MODELL.md",
+        "13-LIVSLOP-OBSERVASJONER-RAPPORT-OG-HISTORIKK.md",
+        "16-W3470-FAGGRUNNLAG-OG-PROSESSMODELL.md",
+        "17-ALE-TEMPLATER-OG-FAKTA.md"
+      ]
+    },
+    {
+      "title": "Grensesnitt og diagnostikk",
+      "documents": [
+        "05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+        "12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md",
+        "19-TEKNISK-FANE-OG-DRIFTSMELDINGER.md"
+      ]
+    },
+    {
+      "title": "Bruk og drift",
+      "documents": [
+        "20-OPERATOERVEILEDNING.md",
+        "08-DRIFTSVEILEDNING.md"
+      ]
+    },
+    {
+      "title": "Verifikasjon og status",
+      "documents": [
+        "09-AKSEPTANSETEST.md",
+        "15-AAPENT-ARBEID.md",
+        "18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.md"
+      ]
+    }
+  ],
+  "history_source": "docs/sources/requirements-history.json",
+  "revision_source": "docs/sources/document-revision.json",
+  "rule": "Preserve normative statements and intentional guardrail repetition; integrate current rules by topic; keep release history in RELEASE-NOTES.md."
+}

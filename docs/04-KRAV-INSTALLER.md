@@ -7,6 +7,21 @@ source_format: markdown
 
 # 04 – Krav: installer og release
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normative krav til installer og releasegrense.
 
 ## Ansvarsgrense
@@ -29,9 +44,10 @@ Installeren skal **installere** releasepakken. Den skal ikke være et alternativ
 **Prinsipp:** *Installeren verifiserer installasjonen. Applikasjonen verifiserer applikasjonen.*
 
 ## Frontendgrense
+
 Installeren skal stage dashboard, custom card og loader i `/data/gjaeringsassistent/frontend-source` og publisheren i `/data/gjaeringsassistent/runtime`. Selve publiseringen til `/data/gjaeringsassistent/ha-public` eies av Node-RED ved oppstart. Dette er nødvendig fordi `ha-public` er et separat bind-mount som skygger tilsvarende katalog under hoved-mountet `/data`.
 
-## P23 verifikasjons-/dokumentasjonskrav
+## Verifikasjon og dokumentleveranse
 
 | ID | Status | Krav |
 |---|---|---|
@@ -43,14 +59,4 @@ Installeren skal stage dashboard, custom card og loader i `/data/gjaeringsassist
 | REQ-INST-006 | Fastsatt | Eksisterende sesjoner, målinger, korreksjoner, templates, kladder, innstillinger og registrerte testresultater skal bevares ved oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon. |
 | REQ-INST-007 | Fastsatt | Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat verifisert backup og faktisk installasjonsutfall skal være sporbare. Samme målversjon kan reinstallere filer uten å kjøre migreringen på nytt. |
 
-## p24r14: avgrenset lesing og publisering
-
-`tools/overview_reads.sql`, `tools/report_reads.sql` og `sql/20-views.sql` er de autoritative lesedefinisjonene. `tools/build_read_queries.py` kompilerer disse til DB-prosedyrer i `sql/11-runtime-routines.sql`. `contracts/read-execution-schema.json` inneholder faktiske MariaDB-typer, tegnsett og kollasjoner; `read-execution-plan.json` beskriver avhengighetsrekkefølgen. Ingen domeneformel oversettes til en ny JavaScript-implementasjon.
-
-`ga_init_read_basis` oppretter tomme, forbindelsesprivate tabeller før read-only-transaksjonen. `ga_fill_read_basis` tar bare med valgt sesjon og eventuell valgt sesjonssammenligning via deklarerte eierskaps-FK-er. Globale bibliotekvalg og tekniske problemer beholder sin globale betydning. Kilder leses med vanlige konsistente SELECT-er; JSON_TABLE fyller de private tabellene internt i databasen. Tidsserier deles i dagsgrupper for å begrense intern JSON-størrelse. Ingen stor JSON-pakke sendes frem og tilbake over DB-adapteren. Mellomresultater beregnes én gang i SQL, i avhengighetsrekkefølge. Private Aria-tabeller er avledede engangsresultater; de er ingen permanent autoritet. Permanente tabeller beholder InnoDB og normal transaksjonshåndtering.
-
-`ga_read_overview` og `ga_read_report` eier normalt sitt konsistente read-only-snapshot og rydder etter både suksess og feil. SQLite-arbeideren oppretter tabellene før sitt snapshot og gjenbruker rapportlesingen innen samme snapshot som arkivinnholdet. Den rydder etter commit/rollback. Ingen global kø eller manuell skrivelås innføres.
-
-`ga_poll_overview` sammenligner kildenes antall/siste daterte endring og valgsekvenser med siste vellykkede publiseringskvittering. Dette er en invalidasjonskontroll over fysiske tabeller, ikke en ny kjøring av grafviews. Permanente uforanderlige parameterbarn dekkes av eierens daterte revisjon. Handlinger tvinger full oppdatering; tid, konfigurasjon uten egen endringsdato og ferskhet vurderes minst hvert DB-angitte `overview_clock_refresh_seconds` (60 sekunder). Detaljpunktoppløsning er fortsatt fem minutter. `read_model_publication_receipts` lagrer bare tekniske publiseringsfakta, ikke domene- eller grafverdier. Node-RED kvitterer først etter vellykket atomisk publisering.
-
-Kriterier har separate DB-felt for originalt templatekrav, effektivt krav og vurderingssnapshot. `criterion_basis_current` kommer fra nullsikker sammenligning av vurdert og gjeldende kriterierevisjon. Før ny vurdering viser DB «Venter på ny vurdering», og prosessberedskap er `not_evaluated`. Historiske bevis endres ikke. `v_criterion_correction_receipts` finner en vurdering som bruker den nøyaktige revisjonen også etter automatisk B-overgang. Frontend bruker DB-kvitteringens melding.
+Lesearkitektur, private snapshot-tabeller og publiseringskvittering er beskrevet i [dokument 07](07-SYSTEMARKITEKTUR-OG-DATAFLYT.md#avgrenset-lesing-snapshots-og-publiseringskvittering). Dette er applikasjonsarkitektur; installeren leverer de deklarerte definisjonene.

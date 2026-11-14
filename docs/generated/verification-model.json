@@ -16,7 +16,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Løsningen skal gi råd og status, men aldri styre utstyr automatisk.",
-      "source_ref": "01-KRAV-FELLES.md:30",
+      "source_ref": "01-KRAV-FELLES.md:45",
       "sort_order": 1
     },
     {
@@ -25,7 +25,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "MariaDB er eneste autoritative persistente sannhetskilde. Node-RED er gjæringsmotor/orchestrator og utfører all domeneskriving gjennom den sentraliserte MariaDB-grensen. `flow.*`, skrivbar `global.*`, HA-state og frontendprojeksjoner skal ikke være autoritativ applikasjonsstate.",
-      "source_ref": "01-KRAV-FELLES.md:31",
+      "source_ref": "01-KRAV-FELLES.md:46",
       "sort_order": 2
     },
     {
@@ -34,7 +34,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Første produksjonsversjon skal bruke dokumenterte grenser og tydelig merkede faglige tommelfingerregler.",
-      "source_ref": "01-KRAV-FELLES.md:32",
+      "source_ref": "01-KRAV-FELLES.md:47",
       "sort_order": 3
     },
     {
@@ -43,7 +43,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Historiske batcher skal ikke påvirke anbefalingsmotoren i v1.",
-      "source_ref": "01-KRAV-FELLES.md:33",
+      "source_ref": "01-KRAV-FELLES.md:48",
       "sort_order": 4
     },
     {
@@ -52,7 +52,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Hver anbefaling skal vise regeltype, kilde, begrunnelse og usikkerhet.",
-      "source_ref": "01-KRAV-FELLES.md:34",
+      "source_ref": "01-KRAV-FELLES.md:49",
       "sort_order": 5
     },
     {
@@ -61,7 +61,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "En anbefaling har status `pending`, `executed`, `rejected` eller `superseded`.",
-      "source_ref": "01-KRAV-FELLES.md:35",
+      "source_ref": "01-KRAV-FELLES.md:50",
       "sort_order": 6
     },
     {
@@ -70,7 +70,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "En ny anbefaling skal kunne erstatte en utdatert anbefaling uten å slette historikken.",
-      "source_ref": "01-KRAV-FELLES.md:36",
+      "source_ref": "01-KRAV-FELLES.md:51",
       "sort_order": 7
     },
     {
@@ -79,7 +79,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Bare én aktiv sesjon tillates. `draft` er ikke en egen persistent livsløpstilstand.",
-      "source_ref": "01-KRAV-FELLES.md:37",
+      "source_ref": "01-KRAV-FELLES.md:52",
       "sort_order": 8
     },
     {
@@ -88,7 +88,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Session opprettes som del av den samlede Start-operasjonen; det finnes ikke en separat før-pitch-opprettelsesflyt.",
-      "source_ref": "01-KRAV-FELLES.md:38",
+      "source_ref": "01-KRAV-FELLES.md:53",
       "sort_order": 9
     },
     {
@@ -97,7 +97,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Pitchtid registreres ved Start og holdes separat fra tidspunktet startdata og målesett registreres.",
-      "source_ref": "01-KRAV-FELLES.md:39",
+      "source_ref": "01-KRAV-FELLES.md:54",
       "sort_order": 10
     },
     {
@@ -106,7 +106,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "`activity_started_at` registreres automatisk og kan korrigeres manuelt uten å slette originalen.",
-      "source_ref": "01-KRAV-FELLES.md:40",
+      "source_ref": "01-KRAV-FELLES.md:55",
       "sort_order": 11
     },
     {
@@ -115,7 +115,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Sesjonen avsluttes bare manuelt. Eget obligatorisk sluttnotat kreves ikke; notater registreres separat mens sesjonen er aktiv.",
-      "source_ref": "01-KRAV-FELLES.md:41",
+      "source_ref": "01-KRAV-FELLES.md:56",
       "sort_order": 12
     },
     {
@@ -124,7 +124,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Templateidentitet, biologimodell, prosessplan, kriterier, mål og actions fryses ved Start som en komplett normalisert session-kopi med snapshot-metadata/SHA-256. Ingen JSON-blob er autoritativt regelgrunnlag.",
-      "source_ref": "01-KRAV-FELLES.md:42",
+      "source_ref": "01-KRAV-FELLES.md:57",
       "sort_order": 13
     },
     {
@@ -133,7 +133,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Frosset plan redigeres ikke under aktiv gjæring; faktiske tiltak, avvik og timing registreres mot den uendrede planen.",
-      "source_ref": "01-KRAV-FELLES.md:43",
+      "source_ref": "01-KRAV-FELLES.md:58",
       "sort_order": 14
     },
     {
@@ -142,7 +142,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Prosessmodellen har 15 generiske plasser. Gjeldende W-34/70/IPL-grunnlag bruker P1–P10 aktivt og P11–P15 som reserve.",
-      "source_ref": "01-KRAV-FELLES.md:44",
+      "source_ref": "01-KRAV-FELLES.md:59",
       "sort_order": 15
     },
     {
@@ -151,7 +151,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Ordinære/live prosesstrinnoverganger krever manuell operatørbekreftelse. Historisk replay kan bare autoetablere et prosesstrinn når dette eksplisitt er tillatt i den frosne step-policyen; W-34/70 tillater dette bare for P1/P2.",
-      "source_ref": "01-KRAV-FELLES.md:45",
+      "source_ref": "01-KRAV-FELLES.md:60",
       "sort_order": 16
     },
     {
@@ -160,7 +160,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Aktivt og anbefalt prosesstrinn skal vises separat fra biologisk fase.",
-      "source_ref": "01-KRAV-FELLES.md:46",
+      "source_ref": "01-KRAV-FELLES.md:61",
       "sort_order": 17
     },
     {
@@ -169,7 +169,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Normal framdrift skjer ett trinn om gangen med `Neste`; `Hopp over` er ikke del av gjeldende operatørkontrakt.",
-      "source_ref": "01-KRAV-FELLES.md:47",
+      "source_ref": "01-KRAV-FELLES.md:62",
       "sort_order": 18
     },
     {
@@ -178,7 +178,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Prosess-tilbakeføring går ett trinn tilbake og krever advarsel/bekreftelse, men ingen obligatorisk begrunnelse. Hendelsen og resultatet skal logges; eventuell kommentar registreres i generelt notatfelt.",
-      "source_ref": "01-KRAV-FELLES.md:48",
+      "source_ref": "01-KRAV-FELLES.md:63",
       "sort_order": 19
     },
     {
@@ -187,7 +187,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Templatebestemte prosesskrav skal advare, men aldri blokkere en manuelt bekreftet overgang.",
-      "source_ref": "01-KRAV-FELLES.md:49",
+      "source_ref": "01-KRAV-FELLES.md:64",
       "sort_order": 20
     },
     {
@@ -196,7 +196,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Automatisk målbare sjekkpunkter og manuelle sensoriske/praktiske punkter skal kunne blandes.",
-      "source_ref": "01-KRAV-FELLES.md:50",
+      "source_ref": "01-KRAV-FELLES.md:65",
       "sort_order": 21
     },
     {
@@ -205,7 +205,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Manuell SG før kaldkrasj er standardpunkt; manglende verdi gir bare advarsel.",
-      "source_ref": "01-KRAV-FELLES.md:51",
+      "source_ref": "01-KRAV-FELLES.md:66",
       "sort_order": 22
     },
     {
@@ -214,7 +214,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Manuell SG kan komme fra hydrometer eller alkohol-korrigert refraktometer.",
-      "source_ref": "01-KRAV-FELLES.md:52",
+      "source_ref": "01-KRAV-FELLES.md:67",
       "sort_order": 23
     },
     {
@@ -223,7 +223,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Avvik fra Tilt vises og logges, men Tilt-serien kalibreres ikke automatisk.",
-      "source_ref": "01-KRAV-FELLES.md:53",
+      "source_ref": "01-KRAV-FELLES.md:68",
       "sort_order": 24
     },
     {
@@ -232,7 +232,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Maksimal lengde for hvert notatfelt er 255 tegn.",
-      "source_ref": "01-KRAV-FELLES.md:54",
+      "source_ref": "01-KRAV-FELLES.md:69",
       "sort_order": 25
     },
     {
@@ -241,7 +241,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Startgrunnlaget valideres samlet og fryses atomisk ved Start. Korrigering etter Start skal bare skje gjennom eksplisitt støttet revisjons-/korrigeringsmekanisme.",
-      "source_ref": "01-KRAV-FELLES.md:55",
+      "source_ref": "01-KRAV-FELLES.md:70",
       "sort_order": 26
     },
     {
@@ -250,7 +250,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Endelig W-34/70-regelsett og terskelverdier fastsettes etter kilde- og prototyperevisjon.",
-      "source_ref": "01-KRAV-FELLES.md:56",
+      "source_ref": "01-KRAV-FELLES.md:71",
       "sort_order": 27
     },
     {
@@ -259,7 +259,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Seks biologiske faser brukes som fast referanseforløp for ren tankgjæring med `Saccharomyces`.",
-      "source_ref": "01-KRAV-FELLES.md:57",
+      "source_ref": "01-KRAV-FELLES.md:72",
       "sort_order": 28
     },
     {
@@ -268,7 +268,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Biologisk fase oppdateres automatisk etter vedvarende kriterier. Registrerte tidsstempler kan korrigeres manuelt uten begrunnelseskrav; originalt, manuelt og effektivt tidspunkt bevares sporbar og overstyringen kan fjernes.",
-      "source_ref": "01-KRAV-FELLES.md:58",
+      "source_ref": "01-KRAV-FELLES.md:73",
       "sort_order": 29
     },
     {
@@ -277,7 +277,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Brettanomyces, surøl, blandingskultur og flaskekarbonering er utenfor omfanget.",
-      "source_ref": "01-KRAV-FELLES.md:59",
+      "source_ref": "01-KRAV-FELLES.md:74",
       "sort_order": 30
     },
     {
@@ -286,7 +286,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Bare ett prosesstrinn kan være aktivt; parallelle mål og aktiviteter ligger i dette trinnet.",
-      "source_ref": "01-KRAV-FELLES.md:60",
+      "source_ref": "01-KRAV-FELLES.md:75",
       "sort_order": 31
     },
     {
@@ -295,7 +295,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Forventet FG-grunnlag hentes fra valgt template og fastsettes før Start; det er del av den frosne session-planen.",
-      "source_ref": "01-KRAV-FELLES.md:61",
+      "source_ref": "01-KRAV-FELLES.md:76",
       "sort_order": 32
     },
     {
@@ -304,7 +304,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Biologisk tid måles fra autoritativ pitch til første bekreftede inngang i B6, mens tid i B6 vises separat.",
-      "source_ref": "01-KRAV-FELLES.md:62",
+      "source_ref": "01-KRAV-FELLES.md:77",
       "sort_order": 33
     },
     {
@@ -313,7 +313,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "B6 heter `Stabil utgjæring`; betegnelsen påstår ikke sensorisk ferdig øl eller utført klarning.",
-      "source_ref": "01-KRAV-FELLES.md:63",
+      "source_ref": "01-KRAV-FELLES.md:78",
       "sort_order": 34
     },
     {
@@ -322,7 +322,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Bare aktiv sesjon kan registrere prosessdata. `idle`, `configured`, `active`, `completed` er gjeldende tekniske livsløpsnavn.",
-      "source_ref": "01-KRAV-FELLES.md:64",
+      "source_ref": "01-KRAV-FELLES.md:79",
       "sort_order": 35
     },
     {
@@ -331,7 +331,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Grunnmodellen lagrer manuell SG/temperatur, trykk, kjøleverdier, gjærlås, notat og templatevalgte sensoriske 0–5-felt uavhengig av B/P.",
-      "source_ref": "01-KRAV-FELLES.md:65",
+      "source_ref": "01-KRAV-FELLES.md:80",
       "sort_order": 36
     },
     {
@@ -340,7 +340,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Diacetyl er én ordinær sensorisk 0–5-verdi; prosesstemplaten avgjør eventuell terskel.",
-      "source_ref": "01-KRAV-FELLES.md:66",
+      "source_ref": "01-KRAV-FELLES.md:81",
       "sort_order": 37
     },
     {
@@ -349,7 +349,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Avslutning skal kunne eksportere den aktuelle sessionens frosne templategrunnlag, normaliserte domenedata, relevante logger og manifest. Normalisert sessionhistorikk beholdes i MariaDB; eksport er arkiv/transport og gate før operativ release av reell session.",
-      "source_ref": "01-KRAV-FELLES.md:67",
+      "source_ref": "01-KRAV-FELLES.md:82",
       "sort_order": 38
     },
     {
@@ -358,7 +358,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Template kan bare byttes før sesjonsstart og fryses som en fullstendig kopi i sesjonen.",
-      "source_ref": "01-KRAV-FELLES.md:68",
+      "source_ref": "01-KRAV-FELLES.md:83",
       "sort_order": 39
     },
     {
@@ -367,7 +367,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Session-ID skal være stabil og filsystemsikker og bygge på tidsstempel og sikkert templategrunnlag uten kollisjonsfare.",
-      "source_ref": "01-KRAV-FELLES.md:69",
+      "source_ref": "01-KRAV-FELLES.md:84",
       "sort_order": 40
     },
     {
@@ -376,7 +376,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Data fra Tilt, manuelle målinger, sensorikk og prosesshandlinger skal bare registreres i en aktiv sesjon.",
-      "source_ref": "01-KRAV-FELLES.md:70",
+      "source_ref": "01-KRAV-FELLES.md:85",
       "sort_order": 41
     },
     {
@@ -385,7 +385,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "En uplanlagt Node-RED-/serveromstart skal gjenopprette konfigurert eller aktiv session uten ny Start, rekonstruert fra normaliserte MariaDB-data. HA-entiteter og frontendprojeksjoner er ikke restoreautoritet.",
-      "source_ref": "01-KRAV-FELLES.md:71",
+      "source_ref": "01-KRAV-FELLES.md:86",
       "sort_order": 42
     },
     {
@@ -394,7 +394,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Historikk skal kunne bevares som selvstendige, integritetsverifiserte session-eksporter utenfor den operative MariaDB-instansen.",
-      "source_ref": "01-KRAV-FELLES.md:72",
+      "source_ref": "01-KRAV-FELLES.md:87",
       "sort_order": 43
     },
     {
@@ -403,7 +403,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Rapport skal kunne genereres underveis og etter avslutning; historisk rapport skal kunne bygges fra valgt eksportfil.",
-      "source_ref": "01-KRAV-FELLES.md:73",
+      "source_ref": "01-KRAV-FELLES.md:88",
       "sort_order": 44
     },
     {
@@ -412,7 +412,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "`Gjør klar for ny gjæring` er en egen handling etter kvittert avslutning og, for reell gjæring, komplett SQLite-par for gjæring/template og HTML-rapport for samme sesjon, filverifisert med størrelse og SHA-256. Filfeil vises og logges; manglende, pågående eller mislykket eksport blokkerer. Demo er eksplisitt unntatt eksportkravet.",
-      "source_ref": "01-KRAV-FELLES.md:74",
+      "source_ref": "01-KRAV-FELLES.md:89",
       "sort_order": 45
     },
     {
@@ -421,7 +421,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Ved `Gjør klar` skal avsluttet session frigjøres operativt med append-only release-faktum. Historiske sessiondata beholdes; mutable inputdraft kan nullstilles. Eksportfiler, rapporter og teknisk historikk som skal bevares slettes ikke.",
-      "source_ref": "01-KRAV-FELLES.md:75",
+      "source_ref": "01-KRAV-FELLES.md:90",
       "sort_order": 46
     },
     {
@@ -430,7 +430,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Manuelle grunnobservasjoner lagres atomisk via `record_observation`; Start lagrer første SG/temperatur/metode, og ordinære målesett kan inneholde den komplette templatevalgte sensoriske målkontrakten.",
-      "source_ref": "01-KRAV-FELLES.md:76",
+      "source_ref": "01-KRAV-FELLES.md:91",
       "sort_order": 47
     },
     {
@@ -439,7 +439,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Hvert nytt manuelt målesett bekreftes komplett. Manglende eller avvikende kriteriegrunnlag kan advare, men operatøren kan fortsatt bekrefte en prosessovergang.",
-      "source_ref": "01-KRAV-FELLES.md:77",
+      "source_ref": "01-KRAV-FELLES.md:92",
       "sort_order": 48
     },
     {
@@ -448,7 +448,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Readiness bestemmes av den generiske templatebestemte kriteriemodellen; ingen fast hardkodet AND-/brukerkonklusjonsmodell gjelder på tvers av alle trinn.",
-      "source_ref": "01-KRAV-FELLES.md:78",
+      "source_ref": "01-KRAV-FELLES.md:93",
       "sort_order": 49
     },
     {
@@ -457,7 +457,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Kontrolltypers maksimale alder og ugyldiggjørende endringer skal forvaltes per template og kontrolltype.",
-      "source_ref": "01-KRAV-FELLES.md:79",
+      "source_ref": "01-KRAV-FELLES.md:94",
       "sort_order": 50
     },
     {
@@ -466,7 +466,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Template bestemmer hvilke målinger/sensoriske observasjoner og grenser som er relevante. Maltsødme er ikke del av gjeldende målemodell, og konkrete terskler skal ikke hardkodes som universelle krav.",
-      "source_ref": "01-KRAV-FELLES.md:80",
+      "source_ref": "01-KRAV-FELLES.md:95",
       "sort_order": 51
     },
     {
@@ -475,7 +475,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Manglende eller ikke-bestått kontroll gir rød/advarende informasjon, men kan overstyres med ett trykk; alle aktive advarsler logges.",
-      "source_ref": "01-KRAV-FELLES.md:81",
+      "source_ref": "01-KRAV-FELLES.md:96",
       "sort_order": 52
     },
     {
@@ -484,7 +484,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Pakking/tappeklar er ikke eget prosesstrinn i gjeldende modell; avslutning er en separat manuell livsløpshandling.",
-      "source_ref": "01-KRAV-FELLES.md:82",
+      "source_ref": "01-KRAV-FELLES.md:97",
       "sort_order": 53
     },
     {
@@ -493,7 +493,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Standardforløpet bruker P8 som kaldkrasj, P9 som bunnfallsdump og P10 som kaldkondisjonering; konkrete inngangskriterier bestemmes av templaten.",
-      "source_ref": "01-KRAV-FELLES.md:83",
+      "source_ref": "01-KRAV-FELLES.md:98",
       "sort_order": 54
     },
     {
@@ -502,7 +502,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Det finnes ingen hardkodet trykk-/vakuumsikringsport; relevante trykkkrav må uttrykkes gjennom template/kriterier dersom de innføres.",
-      "source_ref": "01-KRAV-FELLES.md:84",
+      "source_ref": "01-KRAV-FELLES.md:99",
       "sort_order": 55
     },
     {
@@ -511,7 +511,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Kaldkondisjonering inngår i alle støttede gjæringsforløp; måltemperatur og varighet bestemmes av templaten.",
-      "source_ref": "01-KRAV-FELLES.md:85",
+      "source_ref": "01-KRAV-FELLES.md:100",
       "sort_order": 56
     },
     {
@@ -520,7 +520,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Temperaturøkninger kan modelleres som egne prosesstrinn, mens biologiske faser fortsatt holdes som separat modell.",
-      "source_ref": "01-KRAV-FELLES.md:86",
+      "source_ref": "01-KRAV-FELLES.md:101",
       "sort_order": 57
     },
     {
@@ -529,7 +529,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Før livebruk skal Systemkontroll, omstart, sensor-/integrasjonsavbrudd, HA-reconnect, rapport/eksport og minst én komplett testgjæring verifiseres i målmiljøet.",
-      "source_ref": "01-KRAV-FELLES.md:87",
+      "source_ref": "01-KRAV-FELLES.md:102",
       "sort_order": 58
     },
     {
@@ -538,7 +538,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Bunnfallsdump inngår som P9 i standardforløpet. Gjærhøsting, gjærsortering, overføring og pakking ligger utenfor prosessmodellen.",
-      "source_ref": "01-KRAV-FELLES.md:88",
+      "source_ref": "01-KRAV-FELLES.md:103",
       "sort_order": 59
     },
     {
@@ -547,7 +547,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Manuelt målt temperatur og kjølemaskinens settpunkt lagres som separate observasjonsverdier.",
-      "source_ref": "01-KRAV-FELLES.md:89",
+      "source_ref": "01-KRAV-FELLES.md:104",
       "sort_order": 60
     },
     {
@@ -556,7 +556,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Hver brukerinitierte stateful handling skal få en unik operasjons-ID og kunne spores til eksplisitt sluttresultat fra samme operasjon, med tidspunkt, handling, tilstand før/etter, godtatt/avvist, feltfeil, aktive advarsler og teknisk feil. Valideringsavvisning og persistens-/integrasjonsfeil skal skilles.",
-      "source_ref": "01-KRAV-FELLES.md:90",
+      "source_ref": "01-KRAV-FELLES.md:105",
       "sort_order": 61
     },
     {
@@ -565,7 +565,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Systemkontrollen skal, når HA-integrasjonen er migrert, sammenligne forventede og faktisk registrerte HA-entity-ID-er og vise mangler og mulige suffikskollisjoner.",
-      "source_ref": "01-KRAV-FELLES.md:91",
+      "source_ref": "01-KRAV-FELLES.md:106",
       "sort_order": 62
     },
     {
@@ -574,7 +574,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Stateful operatørhandlinger skal ha korrelasjons-/operasjons-ID der nødvendig for idempotens/sporbarhet og en enkel global 8 s dobbelttrykksguard som dekker normal GUI-/read-model-oppdateringstid. Sensoringest og tekniske systemkommandoer behandles ikke som operatørknappetrykk.",
-      "source_ref": "01-KRAV-FELLES.md:92",
+      "source_ref": "01-KRAV-FELLES.md:107",
       "sort_order": 63
     },
     {
@@ -583,7 +583,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Faglige regler som kan variere mellom templateversjoner skal eies deklarativt av registry/template i MariaDB. Node-RED skal ikke hardkode fase-, prosesstrinn-, gjærprofil- eller template-spesifikke terskler, vinduer, persistenskrav eller freshnessgrenser.",
-      "source_ref": "01-KRAV-FELLES.md:94",
+      "source_ref": "01-KRAV-FELLES.md:109",
       "sort_order": 64
     },
     {
@@ -592,7 +592,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Hver beregnet metrikk skal ha registrert generisk beregningsmodell, deklarerte input og typed parametere. Motoren implementerer beregningsmodellene generisk, mens MariaDB bestemmer hvilken modell og hvilke verdier som brukes.",
-      "source_ref": "01-KRAV-FELLES.md:95",
+      "source_ref": "01-KRAV-FELLES.md:110",
       "sort_order": 65
     },
     {
@@ -601,7 +601,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Freshness og persistens er separate begreper. `maximum_age_minutes` gjelder alder på datagrunnlaget; krav om vedvarende kriterium uttrykkes eksplisitt med persistens-/vindusparametere og skal ikke simuleres som maksimal alder på en fase/state.",
-      "source_ref": "01-KRAV-FELLES.md:96",
+      "source_ref": "01-KRAV-FELLES.md:111",
       "sort_order": 66
     },
     {
@@ -610,7 +610,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Automatisk biologisk framdrift er sekvensiell. Motoren vurderer bare neste biologiske fase som overgangskandidat; historisk backfill skal replayes kronologisk og kan ikke hoppe over en mellomliggende B-fase.",
-      "source_ref": "01-KRAV-FELLES.md:97",
+      "source_ref": "01-KRAV-FELLES.md:112",
       "sort_order": 67
     },
     {
@@ -619,7 +619,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "En aktiv sessions regelvurdering skal kunne reproduceres fra persisterte domenedata og den frosne normaliserte session-planen. Dersom Function-nodekode må tilføre en fagregel som ikke finnes i session-planen, er regelen ikke gyldig implementert.",
-      "source_ref": "01-KRAV-FELLES.md:98",
+      "source_ref": "01-KRAV-FELLES.md:113",
       "sort_order": 68
     },
     {
@@ -628,7 +628,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Publisering av template skal avvise kombinasjoner av metrikk, beregningsmodell, kriteriemodell, input, typed parametere og freshness som registry ikke tillater. Motoren skal ikke reparere manglende eller ugyldig regelgrunnlag med skjulte defaults.",
-      "source_ref": "01-KRAV-FELLES.md:99",
+      "source_ref": "01-KRAV-FELLES.md:114",
       "sort_order": 69
     },
     {
@@ -637,7 +637,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Operativ observability skal lese det persisterte produksjonsgrunnlaget. Teknisk/Systemkontroll skal ikke opprette en alternativ live-sensorbane eller være konkurrerende produsent av målekildens runtime-status.",
-      "source_ref": "01-KRAV-FELLES.md:100",
+      "source_ref": "01-KRAV-FELLES.md:115",
       "sort_order": 70
     },
     {
@@ -646,7 +646,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Måledata med åpenbart ugyldig eller utilstrekkelig grunnlag skal ikke gjøres autoritative ved normalisering/clamping. Valideringsutfall skal være sporbare, mens autoritative tidsserier bare skal inneholde godkjent grunnlag.",
-      "source_ref": "01-KRAV-FELLES.md:102",
+      "source_ref": "01-KRAV-FELLES.md:117",
       "sort_order": 71
     },
     {
@@ -655,7 +655,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Utilstrekkelig målegrunnlag vises som manglende. P24r7 publiserer bare ordinære analyseverdier fra faktiske målinger; ingen foreløpige verdier, regresjonsestimater, utfylling eller følsomhetsbånd.",
-      "source_ref": "01-KRAV-FELLES.md:103",
+      "source_ref": "01-KRAV-FELLES.md:118",
       "sort_order": 72
     },
     {
@@ -664,7 +664,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Feil eller mangler skal rettes ved den autoritative kilden. Feil/mangler i MariaDB, registry, frozen session, runtimefakta eller read-model skal ikke maskeres med fallback, defaultverdi, korreksjon eller parallell domenelogikk i Node-RED, Home Assistant eller frontend.",
-      "source_ref": "01-KRAV-FELLES.md:105",
+      "source_ref": "01-KRAV-FELLES.md:120",
       "sort_order": 73
     },
     {
@@ -673,7 +673,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Krav, beslutninger, verifikasjonskrav, tester og deres relasjoner skal være strukturerte metadata i MariaDB. Faktiske testkjøringer og testresultater skal lagres som egne historiske fakta.",
-      "source_ref": "01-KRAV-FELLES.md:106",
+      "source_ref": "01-KRAV-FELLES.md:121",
       "sort_order": 74
     },
     {
@@ -682,7 +682,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Verifikasjonsresultater er append-only. En ny TECH/FUNC/UAT-kjøring skal opprette nye run/result-fakta og skal ikke overskrive tidligere verifikasjonshistorikk.",
-      "source_ref": "01-KRAV-FELLES.md:107",
+      "source_ref": "01-KRAV-FELLES.md:122",
       "sort_order": 75
     },
     {
@@ -691,7 +691,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Verifikasjon skal skille eksplisitt mellom tekniske tester, funksjonelle regresjonstester og UAT/målmiljøtest. Testbarhet skal bygges inn i løsningen selv om omfanget av faktisk testkjøring tilpasses endringens risiko og prototypefasen.",
-      "source_ref": "01-KRAV-FELLES.md:108",
+      "source_ref": "01-KRAV-FELLES.md:123",
       "sort_order": 76
     },
     {
@@ -700,7 +700,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Verifikasjonsdata skal kunne eksporteres som maskinlesbart datasett og lesbar HTML-rapport fra samme DB-eide snapshot/read-model uten at eksportlaget introduserer alternativ tolkning eller statusberegning.",
-      "source_ref": "01-KRAV-FELLES.md:109",
+      "source_ref": "01-KRAV-FELLES.md:124",
       "sort_order": 77
     },
     {
@@ -709,7 +709,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "MariaDB, Node-RED og Home Assistant skal behandles som asynkrone moduler som kan være utilgjengelige og komme tilbake i vilkårlig rekkefølge. Når avhengigheter blir tilgjengelige skal Node-RED idempotent rekonstruere og republisere gjeldende tilstand fra MariaDB uten manuell Start, lokal persistent fallback eller duplisert domenhistorikk.",
-      "source_ref": "01-KRAV-FELLES.md:110",
+      "source_ref": "01-KRAV-FELLES.md:125",
       "sort_order": 78
     },
     {
@@ -718,7 +718,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Sluttarkiv/rapport skal filverifiseres med størrelse og SHA-256 før verified registreres. Bare metadata sendes tilbake til DB; eksportstørrelsen skal ikke være avhengig av max_allowed_packet. Arkiveringsforsøk og terminalt resultat er append-only fakta.",
-      "source_ref": "01-KRAV-FELLES.md:120",
+      "source_ref": "01-KRAV-FELLES.md:135",
       "sort_order": 79
     },
     {
@@ -727,7 +727,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Ingen analyseverdi skal anslås mellom manglende målinger. En beregning fra faktiske målinger er tillatt og skal vise kilde og faktisk måletid; manuell og rå Tilt-basis skal være atskilt.",
-      "source_ref": "01-KRAV-FELLES.md:121",
+      "source_ref": "01-KRAV-FELLES.md:136",
       "sort_order": 80
     },
     {
@@ -736,7 +736,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "SQLite er filutveksling; importert historikk normaliseres i MariaDB. Motoren bruker ikke et eksternt SQLite-arkiv direkte.",
-      "source_ref": "01-KRAV-FELLES.md:127",
+      "source_ref": "01-KRAV-FELLES.md:142",
       "sort_order": 81
     },
     {
@@ -745,7 +745,7 @@
       "requirement_class": "com",
       "status": "active",
       "statement": "Gjærings- og template-arkiv har samme session-/eksportprefix og valideres som et sett. Begge er SQLite; HTML-rapport beholdes.",
-      "source_ref": "01-KRAV-FELLES.md:128",
+      "source_ref": "01-KRAV-FELLES.md:143",
       "sort_order": 82
     },
     {
@@ -754,7 +754,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Alle stateful operatørhandlinger valideres mot MariaDB-grunnlag før skriving.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:24",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:39",
       "sort_order": 83
     },
     {
@@ -763,7 +763,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Én faglig mutasjon skal være én kort atomisk MariaDB-transaksjon; commit eller rollback gjelder hele mutasjonen.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:25",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:40",
       "sort_order": 84
     },
     {
@@ -772,7 +772,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Node-RED-restart skal kunne rekonstruere nødvendig nåtilstand fra MariaDB alene.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:26",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:41",
       "sort_order": 85
     },
     {
@@ -781,7 +781,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "HA-entity-ID/config-ID-grensen følger dokument 05 og maskinkontrakten.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:27",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:42",
       "sort_order": 86
     },
     {
@@ -790,7 +790,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Feil i Node-RED/HA-integrasjonen skal inn i normalisert `technical_events` der persistens er mulig.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:28",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:43",
       "sort_order": 87
     },
     {
@@ -799,7 +799,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Systemkontroll skal skille faktisk teknisk feil fra funksjon som bevisst ikke er portert; `not_applicable` skal ikke gi falsk FAIL.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:29",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:44",
       "sort_order": 88
     },
     {
@@ -808,7 +808,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Ingen JSON-blobber skal brukes som erstatning for normaliserte domenedata.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:30",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:45",
       "sort_order": 89
     },
     {
@@ -817,7 +817,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "SG-only gjelder alle aktive grensesnitt.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:31",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:46",
       "sort_order": 90
     },
     {
@@ -826,7 +826,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Runtimehistorikk skal være append-only der ny faglig tilstand kan uttrykkes som ny fakta-/revisjonsrad. Historiske runtime-rader skal ikke toggles til/fra current.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:32",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:47",
       "sort_order": 91
     },
     {
@@ -835,7 +835,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Systemet skal ikke innføre applikasjonsstyrt DB-serialisering eller eksplisitt locking (`SELECT ... FOR UPDATE`, `GET_LOCK`) som normal concurrency-mekanisme. InnoDB håndterer samtidige readers/writers.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:33",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:48",
       "sort_order": 92
     },
     {
@@ -844,7 +844,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Datakonsistens skal primært uttrykkes med normalisering, PK/FK/UNIQUE/CHECK og idempotente operation-ID-er.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:34",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:49",
       "sort_order": 93
     },
     {
@@ -853,7 +853,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Rene reads kan kjøre parallelt og kan kortvarig se siste committed snapshot. Read-model korrigeres ved neste lesing; dette skal ikke kompenseres med global locking.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:35",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:50",
       "sort_order": 94
     },
     {
@@ -862,7 +862,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Mutable arbeidskladd er tillatt for operatørinput/template-draft, men skal være tydelig skilt fra immutable sessionhistorikk.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:36",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:51",
       "sort_order": 95
     },
     {
@@ -871,7 +871,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Ordinær `Start gjæring` skal bruke valgt **Start fra** som opprinnelig pitch-/kildestart og hente tilgjengelig SG-, temperatur-, heartbeat- og RSSI-historikk fra DB-konfigurert Home Assistant-kilde.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:37",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:52",
       "sort_order": 96
     },
     {
@@ -880,7 +880,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "HA-historikk skal normaliseres til komplette 5-minuttersbøtter i `measurements_5m`; rå HA-state skal ikke bli alternativ persistent domenestore.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:38",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:53",
       "sort_order": 97
     },
     {
@@ -889,7 +889,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Heartbeat-kilden avgjør datadekning. Manglende heartbeat skal gi eksplisitt `measurement_data_gaps`; SG/temperatur skal ikke interpoleres over slike gap.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:39",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:54",
       "sort_order": 98
     },
     {
@@ -898,7 +898,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Etter Start skal samme inkrementelle import fortsette i en aktiv-session-styrt femminuttersløyfe fra persisted `last_import_cutoff_at`. Uten aktiv reell session skal ingen periodisk HA-history-henting initieres; restart skal kunne hente seg inn fra MariaDB-cursor + HA-historikk når aktiv session finnes.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:40",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:55",
       "sort_order": 99
     },
     {
@@ -907,7 +907,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Målekildens entity-ID-er skal ligge i MariaDB `measurement_source_profiles`, ikke hardkodes i Node-RED-funksjoner.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:41",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:56",
       "sort_order": 100
     },
     {
@@ -916,7 +916,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Evaluator skal bruke frosne `session_metric_runtime_*`, `session_biology_calculation_*` og kriterieparametere som deklarativt regelgrunnlag. Metrikk-ID skal ikke brukes som skjult domene-switch for å velge fagregel.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:43",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:58",
       "sort_order": 101
     },
     {
@@ -925,7 +925,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Node-RED implementerer generiske måleberegninger: SG-fall, utgjæringsgrad, signert endepunktrate, maks–min-stabilitet og state-order. Modellvalg, kilder, terskler og vindusparametere kommer fra frozen MariaDB-data. Frontend beregner ingen domenemetrikker.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:44",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:59",
       "sort_order": 102
     },
     {
@@ -934,7 +934,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "En metrikk med `freshness_mode=not_applicable` skal ikke kunne evalueres med `maximum_age_minutes`; dette skal oppdages som ugyldig konfigurasjon ved templatevalidering/publisering.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:45",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:60",
       "sort_order": 103
     },
     {
@@ -943,7 +943,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Ved HA-history-backfill skal biologimotoren evaluere 5-minuttersgrunnlaget kronologisk, håndheve persistens over faktisk sammenhengende datadekning og opprette hvert sekvensielle biologiske visit/transition ved det historiske kriteriekryssingstidspunktet.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:46",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:61",
       "sort_order": 104
     },
     {
@@ -952,7 +952,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Persistens skal resettes over registrerte `measurement_data_gaps`; et krav om vedvarende kriterium kan ikke oppfylles ved å akkumulere tid på tvers av et dokumentert datagap.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:47",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:62",
       "sort_order": 105
     },
     {
@@ -961,7 +961,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "`sensor.gjaeringsassistent_malekilde` skal produseres fra én dedikert MariaDB-read-model. Live-ingest og Systemkontroll kan trigge refresh/kontroll, men skal ikke publisere egne konkurrerende målekildetilstander.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:48",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:63",
       "sort_order": 106
     },
     {
@@ -970,7 +970,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Uten aktiv reell session skal målekildens operative importstatus være `IDLE` og ingen sensorhistorikk hentes for observability. Aktiv reell session uten persistert kildebinding skal være feiltilstand, ikke `IDLE`.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:49",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:64",
       "sort_order": 107
     },
     {
@@ -979,7 +979,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Ved historisk HA-history/catch-up skal prosesstrinn replayes kronologisk og sekvensielt på samme grunnprinsipp som B-faser. Bare neste aktive P-kandidat kan opprettes, og vurderingen skal bruke målinger, observasjoner og biologisk tilstand som var tilgjengelige ved evalueringstidspunktet. Etter catch-up/live er ordinær P-overgang fortsatt operatørbekreftet.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:50",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:65",
       "sort_order": 108
     },
     {
@@ -988,7 +988,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "`Start gjæring` skal ha sporbar ingress og eksplisitt slutt-/feilkvittering. DB-/bindingfeil i Start-kjeden skal nå normalisert Technical-pipeline og startstatus; taus bortfall av en stateful Start-kommando er ikke tillatt.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:51",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:66",
       "sort_order": 109
     },
     {
@@ -997,7 +997,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Historisk evaluator skal bruke persistert importcutoff som øvre evalueringshorizon; live evaluator skal bruke MariaDB-klokken. Node-REDs lokale veggklokke skal ikke være fallback for faglig freshness/alder.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:52",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:67",
       "sort_order": 110
     },
     {
@@ -1006,7 +1006,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Gjennomført B/P-overgang skal presenteres fra transitionens eksakte `evaluation_id`; current candidate evaluation er et separat read-model-faktum og skal ikke erstatte historisk overgangsbevis.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:53",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:68",
       "sort_order": 111
     },
     {
@@ -1015,7 +1015,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Releasebygging skal kjøre maskinell arkitekturkonformitetskontroll for sentrale DB-only-, evalueringshorizon- og read-model-regler. Kontrollen er en utviklings-/releaseport og skal ikke legges inn i installeren.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:54",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:69",
       "sort_order": 112
     },
     {
@@ -1024,7 +1024,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Runtime-/rapportverdier som vises til operatøren skal komme ferdig beregnet og ferdig representert fra MariaDB/read-model. Frontend skal ikke beregne, korrigere, tolke, formatere eller supplere domenedata med fallbackverdier.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:55",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:70",
       "sort_order": 113
     },
     {
@@ -1033,7 +1033,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "En registrert metrikk skal ha én autoritativ beregningsbane. Oversikt, B/P-vurdering og rapport skal lese persistert evaluator-/metric-resultat; samme domeneverdi skal ikke beregnes på nytt i frontend eller parallell Node-RED read-model.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:56",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:71",
       "sort_order": 114
     },
     {
@@ -1042,7 +1042,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Kriterieevaluering skal persistere datagrunnlagets provenance, inkludert relevant vindu, sample count, faktisk dekning og siste sample. MariaDB-read-model skal produsere ferdig `data_window_display`; frontend skal bare vise feltet.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:57",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:72",
       "sort_order": 115
     },
     {
@@ -1051,7 +1051,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Aktiv gjæring skal kunne generere en HTML snapshotrapport fra MariaDB/read-model uten lifecycle-endring. Rapportverdier skal være de samme ferdige displayverdiene som den operative read-modelen leverer.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:58",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:73",
       "sort_order": 116
     },
     {
@@ -1060,7 +1060,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Målekilde/Tilt-status skal leses fra ett MariaDB-view. Node-RED kan normalisere transportformen fra mysql-node, men skal ikke konstruere alternativ målekildestatus, timestamps eller domenedisplay.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:59",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:74",
       "sort_order": 117
     },
     {
@@ -1069,7 +1069,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Historisk automatisk prosesstrinnsovergang skal være en eksplisitt egenskap ved hvert template-prosesstrinn og fryses til session. Historisk evaluator kan vurdere alle neste trinn, men kan bare persistere overgang når det frosne trinnet eksplisitt tillater historisk autoovergang.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:60",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:75",
       "sort_order": 118
     },
     {
@@ -1078,7 +1078,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "W-34/70 standardtemplaten tillater historisk etablering av P1/P2. P3 og senere trinn krever operatørbekreftet overgang selv om kriteriene er oppfylt.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:61",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:76",
       "sort_order": 119
     },
     {
@@ -1087,7 +1087,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Historisk HA-import skal sekvensieres som persistér chunk → biologisk evaluering → prosessevaluering → neste chunk. Evaluator-/recommendation-identiteter skal komme fra MariaDB og ikke konstrueres fra Node-RED-klokke.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:62",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:77",
       "sort_order": 120
     },
     {
@@ -1096,7 +1096,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Åpent måledatagap skal ha én autoritativ representasjon i `measurement_data_gaps`. `session_measurement_sources` skal ikke cache duplisert gapstatus.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:63",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:78",
       "sort_order": 121
     },
     {
@@ -1105,7 +1105,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Validering av rå måleprøver skal være metadata-styrt per målekilde og fryses til session. Motoren kan implementere registrerte generiske valideringsmodeller, men signal-/template-spesifikke grenser skal ikke hardkodes.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:64",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:79",
       "sort_order": 122
     },
     {
@@ -1114,7 +1114,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Ugyldige råprøver skal forkastes før autoritativ `measurements_5m`-lagring; systemet skal ikke clamp-e eller erstatte en ugyldig verdi med en oppdiktet plausibel verdi. Kvalitetsutfall skal være sporbare separat.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:65",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:80",
       "sort_order": 123
     },
     {
@@ -1123,7 +1123,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Autoritativ SG i en godkjent 5-minuttersbøtte skal være robust aggregert fra godkjente prøver; W-34/70/Tilt bruker median. Min/middel/maks er diagnostikk og skal beregnes fra samme godkjente prøvesett.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:66",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:81",
       "sort_order": 124
     },
     {
@@ -1132,7 +1132,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Om en beregnet verdi skal ha analyseserie/graf og dens presentasjons-/behandlingsregler skal ligge i template/sessionmetadata. Motor/frontend skal ikke ha graph-ID-spesifikke regler.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:67",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:82",
       "sort_order": 125
     },
     {
@@ -1141,7 +1141,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Analyse publiserer bare verdier som oppfyller frozen minste antall, tidsspenn og dekning. Rate beregnes fra målte endepunkter og faktisk tid; ingen kortvindu-estimat eller foreløpig publisering.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:68",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:83",
       "sort_order": 126
     },
     {
@@ -1150,7 +1150,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "`analysis_series_values` er append-only. Ugyldige beregnede outputs skal ikke clampes/persisteres som gyldig serie; avvisningen skal registreres som analysevalideringsfaktum.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:69",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:84",
       "sort_order": 127
     },
     {
@@ -1159,7 +1159,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "HA-projeksjoner skal bare eksponere attributtverdier som er gyldige i HA-kontrakten. Nullable interne råfelt skal erstattes av DB-eide ferdige presentasjonsfelt eller utelates, ikke få Node-RED-fallback.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:70",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:85",
       "sort_order": 128
     },
     {
@@ -1168,7 +1168,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Gyldighetsdomene for avledede metrics skal være normalisert metric-metadata og fryses til template/session. Samme frozen grenser skal håndheves før en metric kan brukes av B/P-kriterier og før den kan persisteres i analyseserie. Ugyldig output skal gi manglende/ugyldig datagrunnlag, aldri overgang eller clampet verdi.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:71",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:86",
       "sort_order": 129
     },
     {
@@ -1177,7 +1177,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Node-RED skal registrere UAT-resultater gjennom validert MariaDB-operasjon mot aktive `UAT`-tester; frontend-event er bare ingress og er ikke kvittering på lagring.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:73",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:88",
       "sort_order": 130
     },
     {
@@ -1186,7 +1186,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Gjeldende test-, verifikasjons- og kravstatus skal utledes i MariaDB read-models. Node-RED og frontend skal ikke beregne egen coverage, samlet kravstatus eller fallback-status.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:74",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:89",
       "sort_order": 131
     },
     {
@@ -1195,7 +1195,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Automatisk releaseverifikasjon skal kunne representeres med stabile `TEST-TECH-*`/`TEST-FUNC-*`-identiteter og knyttes til verifikasjonskrav; målmiljøtest skal bruke `TEST-UAT-*`.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:75",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:90",
       "sort_order": 132
     },
     {
@@ -1204,7 +1204,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Verifikasjonseksport skal lese ett konsistent DB-grunnlag med metadata, relasjoner, testkjøringer og resultater og produsere JSON og HTML uten domenelogikk i renderer.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:76",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:91",
       "sort_order": 133
     },
     {
@@ -1213,7 +1213,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Forventet gjæringsresultat skal uttrykkes normativt som templateens intervall for tilsynelatende utgjæringsgrad. Forventet FG skal beregnes fra faktisk korrigert OG og dette intervallet; operatøren skal ikke registrere et uavhengig FG-mål ved Start.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:77",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:92",
       "sort_order": 134
     },
     {
@@ -1222,7 +1222,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Operativ gjæringsprosent skal være tilsynelatende utgjæringsgrad. Egen FG-fremdriftsprosent, rate relativt til historisk maksimum og absolutt SG-rate skal ikke være operative domenemetrikker.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:78",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:93",
       "sort_order": 135
     },
     {
@@ -1231,7 +1231,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Målefreshness og generell målekvalitet skal behandles som en felles evalueringsforutsetning. Manglende eller foreldet livegrunnlag skal gi «kan ikke evalueres»/ufullstendig vurdering, ikke falskt biologisk eller prosessuelt kriterium.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:79",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:94",
       "sort_order": 136
     },
     {
@@ -1240,7 +1240,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Biologiske kriterier skal bruke et lite forklarbart kjernesett av SG-fall, signert SG-rate, tilsynelatende utgjæringsgrad og SG-stabilitet. Prosesstrinn skal normalt konsumere ferdig biologisk fase og bare legge til operative betingelser; samme biologiske logikk skal ikke dupliseres i P-kriterier.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:80",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:95",
       "sort_order": 137
     },
     {
@@ -1249,7 +1249,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "MAD-validering bruker deklarert støygulv også ved null MAD. B/P og Analyse bruker identisk endpoint_rate_v1 fra felles kilde: målt SG-forskjell / faktisk tid, ingen regresjon eller følsomhetsbånd. Datagap bryter vinduet.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:82",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:97",
       "sort_order": 138
     },
     {
@@ -1258,7 +1258,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Rå Tilt-utgjæringsgrad bruker faktisk OG og godkjent Tilt-SG uten pitch-kalibrering. Manuell utgjæringsgrad bruker faktisk OG og korrigert manuell SG. Kildene er separate og velges eksplisitt av templatekriteriets metric_id; ingen kildebytte/fallback.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:83",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:98",
       "sort_order": 139
     },
     {
@@ -1267,7 +1267,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Aktuelle analyseverdier skal hentes fra siste godkjente analyseserie og kontrolleres mot nyere avvisning/freskhet; overgangskriteriers gamle snapshots skal ikke presenteres som aktuell rate. Rå Tilt-AA og manuell AA har hvert sitt faktiske målegrunnlag og måletid; ingen automatisk kildebytte.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:84",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:99",
       "sort_order": 140
     },
     {
@@ -1276,7 +1276,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Tomme valgfrie korreksjonsparametere skal lagres eksplisitt som ikke angitt, uten konvertering til nulltallet. Hele konfigurasjonen skal valideres før transaksjonen. Ved ugyldig kriteriekonfigurasjon skal fortsatt beregnbar faktisk verdi og forklarende årsak bevares.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:85",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:100",
       "sort_order": 141
     },
     {
@@ -1285,7 +1285,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "S-04- og M42-templater skal være egne publiserte normaliserte profiler med kjølig hovedgjæring innen produsentområdet, gradvis opprydding ved 20 °C og eksplisitte sluttkontroller. 21 dager er planleggingsramme, ikke automatisk ferdigregel.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:95",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:110",
       "sort_order": 142
     },
     {
@@ -1294,7 +1294,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "HA-timesstatistikk lagres append-only med reelle min/gjennomsnitt/maks, uten krav om historisk MQTT-heartbeat og uten konstruerte medianer/prøveantall.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:101",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:116",
       "sort_order": 143
     },
     {
@@ -1303,7 +1303,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Hver Systemkontroll lagrer alle resultater atomisk med unik kjøringsidentitet og kontrollerer HA mot et ferskt API-svar.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:102",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:117",
       "sort_order": 144
     },
     {
@@ -1312,7 +1312,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Aktiv og avsluttet rapport bruker én generator og inkluderer full kronologisk hendelseshistorikk og tilgjengelige timesdata.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:103",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:118",
       "sort_order": 145
     },
     {
@@ -1321,7 +1321,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Datasett- og sammenligningsvalg persisteres i MariaDB; den valgte demoidentiteten fryses ved Start.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:104",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:119",
       "sort_order": 146
     },
     {
@@ -1330,7 +1330,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Graftransport skal dele presentasjonsmetadata, bruke kompakt JSON og tilby verifisert gzip. Punktutvalg skjer i DB og bevarer første/siste/min/maks og segmentgrenser. Lagring/analyser beholder femminuttersoppløsning; standard visningsintervall er 30 minutter.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:110",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:123",
       "sort_order": 147
     },
     {
@@ -1339,62 +1339,8 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "HA-timesstatistikk hentes ved første historiske import og ved DB-målt etterslep på minst én time. Vanlig frisk femminuttersimport henter detaljhistorikk. En uløst statistikkfeil gir nytt historisk forsøk; gjenoppretting registreres bare når en slik feil faktisk er aktiv.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:116",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:127",
       "sort_order": 148
-    },
-    {
-      "requirement_id": "REQ-MOTOR-067",
-      "document_id": "DOC-02",
-      "requirement_class": "motor",
-      "status": "active",
-      "statement": "Import av gjæring og tilhørende template skjer atomisk med ny lokal identitet og historisk frigivelse. Feil ruller tilbake hele importen; aktiv gjæring og måleskriving påvirkes ikke.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:122",
-      "sort_order": 149
-    },
-    {
-      "requirement_id": "REQ-MOTOR-068",
-      "document_id": "DOC-02",
-      "requirement_class": "motor",
-      "status": "active",
-      "statement": "Importert template får alltid en egen unik ID og kildeproveniens; den sammenlignes, dedupliseres eller flettes ikke med eksisterende templates. Redigering krever egen kopi.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:123",
-      "sort_order": 150
-    },
-    {
-      "requirement_id": "REQ-MOTOR-069",
-      "document_id": "DOC-02",
-      "requirement_class": "motor",
-      "status": "active",
-      "statement": "Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning, klargjøring og omstart. Systemkontroll skal oppdage vedvarende motstridende HA-status.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:129",
-      "sort_order": 151
-    },
-    {
-      "requirement_id": "REQ-MOTOR-070",
-      "document_id": "DOC-02",
-      "requirement_class": "motor",
-      "status": "active",
-      "statement": "Hele historiske sesjoner kan slettes atomisk med alle tilhørende data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg nullstilles ved sletting. Append-only gjelder innenfor beholdte sesjoner.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:130",
-      "sort_order": 152
-    },
-    {
-      "requirement_id": "REQ-MOTOR-071",
-      "document_id": "DOC-02",
-      "requirement_class": "motor",
-      "status": "active",
-      "statement": "Aktiv eksport produserer et merket konsistent øyeblikksbilde av gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge SQLite-filer får SHA-256-sidefil.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:131",
-      "sort_order": 153
-    },
-    {
-      "requirement_id": "REQ-MOTOR-072",
-      "document_id": "DOC-02",
-      "requirement_class": "motor",
-      "status": "active",
-      "statement": "Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten å blokkere import. SQLite-integritet, skjema, eksportpar og transportkontrollsum valideres fortsatt.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:132",
-      "sort_order": 154
     },
     {
       "requirement_id": "REQ-MOTOR-073",
@@ -1402,8 +1348,8 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "En historisk HA-sesjon har fra-tid fra gjeldende pitchrevisjon og en eksplisitt slutt i session_history_windows. Importen stopper ved sluttgrensen, også etter omstart. Sluttgrensen valideres i DB og avgrenser lagring; ingen normal live-import planlegges etter fullføring.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:138",
-      "sort_order": 155
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:131",
+      "sort_order": 149
     },
     {
       "requirement_id": "REQ-MOTOR-074",
@@ -1411,8 +1357,8 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Effektiv P/B-slutt er neste visits gjeldende start innen samme tidslinje. Siste visit avgrenses av DB-eid sesjonsklokke. MariaDB beregner datoer og varighet for dashboard og rapport; korreksjon beholder tidligere revisjoner.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:139",
-      "sort_order": 156
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:132",
+      "sort_order": 150
     },
     {
       "requirement_id": "REQ-MOTOR-075",
@@ -1420,7 +1366,61 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Historiske vurderinger, grafakser og manuelle registreringer bruker den historiske horisonten, ikke dagens klokke. Måle-/hendelsestid og faktisk registreringstid bevares separat. Manglende data og delvis ubrukelig timesstatistikk skal ikke fylles ut med estimater.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:140",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:133",
+      "sort_order": 151
+    },
+    {
+      "requirement_id": "REQ-MOTOR-067",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Import av gjæring og tilhørende template skjer atomisk med ny lokal identitet og historisk frigivelse. Feil ruller tilbake hele importen; aktiv gjæring og måleskriving påvirkes ikke.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:141",
+      "sort_order": 152
+    },
+    {
+      "requirement_id": "REQ-MOTOR-068",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Importert template får alltid en egen unik ID og kildeproveniens; den sammenlignes, dedupliseres eller flettes ikke med eksisterende templates. Redigering krever egen kopi.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:142",
+      "sort_order": 153
+    },
+    {
+      "requirement_id": "REQ-MOTOR-069",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning, klargjøring og omstart. Systemkontroll skal oppdage vedvarende motstridende HA-status.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:148",
+      "sort_order": 154
+    },
+    {
+      "requirement_id": "REQ-MOTOR-070",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Hele historiske sesjoner kan slettes atomisk med alle tilhørende data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg nullstilles ved sletting. Append-only gjelder innenfor beholdte sesjoner.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:149",
+      "sort_order": 155
+    },
+    {
+      "requirement_id": "REQ-MOTOR-071",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Aktiv eksport produserer et merket konsistent øyeblikksbilde av gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge SQLite-filer får SHA-256-sidefil.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:150",
+      "sort_order": 156
+    },
+    {
+      "requirement_id": "REQ-MOTOR-072",
+      "document_id": "DOC-02",
+      "requirement_class": "motor",
+      "status": "active",
+      "statement": "Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten å blokkere import. SQLite-integritet, skjema, eksportpar og transportkontrollsum valideres fortsatt.",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:151",
       "sort_order": 157
     },
     {
@@ -1429,7 +1429,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Klassifisering av målekildestatus eies av normalisert MariaDB-policy og read-model. Ukjent statuspolicy eller manglende påkrevd kontrollgrunnlag skal være synlig feil, uten lokal Node-RED-liste eller fallback.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:149",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:157",
       "sort_order": 158
     },
     {
@@ -1438,7 +1438,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Ferdig behandlet importperiode skal skilles fra faktisk datadekning. Antall og tidsgrenser for ordinære femminuttersmålinger og timesstatistikk samt registrerte rådatagap utledes i DB. Timesstatistikk skal ikke fremstilles som ordinært B/P-grunnlag.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:150",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:158",
       "sort_order": 159
     },
     {
@@ -1447,7 +1447,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Forbigående HA-publiseringsbrudd journalføres uten rekursiv publisering av feilen. Nytt forsøk leser ferske DB-projeksjoner, aldri en lokal domenekø. Et konkret publiseringsproblem lukkes først etter vellykket utgang fra den berørte HA-noden. Ugyldig payload skal fortsatt være feil.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:151",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:159",
       "sort_order": 160
     },
     {
@@ -1456,7 +1456,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Sensorbindinger normaliseres per signal, enhet og konfigurasjonsrevisjon i MariaDB, og fryses per reell sesjon. Livebytte trer i kraft ved en DB-bestemt femminuttersgrense; tidligere bindinger og målinger beholdes. Historisk import endres ikke retroaktivt.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:157",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:165",
       "sort_order": 161
     },
     {
@@ -1465,7 +1465,7 @@
       "requirement_class": "motor",
       "status": "active",
       "statement": "Trykk er manuelt til en kompatibel HA-sensor er valgt. Sensortrykk omregnes fra deklarert enhet til bar med DB-eide koeffisienter og grenser. Fravær av valgfritt trykk skal ikke blokkere SG/temperatur. B/P-fravik lagres i en felles kort DB-transaksjon med gjeldende evaluering, kriterierevisjon og eksplisitt bekreftelse.",
-      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:158",
+      "source_ref": "02-KRAV-MOTOR-OG-INTEGRASJON.md:166",
       "sort_order": 162
     },
     {
@@ -1474,7 +1474,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Løsningen bruker flow-opprettede HA-entiteter og eget Lovelace-kort; ingen HA-package kreves.",
-      "source_ref": "03-KRAV-DASHBOARD.md:45",
+      "source_ref": "03-KRAV-DASHBOARD.md:60",
       "sort_order": 163
     },
     {
@@ -1483,7 +1483,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Biologisk fase, biologisk kandidat, aktivt prosesstrinn og anbefalt prosesstrinn skal være tydelig adskilt.",
-      "source_ref": "03-KRAV-DASHBOARD.md:46",
+      "source_ref": "03-KRAV-DASHBOARD.md:61",
       "sort_order": 164
     },
     {
@@ -1492,7 +1492,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Hovedgrafen åpner med hele aktive forløpet fra pitch til nå.",
-      "source_ref": "03-KRAV-DASHBOARD.md:47",
+      "source_ref": "03-KRAV-DASHBOARD.md:62",
       "sort_order": 165
     },
     {
@@ -1501,7 +1501,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "SG vises som den autoritative validerte 5-minuttersserien med tydelig min–maks-bånd fra samme godkjente prøvesett. Båndet skal synliggjøre målespredning, ikke skjules av unødvendig stor Y-akse.",
-      "source_ref": "03-KRAV-DASHBOARD.md:48",
+      "source_ref": "03-KRAV-DASHBOARD.md:63",
       "sort_order": 166
     },
     {
@@ -1510,7 +1510,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "SG, temperatur og trykk vises som tre vertikalt stablede, synkroniserte grafer med samme tidsutstrekning.",
-      "source_ref": "03-KRAV-DASHBOARD.md:49",
+      "source_ref": "03-KRAV-DASHBOARD.md:64",
       "sort_order": 167
     },
     {
@@ -1519,7 +1519,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Datagap skal være visuelt synlige og kurver skal brytes.",
-      "source_ref": "03-KRAV-DASHBOARD.md:50",
+      "source_ref": "03-KRAV-DASHBOARD.md:65",
       "sort_order": 168
     },
     {
@@ -1528,7 +1528,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Historiske forløp skal ha egen sammenligningsvisning.",
-      "source_ref": "03-KRAV-DASHBOARD.md:51",
+      "source_ref": "03-KRAV-DASHBOARD.md:66",
       "sort_order": 169
     },
     {
@@ -1537,7 +1537,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Historisk tidsanker skal kunne velges mellom pitch og registrert aktivitet.",
-      "source_ref": "03-KRAV-DASHBOARD.md:52",
+      "source_ref": "03-KRAV-DASHBOARD.md:67",
       "sort_order": 170
     },
     {
@@ -1546,7 +1546,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboardet viser alarm/status, men v1 sender ikke direkte varsler.",
-      "source_ref": "03-KRAV-DASHBOARD.md:53",
+      "source_ref": "03-KRAV-DASHBOARD.md:68",
       "sort_order": 171
     },
     {
@@ -1555,7 +1555,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Skjemadata registreres i flow-opprettede HA-entiteter og lagres samlet med én knapp.",
-      "source_ref": "03-KRAV-DASHBOARD.md:54",
+      "source_ref": "03-KRAV-DASHBOARD.md:69",
       "sort_order": 172
     },
     {
@@ -1564,7 +1564,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Node-RED-motoren validerer operatørgrunnlaget mot MariaDB og persisterer atomiske domeneoperasjoner i MariaDB. HA/dashboard er operatør-/presentasjonslag og skal ikke være alternativ domenemotor eller sannhetskilde.",
-      "source_ref": "03-KRAV-DASHBOARD.md:55",
+      "source_ref": "03-KRAV-DASHBOARD.md:70",
       "sort_order": 173
     },
     {
@@ -1573,7 +1573,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Custom-kortet skal hente en eksplisitt read-model som er avledet fra kvitterte MariaDB-data via Node-RED. Transportformatet kan utvikles videre, men frontendprojeksjonen er aldri persistent autoritet.",
-      "source_ref": "03-KRAV-DASHBOARD.md:56",
+      "source_ref": "03-KRAV-DASHBOARD.md:71",
       "sort_order": 174
     },
     {
@@ -1582,7 +1582,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Historisk sammenligning skal lese eksplisitt valgt eksport read-only, justere tidsforløp etter lagrede ankere og aldri aktivere eller endre den historiske sesjonen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:57",
+      "source_ref": "03-KRAV-DASHBOARD.md:72",
       "sort_order": 175
     },
     {
@@ -1591,7 +1591,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Node-RED-status eksponeres som direkte HA-entiteter via WebSocket-integrasjonen, ikke via MQTT Discovery.",
-      "source_ref": "03-KRAV-DASHBOARD.md:58",
+      "source_ref": "03-KRAV-DASHBOARD.md:73",
       "sort_order": 176
     },
     {
@@ -1600,7 +1600,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Gjæringsmotoren skal ikke bruke MQTT Discovery for sine HA-statusentiteter. Sensoringest kan bruke relevant transport, mens operatør-/statusentiteter opprettes av Node-RED gjennom HA WebSocket-integrasjonen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:59",
+      "source_ref": "03-KRAV-DASHBOARD.md:74",
       "sort_order": 177
     },
     {
@@ -1609,7 +1609,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Statuslaget omfatter system/sesjon, biologisk fase/kandidat/sikkerhet, aktiv/anbefalt prosess, tilsynelatende utgjæringsgrad, SG-hastighet, datakvalitet, målingsalder, anbefaling og alarm.",
-      "source_ref": "03-KRAV-DASHBOARD.md:60",
+      "source_ref": "03-KRAV-DASHBOARD.md:75",
       "sort_order": 178
     },
     {
@@ -1618,7 +1618,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Biologiske faser og prosesstrinn vises i separate visninger; førstesiden viser bare en kompakt biologisk tidslinje.",
-      "source_ref": "03-KRAV-DASHBOARD.md:61",
+      "source_ref": "03-KRAV-DASHBOARD.md:76",
       "sort_order": 179
     },
     {
@@ -1627,7 +1627,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Tidskorrigering for biologiske faser bruker valgt registrering og dato/tid, uten begrunnelseskrav. Originalt, manuelt og effektivt tidspunkt skal kunne vises og overstyringen kunne fjernes.",
-      "source_ref": "03-KRAV-DASHBOARD.md:62",
+      "source_ref": "03-KRAV-DASHBOARD.md:77",
       "sort_order": 180
     },
     {
@@ -1636,7 +1636,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboardets målstruktur har åtte faner: `Gjæring`, `Biologi`, `Prosesstrinn`, `Analyse`, `Måleresultater`, `Template`, `Verifikasjon` og `Teknisk`.",
-      "source_ref": "03-KRAV-DASHBOARD.md:63",
+      "source_ref": "03-KRAV-DASHBOARD.md:78",
       "sort_order": 181
     },
     {
@@ -1645,7 +1645,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Biologivisningen viser total tid til stabil utgjæring, tid i aktiv fase, forventet intervall og faktisk varighet per fase.",
-      "source_ref": "03-KRAV-DASHBOARD.md:64",
+      "source_ref": "03-KRAV-DASHBOARD.md:79",
       "sort_order": 182
     },
     {
@@ -1654,7 +1654,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Gjæring` skal prioritere oversikt og normalt kreve lite eller ingen vertikal scrolling på bred skjerm.",
-      "source_ref": "03-KRAV-DASHBOARD.md:65",
+      "source_ref": "03-KRAV-DASHBOARD.md:80",
       "sort_order": 183
     },
     {
@@ -1663,7 +1663,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboardet skal ikke referere til entiteter som ikke opprettes av flowen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:66",
+      "source_ref": "03-KRAV-DASHBOARD.md:81",
       "sort_order": 184
     },
     {
@@ -1672,7 +1672,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Gjæring- og prosessvisningen viser biologisk utløser, beredskap og estimert mulig start for neste prosesstrinn.",
-      "source_ref": "03-KRAV-DASHBOARD.md:67",
+      "source_ref": "03-KRAV-DASHBOARD.md:82",
       "sort_order": 185
     },
     {
@@ -1681,7 +1681,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Manuelle observasjoner registreres som komplette målesett; første sett inngår i Start. Prosess-readiness og kaldkrasjvurdering vises under `Prosesstrinn`.",
-      "source_ref": "03-KRAV-DASHBOARD.md:68",
+      "source_ref": "03-KRAV-DASHBOARD.md:83",
       "sort_order": 186
     },
     {
@@ -1690,7 +1690,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Start demo` er en flow-opprettet HA-knapp, og demo lastes ikke automatisk.",
-      "source_ref": "03-KRAV-DASHBOARD.md:69",
+      "source_ref": "03-KRAV-DASHBOARD.md:84",
       "sort_order": 187
     },
     {
@@ -1699,7 +1699,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Før sessionstart skal dashboardet støtte templatevalg, startdata, første komplette målesett og historisk rapport uten å vise misvisende aktive-session-kontroller.",
-      "source_ref": "03-KRAV-DASHBOARD.md:70",
+      "source_ref": "03-KRAV-DASHBOARD.md:85",
       "sort_order": 188
     },
     {
@@ -1708,7 +1708,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Måleresultater bruker tre kolonner på bred skjerm; målehistorikk bruker full bredde.",
-      "source_ref": "03-KRAV-DASHBOARD.md:71",
+      "source_ref": "03-KRAV-DASHBOARD.md:86",
       "sort_order": 189
     },
     {
@@ -1717,7 +1717,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Prosesstrinn viser planlagt anker/mål mot faktisk start og varighet.",
-      "source_ref": "03-KRAV-DASHBOARD.md:72",
+      "source_ref": "03-KRAV-DASHBOARD.md:87",
       "sort_order": 190
     },
     {
@@ -1726,7 +1726,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "I `sections`-visninger skal bredde settes på det ytre `conditional`-kortet; kort i Gjæring, Biologi og Prosesstrinn skal ha `grid_options.columns: full` og stables vertikalt.",
-      "source_ref": "03-KRAV-DASHBOARD.md:73",
+      "source_ref": "03-KRAV-DASHBOARD.md:88",
       "sort_order": 191
     },
     {
@@ -1735,7 +1735,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Gjæring` skal vise én relevant livsløpsflate om gangen: templatevalg, konfigurert start, aktiv sesjon eller avsluttet sesjon.",
-      "source_ref": "03-KRAV-DASHBOARD.md:74",
+      "source_ref": "03-KRAV-DASHBOARD.md:89",
       "sort_order": 192
     },
     {
@@ -1744,7 +1744,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Måleresultater` skal vise tekstlig betydning for valgt 0–5-nivå for hver sensoriske parameter.",
-      "source_ref": "03-KRAV-DASHBOARD.md:75",
+      "source_ref": "03-KRAV-DASHBOARD.md:90",
       "sort_order": 193
     },
     {
@@ -1753,7 +1753,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Prosessport og kaldkrasjvurdering skal ligge under `Prosesstrinn`, ikke under målingsskjemaet.",
-      "source_ref": "03-KRAV-DASHBOARD.md:76",
+      "source_ref": "03-KRAV-DASHBOARD.md:91",
       "sort_order": 194
     },
     {
@@ -1762,7 +1762,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Trykk, kjølemaskinens settpunkt og kjølemaskinens kalibreringsverdi skal kunne registreres i observasjonsfanen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:77",
+      "source_ref": "03-KRAV-DASHBOARD.md:92",
       "sort_order": 195
     },
     {
@@ -1771,7 +1771,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Teknisk-fanen skal vise systemkontroll, runtime, datakvalitet, siste måling, målingsalder og oppmerksomhetsstatus.",
-      "source_ref": "03-KRAV-DASHBOARD.md:78",
+      "source_ref": "03-KRAV-DASHBOARD.md:93",
       "sort_order": 196
     },
     {
@@ -1780,7 +1780,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboardet skal bruke korte visningsnavn; prefikset «Gjæringsassistent» skal ikke gjentas i hver rad.",
-      "source_ref": "03-KRAV-DASHBOARD.md:79",
+      "source_ref": "03-KRAV-DASHBOARD.md:94",
       "sort_order": 197
     },
     {
@@ -1789,7 +1789,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Templatefanen skal være grafisk og administrere/redigere normaliserte template-data gjennom Node-RED-motorens MariaDB-operasjoner, ikke et JSON-tre. Registry skal styre tilgjengelige metrics/modeller/parametere, og valideringsfeil skal vises konkret ved relevant felt og samlet før publisering.",
-      "source_ref": "03-KRAV-DASHBOARD.md:80",
+      "source_ref": "03-KRAV-DASHBOARD.md:95",
       "sort_order": 198
     },
     {
@@ -1798,7 +1798,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Skjulte livsløpskort skal ikke etterlate misvisende tomme kontrollflater; brukeren skal se hvorfor en handling ikke er tilgjengelig.",
-      "source_ref": "03-KRAV-DASHBOARD.md:81",
+      "source_ref": "03-KRAV-DASHBOARD.md:96",
       "sort_order": 199
     },
     {
@@ -1807,7 +1807,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Graf-/hendelsesmarkører skal vise faktiske observasjoner, anbefalinger og utførte prosesshandlinger med tidspunkt. Frozen plan endres ikke underveis.",
-      "source_ref": "03-KRAV-DASHBOARD.md:82",
+      "source_ref": "03-KRAV-DASHBOARD.md:97",
       "sort_order": 200
     },
     {
@@ -1816,7 +1816,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboardet prioriteres for stor skjerm. Måle- og prosesskort kan være brede selv om mobilvisningen blir lengre.",
-      "source_ref": "03-KRAV-DASHBOARD.md:83",
+      "source_ref": "03-KRAV-DASHBOARD.md:98",
       "sort_order": 201
     },
     {
@@ -1825,7 +1825,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Manuell SG vises som diamant ved korrigert verdi, med tynn linje til Tilt-verdien på samme observasjonsrunde.",
-      "source_ref": "03-KRAV-DASHBOARD.md:84",
+      "source_ref": "03-KRAV-DASHBOARD.md:99",
       "sort_order": 202
     },
     {
@@ -1834,7 +1834,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Manuell temperatur vises ved målt temperatur, kjølesettpunkt som firkant på stiplet observasjonskurve og trykk som punkt ved målt bar.",
-      "source_ref": "03-KRAV-DASHBOARD.md:85",
+      "source_ref": "03-KRAV-DASHBOARD.md:100",
       "sort_order": 203
     },
     {
@@ -1843,7 +1843,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Sensorikk og kommentarer uten naturlig Y-verdi vises i et smalt hendelsesspor under grafene.",
-      "source_ref": "03-KRAV-DASHBOARD.md:86",
+      "source_ref": "03-KRAV-DASHBOARD.md:101",
       "sort_order": 204
     },
     {
@@ -1852,7 +1852,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Prosesstart vises med mørk stiplet linje gjennom alle tre grafer og P-flagg i to høyder når markørene ligger tett. Tooltip viser trinn, tidspunkt, inngangsvilkår og advarsler.",
-      "source_ref": "03-KRAV-DASHBOARD.md:87",
+      "source_ref": "03-KRAV-DASHBOARD.md:102",
       "sort_order": 205
     },
     {
@@ -1861,7 +1861,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Biologiske faser vises som tydelige, vekslende bakgrunnsfelt gjennom grafstakken med fasegrense og B1–B6 i SG-grafen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:88",
+      "source_ref": "03-KRAV-DASHBOARD.md:103",
       "sort_order": 206
     },
     {
@@ -1870,7 +1870,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Biologitabellen viser regel, parameter, aktuell verdi, terskel, vedvarende tid, datakvalitet, status, venteforklaring, kilde, regeltype og usikkerhet.",
-      "source_ref": "03-KRAV-DASHBOARD.md:89",
+      "source_ref": "03-KRAV-DASHBOARD.md:104",
       "sort_order": 207
     },
     {
@@ -1879,7 +1879,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Prosesstrinnkortet leser kontrollport, vilkår, vurdering og tillatte handlinger fra en MariaDB-avledet read-model publisert via Node-RED og skal ikke være avhengig av hardkodede status-entity-ID-er for å kunne tegnes.",
-      "source_ref": "03-KRAV-DASHBOARD.md:90",
+      "source_ref": "03-KRAV-DASHBOARD.md:105",
       "sort_order": 208
     },
     {
@@ -1888,7 +1888,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Måleresultater` skal ha en tydelig `Lagre målinger`-handling som lagrer ett komplett atomisk målesett; ved valideringsfeil beholdes alle inndata.",
-      "source_ref": "03-KRAV-DASHBOARD.md:91",
+      "source_ref": "03-KRAV-DASHBOARD.md:106",
       "sort_order": 209
     },
     {
@@ -1897,7 +1897,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Prosesstrinnoversikten skal minst ha kolonnene `P`, `Status` og `Prosesstrinn`, og dessuten vise inngangsvilkår, vurdering, målverdier for temperatur/trykk, faktisk start og faktisk varighet uten at disse blandes sammen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:92",
+      "source_ref": "03-KRAV-DASHBOARD.md:107",
       "sort_order": 210
     },
     {
@@ -1906,7 +1906,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Kortet for utløser/kontrollport/manuell overgang skal vise hva som utløser vurderingen, hvilke kriterier som er oppfylt/venter/advarer, og hvilke manuelle handlinger som er tillatt.",
-      "source_ref": "03-KRAV-DASHBOARD.md:93",
+      "source_ref": "03-KRAV-DASHBOARD.md:108",
       "sort_order": 211
     },
     {
@@ -1915,7 +1915,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Vurdering av neste prosesstrinn` skal vise anbefalt neste trinn og anbefalte temperatur-/trykkmål med begrunnelse og datagrunnlag.",
-      "source_ref": "03-KRAV-DASHBOARD.md:94",
+      "source_ref": "03-KRAV-DASHBOARD.md:109",
       "sort_order": 212
     },
     {
@@ -1924,7 +1924,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "`Teknisk` skal ha en samlet strøm/logg for tekniske feil og avvik fra ulike deler av systemet, med tidspunkt, kilde, alvorlighet, melding og relevant kontekst. Denne fungerer som en lesbar teknisk hendelses-/debugflate og er separat fra aktiv oppmerksomhetsstatus.",
-      "source_ref": "03-KRAV-DASHBOARD.md:95",
+      "source_ref": "03-KRAV-DASHBOARD.md:110",
       "sort_order": 213
     },
     {
@@ -1933,7 +1933,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Før Start skal `Gjæring` samle templatevalg, startgrunnlag og første målesett i samme livsløpsflate. Første målesett skal ligge nederst i Start-flaten, og alternative tetthetsskalaer skal ikke introduseres; hele brukerflaten er SG-basert.",
-      "source_ref": "03-KRAV-DASHBOARD.md:96",
+      "source_ref": "03-KRAV-DASHBOARD.md:111",
       "sort_order": 214
     },
     {
@@ -1942,7 +1942,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Ved aktiv session skal `Gjæring` tilby eksplisitt **Avslutt gjæring**. Etter kvittert avslutning skal en egen `completed`-flate vises og nye gjæringsmålinger være utilgjengelige.",
-      "source_ref": "03-KRAV-DASHBOARD.md:97",
+      "source_ref": "03-KRAV-DASHBOARD.md:112",
       "sort_order": 215
     },
     {
@@ -1951,7 +1951,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Completed-flaten skal tilby **Gjør klar for ny gjæring**. Reell session skal vise/svare på eksportgaten; demo kan frigjøres uten eksport.",
-      "source_ref": "03-KRAV-DASHBOARD.md:98",
+      "source_ref": "03-KRAV-DASHBOARD.md:113",
       "sort_order": 216
     },
     {
@@ -1960,7 +1960,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Kriterietabellene i Biologi og Prosesstrinn skal vise **Datavindu** som kompakt beskrivelse av faktisk vurderingsgrunnlag. `window_median_range` viser vinduslengde og antall datapunkter; `stability_window` viser vinduslengde, faktisk tidsdekning og antall datapunkter. Rå timestamp skal ikke brukes som erstatning for datavindu.",
-      "source_ref": "03-KRAV-DASHBOARD.md:99",
+      "source_ref": "03-KRAV-DASHBOARD.md:114",
       "sort_order": 217
     },
     {
@@ -1969,7 +1969,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "En akseptert operatørkommando skal ha enkel global gjentakelsesbeskyttelse i 8 sekunder slik at nytt klikk ikke sendes mens GUI/read-model normalt rekker å oppdatere. Beskyttelsen er flyktig UI/runtime-tilstand og erstatter ikke `operation_id`/DB-constraints.",
-      "source_ref": "03-KRAV-DASHBOARD.md:100",
+      "source_ref": "03-KRAV-DASHBOARD.md:115",
       "sort_order": 218
     },
     {
@@ -1978,7 +1978,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Kriteriestatus skal skille faktisk `Konfigurasjonsfeil` fra `Mangler grunnlag`, `For lite grunnlag`, `Foreldet`, `Ikke oppfylt`, `Oppfylt` og `Ikke vurdert`. Frontend skal bruke persistert evaluatorstatus, ikke utlede alle `valid=0` som konfigurasjonsfeil.",
-      "source_ref": "03-KRAV-DASHBOARD.md:101",
+      "source_ref": "03-KRAV-DASHBOARD.md:116",
       "sort_order": 219
     },
     {
@@ -1987,7 +1987,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Aktiv kriteriekorreksjon og registrert kriteriefravik skal være tydelig visuelt markert direkte ved kriteriet. Markeringen skal ikke erstatte eller farge om selve oppfylt/ikke-oppfylt-statusen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:102",
+      "source_ref": "03-KRAV-DASHBOARD.md:117",
       "sort_order": 220
     },
     {
@@ -1996,7 +1996,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Målehistorikken skal vise persistente SG-, temperatur-, prosess- og sensorikkfakta eksplisitt, inkludert nærmeste Tilt-SG og ΔSG for manuell korrigert SG når et tidsmessig relevant Tilt-punkt finnes. Horisontal scrolling er tillatt fremfor sammenslåtte kryptiske kolonner.",
-      "source_ref": "03-KRAV-DASHBOARD.md:103",
+      "source_ref": "03-KRAV-DASHBOARD.md:118",
       "sort_order": 221
     },
     {
@@ -2005,7 +2005,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Fanen **Analyse** skal ligge mellom Prosesstrinn og Måleresultater og tegne de analysene den aktive sessionens metadata deklarerer. Grafene viser den avledede verdien selv; label, forklaring, enhet, serie, B/P-markører, kriterieterskler og gap-policy leveres fra DB-read-model. Under hver graf skal de B-/P-trinnene som bruker analysen vises med kriterium, rolle, krav og tidspunkt kravet først ble oppfylt. Samme requirements-read-model skal drive både terskellinjer/oppfyllelsesmarkører og tabellen. Frontend skal ikke kjenne W-34/70s graf-ID-er eller beregne analysen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:104",
+      "source_ref": "03-KRAV-DASHBOARD.md:119",
       "sort_order": 222
     },
     {
@@ -2014,7 +2014,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Template-fanen skal ha et komplett templatebibliotek med lifecycle `draft/published/retired`, statusfilter, åpning av eksisterende versjoner, ny draft/ny template, publisering, forkasting, retire og reaktivering. Template-administrasjonens valgte versjon skal være MariaDB-persistet og uavhengig av Start-valget og aktiv session. Publisering skal ikke implisitt endre Start-valget.",
-      "source_ref": "03-KRAV-DASHBOARD.md:105",
+      "source_ref": "03-KRAV-DASHBOARD.md:120",
       "sort_order": 223
     },
     {
@@ -2023,7 +2023,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboardet skal ha egen `Verifikasjon`-fane som viser DB-eid status for krav → verifikasjonskrav → test/resultat og kan filtrere TECH/FUNC/UAT.",
-      "source_ref": "03-KRAV-DASHBOARD.md:151",
+      "source_ref": "03-KRAV-DASHBOARD.md:166",
       "sort_order": 224
     },
     {
@@ -2032,7 +2032,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Teknisk-fanen skal vise et kompakt verifikasjonssammendrag med siste DB-eide status og lenke/henvisning til detaljfanen.",
-      "source_ref": "03-KRAV-DASHBOARD.md:152",
+      "source_ref": "03-KRAV-DASHBOARD.md:167",
       "sort_order": 225
     },
     {
@@ -2041,7 +2041,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "UAT skal kunne registreres fra Verifikasjon-fanen med `pass/fail/blocked/not_run`, operatørnavn, notat og eventuell evidensreferanse. Registreringen skal gi ny DB-kvittert append-only resultatrad.",
-      "source_ref": "03-KRAV-DASHBOARD.md:153",
+      "source_ref": "03-KRAV-DASHBOARD.md:168",
       "sort_order": 226
     },
     {
@@ -2050,7 +2050,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Verifikasjon-fanen skal kunne bestille eksport av strukturert JSON og lesbar HTML-rapport. Frontend skal bare bestille og vise DB/read-model-resultatet, ikke beregne rapportinnhold.",
-      "source_ref": "03-KRAV-DASHBOARD.md:154",
+      "source_ref": "03-KRAV-DASHBOARD.md:169",
       "sort_order": 227
     },
     {
@@ -2059,7 +2059,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Startflaten skal vise templateens forventede utgjæringsområde og FG-området som er beregnet fra faktisk OG som read-only informasjon. Operatøren skal ikke måtte beregne eller skrive inn forventet FG.",
-      "source_ref": "03-KRAV-DASHBOARD.md:155",
+      "source_ref": "03-KRAV-DASHBOARD.md:170",
       "sort_order": 228
     },
     {
@@ -2068,7 +2068,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Analyse-grafer skal bruke DB-eide aksemetadata for vertikal minimum/maksimum/tick-intervall og DB-eid `+dag · dato`-merking horisontalt. Grafbeskrivelsen skal forklare hva verdien måler, hvordan den tolkes og hvorfor den er relevant.",
-      "source_ref": "03-KRAV-DASHBOARD.md:156",
+      "source_ref": "03-KRAV-DASHBOARD.md:171",
       "sort_order": 229
     },
     {
@@ -2077,7 +2077,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Alle tidsseriegrafer i Gjæring og Analyse skal bruke MariaDB/read-model-eid dynamisk Y-akse beregnet fra faktisk min/maks samt relevante mål-/kriteriegrenser. Aksen skal ha liten normal tegnemargin og skal ikke få kunstig minimumsspenn for å skjule variasjon.",
-      "source_ref": "03-KRAV-DASHBOARD.md:157",
+      "source_ref": "03-KRAV-DASHBOARD.md:172",
       "sort_order": 230
     },
     {
@@ -2086,7 +2086,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Analyse viser ingen estimerte min–maks-/følsomhetsbånd. Målt variasjon kan vises som faktisk spredning i Gjæringsfanens rådatagrafer. Graphpolicy fryses i MariaDB.",
-      "source_ref": "03-KRAV-DASHBOARD.md:158",
+      "source_ref": "03-KRAV-DASHBOARD.md:173",
       "sort_order": 231
     },
     {
@@ -2095,7 +2095,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Analysegrafer viser kun ordinære verdier fra godkjente målinger. Manglende grunnlag er synlig; ingen foreløpig kurve, utfylling eller interpolasjon over datagap.",
-      "source_ref": "03-KRAV-DASHBOARD.md:159",
+      "source_ref": "03-KRAV-DASHBOARD.md:174",
       "sort_order": 232
     },
     {
@@ -2104,7 +2104,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "SG-rate vises med DB-eid nedre Y-grense 0 og automatisk øvre grense. Negative målebaserte rater beholdes i databasen og i siste-verdi-feltet; de erstattes ikke med absoluttverdi eller null.",
-      "source_ref": "03-KRAV-DASHBOARD.md:160",
+      "source_ref": "03-KRAV-DASHBOARD.md:175",
       "sort_order": 233
     },
     {
@@ -2113,7 +2113,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Kriteriekorreksjon og kriteriefravik skal følge p22-arbeidsformen. Notat er valgfritt og tomt notat skal ikke avvise handlingen; korreksjon/fravik skal vises separat fra kriteriets faktiske `met/not_met`-status.",
-      "source_ref": "03-KRAV-DASHBOARD.md:161",
+      "source_ref": "03-KRAV-DASHBOARD.md:176",
       "sort_order": 234
     },
     {
@@ -2122,7 +2122,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Teknisk-fanen skal tilby separat **Eksporter måledata** for aktiv session. Eksporten bygges fra MariaDB og omfatter sessiongrunnlag, 5-minuttersmålinger med min/middel/median/maks der tilgjengelig samt registrerte datagap.",
-      "source_ref": "03-KRAV-DASHBOARD.md:162",
+      "source_ref": "03-KRAV-DASHBOARD.md:177",
       "sort_order": 235
     },
     {
@@ -2131,7 +2131,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Manuelle utgjæringskontroller vises som separate punkter i samme graf som rå Tilt-serien, med faktisk måletid. Punktserie bindes ikke sammen til en oppdiktet kontinuerlig manuell kurve.",
-      "source_ref": "03-KRAV-DASHBOARD.md:177",
+      "source_ref": "03-KRAV-DASHBOARD.md:192",
       "sort_order": 236
     },
     {
@@ -2140,7 +2140,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Dashboard, aktiv rapport og sluttrapport bruker samme DB-eide horisontale tidsakse fra effektivt pitchtidspunkt. Før første beregnbare verdi vises en tom graf med akse. Datagap bryter linjer og bånd.",
-      "source_ref": "03-KRAV-DASHBOARD.md:178",
+      "source_ref": "03-KRAV-DASHBOARD.md:193",
       "sort_order": 237
     },
     {
@@ -2149,7 +2149,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Aktiv gjæring skal samle batch/gjær, volum/OG, effektiv pitch og varigheter, B/P-status, rå Tilt-SG, én aktuell utgjæringsgrad, estimert ABV nå, fersk 24-timersrate, 24/48-timersstabilitet og neste prosesstrinn med årsak/vurderingstid. Verdier og basis leveres av read-model; rapporthandlinger ligger nederst.",
-      "source_ref": "03-KRAV-DASHBOARD.md:184",
+      "source_ref": "03-KRAV-DASHBOARD.md:199",
       "sort_order": 238
     },
     {
@@ -2158,7 +2158,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "SG-stabilitet har generelle 24-/48-timerskurver på faktiske sammenhengende målinger. Verdien er maks–min i SG-poeng, uten bånd, kortvindu-oppskalering eller faseanker. Minste tidsdekning og dynamiske akser eies av DB.",
-      "source_ref": "03-KRAV-DASHBOARD.md:185",
+      "source_ref": "03-KRAV-DASHBOARD.md:200",
       "sort_order": 239
     },
     {
@@ -2167,7 +2167,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Over hver analysegraf vises MariaDB-forberedt siste gyldige verdi, enhet og faktisk måletid for hver serie. Manglende grunnlag vises uttrykkelig; siste måling fremstilles ikke som en ny måling nå.",
-      "source_ref": "03-KRAV-DASHBOARD.md:187",
+      "source_ref": "03-KRAV-DASHBOARD.md:202",
       "sort_order": 240
     },
     {
@@ -2176,7 +2176,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Avsluttet gjæring skal vise DB-eid arkivstatus og støtte nytt arkiveringsforsøk uten ny avslutning. Uverifisert sluttarkiv skal fortsatt blokkere Gjør klar for reell gjæring og inngå vedvarende i Systemkontroll.",
-      "source_ref": "03-KRAV-DASHBOARD.md:188",
+      "source_ref": "03-KRAV-DASHBOARD.md:203",
       "sort_order": 241
     },
     {
@@ -2185,7 +2185,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Grafene kan sammenligne med et referansedatasett eller en avsluttet gjæring, justert til tid siden pitch og med egne analyseverdier.",
-      "source_ref": "03-KRAV-DASHBOARD.md:194",
+      "source_ref": "03-KRAV-DASHBOARD.md:209",
       "sort_order": 242
     },
     {
@@ -2194,7 +2194,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Grafvisningen kan velge 5/15/60-minutters detaljvisning og hele gjæringen/siste 24 timer/48 timer/7 dager uten å endre lagrede målinger.",
-      "source_ref": "03-KRAV-DASHBOARD.md:195",
+      "source_ref": "03-KRAV-DASHBOARD.md:210",
       "sort_order": 243
     },
     {
@@ -2203,7 +2203,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Avsluttet gjæring forblir synlig under arkivering; nytt forsøk vises når arkiv mangler/feiler, og Gjør klar følger DB-verifisert eksport.",
-      "source_ref": "03-KRAV-DASHBOARD.md:196",
+      "source_ref": "03-KRAV-DASHBOARD.md:211",
       "sort_order": 244
     },
     {
@@ -2212,7 +2212,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Gjæringskortet skal vise DB-eid målekildetekst direkte, og synliggjøre feil ved lasting/tegning.",
-      "source_ref": "03-KRAV-DASHBOARD.md:202",
+      "source_ref": "03-KRAV-DASHBOARD.md:215",
       "sort_order": 245
     },
     {
@@ -2221,7 +2221,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Graf- og demovalg skal nå DB med operation_id. Grafvalg skal bekreftes med akkurat sendt operation_id; periodisk refresh skal ikke tegne om et ventende valg.",
-      "source_ref": "03-KRAV-DASHBOARD.md:203",
+      "source_ref": "03-KRAV-DASHBOARD.md:216",
       "sort_order": 246
     },
     {
@@ -2230,7 +2230,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Analyse skal også vise SG, temperatur og trykk med delt sammenligning. Analyse- og rapportgrafer skal være om lag 40 prosent høyere.",
-      "source_ref": "03-KRAV-DASHBOARD.md:204",
+      "source_ref": "03-KRAV-DASHBOARD.md:217",
       "sort_order": 247
     },
     {
@@ -2239,7 +2239,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Teknisk eksport skal tilby kompakt standarddiagnostikk og eksplisitt utvidet diagnostikk med faktisk publisert dashboardgrunnlag; grafvalg og detalj/timeimportens omfang skal følge eksporten.",
-      "source_ref": "03-KRAV-DASHBOARD.md:205",
+      "source_ref": "03-KRAV-DASHBOARD.md:218",
       "sort_order": 248
     },
     {
@@ -2248,7 +2248,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Graf- og demovalg skal akseptere direkte kommando, payload.data, payload.event og payload.event.data. Det sendte operation_id skal bevares helt til DB-bekreftelse.",
-      "source_ref": "03-KRAV-DASHBOARD.md:211",
+      "source_ref": "03-KRAV-DASHBOARD.md:222",
       "sort_order": 249
     },
     {
@@ -2257,7 +2257,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Kravlinjer, kravtekst og oppfylt-markeringer i dashboard/rapport skal følge gjeldende kriterierevisjon. Reset bruker originalparametere, eksplisitt tom grense forblir tom, og korrigert stabilitetsvindu knyttes til rett måleserie.",
-      "source_ref": "03-KRAV-DASHBOARD.md:212",
+      "source_ref": "03-KRAV-DASHBOARD.md:223",
       "sort_order": 250
     },
     {
@@ -2266,7 +2266,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Template og arkiv tilbyr filvalg, forhåndsvisning, import, eksport og separate system-, egen- og importert-kategorier. Historikk kan skjules fra sammenligning uten sletting.",
-      "source_ref": "03-KRAV-DASHBOARD.md:218",
+      "source_ref": "03-KRAV-DASHBOARD.md:229",
       "sort_order": 251
     },
     {
@@ -2275,7 +2275,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Arkivkortet ligger øverst i Templatefanen og tilbyr aktiv eksport og bekreftet permanent sletting av historiske sesjoner og ubrukte importerte templates.",
-      "source_ref": "03-KRAV-DASHBOARD.md:224",
+      "source_ref": "03-KRAV-DASHBOARD.md:233",
       "sort_order": 252
     },
     {
@@ -2284,7 +2284,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Ett samlet filvalg leses av backend til en liste etter template-navn. Deretter velges bare template eller template med gjæringsdata. Valg beholdes ved oppdatering; SHA-advarsler vises før import.",
-      "source_ref": "03-KRAV-DASHBOARD.md:225",
+      "source_ref": "03-KRAV-DASHBOARD.md:234",
       "sort_order": 253
     },
     {
@@ -2293,7 +2293,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Det vanlige startbildet skal tilby «Importer avsluttet gjæring» med sluttidspunkt. Angitt «Start fra», template og første måleserie gjenbrukes. B/P har etterregistrering av manglende faktisk fasestart; alle viste varigheter kommer fra DB.",
-      "source_ref": "03-KRAV-DASHBOARD.md:231",
+      "source_ref": "03-KRAV-DASHBOARD.md:240",
       "sort_order": 254
     },
     {
@@ -2302,7 +2302,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Sensoriske 0–5-felt vises som heltallsslidere fra DB-metadata. Ikke registrert skal skilles fra registrert 0. Manuell temperatur vises med én desimal; lagret presisjon beholdes.",
-      "source_ref": "03-KRAV-DASHBOARD.md:240",
+      "source_ref": "03-KRAV-DASHBOARD.md:248",
       "sort_order": 255
     },
     {
@@ -2311,7 +2311,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Målekilder og sensorer plasseres øverst i Teknisk, med DB-kvittert les/kontroller/lagre, HA-valg og sist kontrollerte verdier. Startbildet viser et kompakt kildesammendrag. Pågående redigering overskrives ikke ved bakgrunnsoppdatering.",
-      "source_ref": "03-KRAV-DASHBOARD.md:241",
+      "source_ref": "03-KRAV-DASHBOARD.md:249",
       "sort_order": 256
     },
     {
@@ -2320,7 +2320,7 @@
       "requirement_class": "ha",
       "status": "active",
       "statement": "Teknisk Kilde viser DB-registrert komponentnavn; rå node-/rutineidentitet bevares i detaljer/eksport. Prosesstrinn og Biologi tilbyr samme kriteriekorreksjon og tillatte kriterieavvik fra frozen grunnlag.",
-      "source_ref": "03-KRAV-DASHBOARD.md:242",
+      "source_ref": "03-KRAV-DASHBOARD.md:250",
       "sort_order": 257
     },
     {
@@ -2329,7 +2329,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Gjeldende dokumentasjon skal bygges som del av samme releasebygg som kode/SQL/kontrakter. Generert HTML er artefakt, ikke separat vedlikeholdt sannhetskilde.",
-      "source_ref": "04-KRAV-INSTALLER.md:38",
+      "source_ref": "04-KRAV-INSTALLER.md:54",
       "sort_order": 258
     },
     {
@@ -2338,7 +2338,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Ordinær releasepakke skal ikke inneholde komplett historisk p19-dokumentasjon. Historikk beholdes bare når den uttrykkelig dokumenterer forlatte løsninger eller funksjonelle referanser som fortsatt er relevante.",
-      "source_ref": "04-KRAV-INSTALLER.md:39",
+      "source_ref": "04-KRAV-INSTALLER.md:55",
       "sort_order": 259
     },
     {
@@ -2347,7 +2347,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Releaseporten skal bevare testbarhet og relevante regresjons-/arkitekturkontroller, men skal ikke feile på kunstige minimumstall for dokumenter, REQ, DEC eller OPEN.",
-      "source_ref": "04-KRAV-INSTALLER.md:40",
+      "source_ref": "04-KRAV-INSTALLER.md:56",
       "sort_order": 260
     },
     {
@@ -2356,7 +2356,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Etter vellykket releaseport skal strukturerte release-testresultater kunne følge pakken og importeres som verifikasjonsfakta ved installasjon.",
-      "source_ref": "04-KRAV-INSTALLER.md:41",
+      "source_ref": "04-KRAV-INSTALLER.md:57",
       "sort_order": 261
     },
     {
@@ -2365,7 +2365,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Før databaseendring eller endring av Node-RED-flow skal installeren lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon skal fremgå av installasjonsrapporten.",
-      "source_ref": "04-KRAV-INSTALLER.md:42",
+      "source_ref": "04-KRAV-INSTALLER.md:58",
       "sort_order": 262
     },
     {
@@ -2374,7 +2374,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Eksisterende sesjoner, målinger, korreksjoner, templates, kladder, innstillinger og registrerte testresultater skal bevares ved oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon.",
-      "source_ref": "04-KRAV-INSTALLER.md:43",
+      "source_ref": "04-KRAV-INSTALLER.md:59",
       "sort_order": 263
     },
     {
@@ -2383,7 +2383,7 @@
       "requirement_class": "inst",
       "status": "active",
       "statement": "Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat verifisert backup og faktisk installasjonsutfall skal være sporbare. Samme målversjon kan reinstallere filer uten å kjøre migreringen på nytt.",
-      "source_ref": "04-KRAV-INSTALLER.md:44",
+      "source_ref": "04-KRAV-INSTALLER.md:60",
       "sort_order": 264
     }
   ],
@@ -2394,7 +2394,7 @@
       "rationale": "Én sannhetskilde reduserer divergens og restartproblemer.",
       "consequence": "Domenestate i flow/global/HA/frontend/runtimefiler er ikke tillatt.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:14"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:29"
     },
     {
       "decision_id": "DEC-GA-002",
@@ -2402,7 +2402,7 @@
       "rationale": "Tydelig ansvarsdeling.",
       "consequence": "HA skal ikke være domenemotor.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:15"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:30"
     },
     {
       "decision_id": "DEC-GA-003",
@@ -2410,7 +2410,7 @@
       "rationale": "Verdifull funksjon/UX skal kunne sammenlignes uten å gjeninnføre svak implementasjon.",
       "consequence": "SQLite/writer-kø/lokal runtime-state fra referansen kopieres ikke.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:16"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:31"
     },
     {
       "decision_id": "DEC-GA-004",
@@ -2418,7 +2418,7 @@
       "rationale": "Integritet, sporing og DB-validering.",
       "consequence": "JSON brukes som transport/eksport/read-model, ikke autoritativ runtime.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:17"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:32"
     },
     {
       "decision_id": "DEC-GA-005",
@@ -2426,7 +2426,7 @@
       "rationale": "Én entydig domenekontrakt.",
       "consequence": "Ingen Brix i GUI, template, runtime, rapport, docs eller tester.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:18"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:33"
     },
     {
       "decision_id": "DEC-GA-007",
@@ -2434,7 +2434,7 @@
       "rationale": "Direkte DB/inject kan gi falsk trygghet.",
       "consequence": "Direkte tester kan være unit/integration, men ikke kalles operatør-E2E.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:19"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:34"
     },
     {
       "decision_id": "DEC-GA-008",
@@ -2442,7 +2442,7 @@
       "rationale": "Unngå parallelle entity/event-lister.",
       "consequence": "Generert kontrakt er avledet inspeksjon.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:20"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:35"
     },
     {
       "decision_id": "DEC-GA-009",
@@ -2450,7 +2450,7 @@
       "rationale": "Sporadiske runtimefeil må finnes igjen.",
       "consequence": "Technical Events, aktive issues, målekilde og Systemkontroll vises samlet.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:21"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:36"
     },
     {
       "decision_id": "DEC-GA-010",
@@ -2458,7 +2458,7 @@
       "rationale": "Operatørflyten skal ikke blokkeres unødig.",
       "consequence": "Kommentar kan registreres som generelt notat.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:22"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:37"
     },
     {
       "decision_id": "DEC-GA-011",
@@ -2466,7 +2466,7 @@
       "rationale": "Skjulte defaults gjør vurderinger irreproduserbare.",
       "consequence": "Manglende grunnlag er synlig feil/status.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:23"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:38"
     },
     {
       "decision_id": "DEC-GA-012",
@@ -2474,7 +2474,7 @@
       "rationale": "Audit og reproduksjon.",
       "consequence": "Current state utledes i views.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:24"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:39"
     },
     {
       "decision_id": "DEC-GA-013",
@@ -2482,7 +2482,7 @@
       "rationale": "Redigering trenger mutabilitet uten å omskrive historikk.",
       "consequence": "`session_setup_draft`, `measurement_input_draft`, template-draft skilles fra journal.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:25"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:40"
     },
     {
       "decision_id": "DEC-GA-014",
@@ -2490,7 +2490,7 @@
       "rationale": "InnoDB håndterer concurrency; applikasjonslocking øker kompleksitet.",
       "consequence": "Modell/constraints/transaksjon revurderes før locking innføres.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:26"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:41"
     },
     {
       "decision_id": "DEC-GA-015",
@@ -2498,7 +2498,7 @@
       "rationale": "Konsistens bør ligge nær data.",
       "consequence": "Applikasjonen bygger på DB-integritet.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:27"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:42"
     },
     {
       "decision_id": "DEC-GA-016",
@@ -2506,7 +2506,7 @@
       "rationale": "Normal MVCC/snapshot-adferd trenger ikke global serialisering.",
       "consequence": "Neste read-model-refresh viser siste commit.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:28"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:43"
     },
     {
       "decision_id": "DEC-GA-017",
@@ -2514,7 +2514,7 @@
       "rationale": "Retry kan skjule strukturelle feil.",
       "consequence": "Konkret årsak må forstås før tiltak.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:29"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:44"
     },
     {
       "decision_id": "DEC-GA-018",
@@ -2522,7 +2522,7 @@
       "rationale": "Prototypearbeidet skal ikke bli infrastrukturprosjekt.",
       "consequence": "Teknisk kompleksitet må begrunnes av konkret behov.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:30"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:45"
     },
     {
       "decision_id": "DEC-GA-019",
@@ -2530,7 +2530,7 @@
       "rationale": "Metadata-duplisering gir drift.",
       "consequence": "HA-metadata og funksjon↔informasjon-lineage modelleres i MariaDB.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:31"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:46"
     },
     {
       "decision_id": "DEC-GA-020",
@@ -2538,7 +2538,7 @@
       "rationale": "Én sammenhengende måleprosess.",
       "consequence": "Ingen separat «live-start»-modus.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:32"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:47"
     },
     {
       "decision_id": "DEC-GA-021",
@@ -2546,7 +2546,7 @@
       "rationale": "Historiske målepunkter må beholde faktisk tid.",
       "consequence": "Effektiv pitchreferanse kan revideres separat.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:33"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:48"
     },
     {
       "decision_id": "DEC-GA-022",
@@ -2554,7 +2554,7 @@
       "rationale": "Sensorbinding er konfigurasjon.",
       "consequence": "Node-RED Function-kode hardkoder ikke entity-ID-er.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:34"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:49"
     },
     {
       "decision_id": "DEC-GA-023",
@@ -2562,7 +2562,7 @@
       "rationale": "Uendret SG/temperatur betyr ikke kommunikasjonsbrudd.",
       "consequence": "Gap bygges fra heartbeat og persisteres i `measurement_data_gaps`.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:35"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:50"
     },
     {
       "decision_id": "ADR-GA-024",
@@ -2570,7 +2570,7 @@
       "rationale": "Fagregler må være deklarative/reproduserbare.",
       "consequence": "Registry definerer vokabular; template velger; Start fryser; motor utfører generiske modeller.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:36"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:51"
     },
     {
       "decision_id": "DEC-GA-025",
@@ -2578,7 +2578,7 @@
       "rationale": "Navn er ikke fagregel.",
       "consequence": "Beregningsmodell/input/parametere er eksplisitte metadata.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:37"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:52"
     },
     {
       "decision_id": "DEC-GA-026",
@@ -2586,7 +2586,7 @@
       "rationale": "De beskriver ulike egenskaper.",
       "consequence": "Maks alder skal ikke brukes som skjult persistensregel.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:38"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:53"
     },
     {
       "decision_id": "DEC-GA-027",
@@ -2594,7 +2594,7 @@
       "rationale": "Hindrer historiske hopp og falsk persistens.",
       "consequence": "Bare neste B-kandidat vurderes.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:39"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:54"
     },
     {
       "decision_id": "DEC-GA-028",
@@ -2602,7 +2602,7 @@
       "rationale": "Konkurrerende produsenter ga stale/motstridende status.",
       "consequence": "Ingest/Systemkontroll trigger refresh, men lager ikke alternativ status.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:40"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:55"
     },
     {
       "decision_id": "DEC-GA-029",
@@ -2610,7 +2610,7 @@
       "rationale": "Entity→domene-felt skal ikke ligge som lokal Function-tabell.",
       "consequence": "Manglende binding/mapping er konfigurasjonsfeil.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:41"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:56"
     },
     {
       "decision_id": "DEC-GA-030",
@@ -2618,7 +2618,7 @@
       "rationale": "GUI-workarounds skjuler kildedefekter.",
       "consequence": "Ingen domeneberegning/fallback/formatregler i frontend.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:42"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:57"
     },
     {
       "decision_id": "DEC-GA-031",
@@ -2626,7 +2626,7 @@
       "rationale": "Parallelle formler gir mismatch.",
       "consequence": "Overview/B/P/report/Analyse leser persistert resultat/read-model.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:43"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:58"
     },
     {
       "decision_id": "DEC-GA-032",
@@ -2634,7 +2634,7 @@
       "rationale": "Fail-visible gir bedre arkitektur enn skjult fallback.",
       "consequence": "GUI/Node-RED skal ikke maskere feil med lokal workaround.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:44"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:59"
     },
     {
       "decision_id": "DEC-GA-033",
@@ -2642,7 +2642,7 @@
       "rationale": "Korrigerte oppdiktede data forurenser analysegrunnlaget.",
       "consequence": "Kvalitetsutfall logges separat.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:45"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:60"
     },
     {
       "decision_id": "DEC-GA-034",
@@ -2650,7 +2650,7 @@
       "rationale": "Nye grafer skal ikke kreve spesialmotor/frontend.",
       "consequence": "Graph/series/warm-up/gap/markerpolicy fryses til session.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:46"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:61"
     },
     {
       "decision_id": "DEC-GA-035",
@@ -2658,7 +2658,7 @@
       "rationale": "Unngå oppdiktede tall.",
       "consequence": "Status, datagrunnlag og stil leveres fra read-model; ordinære krav beholdes.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:47"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:62"
     },
     {
       "decision_id": "DEC-GA-036",
@@ -2666,7 +2666,7 @@
       "rationale": "Nye noder skal ikke falle utenfor «søppelbøtta».",
       "consequence": "Technical Event-writer/fangstsløyfe skjermes mot rekursjon.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:48"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:63"
     },
     {
       "decision_id": "DEC-GA-037",
@@ -2674,7 +2674,7 @@
       "rationale": "Urimelige derived values skal ikke drive overganger eller grafer.",
       "consequence": "Output utenfor frozen domene avvises, ikke clampes.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:49"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:64"
     },
     {
       "decision_id": "DEC-GA-038",
@@ -2682,7 +2682,7 @@
       "rationale": "Historikk kan rekonstrueres uten å late som fysisk operatørhandling er utført.",
       "consequence": "W-34/70 kan autoetablere P1/P2; P3+ krever operatørtransition.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:50"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:65"
     },
     {
       "decision_id": "DEC-GA-039",
@@ -2690,7 +2690,7 @@
       "rationale": "Linje gjennom manglende data skaper oppdiktet visuell informasjon.",
       "consequence": "Renderer bryter kurver ved persisterte gap.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:51"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:66"
     },
     {
       "decision_id": "DEC-GA-040",
@@ -2698,7 +2698,7 @@
       "rationale": "Historikk i kravdokumenter gjorde dem stale og vanskelige å validere.",
       "consequence": "Markdown er kilde; HTML/JSON/traceability genereres og releasekontrolleres.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:52"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:67"
     },
     {
       "decision_id": "DEC-GA-041",
@@ -2706,7 +2706,7 @@
       "rationale": "Frozen sessionplan gjør senere templatearbeid trygt.",
       "consequence": "Aktiv eller completed session blokkerer ikke templatebibliotek, draft eller publisering.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:53"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:68"
     },
     {
       "decision_id": "DEC-GA-042",
@@ -2714,7 +2714,7 @@
       "rationale": "En versjon kan tas ut av Start-utvalget uten å slette historikk eller tvinge ny versjon.",
       "consequence": "Retired versjon kan reaktiveres; publisert/retired faginnhold er immutable.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:54"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:69"
     },
     {
       "decision_id": "DEC-GA-043",
@@ -2722,7 +2722,7 @@
       "rationale": "Inspeksjon/redigering skal ikke utilsiktet endre hvilken prosess neste gjæring starter med.",
       "consequence": "Publisering/åpning i Template-fanen endrer ikke `session_setup_draft`; Start kan kun velge `published`.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:55"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:70"
     },
     {
       "decision_id": "DEC-GA-044",
@@ -2730,7 +2730,7 @@
       "rationale": "Krav, verifikasjon og resultater må kunne inspiseres og analyseres uten tekstsøk.",
       "consequence": "Metadata og faktiske resultater skilles; read-models utleder status.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:56"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:71"
     },
     {
       "decision_id": "DEC-GA-045",
@@ -2738,7 +2738,7 @@
       "rationale": "Teknisk integritet, domeneregresjon og målmiljøbruk har ulike testegenskaper.",
       "consequence": "Testtype og metode er eksplisitt metadata; én type erstatter ikke de andre.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:57"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:72"
     },
     {
       "decision_id": "DEC-GA-046",
@@ -2746,7 +2746,7 @@
       "rationale": "Testarkitektur har verdi, men prototypearbeidet skal ikke styres av testprosess.",
       "consequence": "Testomfang tilpasses risiko; etablerte regresjonstester bevares.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:58"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:73"
     },
     {
       "decision_id": "DEC-GA-047",
@@ -2754,7 +2754,7 @@
       "rationale": "Målmiljøerfaring skal være synlig og analyserbar sammen med krav/testmetadata.",
       "consequence": "Ny UAT gir ny run/result; tidligere observasjoner overskrives ikke.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:59"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:74"
     },
     {
       "decision_id": "DEC-GA-048",
@@ -2762,7 +2762,7 @@
       "rationale": "Maskinanalyse og menneskelesing skal beskrive samme snapshot.",
       "consequence": "Rapportgeneratoren presenterer; den beregner ikke alternativ verifikasjonsstatus.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:60"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:75"
     },
     {
       "decision_id": "DEC-GA-049",
@@ -2770,7 +2770,7 @@
       "rationale": "Historisk teknisk arkitektur kan forveksles med gjeldende løsning.",
       "consequence": "Bare eksplisitte baseline-/forlatt-løsning-referanser beholdes.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:61"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:76"
     },
     {
       "decision_id": "DEC-GA-050",
@@ -2778,7 +2778,7 @@
       "rationale": "De økte kompleksitet og ga flere sannhetskilder/concurrencyproblemer uten funksjonell gevinst.",
       "consequence": "Gjeldende p24 er Node-RED ↔ MariaDB direkte med InnoDB/constraints/transaksjoner og DB-eide read-models.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:62"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:77"
     },
     {
       "decision_id": "DEC-GA-051",
@@ -2786,7 +2786,7 @@
       "rationale": "Samme beregningsgrunnlag og terskler.",
       "consequence": "Ordinære verdier og datagrunnlag persisteres append-only; utilstrekkelig grunnlag gir fravær.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:64"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:79"
     },
     {
       "decision_id": "DEC-GA-052",
@@ -2794,7 +2794,7 @@
       "rationale": "Et bånd må ha konkret fysisk/statistisk betydning.",
       "consequence": "P24r7-AA/rate/stabilitet har ingen estimert bånd. Oversiktsgrafer kan vise faktisk min/maks-spredning fra samme godkjente prøvesett.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:65"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:80"
     },
     {
       "decision_id": "DEC-GA-053",
@@ -2802,7 +2802,7 @@
       "rationale": "En fase skal kunne forklares fra sitt grunnlag.",
       "consequence": "Direkte fasesetter fjernes; korreksjon/fravik er egne append-only fakta.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:66"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:81"
     },
     {
       "decision_id": "DEC-GA-054",
@@ -2810,7 +2810,7 @@
       "rationale": "Operatøren trenger konsistent håndtering på B og P.",
       "consequence": "Editor kan deaktivere rettigheter; Start fryser policyen.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:67"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:82"
     },
     {
       "decision_id": "DEC-GA-055",
@@ -2818,7 +2818,7 @@
       "rationale": "Sammenlignbar oppstart og synlig ventetid.",
       "consequence": "DB/read-model leverer felles X-akse til dashboard og rapporter.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:68"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:83"
     },
     {
       "decision_id": "DEC-P24R6-001",
@@ -2826,7 +2826,7 @@
       "rationale": "Manglende pitchhistorikk og store SQL-pakker blokkerte bruk",
       "consequence": "Separate rå/manuelle AA-kilder, målt endepunktrate, ordinære vinduer, metadata-only eksportregistrering og append-only retry.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:70"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:85"
     },
     {
       "decision_id": "DEC-P24R8-TRANSPORT",
@@ -2834,7 +2834,7 @@
       "rationale": "Gjentatt metadata var hovedårsaken til store filer.",
       "consequence": "Ingen råmålinger slettes ved transportkomprimering; DB styrer utvalg og verdier.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:72"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:87"
     },
     {
       "decision_id": "DEC-P24R9-CURRENT",
@@ -2842,7 +2842,7 @@
       "rationale": "Gjentatt statistikkhenting og gamle kravlinjer ga misvisende visning.",
       "consequence": "Normal live-import henter detaljdata; parameterkorreksjon/reset og oppfylt-markører følger DB-revisjonen. Tidligere målinger og evalueringer beholdes.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:74"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:89"
     },
     {
       "decision_id": "DEC-P24R10-ARCHIVES",
@@ -2850,7 +2850,7 @@
       "rationale": "Filer skal være søkbare og kunne importeres uten å sende store JSON-pakker til DB.",
       "consequence": "All runtime authority og all sammenligning ligger fortsatt i MariaDB.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:80"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:95"
     },
     {
       "decision_id": "DEC-P24R10-IMPORT",
@@ -2858,7 +2858,7 @@
       "rationale": "Kilden skal ikke blandes med eksisterende templates eller aktiv gjæring.",
       "consequence": "Import er tillatt under gjæring; feil ruller tilbake hele settet og redigering krever egen kopi.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:81"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:96"
     },
     {
       "decision_id": "DEC-P24R11-DELETE",
@@ -2866,7 +2866,7 @@
       "rationale": "Gamle sesjoner skal kunne ryddes etter eksport eller sammenligning.",
       "consequence": "Eksplisitt sletting av hele sesjonen i én transaksjon, med aktivbeskyttelse og referansekontroll for templates.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:87"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:102"
     },
     {
       "decision_id": "DEC-P24R11-SNAPSHOT",
@@ -2874,7 +2874,7 @@
       "rationale": "Aktiv drift skal kunne fortsette mens arkivet lages.",
       "consequence": "SQLite-par, HTML og SHA-filer deler prefix; aktivt øyeblikksbilde merkes med tidspunkt.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:88"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:103"
     },
     {
       "decision_id": "DEC-P24R11-SHA",
@@ -2882,7 +2882,7 @@
       "rationale": "Gamle eller flyttede arkiver skal fortsatt kunne importeres.",
       "consequence": "Manglende/feil SHA blokkerer ikke import; intern integritet og faktisk overføring valideres obligatorisk.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:89"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:104"
     },
     {
       "decision_id": "DEC-RELEASE-001",
@@ -2890,7 +2890,7 @@
       "rationale": "Entydig publiseringsdag og identitet uten prototype-serier.",
       "consequence": "Løpenummer starter på 1 hver publiseringsdag; prosjektversjon samordnes i leveranse- og runtime-metadata.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:95"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:110"
     },
     {
       "decision_id": "DEC-WORK-001",
@@ -2898,7 +2898,7 @@
       "rationale": "Dagens avtalte prosjektarbeidsmåte.",
       "consequence": "Issues/PR og den gamle Chat→Work-handoff-prosessen videreføres ikke.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:96"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:111"
     },
     {
       "decision_id": "DEC-PROD-001",
@@ -2906,7 +2906,7 @@
       "rationale": "Brukeren tar løsningen i ordinær drift.",
       "consequence": "Førstegangsseeding kjøres bare på tom database. Privat backup før oppgradering; ukjent kilde avvises. Erstatter tidligere DEC-GA-006.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:102"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:117"
     },
     {
       "decision_id": "DEC-START-001",
@@ -2914,7 +2914,7 @@
       "rationale": "Gamle HA-tall kunne skjule NULL etter nytt templatevalg.",
       "consequence": "Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt og DB-avvisning.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:103"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:118"
     },
     {
       "decision_id": "DEC-SOURCES-001",
@@ -2922,7 +2922,7 @@
       "rationale": "Kildebytter må være sporbare uten å omskrive tidligere data.",
       "consequence": "HA-katalog er kontrollert teknisk snapshot; NR transporterer. Valgfritt overtrykk bruker DB-deklarert enhet/konvertering og er manuelt før valg.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:109"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:124"
     },
     {
       "decision_id": "DEC-OPERATOR-001",
@@ -2930,7 +2930,7 @@
       "rationale": "Synlig verdi, mangler og tillatte handlinger må stemme med DB.",
       "consequence": "Slider har eksplisitt ikke registrert og registrert 0. Kildenavn er lesbare mens rå identitet bevares.",
       "status": "active",
-      "source_ref": "14-AKTIVE-BESLUTNINGER.md:110"
+      "source_ref": "14-AKTIVE-BESLUTNINGER.md:125"
     }
   ],
   "verifications": [

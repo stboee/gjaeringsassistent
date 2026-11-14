@@ -78,7 +78,7 @@ const ddl=s=>s.replace(/^DELIMITER .*$/gm,'').replace(/END\/\//g,'END;');
     pass('changed source structure and failed backup prevent migration and preserve all existing domain rows');
    }
    const output=run(env);assert.match(output,/RESULTAT: PASS/);assert.ok(output.includes('Databaseplan: '+(files?'files':patch?'patch':'upgrade')));
-   if(known){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);if(patch)assert.match(output,/12-operator-schema/);if(files){assert.doesNotMatch(output,/-> 12-operator-schema|-> 11-runtime-routines|-> 20-views/);pass(source+': same-schema file plan applies no domain DDL or seed');}}
+   if(known){assert.equal(JSON.stringify((await db.query('SELECT * FROM session_start_attempts ORDER BY attempt_id;SELECT * FROM session_start_attempt_fields ORDER BY attempt_id,entity_id'))[0]),startRows);if(patch)assert.match(output,/12-operator-schema/);if(files){assert.doesNotMatch(output,/-> 12-operator-schema|-> 11-runtime-routines|-> 20-views/);pass(source+': same-schema file plan applies no domain DDL; requirement metadata matches current documents');}}
    assert.deepEqual(await hash(),before,'every existing user/domain table must retain byte-equivalent rows');
    for(const [entity,description]of Object.entries(sensoryHelp))assert.equal((await db.query('SELECT description FROM ha_entity_registry WHERE entity_id=?',[entity]))[0][0].description,description,'only the declared sensory help text changes');
    const expectedMetadata=JSON.parse(fs.readFileSync(path.join(root,'docs/generated/verification-model.json')));

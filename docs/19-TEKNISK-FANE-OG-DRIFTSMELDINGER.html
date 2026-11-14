@@ -30,16 +30,53 @@
 </header>
 <h1 id="19--teknisk-diagnostikk-og-systemkontroll">19 – Teknisk
 diagnostikk og Systemkontroll</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normativ teknisk/operativ kontrakt for
 observability. Visuell plassering i dashboardet ligger i dokument
 03.</p>
-<h2 id="1-formål">1. Formål</h2>
+<h2 id="formål">Formål</h2>
 <p>Teknisk gir én lesbar flate for runtime/datagrunnlag, målekilde,
 aktive problemer, teknisk hendelseslogg, Systemkontroll, strukturert
 diagnostisk eksport og eksplisitt måledataeksport. MariaDB er
 autoritativ; HA-attributter/custom card er projeksjon.</p>
-<h2 id="2-technical-events-og-aktive-issues">2. Technical Events og
-aktive issues</h2>
+<h2 id="technical-events-og-aktive-issues">Technical Events og aktive
+issues</h2>
 <ul>
 <li><code>technical_events</code> lagrer tekniske hendelser.</li>
 <li><code>issue_raised</code> / <code>issue_cleared</code> med
@@ -52,7 +89,7 @@ hvert kontrollkjør når nøkkel/melding er uendret.</li>
 for Gjæringsassistent-flowen, ikke en manuelt vedlikeholdt liste over
 enkelt-noder. Technical Event-writer/MySQL og egen feilresultatkjede må
 skjermes mot rekursiv catch.</p>
-<h2 id="3-systemkontroll">3. Systemkontroll</h2>
+<h2 id="systemkontroll">Systemkontroll</h2>
 <p><code>system_check_definitions</code> eier
 kontrollkatalog/label/kategori/alvorlighet.
 <code>system_check_expectations</code> eier eksplisitte
@@ -67,12 +104,12 @@ runtimefeil.</p>
 overgang fra history catch-up til LIVE og på operatørens <strong>Kjør
 systemkontroll</strong>. <code>checked_at</code> skal komme fra
 persisted run.</p>
-<h2 id="4-runtime-issues">4. Runtime issues</h2>
+<h2 id="runtime-issues">Runtime issues</h2>
 <p>Kontrollpunktet <code>runtime_issues</code> gjør nye
 ikke-Systemkontroll-runtimefeil synlige i samlet status. Systemkontroll
 skal ikke bli grønn samtidig som uncaught feil bare finnes i
 Node-RED-loggen.</p>
-<h2 id="5-målekilde--tilt">5. Målekilde / Tilt</h2>
+<h2 id="målekilde--tilt">Målekilde / Tilt</h2>
 <p>Systemkontroll leser <code>v_measurement_source_status</code>.
 HA-sensoren leser en dedikert
 <code>v_measurement_source_ha_projection</code>. Begge bygger på samme
@@ -100,7 +137,7 @@ attributtene endres. Persistente timestamps forblir UTC;
 formateres i <code>Europe/Oslo</code> av MariaDB-read-modelen. Panelet
 skal kunne vise når projeksjonen sist ble lest/oppdatert slik at
 ferskheten kan kontrolleres uten å tolke UTC manuelt.</p>
-<h2 id="6-metadatainformasjonskjede">6. Metadata/informasjonskjede</h2>
+<h2 id="metadatainformasjonskjede">Metadata/informasjonskjede</h2>
 <p>HA-kontrollen leser active/required entities og aliases fra
 <code>ha_entity_registry</code>/<code>ha_entity_aliases</code>; ingen
 parallell hardkodet entity-liste i Systemkontroll.</p>
@@ -111,15 +148,14 @@ parallell hardkodet entity-liste i Systemkontroll.</p>
 funksjoner uten nødvendige avhengigheter skal feile; alle fysiske
 DB-objekter trenger ikke automatisk både direkte produsent og konsument
 fordi seed/config/audit/read-model-kjeder kan være indirekte.</p>
-<h2 id="7-frontendpublisering">7. Frontendpublisering</h2>
+<h2 id="frontendpublisering">Frontendpublisering</h2>
 <p>Node-RED publiserer dashboard/custom card/loader atomisk og
 journalfører <code>frontend_publication_runs</code> /
 <code>frontend_publication_artifacts</code> med releaseversjon,
 mount-verifikasjon og SHA-256. Systemkontroll sammenligner siste
 vellykkede publisering med forventet releaseidentitet og
 artefakt-SHA.</p>
-<h2 id="8-strukturert-teknisk-eksport">8. Strukturert
-Teknisk-eksport</h2>
+<h2 id="strukturert-teknisk-eksport">Strukturert Teknisk-eksport</h2>
 <p><strong>Eksporter Teknisk</strong> skriver et read-only JSON-snapshot
 under HA-public <code>exports/</code>. Snapshotet skal inneholde
 applikasjonsversjon, pre-start/current-session-grunnlag, relevante
@@ -140,7 +176,7 @@ templateversjoner og HA-templatevalgets faktiske alternativer.
 DB-release og Node-RED-/frontend-release skal kunne sammenlignes ved
 feilsøking.</p>
 <p>Filen er diagnostikk og skal aldri importeres som runtime-state.</p>
-<h2 id="9-måledataeksport">9. Måledataeksport</h2>
+<h2 id="måledataeksport">Måledataeksport</h2>
 <p><strong>Eksporter måledata</strong> er en separat operatørhandling i
 Teknisk, ikke et Systemkontroll-resultat. Den skriver CSV direkte fra
 MariaDB for aktiv session og omfatter session-ID/batch, pitch, OG,
@@ -151,16 +187,16 @@ temperatur, trykk og RSSI, samt persisterte
 viser lenken; den beregner eller reparerer ikke måledata.</p>
 <p>Eksporten er analyse-/diagnostikkgrunnlag og er ikke runtime-state
 eller restorekilde.</p>
-<h2 id="10-tid">10. Tid</h2>
+<h2 id="tid">Tid</h2>
 <p>Persistent maskintid er UTC. Operative tidspunkt i Teknisk formateres
 i <code>Europe/Oslo</code>. Klokkesammenligning Node-RED↔︎MariaDB skal
 bruke entydig tid/epoch der det er hensiktsmessig.</p>
-<h2 id="11-legacy-ha-identiteter">11. Legacy HA-identiteter</h2>
+<h2 id="legacy-ha-identiteter">Legacy HA-identiteter</h2>
 <p>Kjente legacy entity-ID-er kan eksistere i HA-registry etter
 tidligere prototyper. Når alle aktive normative ID-er finnes, er
 legacy-ID alene informativ og skal ikke sette samlet status til
 warning/error. Manglende required normativ ID er derimot avvik.</p>
-<h2 id="12-verifikasjonsstatus">12. Verifikasjonsstatus</h2>
+<h2 id="verifikasjonsstatus">Verifikasjonsstatus</h2>
 <p>Teknisk viser et kompakt DB-avledet sammendrag for TECH/FUNC/UAT og
 siste relevante testkjøring. Detaljert REQ→VER→TEST/resultathistorikk,
 UAT-registrering og verifikasjonseksport ligger i egen
@@ -185,29 +221,15 @@ manglende eller ugyldig kontrollgrunnlag gir synlig feil. En senere
 OK-kontroll lukker tidligere writable-feil med et nytt
 <code>issue_cleared</code>-event; eksisterende kontroll- og
 hendelseshistorikk omskrives ikke.</p>
-<h2 id="p24r8-publisering-og-diagnostikk">P24r8 publisering og
+<h2 id="read-model-publisering-og-diagnostikk">Read-model-publisering og
 diagnostikk</h2>
-<p>Oversikt bruker schema 2.3. <code>analysis.series_definitions</code>
-er en ordbok med DB-eide presentasjonsfelt. Punktets
-<code>presentation_id</code> peker på denne; frontend gjør bare oppslag
-og tegning. Ingen metrikker beregnes i nettleseren. DB velger første,
-siste, min og maks per segment/serie/visningsintervall. Det kan derfor
-være mer enn ett faktisk punkt per 30 minutter. Nå-verdier leses fra
-full serie og påvirkes ikke av punktutvalget.</p>
-<p>Publiseringsverktøyet får kun stier til unik stagingfil og målfil.
-Det lager kompakt JSON og <code>.json.gz</code>, verifiserer gzip
-tilbake mot JSON-bytes og leser publiserte filer tilbake. Filene er
-reproducerbare presentasjons-/eksportderivater; MariaDB er fortsatt
-eneste runtime-authority. HTTP-serveren kan forhandle gzip-sidefilen med
-Accept-Encoding. Dette endrer ikke JSON-URL-en; faktisk HA-levering skal
-måltestes. Direkte gzip-nedlasting er også mulig.</p>
-<p>Normal Teknisk eksport inneholder antall/tidsrom for importerte
-5-minuttersrader og gjeldende timepunkter, DB-lagrede visningsvalg samt
-SHA, størrelse, genereringstid, akser og punkttall for publisert
-oversikt. Utvidet diagnostikk inkluderer hele det publiserte slanke
-GUI-grunnlaget. En manglende/ugyldig oversiktsfil registreres eksplisitt
-som diagnostikkfeil; den rekonstrueres ikke i eksporten.</p>
-<h2 id="p24r12-teknisk-projeksjon">P24r12: teknisk projeksjon</h2>
+<p>Feltkontrakt, skjema og JSON/gzip-publisering eies av <a
+href="05-FRONTEND-OG-INTEGRASJONSKONTRAKT.html#read-model-publisering-og-filtransport">dokument
+05</a> og den strukturerte <a
+href="../contracts/interface-catalog.json">grensesnittkatalogen</a>.
+Teknisk skal vise publiseringsfeil; en lokal reservepayload er ikke
+tillatt.</p>
+<h2 id="db-eid-teknisk-projeksjon">DB-eid teknisk projeksjon</h2>
 <p><code>v_technical_event_presentation</code>,
 <code>v_technical_presentation_context</code> og
 <code>v_ha_technical_payloads</code> eier tekniske statuslinjer, tom

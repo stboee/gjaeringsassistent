@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>00 – Dokumentkart og status</title>
+  <title>00 – Dokumentkart og kildeeierskap</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -26,157 +26,215 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">00 – Dokumentkart og status</h1>
+<h1 class="title">00 – Dokumentkart og kildeeierskap</h1>
 </header>
-<h1 id="00--dokumentkart-og-status">00 – Dokumentkart og status</h1>
-<p><strong>Gjeldende release:</strong> <code>2026.11.14-1</code></p>
-<p>Prosjektets utviklings-/publiseringsregler står i <a
-href="../AGENTS.html">AGENTS.md</a>. Datoversjon er ÅÅÅÅ.MM.DD-N med kort
-releasebeskrivelse. Utvikling skjer direkte på main etter avklaring og
-«start»; issues/PR inngår ikke i arbeidsflyten.</p>
+<h1 id="00--dokumentkart-og-kildeeierskap">00 – Dokumentkart og
+kildeeierskap</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Rolle:</strong> Navigasjon og eierskap for hele
+dokumentasjonsmodellen: Markdown, SQL-registre, strukturerte kontrakter,
+verifikasjonskilder og genererte leseutgaver.</p>
 <h2 id="dokumentprinsipper">Dokumentprinsipper</h2>
-<p>Dokumentsettet beskriver <strong>gjeldende</strong> krav, arkitektur,
-semantikk og operativ bruk. Releasehistorikk skal ligge i
-<code>RELEASE-NOTES.md</code> eller historisk referansemateriale, ikke
-som løpende «revisedX»-seksjoner i normative dokumenter.</p>
-<p>Tre nivåer skal holdes adskilt:</p>
-<ol type="1">
-<li><strong>Normativt krav / beslutning</strong> – hva systemet skal
-gjøre og hvorfor.</li>
-<li><strong>Implementert og release-verifisert</strong> – hva som finnes
-i den aktuelle pakken og har bestått releaseporten.</li>
-<li><strong>Målmiljø-verifisert</strong> – hva som faktisk er
-demonstrert mot installert Home Assistant/Node-RED/MariaDB og reelle
-data.</li>
-</ol>
-<p><code>docs/*.md</code>, SQL/registry og de strukturerte
-verifikasjonskildene er vedlikeholdte kilder etter hvilket
-informasjonselement de eier. HTML og genererte JSON-/SQL-uttrekk er
-avledede artefakter og skal ikke redigeres som parallelle
-sannhetskilder. Feil eller mangler skal rettes ved den autoritative
-kilden; Node-RED, Home Assistant eller frontend skal aldri kompensere
-med skjulte defaults, fallback eller parallell domenelogikk.</p>
+<p>Gjeldende fag- og kontraktdokumenter beskriver systemet etter emne.
+<a href="../RELEASE-NOTES.md">Releasehistorikken</a> beskriver
+leveranser; <a
+href="21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.html">kravhistorikken</a>
+bevarer behov, begrunnelser og endringer. God dokumentasjon bevares og
+mangler suppleres. Arkitektursperrene gjentas bevisst.</p>
+<p>Normativt krav/beslutning, implementert/release-verifisert funksjon
+og målmiljø-verifisert funksjon er separate nivåer. En grønn lokal test
+eller installasjonsbekreftelse lukker ikke automatisk UAT. Eksakte
+verdier og ID-er vedlikeholdes hos sin eier; oversikter genereres eller
+lenker dit.</p>
+<p>Arbeidsregler står i <a href="../AGENTS.md">AGENTS.md</a>.
+Datoversjon og publiseringsidentitet eies av VERSION/BUILD-INFO og de
+kontrollerte releasekvitteringene. Ingen manuelt kopiert «gjeldende
+release» på hver side.</p>
 <h2 id="dokumenthierarki">Dokumenthierarki</h2>
+<!-- BEGIN DOCUMENT MAP -->
+
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Nr</th>
+<th>Gruppe</th>
 <th>Dokument</th>
 <th>Rolle</th>
-<th>Autoritet</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">01</td>
-<td>Krav – felles</td>
-<td>Produkt- og domenekrav</td>
-<td>Normativ</td>
+<td>Inngang og styring</td>
+<td><a href="00-DOKUMENTKART-OG-STATUS.html">00 – Dokumentkart og
+kildeeierskap</a></td>
+<td>governance</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">02</td>
-<td>Krav – motor og integrasjon</td>
-<td>Node-RED/MariaDB/HA-ansvar og motorgrenser</td>
-<td>Normativ</td>
+<td>Inngang og styring</td>
+<td><a href="ONBOARDING-NY-CHAT.html">Onboarding av en ny chat</a></td>
+<td>governance</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">03</td>
-<td>Krav – dashboard</td>
-<td>Operatørflate og visualisering</td>
-<td>Normativ</td>
+<td>Inngang og styring</td>
+<td><a href="21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.html">21 –
+Kravhistorikk og dokumentforvaltning</a></td>
+<td>history</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">04</td>
-<td>Krav – installer og release</td>
-<td>Installasjons-/releasegrense</td>
-<td>Normativ</td>
+<td>Krav og beslutninger</td>
+<td><a href="01-KRAV-FELLES.html">01 – Krav: felles system</a></td>
+<td>requirements</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">05</td>
-<td>Frontend- og integrasjonskontrakt</td>
-<td>HA ↔︎ Node-RED-kontrakt</td>
-<td>Normativ</td>
+<td>Krav og beslutninger</td>
+<td><a href="02-KRAV-MOTOR-OG-INTEGRASJON.html">02 – Krav: gjæringsmotor
+og integrasjon</a></td>
+<td>requirements</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">06</td>
-<td>Datamodell og persistens</td>
-<td>Logisk datamodell og persistensprinsipper</td>
-<td>Normativ</td>
+<td>Krav og beslutninger</td>
+<td><a href="03-KRAV-DASHBOARD.html">03 – Krav: Home
+Assistant-dashboard</a></td>
+<td>requirements</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">07</td>
-<td>Systemarkitektur og dataflyt</td>
-<td>Systemgrenser og hovedflyter</td>
-<td>Normativ</td>
+<td>Krav og beslutninger</td>
+<td><a href="04-KRAV-INSTALLER.html">04 – Krav: installer og
+release</a></td>
+<td>requirements</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">08</td>
-<td>Driftsveiledning</td>
-<td>Installasjon, drift og feilsøking</td>
-<td>Normativ operativ</td>
+<td>Krav og beslutninger</td>
+<td><a href="14-AKTIVE-BESLUTNINGER.html">14 – Aktive
+beslutninger</a></td>
+<td>decisions</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">09</td>
-<td>Akseptansetest</td>
-<td>Målmiljø-verifikasjon</td>
-<td>Normativ verifikasjon</td>
+<td>Arkitektur og modeller</td>
+<td><a href="07-SYSTEMARKITEKTUR-OG-DATAFLYT.html">07 – Systemarkitektur
+og dataflyt</a></td>
+<td>architecture</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10</td>
-<td>Regel- og evalueringsmodell</td>
-<td>Generisk regel-/kriterie-/datakvalitetssemantikk</td>
-<td>Normativ</td>
+<td>Arkitektur og modeller</td>
+<td><a href="06-DATAMODELL-OG-PERSISTENS.html">06 – Datamodell og
+persistens</a></td>
+<td>architecture</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">11</td>
-<td>Template- og editormodell</td>
-<td>Draft → publisering → frozen session</td>
-<td>Normativ</td>
+<td>Arkitektur og modeller</td>
+<td><a href="10-REGEL-OG-EVALUERINGSMODELL.html">10 – Regel- og
+evalueringsmodell</a></td>
+<td>rule-model</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">12</td>
-<td>Operasjons- og transaksjonskontrakt</td>
-<td>Node-RED ↔︎ MariaDB-operasjonsgrense</td>
-<td>Normativ</td>
+<td>Arkitektur og modeller</td>
+<td><a href="11-TEMPLATE-OG-EDITOR-MODELL.html">11 – Template-livsløp og
+editormodell</a></td>
+<td>template-model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">13</td>
-<td>Livsløp, observasjoner, rapport og historikk</td>
-<td>Session-livsløp og historikk</td>
-<td>Normativ</td>
+<td>Arkitektur og modeller</td>
+<td><a href="13-LIVSLOP-OBSERVASJONER-RAPPORT-OG-HISTORIKK.html">13 –
+Livsløp, observasjoner, rapport og historikk</a></td>
+<td>lifecycle</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">14</td>
-<td>Aktive beslutninger</td>
-<td>ADR/DEC-register</td>
-<td>Normativ</td>
+<td>Arkitektur og modeller</td>
+<td><a href="16-W3470-FAGGRUNNLAG-OG-PROSESSMODELL.html">16 – W-34/70
+faggrunnlag og prosessmodell</a></td>
+<td>profile-model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">15</td>
-<td>Åpent arbeid</td>
-<td>Reelle gjenstående måltester/avklaringer</td>
-<td>Gjeldende status</td>
+<td>Arkitektur og modeller</td>
+<td><a href="17-ALE-TEMPLATER-OG-FAKTA.html">17 – Aletemplater og
+faggrunnlag</a></td>
+<td>domain_reference</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">16</td>
-<td>W-34/70 faggrunnlag og prosessmodell</td>
-<td>Profilspesifikk forklaring; eksakte verdier genereres fra SQL</td>
-<td>Normativ forklaring + generert detaljfasit</td>
+<td>Grensesnitt og diagnostikk</td>
+<td><a href="05-FRONTEND-OG-INTEGRASJONSKONTRAKT.html">05 – Frontend- og
+integrasjonskontrakt</a></td>
+<td>contract</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">18</td>
-<td>Implementasjons- og verifikasjonsstatus</td>
-<td>Gjeldende capability/status uten releasehistorikk</td>
-<td>Gjeldende status</td>
+<td>Grensesnitt og diagnostikk</td>
+<td><a href="12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.html">12 –
+Node-RED–MariaDB operasjons- og transaksjonskontrakt</a></td>
+<td>transaction-contract</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">19</td>
-<td>Teknisk diagnostikk og Systemkontroll</td>
-<td>Observability-/diagnostikkmodell</td>
-<td>Normativ</td>
+<td>Grensesnitt og diagnostikk</td>
+<td><a href="19-TEKNISK-FANE-OG-DRIFTSMELDINGER.html">19 – Teknisk
+diagnostikk og Systemkontroll</a></td>
+<td>diagnostics</td>
+</tr>
+<tr class="odd">
+<td>Bruk og drift</td>
+<td><a href="20-OPERATOERVEILEDNING.html">20 – Operatørveiledning</a></td>
+<td>operator-guide</td>
+</tr>
+<tr class="even">
+<td>Bruk og drift</td>
+<td><a href="08-DRIFTSVEILEDNING.html">08 – Driftsveiledning</a></td>
+<td>operations-guide</td>
+</tr>
+<tr class="odd">
+<td>Verifikasjon og status</td>
+<td><a href="09-AKSEPTANSETEST.html">09 – Akseptansetest</a></td>
+<td>verification</td>
+</tr>
+<tr class="even">
+<td>Verifikasjon og status</td>
+<td><a href="15-AAPENT-ARBEID.html">15 – Åpent arbeid og
+målmiljøstatus</a></td>
+<td>open-work</td>
+</tr>
+<tr class="odd">
+<td>Verifikasjon og status</td>
+<td><a href="18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.html">18 –
+Implementasjons- og verifikasjonsstatus</a></td>
+<td>implementation-status</td>
 </tr>
 </tbody>
 </table>
+<!-- END DOCUMENT MAP -->
+
 <h2 id="autoritative-kilder">Autoritative kilder</h2>
 <table>
 <thead>
@@ -274,22 +332,32 @@ inspeksjonsuttrekk fra W-34/70-/målekilde-SQL.</li>
 <p>HTML-leseutgaver genereres fra Markdown med samme byggesteg.
 Releaseporten skal regenerere dokumentartefaktene og kreve null
 diff.</p>
+<h2 id="hele-grensesnittkjeden">Hele grensesnittkjeden</h2>
+<p><a
+href="../contracts/interface-catalog.json">Grensesnittkatalogen</a> er
+det vedlikeholdte kartet over DB ↔︎ NR, NR ↔︎ HA og teknisk
+filpublisering. <a href="generated/interface-reference.html">Generert
+grensesnittreferanse</a> viser registrerte rutiner, ruter, felt og
+faktiske flowkoblinger. Autoritet, fraværsregler og kontrollmetode skal
+fremgå; genererte kataloger er ikke parallelle autoriteter.</p>
+<h2 id="status-og-bevis">Status og bevis</h2>
+<p>Dokument 15 eier åpne forhold og dokumenterte målmiljøobservasjoner.
+Dokument 18 er en kort funksjonsoversikt som lenker til bevis og
+OPEN-ID-er. TEST-RESULTS.md beskriver den navngitte releasens
+testomfang. verification/-filer har egne versjoner, datoer og
+kildeavtrykk; historiske bevis får ikke ny dato uten ny kjøring.</p>
 <h2 id="historiske-referanser">Historiske referanser</h2>
-<p>Ordinær p24-release inneholder ikke komplette historiske
-dokumentsett. <code>../reference/BASELINES.json</code> beholder bare
-eksplisitte funksjonelle/designmessige referanser. <code>p18-r5</code>
-og <code>p17r12</code> kan brukes når gjeldende dokumentasjon
-uttrykkelig peker på dem; deres tekniske implementasjon er ikke
-baseline. Forlatte tekniske løsninger som ikke skal gjeninnføres
-beskrives som aktive DEC/arkitektursperrer, ikke ved å distribuere gamle
-normative dokumenter.</p>
-<h2 id="videreføring-til-ny-chat">Videreføring til ny chat</h2>
-<p>Følg <a href="ONBOARDING-NY-CHAT.html">Onboarding av en ny chat</a> for
-konkret leserekkefølge, undersøkelse av strukturerte kilder og
-statuskvittering.</p>
-<p><code>../OVERLEVERING.md</code> er leveransens daterte
-overleveringssnapshot med leserekkefølge, prinsipper og
-installasjons-/teststatus. Det er et inngangspunkt, ikke en parallell
-normativ kilde. Nye observasjoner kontrolleres mot aktuell versjon.</p>
+<p>Gamle dokumentutgaver finnes på sine Git-committer/tagger. Ordinær
+release distribuerer gjeldende dokumentasjon. <a
+href="../reference/BASELINES.json">BASELINES</a> beskriver eksplisitte
+funksjonelle/designreferanser; deres tekniske implementasjon er ikke
+gjeldende arkitektur. Aktive sperrer mot forlatte løsninger står i
+dokument 14 og gjentas i dokumentene.</p>
+<h2 id="ny-chat-og-vedlikehold">Ny chat og vedlikehold</h2>
+<p><a href="ONBOARDING-NY-CHAT.html">Onboarding</a> angir lesekjerne og
+oppgaveavhengig fordypning. OVERLEVERING.md inneholder pågående avtale
+og neste steg og viser til eierne av krav, kontrakter og målstatus. <a
+href="21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.html">Dokumentforvaltning</a>
+beskriver bevaring og kontroll.</p>
 </body>
 </html>

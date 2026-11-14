@@ -7,9 +7,24 @@ source_format: markdown
 
 # 12 – Node-RED–MariaDB operasjons- og transaksjonskontrakt
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normativ grense for mutasjoner/reads mellom Node-RED-motoren og MariaDB. Det finnes ingen separat applikasjons-API/backend mellom disse lagene.
 
-## 1. Normal operasjon
+## Normal operasjon
 
 En stateful operatørhandling følger i prinsippet:
 
@@ -28,13 +43,13 @@ Mottatt HA-event er ikke i seg selv kvittering på lagring.
 
 SQL-objekter opprettes med `SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci`. mysql2-forbindelsen bruker `UTF8MB4_UNICODE_CI` og UTC-token `Z`. Skjemaets streng- og tidssemantikk skal være eksplisitt, slik at endrede MariaDB-standardverdier ikke kan endre kontrakten. Lineage-koder som filtreres fra views skal ha eksplisitt kollasjon.
 
-## 2. Intern meldingskontrakt
+## Intern meldingskontrakt
 
 Mellom noder kan `msg` bære transient data for én operasjon. Informasjon som må overleve operasjonen, en restart eller brukes av en senere kommando skal persisteres i MariaDB og leses derfra igjen.
 
 `flow.*`, `global.*` og runtimefiler skal ikke være nødvendig domenestate. Flyktig debounce/UI-orchestrering er tillatt så lenge det ikke blir autoritativ fagstate.
 
-## 3. Transaksjonsregler
+## Transaksjonsregler
 
 - Én faglig mutasjon skal committe/rollbacke samlet. En DB-feil inne i en fler-statement-mutasjon skal aldri kunne etterlate en senere commitbar deltilstand; transaksjonsgrensen skal derfor ha server-side rollback-handler eller tilsvarende garantert rollback.
 - PK/FK/UNIQUE/CHECK og idempotente operation-ID-er brukes som primær integritetsmekanisme.
@@ -42,7 +57,7 @@ Mellom noder kan `msg` bære transient data for én operasjon. Informasjon som m
 - Historiske fakta/revisions appendes i stedet for å omskrive journalhistorikk.
 - Mutable draft-tabeller er eksplisitte arbeidsflater og kan oppdateres.
 
-## 4. Viktige operasjonsfamilier
+## Viktige operasjonsfamilier
 
 - pre-Start draftfelt og templatevalg;
 - Start/freeze og målekildebinding;
@@ -60,31 +75,31 @@ Mellom noder kan `msg` bære transient data for én operasjon. Informasjon som m
 
 Eksakt SQL/flow er implementasjonsfasit for operasjonen; dette dokumentet beskriver ansvarsgrensen.
 
-## 5. Ingest og evaluatorsekvens
+## Ingest og evaluatorsekvens
 
 Historisk import skal ikke ha konkurrerende evaluatorgrener. Etter committed chunk kjøres biologisk evaluator, deretter prosessevaluator, før neste chunk. Dette er normal prosess-sekvensiering, ikke applikasjonsstyrt writer queue.
 
-## 6. Read-operasjoner
+## Read-operasjoner
 
 Rene reads kan kjøres parallelt og kan kortvarig se siste committed snapshot. Neste read-model-refresh korrigerer visningen. Systemet skal ikke innføre locking for å skjule normal snapshot-semantikk.
 
-## 7. Feil og kvittering
+## Feil og kvittering
 
 Valideringsavvisning, DB-/integritetsfeil og teknisk transportfeil er forskjellige utfall og skal kunne skilles. Uncaught Node-RED-feil går til Technical Event-safety-net der persistens er mulig.
 
 Operatørflaten skal bruke observerbar DB/read-model-kvittering for «lagret/utført», ikke optimistisk lokal antakelse.
 
-## 8. Metadata-/bootstrapoperasjon
+## Metadata-/bootstrapoperasjon
 
 Node-RED leser HA entity/event-registre, inputbindings og bootstrapmetadata fra MariaDB. Fysiske HA-noder er runtimeimplementasjon; betydningen av entity-ID→domeneinput skal ikke dupliseres i lokale Function-tabeller.
 
-## 9. Verifikasjonsoperasjoner
+## Verifikasjonsoperasjoner
 
 `record_uat_result` validerer test-ID/status/payload, leser registrert aktiv UAT-test, oppretter nytt `verification_test_run` og `verification_test_result` atomisk og refresher deretter DB-read-modelen. Resultatet overskriver ikke tidligere gjennomføringer.
 
 `export_verification` er read-only og skal lese et konsistent DB-snapshot. JSON og HTML genereres fra samme resultatsett; renderer skal ikke beregne alternativ verifikasjonsstatus.
 
-## P24r12: Start og normalisert pitch
+## Start og normalisert pitch
 
 `ga_select_start_template_tx` og `ga_read_ha_draft_projection` eier templatevalgets kladd og tilbakepublisering. Start leser DB-klokken, eksplisitt pitchmodus/tid, HA-valgkontrakter og grenser. Obligatorisk null/tom input avvises før Number-konvertering. `ga_start_session_tx` skriver felles sesjon, korrekt pitch-subtype og frozen definisjon atomisk. Slurry og tørrgjær kan ikke knyttes til feil pitchmodus.
 
@@ -95,3 +110,9 @@ Prosessovergang leser `v_process_guidance_effective`. Registrert fravik og tilba
 ## DB-validering av Start
 
 `ga_read_start_context(attempt_id,historical_end)` validerer den aktuelle kladden, lagrer feltvise forsøksfakta og returnerer validering og samme DB-grunnlag fra ett konsistent snapshot. Startfunksjonen transporterer DB-avvisningen og kontrollerer kontraktens tilstedeværelse/samsvar; den har ingen alternativ slurry-/tørrgjærvalidering. `ga_start_session_tx` beholder den atomiske frozen-/pitch-/livsløpsskrivingen. `v_system_check_session` teller åpne P/B-besøk bare innen operativ aktiv sesjon og oppdager både manglende og reelt doble åpne besøk.
+
+## Strukturert grensesnitt og konsumentkontroll
+
+[Grensesnittkatalogen](../contracts/interface-catalog.json) angir autoritative SQL-/kontraktkilder og hvilke read-model-/schemafiler som er avledet eller tatt opp fra MariaDB. [Generert referanse](generated/interface-reference.md) viser parameterdeklarasjoner fra faktisk SQL og direkte CALL-konsumenter i flowen. Rutiner kan også ha SQL-/adapterkonsumenter; fravær av et direkte flowkall betyr ikke automatisk ubrukt rutine.
+
+verify-read-model-contract.py kontrollerer aktive views og kvalifiserte konsumentkolonner. verify-interface-contracts.py kontrollerer direkte rutinenavn, registrerte projeksjonskilder og fullstendige HA-felt/bindinger. Native tester prøver parametere, NULL-/fraværssemantikk, rollback, resultatformer og faktisk plugin-validering. Dekning på ett nivå skal ikke presenteres som full verifikasjon av alle operasjoner eller faktisk HA-transport.

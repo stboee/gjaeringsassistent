@@ -1,0 +1,46 @@
+name: Dokumentasjon og grensesnitt
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.md'
+      - 'docs/**'
+      - 'contracts/**'
+      - 'sql/**'
+      - 'nodered/flows.template.json'
+      - 'dashboard/**'
+      - 'tools/build*.py'
+      - 'tools/documentation_metadata.py'
+      - 'tests/**'
+      - '.github/workflows/documentation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Installer dokumentbygger
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends pandoc
+      - name: Kontroller dokumentasjon og faktiske grensesnitt
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          python3 tests/verify-docs-current.py
+          python3 tests/verify-verification-model.py
+          python3 tests/verify-ha-contract.py
+          python3 tests/verify-read-model-contract.py
+          python3 tests/verify-interface-contracts.py
+          node tests/test-interface-contracts.js
+          git diff --exit-code

@@ -7,9 +7,24 @@ source_format: markdown
 
 # 10 – Regel- og evalueringsmodell
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normativ, generisk regel-/kriterie-/datakvalitetsmodell. Profilspesifikke W-34/70-valg beskrives i dokument 16 og eksakte aktive verdier genereres fra SQL.
 
-## 1. Fire lag
+## Fire lag
 
 Regelmodellen har fire eksplisitte lag:
 
@@ -20,7 +35,7 @@ Regelmodellen har fire eksplisitte lag:
 
 Motoren skal ikke velge fagregel fordi en metric heter X, fasen heter B3 eller prosesstrinnet heter P4. Manglende/inkonsistent frozen grunnlag gir `invalid_configuration` eller annet eksplisitt manglende datagrunnlag; ingen skjulte defaults.
 
-## 2. Felles kriteriespråk
+## Felles kriteriespråk
 
 B- og P-kriterier bruker samme ytre modell: identitet, metric, criterion model, role, label og typed parameters. Aktive generiske kriteriemodeller omfatter:
 
@@ -37,7 +52,7 @@ Roller:
 
 Nye kriteriemodeller implementeres ett sted og kan brukes av både B og P.
 
-## 3. Eksplisitt kriteriestatus
+## Eksplisitt kriteriestatus
 
 Persistert kriterieresultat har eksplisitt `evaluation_status`:
 
@@ -53,7 +68,7 @@ Persistert kriterieresultat har eksplisitt `evaluation_status`:
 
 `valid=0` er ikke synonym for konfigurasjonsfeil. Frontend skal bruke persistert status/read-modeltekst.
 
-## 4. Freshness, vindu, persistens og warm-up
+## Freshness, vindu, persistens og warm-up
 
 Begrepene skal holdes adskilt:
 
@@ -65,13 +80,13 @@ Begrepene skal holdes adskilt:
 
 Registrert `measurement_data_gaps` bryter kontinuitet der modellen krever sammenhengende datagrunnlag.
 
-## 5. Metricberegning og gyldighetsdomene
+## Metricberegning og gyldighetsdomene
 
 Hver avledet metric peker på generisk beregningsmodell med deklarerte inputs og typed parametere. Metric-registry har i tillegg et gyldighetsdomene som fryses til template/session.
 
 Hvis beregningsoutput ligger utenfor frozen domene, er metricen ugyldig grunnlag. Den kan ikke tilfredsstille B/P-kriterium og skal ikke persisteres som gyldig Analyse-punkt. Verdien skal ikke clampes.
 
-## 6. Målevalidering
+## Målevalidering
 
 Målekildevalidering følger samme deklarative mønster:
 
@@ -87,7 +102,7 @@ Aktive generiske modelltyper kan omfatte hard range, robust MAD, max-jump og min
 
 Forkastede samples skal ikke bli autoritative data. Kvalitetsutfall persisteres separat slik at datarensing er sporbar uten å lagre en korrigert/opdiktet måleverdi som sannhet.
 
-## 7. Analysemetadata
+## Analysemetadata
 
 Om en verdi skal ha graf er template-/sessionmetadata. Graph/series-metadata kan blant annet angi:
 
@@ -103,17 +118,17 @@ Om en verdi skal ha graf er template-/sessionmetadata. Graph/series-metadata kan
 
 Motoren produserer generiske analyseserier etter frozen metadata. Runtimeaksen er read-model-avledet fra den faktiske sessionen; templaten skal ikke tvinge et unødvendig stort fast Y-spenn. Frontend itererer read-modelen og kjenner ikke graf-ID-ene som domenegren eller beregner eget akseområde.
 
-## 8. Biologisk progresjon
+## Biologisk progresjon
 
 B1–B6 er generiske ordnede faseplasser. Biologisk overgang er sekvensiell: bare neste aktiverte B-fase vurderes som overgangskandidat. Historisk replay går kronologisk; en senere fase kan ikke hoppes til bare fordi kriteriene ved siste tidspunkt også ville vært oppfylt.
 
-## 9. Prosesstrinn og replay-policy
+## Prosesstrinn og replay-policy
 
 P1–P15 er generiske ordnede plasser. Ordinære/live overganger er operatørbekreftet. Historisk replay kan vurdere neste P-kandidat, men kan bare persistere automatisk overgang dersom frozen stegmetadata eksplisitt tillater `historical_replay_auto_transition_allowed`.
 
 Kriterium **oppfylt** og prosesstrinn **aktivert** er separate fakta og skal presenteres separat.
 
-## 10. Kriteriekorreksjon og fravik
+## Kriteriekorreksjon og fravik
 
 Registry eier hva motoren teknisk støtter; templaten eier tillatelsen per kriterium.
 
@@ -124,13 +139,13 @@ Registry eier hva motoren teknisk støtter; templaten eier tillatelsen per krite
 - operatørnotat ved kriteriekorreksjon og prosessfravik er valgfritt; tomt notat er ikke en valideringsfeil;
 - biologisk fase utledes av kriterier; korreksjon/fravik er separate historikkbevarende fakta og endrer ikke opprinnelig rå vurdering eller frozen template.
 
-## 11. Evalueringshorizon og provenance
+## Evalueringshorizon og provenance
 
 Historisk evaluator bruker persistert importcutoff som øvre horizon; live bruker MariaDB-klokken. Freshness, vinduer og observasjonsalder beregnes mot eksplisitt evalueringshorizon, aldri lokal `Date.now()`-fallback.
 
 Evaluator persisterer provenance som relevant vindu, sample count, faktisk dekning, siste sample og effektive parametere. MariaDB-read-model lager ferdig `data_window_display`, `actual_display`, `requirement_display` og `status_display`.
 
-## 12. Overgangsbevis
+## Overgangsbevis
 
 En transition peker på eksakt `evaluation_id`. Historisk presentasjon følger derfor:
 
@@ -138,15 +153,15 @@ En transition peker på eksakt `evaluation_id`. Historisk presentasjon følger d
 
 Current candidate-evaluering er et separat faktum. «Siste evaluated_at» skal ikke brukes som erstatning for overgangens faktiske bevis.
 
-## 13. Recommendation-livsløp
+## Recommendation-livsløp
 
 Recommendation-status er `pending`, `executed`, `rejected` eller `superseded`. Original anbefaling, datagrunnlag og begrunnelse beholdes; operatørens faktiske handling er et separat faktum.
 
-## 14. Publiseringsvalidering
+## Publiseringsvalidering
 
 Templatepublisering skal avvise registry-inkompatible metric/model/input/parameter/freshness-/criterion-kombinasjoner og ugyldig operatorpolicy. Publisering skal også validere analyse- og replaymetadata. Motoren skal ikke være reparasjonslag for en ugyldig publisert template.
 
-## forenklet biologisk kriteriemodell
+## Biologisk kriteriemodell
 
 Gjæringsprosenten i runtime er **tilsynelatende utgjæringsgrad (apparent attenuation)**. Egen «FG-fremdrift», rate relativt til historisk maksimum og absolutt SG-rate er ikke operative domenemetrikker i gjeldende modell.
 
@@ -154,16 +169,13 @@ W-34/70-standardtemplaten uttrykker biologien med et lite, forklarbart kjerneset
 
 Målefreshness og generell målekvalitet er **evalueringsforutsetninger**, ikke biologiske egenskaper. Prosesskriterier skal normalt konsumere ferdig biologisk fase og bare legge til operative forhold som temperatur, manuell bekreftelse eller stabilitet etter en konkret prosesshendelse. Dermed skal P-trinn ikke duplisere SG-logikken som allerede ligger i B-modellen.
 
-
 ## Operatørpolicy og målegrunnlag
 
 Registry definerer modellens tillatte parameter-ID-er. Ved opprettelse/modellbytte får kriteriet disse korrigeringsrettighetene og `exception_allowed=true` fra DB-registry; parametere som er uforenlige med metricens freshness-semantikk utelates. Templateeditor kan slå rettighetene av. Publisert template og Start fryser det konkrete valget til sessionen.
 
 Biologisk fravik knyttes til en eksplisitt kandidatvurdering/kriterium og bekreftes før innsending. Registrering og tilbaketrekking er append-only. Ved ny evaluering beholdes faktisk verdi, `met`, `valid` og datagrunnlag, mens `applied_exception_id` peker på eventuell håndtering. Et fravik kan ikke omgå `invalid_configuration` eller hoppe over en fase. Overgangstid kan ikke settes tidligere enn fravikets registrering. Det ruller ikke tilbake allerede registrerte overganger.
 
-
-
-## Målebasert analyse i p24r7
+## Målebasert analyse
 
 Alle operative analyser bygger på godkjente faktiske målinger. Det er ingen regresjonsestimater, foreløpige verdier, følsomhetsbånd eller oppskalering av et kort stabilitetsvindu. Manglende data forblir manglende. Råvalidering med median/MAD og deklarert støygulv beholdes; den prøver ikke å rekonstruere råprøver fra gamle min/maks-aggregater.
 

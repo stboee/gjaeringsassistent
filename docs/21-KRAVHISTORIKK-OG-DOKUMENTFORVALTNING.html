@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>21 – Kravhistorikk og dokumentforvaltning</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">21 – Kravhistorikk og dokumentforvaltning</h1>
+</header>
+<h1 id="21--kravhistorikk-og-dokumentforvaltning">21 – Kravhistorikk og
+dokumentforvaltning</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Rolle:</strong> Samlet krav-/beslutningsproveniens og regler
+for å bevare dokumentasjon. Gjeldende krav eies av dokument 01–04;
+aktive beslutninger av dokument 14. Releaseendringer eies av
+RELEASE-NOTES.md.</p>
+<h2 id="bevaring-og-kravhistorikk">Bevaring og kravhistorikk</h2>
+<p><a
+href="sources/requirements-history.json">requirements-history.json</a>
+bevarer første dokumenterte baseline med alle 264 krav og 68
+beslutninger, opprinnelig tekst og kildeposisjon ved den eksplisitte
+basecommitten. Det er historiske snapshots; dagens krav oppdateres hos
+sin eier. Opprinnelig dialogdato skal ikke utledes fra en senere
+dokument- eller commitdato.</p>
+<p>Nye avklaringer føres som en ny historikkhendelse med kilde,
+begrunnelse og berørte ID-er. Ved kravendring registreres tidligere og
+ny betydning samt eventuell erstatter; ID-er gjenbrukes ikke. Tidligere
+utgåtte ID-er og eksisterende historikk i Git beholdes. Historikken er
+ikke en påstand om at alle krav er implementert eller verifisert.</p>
+<p>En <a href="generated/requirements-history.html">generert
+leseutgave</a> viser alle baselinekrav, beslutninger og senere
+kildeavklaringer med lenker til de opprinnelige dokumentposisjonene. Den
+redigeres ikke separat.</p>
+<h2 id="kildekvalitet">Kildekvalitet</h2>
+<p>HIST-001 er et kontrollert Git-snapshot. HIST-002 registrerer
+prosjekteierens avklaringer i denne revisjonen. HIST-003 er gjenfunnet
+samtalesammendrag med rapportert dato, ikke åpnet originaldialog eller
+ordrett sitat. Manglende opprinnelsesreferanse er eksplisitt ukjent. Nye
+funn kan supplere historikken uten å erstatte det eksisterende
+beviset.</p>
+<h2 id="bevisst-gjentakelse">Bevisst gjentakelse</h2>
+<p>Ansvarsdeling, databaseautoritet og reglene mot «juks» gjentas i alle
+aktive dokumenter og inngangspunkter. <a
+href="sources/architecture-guardrails.md">Grunnteksten</a> er
+vedlikeholdt kilde; like blokker innarbeides ved dokumentbygg og
+kontrolleres for samsvar. Dette er et synlig vern mot tilbakevendende
+kodefeil, ikke uønsket dobbeltføring.</p>
+<h2 id="endringsregler">Endringsregler</h2>
+<p>God forklaring, begrunnelse, konkrete eksempler, kontrakter og
+kildehenvisninger bevares. Ved flytting skal destinasjonen finnes og
+lenkene oppdateres. Mangler suppleres; motstrid mellom krav og kode
+registreres som avvik før betydningen endres. Gjeldende regler
+organiseres etter emne uten nye releaseavsnitt. Stabile
+DEC/REQ/TEST-ID-er og faktiske kompatibilitetsversjoner beholdes.</p>
+<h2 id="strukturerte-kilder-og-avledninger">Strukturerte kilder og
+avledninger</h2>
+<p><a
+href="../contracts/interface-catalog.json">Grensesnittkatalogen</a>
+skiller autoritative kilder, genererte kataloger, implementasjon og
+kontroll. SQL-registre og rutiner, kontraktskjema, verifikasjonsmodell
+og kravhistorikk inngår i samme dokumentforvaltning.
+HTML/JSON/SQL-uttrekk genereres fra sine eiere og redigeres ikke som
+parallelle sannheter.</p>
+<h2 id="kontroll-av-revisjonen">Kontroll av revisjonen</h2>
+<p><a href="sources/document-revision.json">Revisjonsregnskapet</a>
+knytter kildeavsnitt før revisjonen til bevart innhold eller begrunnet
+behandling. Krav- og beslutningstekst kontrolleres eksakt mot
+historikksnapshotet. Dokumentkontroll prøver gjentatte grunnregler,
+overskrifter, lenker, dokumentkart og reproduksjon. Grensesnittkontroll
+prøver faktiske register-/flow-/mottakergrenser og negative
+kontrakttilfeller. Dette lukker ingen målmiljø-UAT.</p>
+<p>Releasejobben bruker tools/release_notes.py til å hente bare den
+aktuelle utgavens avsnitt fra RELEASE-NOTES.md. Tidligere
+releasebeskrivelser og publiserte pakker omskrives ikke av denne
+revisjonen.</p>
+</body>
+</html>

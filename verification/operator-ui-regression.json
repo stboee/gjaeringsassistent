@@ -18,7 +18,7 @@
     "nodered/flows.template.json": "14c0675065a2a0352f6c5820d09b6d58e3155da4adfc3ce8f2863e67ad7085f1",
     "sql/12-operator-routines.sql": "417bcd0c22912679a280a0511a4409056c61c8f68c96d83c1faf8f5aeb274da3",
     "sql/20-views.sql": "217c754cb254e54b9f7f82c5ef288494c739f6fa65ec11d3bd14f7c2cb47d38a",
-    "tests/fixtures/operator-criteria-overview.json": "ef918bf85dcd70526fcc4e3272fa84e3170fdcb3ed08ca79d1020e8a2059b37f",
-    "tests/fixtures/operator-biology-overview.json": "d7501684a8660c35de3135fa713b1aebc64e49538abd19f9711cd63b035aa819"
+    "tests/fixtures/operator-criteria-overview.json": "7d2fae03fd0845f44f9293c18f0ea75a572d6ce0a56045757a6227357de6e716",
+    "tests/fixtures/operator-biology-overview.json": "5eb4b29be2df7d2bf21861a355d74fc04d0ae18b4f1b5e5a0c5887e935196006"
   }
 }

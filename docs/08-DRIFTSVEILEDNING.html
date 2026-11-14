@@ -93,7 +93,44 @@
 <h1 class="title">08 – Driftsveiledning</h1>
 </header>
 <h1 id="08--driftsveiledning">08 – Driftsveiledning</h1>
-<h2 id="1-installerereinstallere">1. Installere/reinstallere</h2>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+<h2 id="installerereinstallere">Installere/reinstallere</h2>
 <p>Gjeldende release bruker <strong>MariaDB 12.3.3</strong>, fast tag
 <code>mariadb:12.3.3</code>. Oppdater bare eksisterende
 <code>gjaeringsassistent-mariadb</code>-tjeneste i den samlede
@@ -138,8 +175,7 @@ som <code>database_server_version</code>.</p>
 under <code>install-reports/</code>. Ved FAIL brukes
 <code>last_step</code> og tilhørende logg; installerfeil skal løses som
 installer-/DDL-/flowfeil, ikke maskeres med runtime-workarounds.</p>
-<h2 id="2-etter-vellykket-installasjon">2. Etter vellykket
-installasjon</h2>
+<h2 id="etter-vellykket-installasjon">Etter vellykket installasjon</h2>
 <ol type="1">
 <li>Åpne Home Assistant → <strong>Teknisk</strong>.</li>
 <li>Hard refresh (<code>Ctrl+F5</code>) dersom browseren viser gammel
@@ -154,7 +190,7 @@ hendelseslogg</strong>, <strong>Målekilde/Tilt</strong> og
 </ol>
 <p><code>NOT_APPLICABLE</code> er ikke feil når kontrollen eksplisitt er
 utenfor gjeldende operativ kontekst.</p>
-<h2 id="3-frontendpublisering">3. Frontendpublisering</h2>
+<h2 id="frontendpublisering">Frontendpublisering</h2>
 <p>Node-RED publiserer dashboard, custom card og loader ved oppstart fra
 staging til <code>/data/gjaeringsassistent/ha-public</code>. Publisering
 registreres med releaseversjon og SHA-256 i MariaDB. Installeren skal
@@ -163,7 +199,7 @@ ikke skrive direkte til en katalog som skjules av bind-mount.</p>
 Lovelace-resource mot
 <code>/local/gjaeringsassistent/gjaeringsassistent-card-loader.js</code>
 og frontendpubliseringsstatus i Teknisk.</p>
-<h2 id="4-eksporter-teknisk">4. Eksporter Teknisk</h2>
+<h2 id="eksporter-teknisk">Eksporter Teknisk</h2>
 <p><strong>Eksporter Teknisk</strong> lager et read-only diagnostisk
 JSON-snapshot under HA-public <code>exports/</code> med lokal tid i
 filnavnet. Snapshotet inneholder relevant HA-projeksjon,
@@ -181,42 +217,20 @@ utilgjengelig.</p>
 <p>Ved feilsøking er disse filene foretrukket fremfor manuell kopiering
 av enkeltmeldinger. De er kun diagnostikk og er aldri
 restoreautoritet.</p>
-<h2 id="5-template-editor">5. Template-editor</h2>
-<p>Før Start velges publisert template i Gjæring-flaten. Template-fanen
-har et eget MariaDB-persistet administrasjonsvalg og kan brukes til å
-opprette/redigere draft, validere, publisere, retire og reaktivere
-templateversjoner både før og under aktiv session. En aktiv session
-bruker sin frozen session-template uendret; senere
-templateadministrasjon påvirker ikke sessionens faggrunnlag.</p>
-<p><code>template-editor.json</code> er dynamisk read-model. HTTP 404
-betyr at genereringskjeden ikke har produsert filen; den skal ikke
-kopieres manuelt som permanent løsning. Finn årsaken i Teknisk/Technical
-Events.</p>
-<h2 id="6-referansedemo">6. Referansedemo</h2>
-<p><strong>Start demo</strong> er en eksplisitt operatørhandling og går
-gjennom ordinær Start/frozen-session-kjede før deterministisk
-referansedata legges i de ordinære runtime-tabellene. Demodata har
-bevarte datagap og skal ikke forveksles med produksjons-Tilt-ingest.</p>
-<h2 id="7-ordinær-start-med-home-assistant-history">7. Ordinær Start med
-Home Assistant-history</h2>
-<ol type="1">
-<li>Kontroller DB-konfigurert målekilde dersom eksterne entity-ID-er er
-endret.</li>
-<li>Velg template og fyll start-/målegrunnlag.</li>
-<li>Angi <strong>Start fra</strong> i lokal
-<code>Europe/Oslo</code>-tid.</li>
-<li>Trykk <strong>Start gjæring</strong>.</li>
-<li>Historikk importeres/valideres kronologisk til komplette
-5-minuttersbøtter, B/P replay kjøres sekvensielt og importen fortsetter
-til LIVE.</li>
-<li>Deretter kjører inkrementell import bare mens reell session er
-aktiv. Restart fortsetter fra persistert importcursor.</li>
-</ol>
-<p>Heartbeat avgjør datagap. Registrerte gap skal ikke interpoleres.</p>
-<p>Systemkontroll trigges etter vellykket Start og ved overgang til
-LIVE, slik at session-/målekildestatus ikke blir stående som
-pre-Start-snapshot.</p>
-<h2 id="8-datakvalitet">8. Datakvalitet</h2>
+<h2 id="template-editor">Template-editor</h2>
+<p>Praktisk bruk er samlet i <a
+href="20-OPERATOERVEILEDNING.html">operatørveiledningen</a>.
+DB-kvitteringen er grunnlag for lagret/utført status.</p>
+<h2 id="referansedemo">Referansedemo</h2>
+<p>Praktisk bruk er samlet i <a
+href="20-OPERATOERVEILEDNING.html">operatørveiledningen</a>.
+DB-kvitteringen er grunnlag for lagret/utført status.</p>
+<h2 id="ordinær-start-med-home-assistant-history">Ordinær Start med Home
+Assistant-history</h2>
+<p>Praktisk bruk er samlet i <a
+href="20-OPERATOERVEILEDNING.html">operatørveiledningen</a>.
+DB-kvitteringen er grunnlag for lagret/utført status.</p>
+<h2 id="datakvalitet">Datakvalitet</h2>
 <p>SG, temperatur og RSSI valideres mot frozen sessionregler før
 <code>measurements_5m</code>. Ugyldige samples forkastes; de skal ikke
 repareres med DB-edit, frontendfilter eller clamp. Kvalitetsutfall
@@ -225,18 +239,18 @@ finnes i <code>measurement_ingest_quality_events</code>.</p>
 beregningsgrunnlag finnes. P24r7 viser kun ordinære punkter når faktisk
 minste tid, antall og dekning er oppfylt. En fysisk/matematisk urimelig
 verdi skal derimot avvises og være sporbar som valideringshendelse.</p>
-<h2 id="9-målekildetilt">9. Målekilde/Tilt</h2>
+<h2 id="målekildetilt">Målekilde/Tilt</h2>
 <p>Teknisk viser DB-read-modelen for målekilden. Ved aktiv reell session
 forventes minst profil, sessionbinding, importcursor, sist-OK, siste
 5-minuttersmåling, sample count, SG-statistikk, temperatur, RSSI og
 gapstatus. Tom/<code>IKKE KJØRT</code> HA-projeksjon samtidig som
 DB-status er LIVE er en projeksjons-/integrasjonsfeil og skal fremgå av
 Technical Events/Systemkontroll.</p>
-<h2 id="10-tid">10. Tid</h2>
+<h2 id="tid">Tid</h2>
 <p>Persistent maskintid er UTC. Operative tidspunkt vises i
 <code>Europe/Oslo</code>. Lokal visning skal ikke brukes som alternativ
 persistent tidsautoritet.</p>
-<h2 id="11-verifikasjon-og-uat">11. Verifikasjon og UAT</h2>
+<h2 id="verifikasjon-og-uat">Verifikasjon og UAT</h2>
 <p>Fanen <strong>Verifikasjon</strong> viser DB-avledet
 TECH/FUNC/UAT-status og REQ→VER→TEST-relasjoner. UAT registreres som
 nytt append-only resultat med operatør/notat/evidence; tidligere
@@ -246,37 +260,11 @@ samme konsistente DB-grunnlag under HA-public <code>exports/</code>.
 Teknisk-fanen viser bare et kompakt sammendrag og lenker videre til
 detaljflaten.</p>
 <h2 id="historikk-demo-og-grafvalg">Historikk, demo og grafvalg</h2>
-<p>Den ordinære MQTT-automasjonen beholdes; Test MQTT brukes ikke av
-importen. Femminuttsdata lagres som før. MQTT-tidsstempelsensorens
-ISO-verdi brukes til å verifisere fersk rådata. Tidsstempelsensoren er
-ikke en numerisk langtidsstatistikkserie.</p>
-<p>Ved oppstart og videre import spør motoren HA om SG, temperatur og
-RSSI med <code>recorder/statistics_during_period</code>, periode
-<code>hour</code>, samtidig med ordinær historikk. HA-brukeren må ha
-tilgang til Recorder-statistikk. Timesdata brukes som de er, også uten
-MQTT-verifikasjon. Et feilet statistikkanrop gir en driftsmelding og
-stopper ikke rådataimporten; meldingen lukkes ved neste vellykkede
-kall.</p>
-<p>Under grafene kan du velge ingen sammenligning, et av de to
-datasettene eller en avsluttet gjæring. Begge kurvene starter ved dag 0,
-gjæringsstart. Grafvalget deles mellom Gjæring og Analyse og lagres i
-MariaDB. Hele gjæringen eller siste 24 timer, 48 timer eller 7 dager kan
-vises. Visningsintervallene er 5, 15 og 60 minutter, med 15 minutter som
-første valg. Dette endrer ikke lagrede rådata.</p>
-<p>Demo velges før Start demo. <code>2026-05-29 IPL</code> er den samme
-tidligere demoen, kun navnet er endret.
-<code>2026-09-25 Gyllen pils</code> samler 2924 godkjente punkter fra
-vedlagte rådata/CSV/TSV, fra 25.09.2026 kl. 22:00 norsk tid til
-06.10.2026 kl. 20:30. 32 manglende intervaller er bevart som gap;
-datasettet er ikke et løfte om målinger fram til dagens dato. Duplisert
-TSV er ikke telt to ganger. Proveniens finnes under
-<code>reference/demo</code>.</p>
-<p>Etter Avslutt skal kortet vise Gjæring avsluttet og arkivstatus. Gjør
-klar vises når DB-gaten tillater frigivelse. Arkiveringsknappen vises
-når et arkiv mangler eller et forsøk har feilet. Et verifisert arkiv
-skal ikke utløse en ny arkivering. Arkiv kan fortsatt være større enn 19
-MB; bare små filmetadata sendes til MariaDB.</p>
-<h2 id="p24r8-måltest">P24r8 måltest</h2>
+<p>Praktisk bruk er samlet i <a
+href="20-OPERATOERVEILEDNING.html">operatørveiledningen</a>.
+DB-kvitteringen er grunnlag for lagret/utført status.</p>
+<h2 id="kontroll-av-publisering-og-diagnostikk">Kontroll av publisering
+og diagnostikk</h2>
 <p>Etter installasjon: Start reell import, kontroller at Gjæring viser
 grafene, velg Gyllen pils som sammenligning og vent på DB-kvittering.
 Valget skal bestå neste periodiske refresh. Analyse skal vise
@@ -307,49 +295,15 @@ gjeninnfører originalparametere. En eksplisitt tom valgfri grense blir
 ikke nulltallet. Oppfylt-markøren krever evaluering under akkurat den
 gjeldende revisjonen, også etter reset. Historisk
 måle-/evalueringsgrunnlag omskrives ikke.</p>
-<h2 id="sqlite-arkiver-fra-p24r10">SQLite-arkiver fra p24r10</h2>
-<p>Fanen <strong>Template og arkiv</strong> har et eget arkivkort. Velg
-<code>-template.sqlite</code> og, ved gjæringsimport, tilhørende
-<code>-gjaering.sqlite</code>. Kontroller forhåndsvisningen før import.
-Filenes format, skjema, integritet, transportkontrollsum og
-sammenhørende manifest kontrolleres. Domene-FK-er og CHECK-er håndheves
-under selve importtransaksjonen. Feil vises i arkivkortet og ruller
-tilbake både template og sesjon.</p>
-<p>Filene navngis
-<code>session-&lt;sessionid&gt;-export-&lt;exportid&gt;-gjaering.sqlite</code>
-og
-<code>session-&lt;sessionid&gt;-export-&lt;exportid&gt;-template.sqlite</code>.
-Template-filen inneholder én original publisert versjon, med nødvendig
-registergrunnlag. Gjæringsfilen har normaliserte målinger, timedata,
-frozen grunnlag, vurderinger, korreksjoner, observasjoner,
-overgangshistorikk og beregnede fakta. Den inneholder ikke mutable
-UI-valg eller globale systemfeil. Kildeversionens ID bevares som
-kildeproveniens; andre templates i en versjonskjede importeres ikke.</p>
-<p>Importert original er skrivebeskyttet i sin egen kategori. Bruk
-<strong>Opprett ny template fra eksisterende versjon</strong> med ny ID
-og navn for å lage en egen redigerbar kopi. Samme importoperasjon
-gjenbruker sin kvittering; samme gjæringsarkivpar importeres én gang.
-Separate template-importer får egne unike IDs også når navn og
-kildeversjon er like.</p>
-<p>Import er tillatt mens gjæring pågår. Filkontroll og SQLite kjører i
-en worker thread; en egen forbindelse til den samme MariaDB-instansen
-eier hele importtransaksjonen. Den ordinære motorens mysql-node og
-autoritative dataflyt beholdes. Dette er en avgrenset
-filoverføringsadapter, ikke en ny beregnings- eller rapportmotor. Ingen
-manuell kø, fil-lås eller lokal domenestate innføres.</p>
-<p>Midlertidig filopplasting går som autentiserte HA-hendelser med 64
-KiB deler og DB-kvittering. Disse byte-delene er transport, ikke
-domenelagring. Maksimal filstørrelse er 512 MiB. Historikk blir
-tilgjengelig i sammenligningslisten etter import; <strong>Skjul fra
-sammenligning</strong> legger til en synlighetshendelse og sletter ingen
-data. Bare eksplisitt støttede eldre SQLite-skjemaer konverteres;
-ukjente, uvedkommende og fremtidige formater avvises. Tidligere
-JSON-arkiver konverteres ikke i denne versjonen.</p>
-<p>Alle runtime-søk og grafer bruker MariaDB etter import. Filstørrelsen
-bestemmes av faktisk historikk; SQLite fjerner JSONs gjentatte feltnavn,
-men gir ingen garanti om en bestemt komprimeringsfaktor. Alle
-eksisterende målepunkter beholdes i arkivet.</p>
-<h2 id="p24r11-arkivbruk">P24r11 arkivbruk</h2>
+<h2 id="arkivkontroll">Arkivkontroll</h2>
+<p>Arkivenes format, innhold, integritet og transaksjonsgrenser eies av
+<a
+href="13-LIVSLOP-OBSERVASJONER-RAPPORT-OG-HISTORIKK.html#sqlite-arkivenes-innhold-og-integritet">dokument
+13</a>. Praktisk filvalg og import beskrives i <a
+href="20-OPERATOERVEILEDNING.html#arkiver-import-og-sammenligning">operatørveiledningen</a>.
+Ved feil hentes teknisk eksport; en filkvittering skal kontrolleres før
+videre handling.</p>
+<h2 id="arkivadministrasjon">Arkivadministrasjon</h2>
 <p>Gjæringsarkiv og template-arkiv ligger øverst i Template og arkiv.
 Eksport av en gjæring gir gjæring.sqlite, template.sqlite, én SHA-fil
 per SQLite-fil og rapport.html med samme prefix. Eksport av bare
@@ -361,20 +315,9 @@ bekreftelse. Eksportfiler beholdes, og aktiv gjæring er beskyttet.
 Importert template kan bare slettes når den ikke lenger brukes; egen
 kopi basert på originalen teller også som referanse.</p>
 <h2 id="importer-avsluttet-gjæring">Importer avsluttet gjæring</h2>
-<p>Bruk ordinært startbilde: template, batchnavn, «Start fra» og første
-manuelle måleserie. Lagre det angitte starttidspunktet. Angi deretter
-slutten i feltet ved «Importer avsluttet gjæring». Etter fullført import
-viser målekilden HISTORISK. Ved feil beholdes cursor og sluttgrense;
-omstart prøver kun den gjenstående delen. Systemet kan bare hente
-historikk HA fortsatt har tilgjengelig, og timesstatistikk som krysser
-slutten kan ikke deles til et presist delintervall.</p>
-<p>Under Biologi/Prosesstrinn kan du korrigere eksisterende starter og
-etterregistrere manglende starter. Databasen avgrenser tidspunktet
-mellom nabofaser. Manuelle målinger etterregistreres gjennom vanlig
-målekort; korriger målerundens tidspunkt til faktisk historisk måletid.
-Rapporter og eksport er tilgjengelige underveis. «Avslutt gjæring»
-ferdigstiller ved valgt historisk slutt, genererer sluttarkiv og tilbyr
-ordinær klargjøring.</p>
+<p>Praktisk bruk er samlet i <a
+href="20-OPERATOERVEILEDNING.html">operatørveiledningen</a>.
+DB-kvitteringen er grunnlag for lagret/utført status.</p>
 <h2 id="historisk-import-og-ha-gjenoppkobling">Historisk import og
 HA-gjenoppkobling</h2>
 <p>Historisk import viser separat at perioden er ferdig behandlet og
@@ -430,21 +373,15 @@ manuelt til et dashboard i lagringsmodus, oppdater denne kopien fra
 pakken. Filpublisering endrer ikke en separat lagret
 Lovelace-konfigurasjon.</p>
 <h2 id="velg-målekilder">Velg målekilder</h2>
-<p>Åpne Teknisk → Målekilder og sensorer → Kontroller sensorer. Velg SG,
-temperatur, siste MQTT-oppdatering og RSSI; trykk kan stå Manuell
-registrering. En trykksensor må levere overtrykk i en støttet enhet
-(bar, kPa, hPa/mbar, Pa eller psi). Absolutt trykk må ikke velges som
-overtrykk. Temperaturkilden i denne versjonen må levere °C.</p>
-<p>Lagre og vent på databasekvittering. Endringer under en reell
-livegjæring får virkning ved den oppgitte DB-grensen.
-Konfigurasjonshistorikken viser tidligere valg; feltverdier er merket
-sist kontrollert. Arkiverte/historiske sesjoner endres ikke av et nytt
-globalt valg. Trykk fra HA-timesstatistikk er ikke lagt til; trykkimport
-gjelder detaljgrunnlag i femminuttersbøtter.</p>
-<p>Ved HTTP 404 for sensorinnstillinger i 2026.11.13-1: installer den
-komplette 2026.11.14-1-pakken med ordinær installer. Den retter
-publiseringsprodusenten og feilrapporteringen samlet. Etter oppstart
-skal «Les innstillinger» vise DB-feltene; ved ny publiseringsfeil
-kontrolleres Teknisk hendelseslogg.</p>
+<p>Praktisk bruk er samlet i <a
+href="20-OPERATOERVEILEDNING.html">operatørveiledningen</a>. Ved HTTP 404
+for source-settings.json kontrolleres publiseringsresultat og Teknisk
+hendelseslogg. Feilen med source_path er beskrevet i releasehistorikken;
+gjeldende kontrakt krever stage_path.</p>
+<p>Krav-/beslutningskatalogen er tekniske dokumentasjonsmetadata. Ved
+filoppgradering oppdateres denne katalogen fra den deklarerte
+sql/24-verification-metadata-seed.sql slik at kildeposisjoner og
+visningsrekkefølge følger dokumentene. Krav-/beslutnings-ID-er og tekst
+bevares; historiske testresultater beholdes.</p>
 </body>
 </html>

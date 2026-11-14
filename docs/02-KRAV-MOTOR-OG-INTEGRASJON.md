@@ -7,6 +7,21 @@ source_format: markdown
 
 # 02 – Krav: gjæringsmotor og integrasjon
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normative krav til motor, persistens og integrasjon i gjeldende arkitektur.
 
 ## Ansvarsdeling
@@ -94,7 +109,7 @@ Operatørhandlinger skal ha observerbar sluttkvittering. En mottatt HA-knapp/eve
 
 | REQ-MOTOR-060 | Fastsatt | S-04- og M42-templater skal være egne publiserte normaliserte profiler med kjølig hovedgjæring innen produsentområdet, gradvis opprydding ved 20 °C og eksplisitte sluttkontroller. 21 dager er planleggingsramme, ikke automatisk ferdigregel. |
 
-## Historikk og grafer i gjeldende release
+## Historikk, grafer og import
 
 | ID | Status | Krav |
 |---|---|---|
@@ -103,35 +118,13 @@ Operatørhandlinger skal ha observerbar sluttkvittering. En mottatt HA-knapp/eve
 | REQ-MOTOR-063 | Fastsatt | Aktiv og avsluttet rapport bruker én generator og inkluderer full kronologisk hendelseshistorikk og tilgjengelige timesdata. |
 | REQ-MOTOR-064 | Fastsatt | Datasett- og sammenligningsvalg persisteres i MariaDB; den valgte demoidentiteten fryses ved Start. |
 
-## P24r8 graftransport
-
 | ID | Status | Krav |
 |---|---|---|
 | REQ-MOTOR-065 | Aktiv | Graftransport skal dele presentasjonsmetadata, bruke kompakt JSON og tilby verifisert gzip. Punktutvalg skjer i DB og bevarer første/siste/min/maks og segmentgrenser. Lagring/analyser beholder femminuttersoppløsning; standard visningsintervall er 30 minutter. |
 
-## P24r9 historisk statistikkimport
-
 | ID | Status | Krav |
 |---|---|---|
 | REQ-MOTOR-066 | Aktiv | HA-timesstatistikk hentes ved første historiske import og ved DB-målt etterslep på minst én time. Vanlig frisk femminuttersimport henter detaljhistorikk. En uløst statistikkfeil gir nytt historisk forsøk; gjenoppretting registreres bare når en slik feil faktisk er aktiv. |
-
-## P24r10 arkivutveksling
-
-| ID | Status | Krav |
-| --- | --- | --- |
-| REQ-MOTOR-067 | implemented | Import av gjæring og tilhørende template skjer atomisk med ny lokal identitet og historisk frigivelse. Feil ruller tilbake hele importen; aktiv gjæring og måleskriving påvirkes ikke. |
-| REQ-MOTOR-068 | implemented | Importert template får alltid en egen unik ID og kildeproveniens; den sammenlignes, dedupliseres eller flettes ikke med eksisterende templates. Redigering krever egen kopi. |
-
-## P24r11 start og arkivadministrasjon
-
-| ID | Status | Krav |
-| --- | --- | --- |
-| REQ-MOTOR-069 | implemented | Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning, klargjøring og omstart. Systemkontroll skal oppdage vedvarende motstridende HA-status. |
-| REQ-MOTOR-070 | implemented | Hele historiske sesjoner kan slettes atomisk med alle tilhørende data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg nullstilles ved sletting. Append-only gjelder innenfor beholdte sesjoner. |
-| REQ-MOTOR-071 | implemented | Aktiv eksport produserer et merket konsistent øyeblikksbilde av gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge SQLite-filer får SHA-256-sidefil. |
-| REQ-MOTOR-072 | implemented | Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten å blokkere import. SQLite-integritet, skjema, eksportpar og transportkontrollsum valideres fortsatt. |
-
-## Historisk HA-import og felles fasetid (p24r15)
 
 | Krav | Status | Kravtekst |
 | --- | --- | --- |
@@ -141,6 +134,21 @@ Operatørhandlinger skal ha observerbar sluttkvittering. En mottatt HA-knapp/eve
 
 Den historiske sesjonen er den gjeldende operatørens arbeidsøkt mens den etterregistreres. Intern lifecycle=active betyr her at redigering og eksport er tilgjengelig; is_historical og sluttgrensen skiller den fra løpende innhenting. Den bruker samme ene operative arbeidsøkt som eksisterende løsning. «Avslutt gjæring» ferdigstiller ved det historiske sluttidspunktet og bruker ordinær arkiv- og klargjøringsflyt. Ingen fysisk tank eller MQTT-sender stoppes.
 
+## Arkivutveksling
+
+| ID | Status | Krav |
+| --- | --- | --- |
+| REQ-MOTOR-067 | implemented | Import av gjæring og tilhørende template skjer atomisk med ny lokal identitet og historisk frigivelse. Feil ruller tilbake hele importen; aktiv gjæring og måleskriving påvirkes ikke. |
+| REQ-MOTOR-068 | implemented | Importert template får alltid en egen unik ID og kildeproveniens; den sammenlignes, dedupliseres eller flettes ikke med eksisterende templates. Redigering krever egen kopi. |
+
+## Start og arkivadministrasjon
+
+| ID | Status | Krav |
+| --- | --- | --- |
+| REQ-MOTOR-069 | implemented | Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning, klargjøring og omstart. Systemkontroll skal oppdage vedvarende motstridende HA-status. |
+| REQ-MOTOR-070 | implemented | Hele historiske sesjoner kan slettes atomisk med alle tilhørende data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg nullstilles ved sletting. Append-only gjelder innenfor beholdte sesjoner. |
+| REQ-MOTOR-071 | implemented | Aktiv eksport produserer et merket konsistent øyeblikksbilde av gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge SQLite-filer får SHA-256-sidefil. |
+| REQ-MOTOR-072 | implemented | Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten å blokkere import. SQLite-integritet, skjema, eksportpar og transportkontrollsum valideres fortsatt. |
 
 ## Systemkontroll og HA-publisering
 
@@ -150,7 +158,7 @@ Den historiske sesjonen er den gjeldende operatørens arbeidsøkt mens den etter
 | REQ-MOTOR-077 | Aktiv | Ferdig behandlet importperiode skal skilles fra faktisk datadekning. Antall og tidsgrenser for ordinære femminuttersmålinger og timesstatistikk samt registrerte rådatagap utledes i DB. Timesstatistikk skal ikke fremstilles som ordinært B/P-grunnlag. |
 | REQ-MOTOR-078 | Aktiv | Forbigående HA-publiseringsbrudd journalføres uten rekursiv publisering av feilen. Nytt forsøk leser ferske DB-projeksjoner, aldri en lokal domenekø. Et konkret publiseringsproblem lukkes først etter vellykket utgang fra den berørte HA-noden. Ugyldig payload skal fortsatt være feil. |
 
-## Reviderte målekilder
+## Målekilder og konfigurasjonsrevisjoner
 
 | ID | Status | Krav |
 |---|---|---|

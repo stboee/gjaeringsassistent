@@ -30,12 +30,49 @@
 </header>
 <h1 id="16--w-3470-faggrunnlag-og-prosessmodell">16 – W-34/70
 faggrunnlag og prosessmodell</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Profilspesifikk forklaring av intensjon og
 faglig klassifikasjon for den publiserte W-34/70-templaten. Eksakte
 aktive kriterier, parametere, replay-flagg, analysemetadata og
 målekildevalidering skal ikke vedlikeholdes manuelt her; de genereres
 fra SQL til <code>generated/w3470-rule-reference.json</code>.</p>
-<h2 id="1-avgrensning">1. Avgrensning</h2>
+<h2 id="avgrensning">Avgrensning</h2>
 <p>Modellen gjelder ren tankgjæring med
 <code>Saccharomyces</code>/W-34/70-lignende lagerforløp. Brettanomyces,
 surøl, blandingskultur og flaskekarbonering ligger utenfor denne
@@ -51,7 +88,7 @@ batchdata/operativ erfaring;</li>
 fortsatt krever målmiljøkalibrering.</li>
 </ul>
 <p>Status for faglig kalibrering føres i dokument 15.</p>
-<h2 id="2-biologisk-referanseforløp">2. Biologisk referanseforløp</h2>
+<h2 id="biologisk-referanseforløp">Biologisk referanseforløp</h2>
 <p>B1–B6 beskriver et ordnet biologisk referanseforløp:</p>
 <table>
 <thead>
@@ -90,7 +127,7 @@ vindu.</td>
 </table>
 <p>Fasene har ikke skjult kalenderlogikk. Den publiserte templaten eier
 kriteriene.</p>
-<h2 id="3-prosesstrinn">3. Prosesstrinn</h2>
+<h2 id="prosesstrinn">Prosesstrinn</h2>
 <p>Gjeldende template bruker P1–P10 og reserverer P11–P15:</p>
 <table>
 <thead>
@@ -173,7 +210,7 @@ kriteriene.</p>
 <p>P3 og senere kan være <strong>kriteriemessig klare</strong> uten å
 være implementert/aktivert. Operatørens <code>Neste</code> er
 nødvendig.</p>
-<h2 id="4-tilt-som-trendgrunnlag">4. Tilt som trendgrunnlag</h2>
+<h2 id="tilt-som-trendgrunnlag">Tilt som trendgrunnlag</h2>
 <p>Manuell OG/SG er absolutt observasjonsgrunnlag der den brukes. P24r7
 viser rå Tilt-AA fra faktisk OG og godkjent Tilt-median, og separat
 manuell AA fra faktisk OG og korrigert manuell SG. Det er ingen
@@ -187,7 +224,7 @@ templatekriteriets valgte kilde. SG-rate er faktisk SG-forskjell mellom
 vinduets endepunkter / faktisk tid: positiv betyr fallende SG, null
 ingen endepunktendring og negativ stigende SG. Rategrafen starter ved 0;
 en negativ faktisk rate bevares og vises i siste-verdi-feltet.</p>
-<h2 id="5-analyse">5. Analyse</h2>
+<h2 id="analyse">Analyse</h2>
 <p>W-34/70-templaten deklarerer tre operatørgrafer:</p>
 <ol type="1">
 <li><strong>Tilsynelatende utgjæringsgrad</strong> – hvor stor del av
@@ -207,7 +244,7 @@ template/sessionmetadata. Horisontal akse bruker DB-eide
 <code>+dag · dato</code>-markører. Frontend tegner verdiene og aksene
 den får fra read-model og skal ikke utlede egne domenebetingede
 grenser.</p>
-<h2 id="6-målevalidering">6. Målevalidering</h2>
+<h2 id="målevalidering">Målevalidering</h2>
 <p>Tilt-kilden bruker deklarative validatorer for SG, temperatur og
 RSSI. Gjeldende parametere er <strong>prototype-/tekniske
 grenser</strong> inntil de er kalibrert mot reell datadistribusjon. De
@@ -224,7 +261,7 @@ bøtte;</li>
 </ul>
 <p>Eksakte aktive tall genereres fra
 <code>../sql/23-measurement-source-seed.sql</code>.</p>
-<h2 id="7-empirisk-grunnlag">7. Empirisk grunnlag</h2>
+<h2 id="empirisk-grunnlag">Empirisk grunnlag</h2>
 <p>P2–P8 er delvis videreført/kalibrert mot en vellykket IPL-batch.
 Dokumentert historikk beskriver blant annet pitch rundt 12 °C med videre
 nedkjøling mot 8 °C og senere controller-offsetjusteringer. Tidlige
@@ -232,7 +269,7 @@ controller-settpunkter som ikke ble eksplisitt registrert skal ikke
 rekonstrueres som fakta.</p>
 <p>Denne empirien er kalibreringsgrunnlag, ikke i seg selv bevis for at
 alle terskler er optimale.</p>
-<h2 id="8-eksternt-startgrunnlag">8. Eksternt startgrunnlag</h2>
+<h2 id="eksternt-startgrunnlag">Eksternt startgrunnlag</h2>
 <p>Følgende kilder er tidligere identifisert som startgrunnlag og skal
 vurderes konkret før en regel klassifiseres som kildebelagt:</p>
 <ul>
@@ -288,7 +325,7 @@ som kjelfining</a></li>
 revalidert ved GitHub-etableringen. Regel-for-regel-vurdering og
 kildeklassifikasjon må fortsatt utføres. Protafloc er
 bryggeprosessbakgrunn, ikke automatisk et gjæringskriterium.</p>
-<h2 id="9-maskinlesbar-detaljfasit">9. Maskinlesbar detaljfasit</h2>
+<h2 id="maskinlesbar-detaljfasit">Maskinlesbar detaljfasit</h2>
 <p><code>tools/build_docs.py</code> genererer
 <code>generated/w3470-rule-reference.json</code> direkte fra:</p>
 <ul>
@@ -300,7 +337,7 @@ replay-flaggene, analysegraph/series-reglene og valideringsparametrene.
 Ved avvik mellom denne forklaringen og generert SQL-uttrekk er
 SQL/installert MariaDB detaljfasit, og dokumentforklaringen skal
 revideres.</p>
-<h2 id="operativ-prosent--og-kriteriemodell">operativ prosent- og
+<h2 id="operativ-prosent--og-kriteriemodell">Operativ prosent- og
 kriteriemodell</h2>
 <p>W-34/70-standard bruker 80–84 % forventet tilsynelatende utgjæring
 som normativt templateområde. Forventet FG beregnes fra faktisk OG for

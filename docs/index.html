@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Gjæringsassistent – gjeldende dokumentasjon</title>
+  <title>Gjæringsassistent – dokumentasjon</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -26,22 +26,75 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Gjæringsassistent – gjeldende dokumentasjon</h1>
+<h1 class="title">Gjæringsassistent – dokumentasjon</h1>
 </header>
-<h1 id="gjæringsassistent--gjeldende-dokumentasjon">Gjæringsassistent –
-gjeldende dokumentasjon</h1>
-<p>For ny chat: <a href="ONBOARDING-NY-CHAT.html">gjennomfør
-onboarding</a>.</p>
-<p>Dette er det aktive dokumentsettet for <code>2026.11.09-2</code>.
-Start i <a href="00-DOKUMENTKART-OG-STATUS.html">00 – Dokumentkart og
-status</a>.</p>
-<p><code>docs/</code> inneholder bare gjeldende dokumentasjon. Ordinær
-p24-release distribuerer ikke komplette gamle dokumentsett; eksplisitte
-funksjonelle referanser ligger i
-<code>../reference/BASELINES.json</code>. Maskinlesbare avledninger av
-krav, beslutninger, VER/TEST-relasjoner, åpent arbeid og
-W-34/70-regelgrunnlag ligger under <code>generated/</code> og bygges fra
-normative Markdown-/SQL-/verifikasjonskilder med
-<code>../tools/build_docs.py</code>.</p>
+<h1 id="gjæringsassistent--dokumentasjon">Gjæringsassistent –
+dokumentasjon</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+<p>Dette er dokumentasjonen på den aktuelle kildecommitten. Publisert
+programvare og kildekoden på main kan ha ulik dokumentrevisjon.
+Leveranseidentiteten finnes i <a href="../VERSION">VERSION</a>, <a
+href="../BUILD-INFO.json">BUILD-INFO</a> og <a
+href="https://github.com/stboee/gjaeringsassistent/releases">GitHub
+Releases</a>.</p>
+<ul>
+<li>Operatør: <a
+href="20-OPERATOERVEILEDNING.html">brukerveiledning</a>.</li>
+<li>Installasjon og drift: <a
+href="08-DRIFTSVEILEDNING.html">driftsveiledning</a>.</li>
+<li>Utvikling og feilretting: <a
+href="07-SYSTEMARKITEKTUR-OG-DATAFLYT.html">arkitektur</a>, <a
+href="05-FRONTEND-OG-INTEGRASJONSKONTRAKT.html">HA-kontrakt</a>, <a
+href="12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.html">DB-kontrakt</a> og <a
+href="generated/interface-reference.html">strukturerte
+grensesnitt</a>.</li>
+<li>Krav og begrunnelser: <a
+href="00-DOKUMENTKART-OG-STATUS.html">dokumentkart</a>, <a
+href="14-AKTIVE-BESLUTNINGER.html">beslutninger</a> og <a
+href="21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.html">kravhistorikk</a>.</li>
+<li>Status: <a href="15-AAPENT-ARBEID.html">åpne forhold og målmiljø</a>,
+<a
+href="18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.html">funksjonsoversikt</a>.</li>
+<li>Ny chat: <a href="ONBOARDING-NY-CHAT.html">onboarding</a> og <a
+href="../OVERLEVERING.md">pågående arbeid</a>.</li>
+</ul>
+<p>HTML og generated/-kataloger er avledede leseutgaver. Autoritative
+kilder og eiere fremgår av dokumentkartet.</p>
 </body>
 </html>

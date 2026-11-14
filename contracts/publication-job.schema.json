@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gjaeringsassistent:publication-job:1",
+  "title": "Publication job – existing stage_path contract",
+  "type": "object",
+  "required": [
+    "stage_path",
+    "target_path"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "stage_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Absolute completed staging path inside runtime/staged."
+    },
+    "target_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Absolute JSON destination inside ha-public."
+    },
+    "diagnostics_level": {
+      "type": "string",
+      "enum": [
+        "summary",
+        "full"
+      ],
+      "description": "Optional technical export verbosity, not domain data."
+    }
+  }
+}

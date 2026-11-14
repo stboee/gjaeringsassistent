@@ -29,6 +29,43 @@
 <h1 class="title">14 – Aktive beslutninger</h1>
 </header>
 <h1 id="14--aktive-beslutninger">14 – Aktive beslutninger</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Stabilt ADR/DEC-register. ID-er gjenbrukes
 ikke. En beslutning som erstattes beholdes i historisk
 referanse/releasehistorikk; gjeldende dokument inneholder bare aktive
@@ -440,7 +477,7 @@ MariaDB. | Gjentatt statistikkhenting og gamle kravlinjer ga misvisende
 visning. | Normal live-import henter detaljdata;
 parameterkorreksjon/reset og oppfylt-markører følger DB-revisjonen.
 Tidligere målinger og evalueringer beholdes. |</p>
-<h2 id="p24r10-arkiver">P24r10 arkiver</h2>
+<h2 id="arkivformat-og-import">Arkivformat og import</h2>
 <table>
 <thead>
 <tr class="header">
@@ -471,8 +508,8 @@ redigering krever egen kopi.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r11-avgrensning-og-utveksling">P24r11 avgrensning og
-utveksling</h2>
+<h2 id="sesjonssletting-og-konsistent-utveksling">Sesjonssletting og
+konsistent utveksling</h2>
 <table>
 <thead>
 <tr class="header">

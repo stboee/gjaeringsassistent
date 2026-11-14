@@ -84,7 +84,8 @@ for tid,steps in model.get('uat_steps',{}).items():
     for st in steps:
         lines.append("INSERT INTO verification_uat_steps(test_id,step_order,instruction,expected_result,created_at) VALUES (%s,%d,%s,%s,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE instruction=VALUES(instruction),expected_result=VALUES(expected_result);"%(q(tid),st['step_order'],q(st['instruction']),q(st['expected_result'])))
 lines.append('COMMIT;')
-SQL.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+if '--no-sql' not in sys.argv:
+    SQL.write_text('\n'.join(lines)+'\n',encoding='utf-8')
 summary={'schema_version':'1.0','requirements_count':len(reqs),'decisions_count':len(decs),'verification_count':len(model['verifications']),'tests_count':len(tests),'test_types':{k:sum(1 for t in tests if t['test_type']==k) for k in ['TECH','FUNC','UAT']},'requirements':reqs,'decisions':decs,'verifications':model['verifications'],'tests':tests,'decision_requirement_links':model.get('decision_requirement_links',[]),'uat_steps':model.get('uat_steps',{})}
 (GEN/'verification-model.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-print(f"Generated {SQL.relative_to(ROOT)} and docs/generated/verification-model.json: {len(reqs)} requirements, {len(decs)} decisions, {len(model['verifications'])} verifications, {len(tests)} tests")
+print(f"Generated verification metadata (SQL written: {'--no-sql' not in sys.argv}): {len(reqs)} requirements, {len(decs)} decisions, {len(model['verifications'])} verifications, {len(tests)} tests")

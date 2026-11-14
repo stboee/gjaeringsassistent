@@ -16,6 +16,7 @@ if args.source_commit:
  build['source_commit']=args.source_commit
  (ROOT/'BUILD-INFO.json').write_text(json.dumps(build,ensure_ascii=False,indent=2)+'\n')
 subprocess.run([sys.executable,str(ROOT/'tools/embed_analysis_methods.py')],cwd=ROOT,check=True)
+subprocess.run([sys.executable,str(ROOT/'tools/build_runtime.py')],cwd=ROOT,check=True)
 subprocess.run([sys.executable,str(ROOT/'tools/build_docs.py')],cwd=ROOT,check=True)
 def sha(p):
  h=hashlib.sha256()

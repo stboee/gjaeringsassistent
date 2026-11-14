@@ -9,7 +9,7 @@
         "read_only": "ON",
         "global_read_only": "ON",
         "database_writable": 0,
-        "database_epoch": 1794659223.0
+        "database_epoch": 1794664868.0
       },
       "function_result": {
         "id": "writable",
@@ -25,7 +25,7 @@
         "read_only": "NO_LOCK",
         "global_read_only": "NO_LOCK",
         "database_writable": 0,
-        "database_epoch": 1794659223.0
+        "database_epoch": 1794664869.0
       },
       "function_result": {
         "id": "writable",
@@ -41,7 +41,7 @@
         "read_only": "NO_LOCK_NO_ADMIN",
         "global_read_only": "NO_LOCK_NO_ADMIN",
         "database_writable": 0,
-        "database_epoch": 1794659223.0
+        "database_epoch": 1794664869.0
       },
       "function_result": {
         "id": "writable",
@@ -57,7 +57,7 @@
         "read_only": "OFF",
         "global_read_only": "OFF",
         "database_writable": 1,
-        "database_epoch": 1794659224.0
+        "database_epoch": 1794664870.0
       },
       "function_result": {
         "id": "writable",

@@ -5,9 +5,26 @@ status: current
 source_format: markdown
 ---
 
-# 15 – Åpent arbeid
+# 15 – Åpent arbeid og målmiljøstatus
 
-**Rolle:** Register over reelle, fortsatt åpne forhold. Historiske lukkede prototypefeil føres i releasehistorikk, ikke her.
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+**Rolle:** Register over fortsatt åpne forhold og eier av dokumentert målmiljøstatus. Exit-kriteriet avgjør lukking. Implementert kode, lokal regresjon og faktisk måltest skilles.
+
+## Åpne forhold
 
 | ID | Type | Status | Område | Exit-kriterium |
 |---|---|---|---|---|
@@ -22,36 +39,24 @@ source_format: markdown
 | OPEN-009 | Måltest | Åpen | Historisk sammenligning | Pitch-justert sammenligning er implementert; valg av begge datasett og avsluttet session samt persistens skal måltestes. |
 | OPEN-011 | Arkitektur | Åpen | Lineage | Required grensesnitt og aktive systemfunksjoner har komplett registrert lineage; beslutning om eventuell bredere fysisk DB-dekning er dokumentert eksplisitt. |
 | OPEN-012 | UX | Åpen | Operatørflate | Gjenstående hensiktsmessige notatplasseringer/handlingskvitteringer fra funksjonelle referanser er enten implementert eller eksplisitt avvist uten å endre domenemodellen. |
-
 | OPEN-013 | Verifikasjon | Åpen | Verifikasjonsmodell | Eksisterende krav/tester kobles gradvis til strukturerte VER/TEST-relasjoner; manglende koblinger er synlige i Verifikasjon-fanen og skal ikke skjules med kunstig coverage-score. |
-
 | OPEN-014 | Måltest/diagnostikk | Åpen | Gjeldende installasjon/arkiv | Installer/schema samsvarer med release-metadata; SQLite-par/sluttrapport, ny start, sammenligning og HA-gjenoppkobling verifiseres i faktisk Docker/HA/Node-RED. TEST-UAT-012/013/014 er åpne. |
-
-Nye forhold legges inn når de er observerte eller eksplisitt besluttede arbeidsoppgaver. Spekulasjoner uten konkret exit-kriterium hører ikke hjemme i registeret.
-
-## Neste brygg
-
-Bevar rå HA-historikk lenger og hold HA/Raspberry Pi i drift under oppstart. Test støygulv, spranggrenser og biologiske terskler mot rådata. HA-timesstatistikk supplerer eldre grafer uten MQTT-verifikasjon; råd og B/P-overganger krever fortsatt ordinært målegrunnlag. Faglig tuning av terskler er åpen.
-
-## Gjeldende målmiljøstatus
-
-Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert. Siste vedlagte tekniske målrapport er fra p24r16 den 08.11.2026 kl. 22:57. Fersk Systemkontrollrapport og konkrete funksjonstestresultater fra den nye installasjonen foreligger ikke i chatten. Startflyt og databevaring er derfor fortsatt ikke målmiljøverifisert, og de 14 UAT-testene beholder sine faktiske statuser.
-
-Kontroller CPU/slow-log på gangpc med aktiv gjæring og sammenligning. Lokal native integrasjon dokumenterer leseavgrensning og samtidighet, ikke garantert responstid på gangpc. Reell HA Recorder/time-statistikk, nettverksfeil, nettleser/tidssoner, B/P-korreksjoner, faste akser, arkiv/ny start og HA-gjenoppkobling er fortsatt måltester der konkrete bevis mangler.
-
-## Oppgradering og oppstart
-
-| ID | Type | Status | Område | Exit-kriterium |
-|---|---|---|---|---|
 | OPEN-015 | Måltest | Åpen | Oppgradering med databevaring | Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling. |
 | OPEN-016 | Måltest | Åpen | Slurry/startfelt | Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; funksjonen i installert versjon er ikke bekreftet. |
-
-Databevarende migrering fra p24r16 / 2026.11.07-1 / 2026.11.09-1 / 2026.11.09-2 er implementert med native tester og simulert Docker-transport. Installasjonen er brukerbekreftet 14.11.2026; databevaring og teknisk status er ikke dokumentert med en fersk målrapport. Issues/PR inngår ikke i prosjektarbeidsflyten; avtalt arbeid dokumenteres i gjeldende kilder og føres direkte på main.
-
-## Sensorinnstillinger etter 2026.11.13-1
-
-| ID | Type | Status | Område | Exit-kriterium |
-|---|---|---|---|---|
 | OPEN-017 | Feilretting/måltest | Publisert retting; måltest åpen | Sensorinnstillinger gir HTTP 404 | Publisering bruker stage_path, JSON/gzip kan leses tilbake, publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i brukerens HA. Den pakkede rettingen bekreftes i brukerens HA. |
 
-14.11.2026: Ny kortkode laster, men source-settings.json mangler. Feil argumentnavn source_path i flowen er reprodusert og rettet til stage_path på main. Exec-resultat/stderr bruker nå felles feilrapportering. Målrettet publiseringstest bestod etter at den først reproduserte feilen. Rettelsen inngår i 2026.11.14-1. Brukerbekreftelse på den nye pakkens funksjon står fortsatt åpen.
+## Dokumentert målmiljøstatus
+
+Prosjekteier bekreftet 14.11.2026 installasjon av 2026.11.13-1. Skjermbildet samme dag viste HTTP 404 for source-settings.json samtidig med OK Systemkontroll. Rettelsen er publisert i 2026.11.14-1; installasjon og funksjon av denne utgaven er ikke bekreftet. OPEN-017 forblir åpen til konkret måltest foreligger.
+
+Siste fullstendige vedlagte tekniske målrapport er fra p24r16, 08.11.2026 kl. 22:57. Senere installasjonsbekreftelse/skjermbilder beviser sine egne observasjoner, ikke full databevaring, startflyt eller alle 14 UAT. Konkrete nye bevis registreres her eller som korrelert UAT-resultat; de øvrige dokumentene lenker hit.
+
+## Videre måltest og kalibrering
+
+Bevar rå HA-historikk lenger og hold HA/Raspberry Pi i drift under oppstart. Test støygulv, spranggrenser og biologiske terskler mot rådata. HA-timesstatistikk supplerer eldre grafer uten oppdiktet heartbeat; råd og B/P-overganger krever ordinært grunnlag.
+
+Kontroller CPU/slow-log med aktiv gjæring og sammenligning. Lokal integrasjon gir ingen garantert responstid på gangpc. Faktisk Recorder/time-statistikk, nettverksfeil, nettleser/tidssoner, B/P-korreksjoner, faste akser, arkiv/ny start og HA-gjenoppkobling prøves etter dokument 09. OPEN-015/016/017 knytter databevaring, startfelt og sensorpublisering til konkrete exit-kriterier.
+
+## Sporbarhet
+
+Feilrettingshistorikk finnes i RELEASE-NOTES.md og krav-/beslutningsgrunnlag i dokument 21. Historiske rapportreferanser i et åpent forhold beholdes som bevis for observasjonen. En eldre rapport er ingen automatisk beskrivelse av dagens installasjon.

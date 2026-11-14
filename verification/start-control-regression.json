@@ -16,7 +16,7 @@
   "source_fingerprints": {
     "installer/install.sh": "8e2a67dd5b53cb9c2f34db2f23b55bf824b030797418e14f5ee72c890f49bef0",
     "installer/database-plan.py": "e806802bace54ae372e58c2450e903758df773836d31cf6fe9cefe687fb1fe23",
-    "installer/migrations.json": "500852d59eaa430aebc1bfd5f7f5383f3ab428e160c67dbb259b58d62b57d2c1",
+    "installer/migrations.json": "1b7a1571703ce2271e9cca74e4f9e56823e9eba5a5850222b7a1437351eda25f",
     "sql/00-template-schema.sql": "5e8f14d3eac67acc71c8b369a02d4c14021b034875853680661ea8d40ea12536",
     "sql/10-runtime-schema.sql": "83159b460a8433d77644f729c004ce8cc61c03dade83e0a01a721d01f5044002",
     "sql/12-operator-schema.sql": "723ff54f81ddcdd55b4761140523a183e21b8ea35565edc01a6f09ee0b46dc74",

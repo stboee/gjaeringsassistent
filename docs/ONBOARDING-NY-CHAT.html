@@ -29,6 +29,43 @@
 <h1 class="title">Onboarding av en ny chat</h1>
 </header>
 <h1 id="onboarding-av-en-ny-chat">Onboarding av en ny chat</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p>Dette er den faste inngangen for en ny chat som skal videreføre
 Gjæringsassistent. Instruksjonen beskriver hvordan prosjektforståelsen
 etableres og kontrolleres. Krav, beslutninger og strukturerte registre
@@ -38,12 +75,12 @@ href="https://github.com/stboee/gjaeringsassistent">https://github.com/stboee/gj
 Bruk gjeldende main og siste relevante release, ikke en gammel kopi av
 dette dokumentet som udatert statusfasit.</p>
 <p>Råtekst ved behov: <a
-href="https://raw.githubusercontent.com/stboee/gjaeringsassistent/main/docs/ONBOARDING-NY-CHAT.html">https://raw.githubusercontent.com/stboee/gjaeringsassistent/main/docs/ONBOARDING-NY-CHAT.md</a>.</p>
+href="https://raw.githubusercontent.com/stboee/gjaeringsassistent/main/docs/ONBOARDING-NY-CHAT.md">https://raw.githubusercontent.com/stboee/gjaeringsassistent/main/docs/ONBOARDING-NY-CHAT.md</a>.</p>
 <h2 id="1-tekst-prosjekteier-kan-gi-en-ny-chat">1. Tekst prosjekteier
 kan gi en ny chat</h2>
 <blockquote>
 <p>Vi viderefører Gjæringsassistent. Les <a
-href="https://github.com/stboee/gjaeringsassistent/blob/main/docs/ONBOARDING-NY-CHAT.html">https://github.com/stboee/gjaeringsassistent/blob/main/docs/ONBOARDING-NY-CHAT.md</a>
+href="https://github.com/stboee/gjaeringsassistent/blob/main/docs/ONBOARDING-NY-CHAT.md">https://github.com/stboee/gjaeringsassistent/blob/main/docs/ONBOARDING-NY-CHAT.md</a>
 og gjennomfør onboardingen som beskrives der. Etabler først forståelse
 av gjeldende kilder, leveranse, installasjonsstatus, arkitektur og åpent
 arbeid. Oppsummer hva du faktisk har lest, hvilke bindende prinsipper
@@ -81,9 +118,12 @@ feil.</li>
 database-reset, tester som skriver data, migrering eller
 installasjon.</p>
 <h2 id="3-les-i-denne-rekkefølgen">3. Les i denne rekkefølgen</h2>
-<p>Les først kjernen. Bruk deretter fagområdene nedenfor til målrettet
-fordypning. Ikke fyll konteksten med komplette SQL-dumper, millioner av
-katalogtegn eller gjentatte kopier av de samme dataene.</p>
+<p>Les først arbeidsreglene, README/OVERLEVERING, dokumentkart 00,
+aktive beslutninger 14 og arkitektur 07. Bruk deretter tabellen til
+målrettet fordypning i relevante krav, kontrakter og deres faktiske
+strukturerte kilder før endringer på området. Ikke fyll konteksten med
+komplette SQL-dumper, millioner av katalogtegn eller gjentatte kopier av
+de samme dataene.</p>
 <table>
 <thead>
 <tr class="header">
@@ -95,9 +135,9 @@ katalogtegn eller gjentatte kopier av de samme dataene.</p>
 <tbody>
 <tr class="odd">
 <td>Arbeidsregler og orientering</td>
-<td><a href="../AGENTS.html">AGENTS.md</a>, <a
-href="../README.html">README.md</a>, <a
-href="../OVERLEVERING.html">OVERLEVERING.md</a></td>
+<td><a href="../AGENTS.md">AGENTS.md</a>, <a
+href="../README.md">README.md</a>, <a
+href="../OVERLEVERING.md">OVERLEVERING.md</a></td>
 <td>Arbeidsmåte, aktuell leveranse, siste bekreftelser og
 avgrensninger.</td>
 </tr>
@@ -117,12 +157,19 @@ href="14-AKTIVE-BESLUTNINGER.html">aktive beslutninger 14</a></td>
 forlatte løsninger.</td>
 </tr>
 <tr class="even">
+<td>Brukerveiledning og bevaring</td>
+<td><a href="20-OPERATOERVEILEDNING.html">Operatørveiledning 20</a>, <a
+href="21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.html">kravhistorikk og
+dokumentforvaltning 21</a></td>
+<td>Praktiske handlinger, kravproveniens og bevisst gjentakelse.</td>
+</tr>
+<tr class="odd">
 <td>Produkt og arkitektur</td>
 <td><a href="01-KRAV-FELLES.html">Felles krav 01</a>, <a
 href="07-SYSTEMARKITEKTUR-OG-DATAFLYT.html">arkitektur 07</a></td>
 <td>Produktgrenser, ansvar, livsløp og dataflyt.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Kontrakter og datamodell</td>
 <td><a href="05-FRONTEND-OG-INTEGRASJONSKONTRAKT.html">Integrasjon 05</a>,
 <a href="06-DATAMODELL-OG-PERSISTENS.html">persistens 06</a>, <a
@@ -130,7 +177,7 @@ href="12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.html">operasjoner 12</a></td>
 <td>HA ↔︎ Node-RED ↔︎ MariaDB, normalisering, transaksjoner, revisjoner og
 fravær.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Gjeldende status</td>
 <td><a href="15-AAPENT-ARBEID.html">Åpent arbeid 15</a>, <a
 href="18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.html">implementasjonsstatus
@@ -138,7 +185,7 @@ href="18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.html">implementasjonsstatus
 <td>Reelt gjenstående arbeid og skillet mellom implementert, lokalt
 verifisert og målmiljøbekreftet.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Strukturerte kilder</td>
 <td>Avsnitt 4 nedenfor</td>
 <td>Faktiske registrerte kontrakter, regler, schema- og
@@ -253,7 +300,10 @@ resultatfiler og kildeavtrykk.</td>
 </tr>
 </tbody>
 </table>
-<p>contracts/ha-node-red-contract.json, den fysiske schemakatalogen og
+<p>contracts/interface-catalog.json kartlegger eierskap og kontroll for
+hele grensesnittkjeden. Den genererte grensesnittreferansen viser
+konkrete ruter/felt og publiseringskjeder.
+contracts/ha-node-red-contract.json, den fysiske schemakatalogen og
 docs/generated er avledet inspeksjon. De erstatter ikke eierregistrene.
 HTML genereres fra Markdown. Katalogdekning er ikke alene et bevis på
 full normalisering eller korrekt domenesemantikk.</p>
@@ -351,10 +401,12 @@ ikke teknisk baseline. Forlatt SQLite-runtime, separat backend eller
 writer-kø skal ikke gjeninnføres som løsning på et nytt problem.</p>
 <h2 id="8-hold-videreføringen-oppdatert">8. Hold videreføringen
 oppdatert</h2>
-<p>Etter en leveranse eller vesentlig statusendring oppdateres
-OVERLEVERING.md, relevante statusdokumenter og faktisk
-verifikasjonsgrunnlag. Bevar skillet mellom foreslått, besluttet,
-implementert, testet, publisert og installert.</p>
+<p>Etter en leveranse eller vesentlig statusendring oppdateres den
+aktuelle kildeeieren: dokument 15 for målmiljø/åpne forhold,
+kravhistorikken for avklaringer, releasehistorikken for leveranser og
+faktisk verifikasjonsgrunnlag. OVERLEVERING.md angir pågående
+avtale/neste steg og lenker til disse eierne. Bevar skillet mellom
+foreslått, besluttet, implementert, testet, publisert og installert.</p>
 <p>Noter kort: gjeldende kode/pakke, siste brukerbekreftelse, åpne
 konkrete feil, avtalt neste omfang og om arbeidet er startet. Ikke
 dupliser hele historikken i normative dokumenter.</p>

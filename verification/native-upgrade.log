@@ -98,7 +98,7 @@ SOURCE 2026.11.13-1 sql/23-measurement-source-seed.sql
 SOURCE 2026.11.13-1 sql/24-verification-metadata-seed.sql
 SOURCE 2026.11.13-1 sql/25-release-verification-results-seed.sql
 PASS 2026.11.13-1: invalid prior receipt and altered schema reject file upgrade before stopping Node-RED
-PASS 2026.11.13-1: same-schema file plan applies no domain DDL or seed
+PASS 2026.11.13-1: same-schema file plan applies no domain DDL; requirement metadata matches current documents
 PASS 2026.11.13-1: actual installer upgrades an active/retained fermentation without changing any domain table, and its compressed dump restores identically
 PASS 2026.11.13-1: reinstall keeps data and matching migration receipts; version expectations agree
 PASS unknown source is rejected before stopping Node-RED or changing user data

@@ -57,9 +57,10 @@ jobs:
           set -euo pipefail
           version="$(cat VERSION)"
           title="$(python3 -c 'from pathlib import Path; v=Path("VERSION").read_text().strip(); t=Path("RELEASE-NOTES.md").read_text().splitlines()[0].removeprefix("# "); assert t.startswith(v+" – "); print(t)')"
+          python3 tools/release_notes.py > "$RUNNER_TEMP/gjaeringsassistent-release-notes.md"
           gh release create "v$version" \
             --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
             --title "$title" \
-            --notes-file RELEASE-NOTES.md --latest \
+            --notes-file "$RUNNER_TEMP/gjaeringsassistent-release-notes.md" --latest \
             "dist/gjaeringsassistent-$version.zip" \
             "dist/gjaeringsassistent-$version.zip.sha256"

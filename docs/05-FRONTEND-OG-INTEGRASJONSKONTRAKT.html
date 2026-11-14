@@ -30,9 +30,46 @@
 </header>
 <h1 id="05--frontend--og-integrasjonskontrakt">05 – Frontend- og
 integrasjonskontrakt</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normativ semantisk HA ↔︎ Node-RED-kontrakt.
 Eksakte maskinmetadata eies av MariaDB-registeret.</p>
-<h2 id="1-autoritet-og-ansvar">1. Autoritet og ansvar</h2>
+<h2 id="autoritet-og-ansvar">Autoritet og ansvar</h2>
 <ul>
 <li><code>ha_entity_registry</code> eier aktive HA-entiteter,
 entity-/config-ID, type, retning, required-status og bootstrap.</li>
@@ -56,7 +93,7 @@ være konsistente med registeret.</li>
 <code>select.gjaeringsassistent_template</code> med config-ID
 <code>haec_field_template_v1</code>. Detaljlisten vedlikeholdes ikke
 manuelt i dokumentasjonen.</p>
-<h2 id="2-grunnregler">2. Grunnregler</h2>
+<h2 id="grunnregler">Grunnregler</h2>
 <ol type="1">
 <li>Entity-ID, config-ID, type og retning er eksplisitte og
 stabile.</li>
@@ -71,7 +108,7 @@ bruker MariaDB-state, ikke reststate i HA/browser.</li>
 <li>Måltest av operatørgrensen bruker de samme entity/event-banene som
 operatøren faktisk bruker.</li>
 </ol>
-<h2 id="3-bootstrap">3. Bootstrap</h2>
+<h2 id="bootstrap">Bootstrap</h2>
 <p>Ved Node-RED-start leses HA-register/aliases fra MariaDB før ordinær
 restore/Systemkontroll. State-bærende entiteter får registrert
 bootstrapstate; registration-only buttons registreres uten oppdiktet
@@ -80,24 +117,24 @@ normalverdi.</p>
 draft/runtime fra MariaDB publiseres over bootstrapverdien når
 read-model er tilgjengelig. Manglende måling uttrykkes som
 <code>unknown</code>/eksplisitt «ingen måling», ikke tallet 0.</p>
-<h2 id="4-entity-avstemming">4. Entity-avstemming</h2>
+<h2 id="entity-avstemming">Entity-avstemming</h2>
 <p>Hvis en required normativ ID mangler kan diagnostikk bruke
 eksplisitte aliases eller entydig suffiksvariant for å forklare mulig
 HA-kollisjon. Avstemmingen skal være generisk og basert på registeret,
 ikke hardkodede Function-lister.</p>
 <p>Legacy-ID ved siden av komplett aktiv kontrakt er informativ.
 Manglende required normativ ID er Systemkontroll-avvik.</p>
-<h2 id="5-faste-kommandoer">5. Faste kommandoer</h2>
+<h2 id="faste-kommandoer">Faste kommandoer</h2>
 <p>Normal bane:</p>
 <p><code>dashboard/custom card → HA button.press → registrert HA button → én ha-button-node → Node-RED</code></p>
 <p>Dette gjelder faste operatørhandlinger som Start, Start demo, Lagre
 målinger, Kjør systemkontroll, Neste, Tilbake, Avslutt og Gjør klar.</p>
-<h2 id="6-parameteriserte-events">6. Parameteriserte events</h2>
+<h2 id="parameteriserte-events">Parameteriserte events</h2>
 <p>Kriteriekorreksjon, process exception, tidskorrigering,
 measurement-status, template-editoroperasjoner og Teknisk eksport/notat
 kan bruke events med payload. Eksakt eventnavn/retning/listener hentes
 fra <code>ha_event_registry</code>.</p>
-<h2 id="7-kvittering">7. Kvittering</h2>
+<h2 id="kvittering">Kvittering</h2>
 <p>Mottatt HA button/event er ikke bevis på DB-commit. Muterende
 operasjon kvitteres først når persistert resultat/read-model er
 observerbart. Eksempler:</p>
@@ -110,12 +147,12 @@ read-model.</li>
 </ul>
 <p>Direkte HA-attributter skal ikke inneholde verdier som bryter
 HA-nodevalidering, særlig nullable interne råfelt.</p>
-<h2 id="8-sg-og-operatørinput">8. SG og operatørinput</h2>
+<h2 id="sg-og-operatørinput">SG og operatørinput</h2>
 <p>Manuell SG-entitet er <code>number.gjaeringsassistent_malt_sg</code>.
 Operatørinput persisteres i relevant MariaDB-draft før faglig operasjon
 bruker det. Start/Lagre målinger skal ikke bruke synlig HA-state som
 fallback dersom persisted grunnlag mangler.</p>
-<h2 id="9-ekstern-målekilde">9. Ekstern målekilde</h2>
+<h2 id="ekstern-målekilde">Ekstern målekilde</h2>
 <p>Tilt-kildene er eksterne HA-entiteter og inngår ikke i
 Gjæringsassistentens administrerte HA entity-registry. Deres ID-er eies
 av <code>measurement_source_profiles</code>.</p>
@@ -124,23 +161,23 @@ leser kildeprofilen, henter HA History til siste komplette
 5-minuttersgrense, validerer/normaliserer og fortsetter deretter
 inkrementelt mens reell session er aktiv. Heartbeat er
 datadekningssignal.</p>
-<h2 id="10-målekildeprojeksjon">10. Målekildeprojeksjon</h2>
+<h2 id="målekildeprojeksjon">Målekildeprojeksjon</h2>
 <p><code>sensor.gjaeringsassistent_malekilde</code> produseres bare fra
 MariaDB-read-modelen <code>v_measurement_source_ha_projection</code>.
 Ingest og Systemkontroll kan trigge refresh, men skal ikke bygge
 konkurrerende status. Projeksjonen skal bruke HA-sikre ferdige
 attributter og ikke sende nullable interne råfelt.</p>
-<h2 id="11-startstatus">11. Startstatus</h2>
+<h2 id="startstatus">Startstatus</h2>
 <p><code>sensor.gjaeringsassistent_startstatus</code> er
 operatør-read-model for Start-fremdrift og sluttstatus. Den er ikke
 domeneautoritet; session/importcursor i MariaDB er fasit.</p>
-<h2 id="12-release-dokumentasjonskontroll">12.
-Release-/dokumentasjonskontroll</h2>
+<h2
+id="release-dokumentasjonskontroll">Release-/dokumentasjonskontroll</h2>
 <p>Bootstrap, HA-avstemming, flow/dashboardkontroll, generert kontrakt
 og dokumenterte maskinfakta skal alle være avledet fra samme
 MariaDB-metadata. Releaseporten skal oppdage divergens mellom register,
 fysisk flow, dashboard og generert kontrakt.</p>
-<h2 id="13-verifikasjon-og-uat">13. Verifikasjon og UAT</h2>
+<h2 id="verifikasjon-og-uat">Verifikasjon og UAT</h2>
 <p><code>Verifikasjon</code> leser bare MariaDB-eide read-models for
 krav, VER, TEST og siste resultater. TECH/FUNC/UAT-status skal ikke
 beregnes på nytt i Node-RED eller frontend.</p>
@@ -150,8 +187,8 @@ Node-RED mot registrert aktiv <code>TEST-UAT-*</code> før append-only
 skrives. Verifikasjonseksport sendes som eget event og produserer JSON
 og HTML fra samme konsistente DB-grunnlag. HTML er presentasjon av dette
 grunnlaget og skal ikke innføre alternativ status-/coverage-logikk.</p>
-<h2 id="p24r8-publisering-og-diagnostikk">P24r8 publisering og
-diagnostikk</h2>
+<h2 id="read-model-publisering-og-filtransport">Read-model-publisering
+og filtransport</h2>
 <p>Oversikt bruker schema 2.5. <code>analysis.series_definitions</code>
 er en ordbok med DB-eide presentasjonsfelt. Punktets
 <code>presentation_id</code> peker på denne; frontend gjør bare oppslag
@@ -177,8 +214,45 @@ Samtidige publiseringer etterlater ett konsistent filpar; en eldre
 oversikt erstatter ikke en nyere <code>generated_at</code>. Dette endrer
 ingen database-transaksjoner eller domeneautoritet. Midlertidige
 publiseringsfiler har unik identitet per kjøring.</p>
-<h2 id="p24r12-db-eid-ha-payloadkontrakt">P24r12: DB-eid
-HA-payloadkontrakt</h2>
+<p>Node-RED skriver først DB-read-modellen til en stagingfil. Den
+eksisterende felles tools/publish_payload.js mottar én JSON-kodet jobb
+som kommandolinjeargument. Dette er transport av avledede filer;
+domenefakta forvaltes fortsatt i MariaDB.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Felt</th>
+<th>Betydning</th>
+<th>Krav</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>stage_path</td>
+<td>Absolutt sti til ferdig skrevet stagingfil i runtime/staged</td>
+<td>Påkrevd</td>
+</tr>
+<tr class="even">
+<td>target_path</td>
+<td>Absolutt JSON-mål i ha-public</td>
+<td>Påkrevd</td>
+</tr>
+<tr class="odd">
+<td>diagnostics_level</td>
+<td>summary eller full for teknisk eksport</td>
+<td>Valgfritt</td>
+</tr>
+</tbody>
+</table>
+<p>Samme kontrakt brukes for gjæringsoversikt, teknisk eksport og
+sensorinnstillinger. source_path er ikke et argument i dette
+grensesnittet. Produsenten skal levere stage_path; publisereren velger
+ingen alternativ kildefil ved manglende argument. JSON og gzip
+publiseres og leses tilbake før suksess. Resultatfeil og stderr skal gå
+til felles feilrapportering slik at de blir synlige i Teknisk
+hendelseslogg. Den tekniske kontrakten og dens kobling til produsentene
+prøves i tests/test-p24r8.js.</p>
+<h2 id="db-eid-ha-payloadkontrakt">DB-eid HA-payloadkontrakt</h2>
 <p><code>ha_projection_routes</code> knytter entity, faktisk output-slot
 og consumer-node til et registrert DB-view.
 <code>ha_projection_fields</code> definerer feltsti, datatype,
@@ -197,7 +271,7 @@ Påkrevde felter må finnes. Notater, hendelser og kontrollresultater skal
 være JSON-objekter/arrays, ikke JSON kodet som tekst. Eksakt
 inputvalidering i plugin 0.80.3 brukes i native test. Full HA-transport
 krever måltest.</p>
-<h2 id="p24r13-felles-grafkontrakt">P24r13: felles grafkontrakt</h2>
+<h2 id="felles-grafkontrakt">Felles grafkontrakt</h2>
 <p>Alle seks grafer leveres i <code>analysis.graphs</code>, med
 DB-projiserte seriedefinisjoner, punkter, akseticks, tidsmarkører,
 sisteverdier, kriteriekrav og <code>reference_bands</code>.
@@ -213,8 +287,8 @@ report. Begge bruker samme tegner og aksealgoritme. Dashboard følger
 valgt tidsvindu; rapport bruker hele gjæringen og eventuell valgt
 sammenligningsserie. Rapporten leser komplette serier selv når
 dashboardet viser siste døgn.</p>
-<h2 id="p24r15-parameteriserte-hendelser">P24r15 parameteriserte
-hendelser</h2>
+<h2 id="historiske-kommandoer-og-payloadfelt">Historiske kommandoer og
+payloadfelt</h2>
 <p>MariaDB ha_event_registry eier disse kanalene; generert
 contracts/ha-node-red-contract.json, Node-RED-listenere og dashboard
 følger samme register.</p>
@@ -296,45 +370,25 @@ felt, utfellingstid, konklusjon og notat. Måletid er pitch; faktisk
 registreringstid og operation-ID beholdes. En senere kladdendring
 omskriver ikke startobservasjonen. Et komplett manuelt målesett
 erstatter ikke kontinuerlig tidsseriedekning for et vinduskriterium.</p>
-<h2 id="teknisk-kontrakt-for-read-model-publisering">Teknisk kontrakt
-for read-model-publisering</h2>
-<p>Node-RED skriver først DB-read-modellen til en stagingfil. Den
-eksisterende felles tools/publish_payload.js mottar én JSON-kodet jobb
-som kommandolinjeargument. Dette er transport av avledede filer;
-domenefakta forvaltes fortsatt i MariaDB.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Felt</th>
-<th>Betydning</th>
-<th>Krav</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>stage_path</td>
-<td>Absolutt sti til ferdig skrevet stagingfil i runtime/staged</td>
-<td>Påkrevd</td>
-</tr>
-<tr class="even">
-<td>target_path</td>
-<td>Absolutt JSON-mål i ha-public</td>
-<td>Påkrevd</td>
-</tr>
-<tr class="odd">
-<td>diagnostics_level</td>
-<td>summary eller full for teknisk eksport</td>
-<td>Valgfritt</td>
-</tr>
-</tbody>
-</table>
-<p>Samme kontrakt brukes for gjæringsoversikt, teknisk eksport og
-sensorinnstillinger. source_path er ikke et argument i dette
-grensesnittet. Produsenten skal levere stage_path; publisereren velger
-ingen alternativ kildefil ved manglende argument. JSON og gzip
-publiseres og leses tilbake før suksess. Resultatfeil og stderr skal gå
-til felles feilrapportering slik at de blir synlige i Teknisk
-hendelseslogg. Den tekniske kontrakten og dens kobling til produsentene
-prøves i tests/test-p24r8.js.</p>
+<h2 id="vedlikehold-og-maskinlesbar-kontrakt">Vedlikehold og
+maskinlesbar kontrakt</h2>
+<p><a
+href="../contracts/interface-catalog.json">Grensesnittkatalogen</a>
+knytter denne semantikken til SQL-eiere, genererte kontrakter, fysiske
+produsenter/mottakere og kontroller. HA-kontrakten genereres fra
+registrene; den komplette feltsamlingen, bindingene og mappingene
+kontrolleres mot SQL, sammen med eksisterende
+entity-/event-/flowkontroller.</p>
+<p><a
+href="../contracts/publication-job.schema.json">Publiseringsjobbens
+skjema</a> brukes av releasekontrollene mot alle faktiske
+argumentprodusenter. Positiv prøve bruker de leverte argumentuttrykkene,
+faktisk shelltransport og publish_payload.js. Negative prøver
+introduserer source_path i stedet for stage_path, manglende/ugyldig felt
+og brudd i feilrapporteringen. En vellykket SQL-/korttest alene er ikke
+bevis for at denne filgrensen fungerer.</p>
+<p>Les <a href="generated/interface-reference.html">den genererte
+grensesnittreferansen</a> ved endringer; den er inspeksjon av
+kildegrunnlaget og ingen påstand om utført målmiljøtest.</p>
 </body>
 </html>

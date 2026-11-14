@@ -13,50 +13,50 @@
     {
       "view": "v_graph_definitions",
       "rows": 6,
-      "elapsed_ms": 1293,
+      "elapsed_ms": 1408,
       "rows_read": 79467,
       "cpu_ms": null
     },
     {
       "view": "v_graph_series",
       "rows": 26374,
-      "elapsed_ms": 1245,
+      "elapsed_ms": 1288,
       "rows_read": 71989,
       "cpu_ms": null
     },
     {
       "view": "v_graph_latest",
       "rows": 18,
-      "elapsed_ms": 1316,
+      "elapsed_ms": 1374,
       "rows_read": 71989,
       "cpu_ms": null
     },
     {
       "view": "v_graph_axis_ticks",
       "rows": 41,
-      "elapsed_ms": 1251,
+      "elapsed_ms": 1273,
       "rows_read": 73445,
       "cpu_ms": null
     },
     {
       "view": "v_graph_time_markers",
       "rows": 48,
-      "elapsed_ms": 1336,
+      "elapsed_ms": 1384,
       "rows_read": 89458,
       "cpu_ms": null
     }
   ],
   "baseline_graph_total": {
-    "elapsed_ms": 6441,
+    "elapsed_ms": 6727,
     "rows_read": 386348
   },
   "full_overview": {
-    "elapsed_ms": 9244,
+    "elapsed_ms": 9418,
     "rows_read": 54553,
     "cpu_ms": null
   },
   "with_three_historical_series": {
-    "elapsed_ms": 9112,
+    "elapsed_ms": 9061,
     "rows_read": 54598,
     "cpu_ms": null
   },
@@ -65,7 +65,7 @@
     "rows_read": 372,
     "cpu_ms": null
   },
-  "concurrent_write_ms": 0.5518799999990733,
+  "concurrent_write_ms": 0.7462059999961639,
   "checks": [
     "21 days: all six graphs/latest values retained; DB display thinning reduces points; unchanged polling skips all graph stages",
     "three complete historical series do not amplify the read; concurrent readers are private; canonical measurement UPDATE is not blocked by a read snapshot",

@@ -16,6 +16,6 @@
     "active snapshot SQLite/report/SHA; historical snapshot import; permanent local/imported deletion, rollback, replay and live protection"
   ],
   "deleted_rows": 605,
-  "active_export_sha256": "f538e74c049beaec9b6aa579b2126b5a02beba26a1eba9bc299088671bf4a1b2",
-  "concurrent_snapshot_writes": 209
+  "active_export_sha256": "64f5a2408c95ffaf4fef47c2e4acce6d0e7146f7cef75a6a7ed96d1f4edc5606",
+  "concurrent_snapshot_writes": 183
 }

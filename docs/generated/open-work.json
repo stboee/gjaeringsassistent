@@ -8,7 +8,7 @@
       "subject": "Reell HA-history/live",
       "exit_criterion": "Clean install fullfører; Start fra historisk tidspunkt importerer/validerer 5-minuttersdata, registrerer gap, replay-er B/P sekvensielt, går til LIVE og fortsetter etter restart fra persistert cursor.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 14
+      "line": 31
     },
     {
       "id": "OPEN-002",
@@ -17,7 +17,7 @@
       "subject": "Målekilde/Tilt-projeksjon",
       "exit_criterion": "Teknisk/Systemkontroll viser fersk DB-eid Tilt-status før Start/under catch-up/i LIVE uten nullable HA-attributtfeil eller konkurrerende produsent.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 15
+      "line": 32
     },
     {
       "id": "OPEN-003",
@@ -26,7 +26,7 @@
       "subject": "Datakvalitet",
       "exit_criterion": "Reelt Tilt-grunnlag demonstrerer at åpenbare outliers forkastes før `measurements_5m`, robust median brukes og kvalitetsutfall er sporbare uten clamp.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 16
+      "line": 33
     },
     {
       "id": "OPEN-004",
@@ -35,7 +35,7 @@
       "subject": "Analyse",
       "exit_criterion": "Tre aktive analysegrafer viser kun ordinære målebaserte verdier og datagrunnlag etter frozen policy; ingen oppdiktede oppstartsnuller, SG-stabilitetsbånd eller linjer gjennom datagap.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 17
+      "line": 34
     },
     {
       "id": "OPEN-005",
@@ -44,7 +44,7 @@
       "subject": "Graf/rapport",
       "exit_criterion": "Gjæring- og rapportgrafer oppdateres med nye committed 5-minuttersdata og bryter linjer ved de samme persisterte `measurement_data_gaps`.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 18
+      "line": 35
     },
     {
       "id": "OPEN-006",
@@ -53,7 +53,7 @@
       "subject": "Tidskorrigering",
       "exit_criterion": "Pitch-/B-/P-/observation-korreksjon verifiseres mot reelle data; effektive referanser endres uten å omskrive absolutte måletimestamps.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 19
+      "line": 36
     },
     {
       "id": "OPEN-007",
@@ -62,7 +62,7 @@
       "subject": "W-34/70 kriterier",
       "exit_criterion": "Hver aktiv terskel/regel er klassifisert som kildebelagt, empirisk kalibrert eller prototypegrense og vurdert mot minst representative reelle gjæringer.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 20
+      "line": 37
     },
     {
       "id": "OPEN-008",
@@ -71,7 +71,7 @@
       "subject": "Målevalideringsgrenser",
       "exit_criterion": "SG/temperatur/RSSI hard range, MAD-multiplikator, max-jump og minimum acceptance er faglig/teknisk begrunnet og justert dersom reell datadistribusjon tilsier det.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 21
+      "line": 38
     },
     {
       "id": "OPEN-009",
@@ -80,7 +80,7 @@
       "subject": "Historisk sammenligning",
       "exit_criterion": "Pitch-justert sammenligning er implementert; valg av begge datasett og avsluttet session samt persistens skal måltestes.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 22
+      "line": 39
     },
     {
       "id": "OPEN-011",
@@ -89,7 +89,7 @@
       "subject": "Lineage",
       "exit_criterion": "Required grensesnitt og aktive systemfunksjoner har komplett registrert lineage; beslutning om eventuell bredere fysisk DB-dekning er dokumentert eksplisitt.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 23
+      "line": 40
     },
     {
       "id": "OPEN-012",
@@ -98,7 +98,7 @@
       "subject": "Operatørflate",
       "exit_criterion": "Gjenstående hensiktsmessige notatplasseringer/handlingskvitteringer fra funksjonelle referanser er enten implementert eller eksplisitt avvist uten å endre domenemodellen.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 24
+      "line": 41
     },
     {
       "id": "OPEN-013",
@@ -107,7 +107,7 @@
       "subject": "Verifikasjonsmodell",
       "exit_criterion": "Eksisterende krav/tester kobles gradvis til strukturerte VER/TEST-relasjoner; manglende koblinger er synlige i Verifikasjon-fanen og skal ikke skjules med kunstig coverage-score.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 26
+      "line": 42
     },
     {
       "id": "OPEN-014",
@@ -116,7 +116,7 @@
       "subject": "Gjeldende installasjon/arkiv",
       "exit_criterion": "Installer/schema samsvarer med release-metadata; SQLite-par/sluttrapport, ny start, sammenligning og HA-gjenoppkobling verifiseres i faktisk Docker/HA/Node-RED. TEST-UAT-012/013/014 er åpne.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 28
+      "line": 43
     },
     {
       "id": "OPEN-015",
@@ -125,7 +125,7 @@
       "subject": "Oppgradering med databevaring",
       "exit_criterion": "Avtalt og verifisert oppgraderingsløp bevarer eksisterende sesjoner, templates og nødvendig historikk; reset er en særskilt tilsiktet handling.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 46
+      "line": 44
     },
     {
       "id": "OPEN-016",
@@ -134,7 +134,7 @@
       "subject": "Slurry/startfelt",
       "exit_criterion": "Den DB-baserte startflaten, komplett første målesett, sensoriske slidere, temperaturpresisjon og P/B-fravik bekreftes i brukerens HA. Rapport 08.11.2026 22:57 viste HA volum=4000/generasjon=2 mens ny DB-kladd hadde NULL. Lokal regresjon dekker dette; funksjonen i installert versjon er ikke bekreftet.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 47
+      "line": 45
     },
     {
       "id": "OPEN-017",
@@ -143,7 +143,7 @@
       "subject": "Sensorinnstillinger gir HTTP 404",
       "exit_criterion": "Publisering bruker stage_path, JSON/gzip kan leses tilbake, publiseringsfeil logges og «Les innstillinger» viser faktiske DB-felt i brukerens HA. Den pakkede rettingen bekreftes i brukerens HA.",
       "source": "15-AAPENT-ARBEID.md",
-      "line": 55
+      "line": 46
     }
   ]
 }

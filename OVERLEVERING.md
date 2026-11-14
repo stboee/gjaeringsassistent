@@ -1,51 +1,34 @@
-# Gjæringsassistent – videreføring 14.11.2026
+# Gjæringsassistent – pågående arbeid
 
-Versjon **2026.11.14-1 – Rettet publisering av sensorinnstillinger**. Publisert som v2026.11.14-1 fra kildecommit 2212b5c2ded8c44371fb61088ea3b9c858d9379c. Forrige brukerbekreftede installasjon er 2026.11.13-1. VERSION, BUILD-INFO.json, tag og bygget releasepakke fastslår leveranseidentiteten. Main kan ha nyere dokumentasjon enn publisert pakke.
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
 
-## Ny chat og arbeidsmåte
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
 
-Følg [onboarding-instruksjonen](docs/ONBOARDING-NY-CHAT.md), AGENTS.md og dokumentkart 00. Les relevante normative dokumenter og de faktiske SQL-/registry-kildene. Arbeid direkte på main uten issues/PR. Allerede godkjent arbeid videreføres uten en ny «start»-runde.
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
 
-Brukeren har bedt om ny samlet ZIP, tag og GitHub Release for denne rettingen. Bestillingen om bygg/publisering er fullført; installasjon eller restart på brukerens server inngikk ikke.
+## Avtalt omfang
 
-## Rettelsen og den eksisterende kontrakten
+Prosjekteier har sagt «start» til en samlet dokumentrevisjon: bevare god dokumentasjon, supplere mangler, bevare dialogbasert kravhistorikk og stabile ID-er, samle releasehistorikk og kontrollere strukturerte kontrakter mot faktiske produsenter/mottakere. Ansvarsdeling og sperrene mot oppdiktede verdier/defaults/workarounds skal gjentas bevisst.
 
-Brukeren har installert 2026.11.13-1 og viser 14.11.2026 «Sensorinnstillinger: HTTP 404» for /local/gjaeringsassistent/source-settings.json, samtidig som Systemkontroll viser OK. Den nye kortkoden lastes.
+## Arbeidsgrunnlag og kilder
 
-Årsaken er reprodusert: source_settings_result_v1 sendte source_path, mens tools/publish_payload.js leser stage_path. Samme stage_path-kontrakt fantes allerede for gjæringsoversikt og teknisk eksport. source_path var et feil argumentnavn i den nye sensornoden; rettingen endrer ikke publiseringsgrensesnittet. Dokument 05 beskriver nå kontrakten eksplisitt.
+Revisjonen startet fra a69a78394a3997705152d1253f68ceef3be85a6f. Publisert programvare identifiseres av [releasekvitteringen](verification/published-release-2026.11.14-1.json); dette dokumentet er ingen ny releasekvittering. Krav og beslutninger eies av dokument 01–04/14, historikk av dokument 21, målmiljøstatus av dokument 15 og grensesnitt av dokument 05/12 samt contracts/interface-catalog.json.
 
-Produsenten sender stage_path. Exec-resultat og stderr er koblet til den eksisterende felles resultat-/feilrapporteringen slik at nye publiseringsfeil blir synlige i Teknisk hendelseslogg. Ingen faglige beregninger eller domenemodell endres.
+## Gjennomført dokumentrevisjon
 
-Den utvidede tests/test-p24r8.js prøver faktiske produsentargumenter, fysiske flowkoblinger, shell-rundtur, JSON/gzip-publisering og tilbake-lesing samt feilrapportering. Testen reproduserte feilen før rettingen og bestod etterpå. Transportfixturet er ikke konstruert faglig målegrunnlag. Beviset har kildeavtrykk og kontrolleres i releaseporten.
+Dokumentene er omorganisert etter emne, operatørveiledning og samlet kravhistorikk er opprettet, og grensesnittkatalogen knytter kontrakter til faktiske SQL-/flow-/mottakergrenser. 264 krav og 68 beslutninger har uendret ID og innhold. De fem opprinnelige strukturerte schema-/HA-kontraktene og runtime flow/kort er bevart byte-identisk. Dokumentbygget er skilt fra runtimegenerering.
 
-## Levering og databevaring
+Filoppgradering oppdaterer nå også den tekniske krav-/beslutningskatalogen, slik at kildehenvisninger følger dokumentene. Alle fem oppgraderingsbaner og ny native integrasjonskjøring har bestått; se revisjonsbeviset for presis kilde/omfang. Publisert programvare er fortsatt den uendrede 2026.11.14-1. Ved en senere programvareutgivelse må ny versjon og migreringskvittering fra faktisk publisert kilde brukes; denne dokumentrevisjonen er ikke bekreftet installert.
 
-Rettelsen leveres samlet med ordinær installer. Manuell redigering av source_path er ikke en forutsetning for denne pakken.
+## Videreføring
 
-Fra 2026.11.13-1 brukes en egen files-plan: den krever samme fysiske målstruktur og samsvarende tidligere migreringskvittering, oppdaterer leverte filer og versjonsmetadata og beholder domenetabeller, rutiner og views. Privat backup tas før endring. Eldre støttede kilder p24r16, 2026.11.07-1, 2026.11.09-1 og 2026.11.09-2 følger deklarerte migreringer. Ukjent struktur/versjon eller feil kvittering avvises.
-
-Runtime-schema **11**, template-schema **4**, **216 InnoDB-tabeller og 193 views**. Se installer/migrations.json for strukturavtrykk og rekkefølge. Eksisterende sensorvalg, aktiv gjæring, frozen grunnlag, historikk og kladder skal bevares.
-
-## Verifikasjon og målmiljø
-
-Se TEST-RESULTS.md, verification/release-results.json og kildebundne regresjonsfiler for faktisk gjennomført verifikasjon. Modellen har 39 automatiserte TEST og 14 UAT. MariaDB 12.3.3 og plugin 0.80.3 er faktiske testavhengigheter. Chromium kjører kortet med kontrollert HA-skall/transport; dette er ikke brukerens installerte Home Assistant.
-
-Oppgraderingstesten bruker faktisk installer fra en uendret bygget pakkekopi, simulert Docker-transport og native MariaDB. Komprimert backup gjenopprettes på en separat isolert server. Root-kravet prøves i et upriviligert user namespace. Ingen produksjonsinstallasjon, migrering eller restart er kjørt av denne arbeidsøkten.
-
-Prosjekteier bekrefter installasjon av 2026.11.13-1 den 14.11.2026. Installasjon og funksjon av 2026.11.14-1 er ikke bekreftet. OPEN-017 står åpen for måltest: «Les innstillinger» skal vise DB-feltene og JSON-filen skal være tilgjengelig. De øvrige UAT beholder sine faktiske statuser. Ferske fullstendige tekniske målrapporter er ikke mottatt.
-
-## Arkitektursperrer
-
-MariaDB/InnoDB er eneste persistente domeneautoritet. Node-RED er generisk motor/transport; HA viser ferdige DB-felt og sender handlinger. Registry → template → normalisert frozen sesjon → generisk evaluering. Ingen skjulte defaults, alternative frontend-beregninger, generell writer-kø eller normal applikasjonslocking. SG-only, separate B/P-faser og ingen automatisk fysisk utstyrsstyring.
-
-Append-only gjelder fakta/revisjoner i hver beholdt sesjon. Hele historiske sesjoner og ubrukte importerte templates kan slettes eksplisitt og atomisk. Felles grafgrunnlag og tegner brukes i dashboard/rapport. SQLite-par er arkiv-/utvekslingsformat; operativ sammenligning leser MariaDB.
-
-## Publisering
-
-Datoversjon ÅÅÅÅ.MM.DD-N med v-prefiks på tag og kort releasebeskrivelse. Releasejobben bygger og kontrollerer samme kildecommit før ZIP/SHA publiseres. Kontroller Actions, tag og nedlastet pakke; et lokalt forberedelsesbygg har en annen hash enn CI-pakken. Eksisterende tag/artefakt skal ikke omskrives. Publiseringskvitteringer i verification/published-release-*.json føres etter faktisk nedlasting og kontroll.
-
-## Kontrollert publisering 14.11.2026
-
-GitHub Actions [43595618068](https://github.com/stboee/gjaeringsassistent/actions/runs/43595618068) bestod. [Release v2026.11.14-1](https://github.com/stboee/gjaeringsassistent/releases/tag/v2026.11.14-1) og tag peker på 2212b5c2ded8c44371fb61088ea3b9c858d9379c. Den faktisk nedlastede CI-pakken er 1 850 000 byte, SHA-256 77a595abe88b46940a7cb7c3c9996e46af95e7b889c0f2dd8d4b6aeaee1339be. Sidecar, GitHub-digest, ZIP-CRC, alle 241 interne SHA-256 og BUILD-INFO-kildecommit er kontrollert. 39 automatiserte PASS og kritiske filer samsvarer med testet kilde. Kvittering: verification/published-release-2026.11.14-1.json.
-
-Denne kvitteringen og oppdatert videreføringsstatus ligger på main etter releasecommitten; de omskriver ikke den publiserte ZIP-en. Installasjon og målmiljøtest av denne utgaven gjenstår.
+Les [onboarding](docs/ONBOARDING-NY-CHAT.md) og [dokumentkartet](docs/00-DOKUMENTKART-OG-STATUS.md). Se docs/sources/document-revision.json og verification/documentation-review.json for faktisk revisjonsregnskap og kontroller. Oppdagede kilde-/kontraktavvik skal være eksplisitte; eldre native bevis skal ikke gis ny testdato eller versjon uten ny kjøring. Dokumentrevisjon på main er forskjellig fra innholdet i en allerede publisert ZIP.

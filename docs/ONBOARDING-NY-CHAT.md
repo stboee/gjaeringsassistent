@@ -7,6 +7,21 @@ source_format: markdown
 
 # Onboarding av en ny chat
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 Dette er den faste inngangen for en ny chat som skal videreføre Gjæringsassistent. Instruksjonen beskriver hvordan prosjektforståelsen etableres og kontrolleres. Krav, beslutninger og strukturerte registre beholder sine egne autoritative kilder; denne siden er et lesekart.
 
 Repository: https://github.com/stboee/gjaeringsassistent.
@@ -32,13 +47,14 @@ Onboarding er lesing og inspeksjon. Den starter ikke containere, database-reset,
 
 ## 3. Les i denne rekkefølgen
 
-Les først kjernen. Bruk deretter fagområdene nedenfor til målrettet fordypning. Ikke fyll konteksten med komplette SQL-dumper, millioner av katalogtegn eller gjentatte kopier av de samme dataene.
+Les først arbeidsreglene, README/OVERLEVERING, dokumentkart 00, aktive beslutninger 14 og arkitektur 07. Bruk deretter tabellen til målrettet fordypning i relevante krav, kontrakter og deres faktiske strukturerte kilder før endringer på området. Ikke fyll konteksten med komplette SQL-dumper, millioner av katalogtegn eller gjentatte kopier av de samme dataene.
 
 | Trinn | Kilder | Hva du skal forstå |
 |---|---|---|
 | Arbeidsregler og orientering | [AGENTS.md](../AGENTS.md), [README.md](../README.md), [OVERLEVERING.md](../OVERLEVERING.md) | Arbeidsmåte, aktuell leveranse, siste bekreftelser og avgrensninger. |
 | Identitet og bevis | VERSION, BUILD-INFO.json, RELEASE-MANIFEST.json, RELEASE-NOTES.md, TEST-RESULTS.md i repo-roten; GitHub Release og relevant Actions-kjøring | Hvilken kode/pakke bevisene gjelder, og hva som faktisk er levert og testet. |
 | Dokumenthierarki og beslutninger | [Dokumentkart 00](00-DOKUMENTKART-OG-STATUS.md), [aktive beslutninger 14](14-AKTIVE-BESLUTNINGER.md) | Hvem som eier ulike informasjonstyper, gjeldende beslutninger og forlatte løsninger. |
+| Brukerveiledning og bevaring | [Operatørveiledning 20](20-OPERATOERVEILEDNING.md), [kravhistorikk og dokumentforvaltning 21](21-KRAVHISTORIKK-OG-DOKUMENTFORVALTNING.md) | Praktiske handlinger, kravproveniens og bevisst gjentakelse. |
 | Produkt og arkitektur | [Felles krav 01](01-KRAV-FELLES.md), [arkitektur 07](07-SYSTEMARKITEKTUR-OG-DATAFLYT.md) | Produktgrenser, ansvar, livsløp og dataflyt. |
 | Kontrakter og datamodell | [Integrasjon 05](05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md), [persistens 06](06-DATAMODELL-OG-PERSISTENS.md), [operasjoner 12](12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md) | HA ↔ Node-RED ↔ MariaDB, normalisering, transaksjoner, revisjoner og fravær. |
 | Gjeldende status | [Åpent arbeid 15](15-AAPENT-ARBEID.md), [implementasjonsstatus 18](18-IMPLEMENTASJONS-OG-VERIFIKASJONSSTATUS.md), [akseptanse 09](09-AKSEPTANSETEST.md) | Reelt gjenstående arbeid og skillet mellom implementert, lokalt verifisert og målmiljøbekreftet. |
@@ -69,7 +85,7 @@ Før arbeid på et område leses også de relevante detaljene:
 | Regler og frosset sesjonsgrunnlag | sql/01-template-registry-seed.sql, sql/02-runtime-registry-seed.sql, sql/03-w3470-template-seed.sql, sql/04-ale-templates-seed.sql, sql/23-measurement-source-seed.sql og berørte session-relasjoner. |
 | Verifikasjon og faktiske resultater | verification/test-catalog.json, verification/verification-model.json, sql/24-verification-metadata-seed.sql, sql/25-release-verification-results-seed.sql og verification_test_runs/verification_test_results. Les relevante resultatfiler og kildeavtrykk. |
 
-contracts/ha-node-red-contract.json, den fysiske schemakatalogen og docs/generated er avledet inspeksjon. De erstatter ikke eierregistrene. HTML genereres fra Markdown. Katalogdekning er ikke alene et bevis på full normalisering eller korrekt domenesemantikk.
+contracts/interface-catalog.json kartlegger eierskap og kontroll for hele grensesnittkjeden. Den genererte grensesnittreferansen viser konkrete ruter/felt og publiseringskjeder. contracts/ha-node-red-contract.json, den fysiske schemakatalogen og docs/generated er avledet inspeksjon. De erstatter ikke eierregistrene. HTML genereres fra Markdown. Katalogdekning er ikke alene et bevis på full normalisering eller korrekt domenesemantikk.
 
 Du trenger ikke et kjørende målmiljø for å gjennomføre kildeonboarding. Skill kildeinspeksjon fra faktisk kontroll av installert MariaDB/HA/Node-RED.
 
@@ -119,7 +135,7 @@ Historiske pakker brukes bare når dagens dokumentasjon uttrykkelig gir dem en r
 
 ## 8. Hold videreføringen oppdatert
 
-Etter en leveranse eller vesentlig statusendring oppdateres OVERLEVERING.md, relevante statusdokumenter og faktisk verifikasjonsgrunnlag. Bevar skillet mellom foreslått, besluttet, implementert, testet, publisert og installert.
+Etter en leveranse eller vesentlig statusendring oppdateres den aktuelle kildeeieren: dokument 15 for målmiljø/åpne forhold, kravhistorikken for avklaringer, releasehistorikken for leveranser og faktisk verifikasjonsgrunnlag. OVERLEVERING.md angir pågående avtale/neste steg og lenker til disse eierne. Bevar skillet mellom foreslått, besluttet, implementert, testet, publisert og installert.
 
 Noter kort: gjeldende kode/pakke, siste brukerbekreftelse, åpne konkrete feil, avtalt neste omfang og om arbeidet er startet. Ikke dupliser hele historikken i normative dokumenter.
 

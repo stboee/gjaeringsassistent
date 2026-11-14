@@ -30,6 +30,43 @@
 </header>
 <h1 id="04--krav-installer-og-release">04 – Krav: installer og
 release</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normative krav til installer og
 releasegrense.</p>
 <h2 id="ansvarsgrense">Ansvarsgrense</h2>
@@ -93,8 +130,8 @@ installasjonen. Applikasjonen verifiserer applikasjonen.</em></p>
 oppstart. Dette er nødvendig fordi <code>ha-public</code> er et separat
 bind-mount som skygger tilsvarende katalog under hoved-mountet
 <code>/data</code>.</p>
-<h2 id="p23-verifikasjons-dokumentasjonskrav">P23
-verifikasjons-/dokumentasjonskrav</h2>
+<h2 id="verifikasjon-og-dokumentleveranse">Verifikasjon og
+dokumentleveranse</h2>
 <table>
 <thead>
 <tr class="header">
@@ -158,54 +195,10 @@ nytt.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="p24r14-avgrenset-lesing-og-publisering">p24r14: avgrenset lesing
-og publisering</h2>
-<p><code>tools/overview_reads.sql</code>,
-<code>tools/report_reads.sql</code> og <code>sql/20-views.sql</code> er
-de autoritative lesedefinisjonene.
-<code>tools/build_read_queries.py</code> kompilerer disse til
-DB-prosedyrer i <code>sql/11-runtime-routines.sql</code>.
-<code>contracts/read-execution-schema.json</code> inneholder faktiske
-MariaDB-typer, tegnsett og kollasjoner;
-<code>read-execution-plan.json</code> beskriver avhengighetsrekkefølgen.
-Ingen domeneformel oversettes til en ny JavaScript-implementasjon.</p>
-<p><code>ga_init_read_basis</code> oppretter tomme, forbindelsesprivate
-tabeller før read-only-transaksjonen. <code>ga_fill_read_basis</code>
-tar bare med valgt sesjon og eventuell valgt sesjonssammenligning via
-deklarerte eierskaps-FK-er. Globale bibliotekvalg og tekniske problemer
-beholder sin globale betydning. Kilder leses med vanlige konsistente
-SELECT-er; JSON_TABLE fyller de private tabellene internt i databasen.
-Tidsserier deles i dagsgrupper for å begrense intern JSON-størrelse.
-Ingen stor JSON-pakke sendes frem og tilbake over DB-adapteren.
-Mellomresultater beregnes én gang i SQL, i avhengighetsrekkefølge.
-Private Aria-tabeller er avledede engangsresultater; de er ingen
-permanent autoritet. Permanente tabeller beholder InnoDB og normal
-transaksjonshåndtering.</p>
-<p><code>ga_read_overview</code> og <code>ga_read_report</code> eier
-normalt sitt konsistente read-only-snapshot og rydder etter både suksess
-og feil. SQLite-arbeideren oppretter tabellene før sitt snapshot og
-gjenbruker rapportlesingen innen samme snapshot som arkivinnholdet. Den
-rydder etter commit/rollback. Ingen global kø eller manuell skrivelås
-innføres.</p>
-<p><code>ga_poll_overview</code> sammenligner kildenes antall/siste
-daterte endring og valgsekvenser med siste vellykkede
-publiseringskvittering. Dette er en invalidasjonskontroll over fysiske
-tabeller, ikke en ny kjøring av grafviews. Permanente uforanderlige
-parameterbarn dekkes av eierens daterte revisjon. Handlinger tvinger
-full oppdatering; tid, konfigurasjon uten egen endringsdato og ferskhet
-vurderes minst hvert DB-angitte
-<code>overview_clock_refresh_seconds</code> (60 sekunder).
-Detaljpunktoppløsning er fortsatt fem minutter.
-<code>read_model_publication_receipts</code> lagrer bare tekniske
-publiseringsfakta, ikke domene- eller grafverdier. Node-RED kvitterer
-først etter vellykket atomisk publisering.</p>
-<p>Kriterier har separate DB-felt for originalt templatekrav, effektivt
-krav og vurderingssnapshot. <code>criterion_basis_current</code> kommer
-fra nullsikker sammenligning av vurdert og gjeldende kriterierevisjon.
-Før ny vurdering viser DB «Venter på ny vurdering», og prosessberedskap
-er <code>not_evaluated</code>. Historiske bevis endres ikke.
-<code>v_criterion_correction_receipts</code> finner en vurdering som
-bruker den nøyaktige revisjonen også etter automatisk B-overgang.
-Frontend bruker DB-kvitteringens melding.</p>
+<p>Lesearkitektur, private snapshot-tabeller og publiseringskvittering
+er beskrevet i <a
+href="07-SYSTEMARKITEKTUR-OG-DATAFLYT.html#avgrenset-lesing-snapshots-og-publiseringskvittering">dokument
+07</a>. Dette er applikasjonsarkitektur; installeren leverer de
+deklarerte definisjonene.</p>
 </body>
 </html>

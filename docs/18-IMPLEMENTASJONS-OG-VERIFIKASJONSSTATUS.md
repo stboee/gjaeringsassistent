@@ -7,7 +7,22 @@ source_format: markdown
 
 # 18 – Implementasjons- og verifikasjonsstatus
 
-**Gjeldende release:** `2026.11.14-1`. Teknisk utgangspunkt er p24r16. Releasehistorikk ligger i RELEASE-NOTES.md.
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
+Denne oversikten beskriver tilgjengelige funksjoner i kildegrunnlaget. Eksakt leveranse og testkjøring identifiseres av VERSION/BUILD-INFO og bevisenes kildeavtrykk.
 
 Implementert, lokalt release-verifisert og målmiljø-verifisert er forskjellige statusnivåer. TEST-RESULTS.md og faktiske verification_test_runs/verification_test_results viser testbevis; dokument 15/09 viser åpne måltester. Ingen grønn releaseport er alene bevis på fungerende operatørflyt i Home Assistant.
 
@@ -32,10 +47,5 @@ Runtime-schema er 11, template-schema 4. Eksakte tabell-/view-/HA-tall følger g
 
 S-04/M42 er publiserte normaliserte gjærprofiler. Faktisk gjæring med profilene og faglig kalibrering er ikke utført av programvaretestene. HA-timesstatistikk er grafgrunnlag, ikke oppdiktet ordinært B/P-målegrunnlag.
 
-Prosjekteier bekrefter 14.11.2026 at 2026.11.13-1 er installert i målmiljøet. Siste vedlagte tekniske målrapport er fortsatt fra p24r16 08.11.2026 kl. 22:57. Installasjonsbekreftelsen dokumenterer ikke funksjon, databevaring eller de enkelte UAT-testene; konkrete måltester står fortsatt åpne.
 
-Brukerens nye observasjon av to konfigurasjonsfeil etter templatevalg er reprodusert lokalt i 2026.11.09-1. Årsaken er manglende godkjenning av `startfields` i kortets konfigurasjonskontroll, rettet i 2026.11.09-2. Faktisk HA-/nettleserbekreftelse gjenstår.
-
-## Rettet publisering av sensorinnstillinger
-
-OPEN-017: Brukerens målmiljø viser HTTP 404 for source-settings.json etter installasjon av 2026.11.13-1. Feil parameter source_path er rettet til stage_path i DB-resultatets publiseringsjobb. Publiseringsresultat og stderr er koblet til den eksisterende felles feilrapporteringen. Den utvidede tests/test-p24r8.js prøver produsent/publiserer-grensen og faktisk JSON/gzip-tilbake-lesing og har bestått. Rettelsen inngår i 2026.11.14-1. TEST-RESULTS.md angir faktisk releaseverifikasjon; målmiljøbekreftelse av den nye pakken gjenstår.
+Sensorinnstillingenes publiseringskontrakt er implementert og har lokal transportregresjon. Målbekreftelse følger OPEN-017. Se [dokument 15](15-AAPENT-ARBEID.md) for all dokumentert installasjons-/målmiljøstatus og [TEST-RESULTS](../TEST-RESULTS.md) for releasens bevis. Historiske feil og rettinger beskrives i releasehistorikken.

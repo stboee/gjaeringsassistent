@@ -8,7 +8,6 @@
 
 Leveres som samlet ZIP/SHA med ordinær installer. Kjør `./installer/install.sh` fra den utpakkede pakken. Målmiljøbekreftelse gjenstår; se TEST-RESULTS.md og dokument 09/15.
 
-## Tidligere utgaver
 
 # 2026.11.13-1 – Målesett, sensorer og kriteriefravik
 
@@ -23,7 +22,6 @@ Leveres som samlet ZIP/SHA med ordinær installer. Kjør `./installer/install.sh
 
 Se TEST-RESULTS.md for faktisk testbevis og åpne måltester. Installer med ./installer/install.sh og last dashboardet på nytt med Ctrl+F5.
 
-## Tidligere utgaver
 
 # 2026.11.09-2 – Rettede startkort
 
@@ -33,7 +31,6 @@ Se TEST-RESULTS.md for faktisk testbevis og åpne måltester. Installer med ./in
 
 Installeren er kjørbar direkte fra den utpakkede pakken. Installer med `./installer/install.sh` og last Home Assistant-dashboardet på nytt med Ctrl+F5. Se TEST-RESULTS.md for faktisk testomfang; nettleser-UAT i målmiljøet er fortsatt åpen.
 
-## Tidligere utgaver
 
 # 2026.11.09-1 – Databevaring og trygg oppstart
 
@@ -45,7 +42,6 @@ Installeren er kjørbar direkte fra den utpakkede pakken. Installer med `./insta
 
 Se TEST-RESULTS.md for faktisk bevis og begrensninger. Lokal HA-/Docker-transport er simulert; installasjon og brukerflate på gangpc er ikke målbekreftet.
 
-## Tidligere utgave
 
 # 2026.11.07-1 – Første GitHub-utgave
 
@@ -61,3 +57,7 @@ Første utgave i nytt repository, med siste fungerende p24r16 som teknisk grunnl
 MariaDB 12.3.3, Node-RED 5.0.7, HA-plugin 0.80.3 og mysql-palett 3.0.4 videreføres. Runtime-schema er 9 og template-schema 4. Se TEST-RESULTS.md for faktisk testomfang og åpne måltester.
 
 **Installeren resetter fortsatt databasen. Utgaven er ikke en databevarende produksjonsoppgradering.** Eksporter sesjoner/templates som skal beholdes før tilsiktet installasjon. Neste avgrensede arbeid er et oppgraderingsløp med bevaring av data.
+
+## Dokumentrevisjon på main etter siste publisering
+
+Godkjent 14.11.2026: emnebasert dokumentstruktur, operatørveiledning, samlet krav-/beslutningsproveniens, bevisste gjentatte arkitektursperrer og samlet kontrollert grensesnittkatalog. Denne kilderevisjonen er ikke en ny programvareutgave og endrer ikke en eksisterende release/tag/ZIP. Faktisk revisjonsbevis følger verification/documentation-review.json.

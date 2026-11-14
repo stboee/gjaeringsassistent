@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Build/test-time contract ownership and bindings; no domain runtime state.",
+  "interfaces": [
+    {
+      "interface_id": "IF-DB-NR",
+      "name": "MariaDB ↔ Node-RED",
+      "authority": [
+        "docs/12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md",
+        "sql/11-runtime-routines.sql",
+        "sql/12-operator-routines.sql",
+        "sql/20-views.sql",
+        "tools/overview_reads.sql",
+        "tools/report_reads.sql"
+      ],
+      "derived_or_captured": [
+        "contracts/read-model-columns.json",
+        "contracts/read-execution-schema.json",
+        "contracts/read-execution-plan.json",
+        "contracts/physical-schema.json"
+      ],
+      "implementation": [
+        "nodered/flows.template.json",
+        "tools/build_read_queries.py"
+      ],
+      "checks": [
+        "tests/verify-read-model-contract.py",
+        "tests/verify-interface-contracts.py",
+        "tests/test-p24r15-live.js",
+        "tests/test-start-control-live.js"
+      ],
+      "semantics": {
+        "charset": "utf8mb4_unicode_ci",
+        "persistent_time": "UTC",
+        "required_absence": "Reject incomplete required data; model legitimate absence; never invent 0.",
+        "receipt": "Committed DB/read-model outcome, not accepted ingress."
+      }
+    },
+    {
+      "interface_id": "IF-NR-HA",
+      "name": "Node-RED ↔ Home Assistant",
+      "authority": [
+        "docs/05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+        "sql/21-system-metadata-seed.sql"
+      ],
+      "derived_or_captured": [
+        "contracts/ha-node-red-contract.json"
+      ],
+      "implementation": [
+        "nodered/flows.template.json",
+        "dashboard/gjaeringsassistent-dashboard.yaml",
+        "dashboard/gjaeringsassistent-card.js"
+      ],
+      "checks": [
+        "tests/verify-ha-contract.py",
+        "tests/verify-interface-contracts.py",
+        "tests/verify-p24r15.py",
+        "tests/test-operator-ui.js"
+      ],
+      "registries": [
+        "ha_entity_registry",
+        "ha_event_registry",
+        "ha_entity_input_bindings",
+        "ha_entity_input_value_mappings",
+        "ha_projection_routes",
+        "ha_projection_fields",
+        "ha_draft_output_bindings",
+        "ha_entity_number_constraints",
+        "start_field_rules",
+        "start_field_pitch_modes"
+      ],
+      "semantics": {
+        "required_absence": "Required fields cannot disappear; declared absence policy governs optional fields.",
+        "input": "Explicit operator input; HA state is not fallback domain data.",
+        "output": "DB-owned values and presentation; no local domain interpretation."
+      }
+    },
+    {
+      "interface_id": "IF-NR-PUBLICATION",
+      "name": "Node-RED → JSON/gzip-publisering",
+      "authority": [
+        "docs/05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+        "contracts/publication-job.schema.json"
+      ],
+      "derived_or_captured": [],
+      "implementation": [
+        "nodered/flows.template.json",
+        "tools/publish_payload.js"
+      ],
+      "checks": [
+        "tests/verify-interface-contracts.py",
+        "tests/test-interface-contracts.js",
+        "tests/test-p24r8.js"
+      ],
+      "job_schema": "contracts/publication-job.schema.json",
+      "pipelines": [
+        {
+          "producer": "p20_overview_result",
+          "staging": "p20_overview_file",
+          "arguments": "p24r8_publication_args",
+          "executor": "p24r8_publication_exec",
+          "success": "p24r8_publication_result",
+          "stderr": "p24r8_publication_stderr"
+        },
+        {
+          "producer": "p20_technical_export_result",
+          "staging": "p20_technical_export_file",
+          "arguments": "p24r8_publication_args",
+          "executor": "p24r8_publication_exec",
+          "success": "p24r8_publication_result",
+          "stderr": "p24r8_publication_stderr"
+        },
+        {
+          "producer": "source_settings_result_v1",
+          "staging": "source_settings_staging_file_v1",
+          "arguments": "source_settings_publication_args_v1",
+          "executor": "source_settings_publish_v1",
+          "success": "p24r8_publication_result",
+          "stderr": "p24r8_publication_stderr"
+        }
+      ],
+      "semantics": {
+        "authority": "Derived transport files only; MariaDB retains domain authority.",
+        "receipt": "JSON/gzip readback precedes success; errors enter Technical event handling.",
+        "stage_path": "Required; source_path is not an alias."
+      }
+    }
+  ]
+}

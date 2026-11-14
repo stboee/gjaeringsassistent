@@ -30,10 +30,47 @@
 </header>
 <h1 id="10--regel--og-evalueringsmodell">10 – Regel- og
 evalueringsmodell</h1>
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+
+<p><strong>Gjennomgående ansvarsdeling og arkitektursperrer</strong></p>
+<ul>
+<li>MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for
+domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende
+tilstand. Informasjon lagres der og hentes derfra.</li>
+<li>HA/frontend viser ferdige DB/read-model-felt og formidler
+handlinger. Node-RED er generisk motor, orkestrering og transport;
+HA-state er ikke domenefasit.</li>
+<li>Ingen oppdiktede verdier, lokale defaults, fallback,
+reserveberegninger, hardkodede fagregler eller workarounds for
+manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og
+skal være synlig.</li>
+<li>Påkrevde felt kan ikke utelates; reelt fravær modelleres og
+forklares, aldri som 0. Ingen nødvendig domenestate i
+flow/global/context, nettleser, HA eller lokale runtimefiler.</li>
+<li>Registry → template → normalisert frozen session → generisk motor.
+Sessionens grunnlag, rettigheter og policy er eksplisitte og
+sporbare.</li>
+<li>Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner
+håndhever integritet. InnoDB håndterer normal samtidighet; ingen global
+writer-kø, normal applikasjonslocking eller retry som skjuler
+modellfeil.</li>
+<li>Fakta og korreksjoner innen beholdte sesjoner er append-only.
+Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er
+særskilt modellerte operasjoner.</li>
+<li>SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk
+fysisk styring. Dashboard og rapport bruker felles autoritativt
+seriegrunnlag og graftegner uten estimerte målinger.</li>
+</ul>
+<p>Flyktig transport, ulagret operatørinput og tegnekoordinater gir
+ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas
+bevisst og kontrolleres mot samme kilde; se dokument 14 for
+begrunnelser.</p>
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 <p><strong>Rolle:</strong> Normativ, generisk
 regel-/kriterie-/datakvalitetsmodell. Profilspesifikke W-34/70-valg
 beskrives i dokument 16 og eksakte aktive verdier genereres fra SQL.</p>
-<h2 id="1-fire-lag">1. Fire lag</h2>
+<h2 id="fire-lag">Fire lag</h2>
 <p>Regelmodellen har fire eksplisitte lag:</p>
 <ol type="1">
 <li><strong>Registry</strong> – tillatt vokabular: metrics, generiske
@@ -51,7 +88,7 @@ modelltype mot frozen data og persisterer resultat/provenance.</li>
 B3 eller prosesstrinnet heter P4. Manglende/inkonsistent frozen grunnlag
 gir <code>invalid_configuration</code> eller annet eksplisitt manglende
 datagrunnlag; ingen skjulte defaults.</p>
-<h2 id="2-felles-kriteriespråk">2. Felles kriteriespråk</h2>
+<h2 id="felles-kriteriespråk">Felles kriteriespråk</h2>
 <p>B- og P-kriterier bruker samme ytre modell: identitet, metric,
 criterion model, role, label og typed parameters. Aktive generiske
 kriteriemodeller omfatter:</p>
@@ -70,7 +107,7 @@ alene;</li>
 </ul>
 <p>Nye kriteriemodeller implementeres ett sted og kan brukes av både B
 og P.</p>
-<h2 id="3-eksplisitt-kriteriestatus">3. Eksplisitt kriteriestatus</h2>
+<h2 id="eksplisitt-kriteriestatus">Eksplisitt kriteriestatus</h2>
 <p>Persistert kriterieresultat har eksplisitt
 <code>evaluation_status</code>:</p>
 <table>
@@ -113,7 +150,7 @@ og P.</p>
 </table>
 <p><code>valid=0</code> er ikke synonym for konfigurasjonsfeil. Frontend
 skal bruke persistert status/read-modeltekst.</p>
-<h2 id="4-freshness-vindu-persistens-og-warm-up">4. Freshness, vindu,
+<h2 id="freshness-vindu-persistens-og-warm-up">Freshness, vindu,
 persistens og warm-up</h2>
 <p>Begrepene skal holdes adskilt:</p>
 <ul>
@@ -129,7 +166,7 @@ tidsserie i det hele tatt kan produsere autoritativt punkt;</li>
 </ul>
 <p>Registrert <code>measurement_data_gaps</code> bryter kontinuitet der
 modellen krever sammenhengende datagrunnlag.</p>
-<h2 id="5-metricberegning-og-gyldighetsdomene">5. Metricberegning og
+<h2 id="metricberegning-og-gyldighetsdomene">Metricberegning og
 gyldighetsdomene</h2>
 <p>Hver avledet metric peker på generisk beregningsmodell med deklarerte
 inputs og typed parametere. Metric-registry har i tillegg et
@@ -137,7 +174,7 @@ gyldighetsdomene som fryses til template/session.</p>
 <p>Hvis beregningsoutput ligger utenfor frozen domene, er metricen
 ugyldig grunnlag. Den kan ikke tilfredsstille B/P-kriterium og skal ikke
 persisteres som gyldig Analyse-punkt. Verdien skal ikke clampes.</p>
-<h2 id="6-målevalidering">6. Målevalidering</h2>
+<h2 id="målevalidering">Målevalidering</h2>
 <p>Målekildevalidering følger samme deklarative mønster:</p>
 <pre class="text"><code>source profile validation registry
 → freeze til session
@@ -150,7 +187,7 @@ metadata, ikke i motoren.</p>
 <p>Forkastede samples skal ikke bli autoritative data. Kvalitetsutfall
 persisteres separat slik at datarensing er sporbar uten å lagre en
 korrigert/opdiktet måleverdi som sannhet.</p>
-<h2 id="7-analysemetadata">7. Analysemetadata</h2>
+<h2 id="analysemetadata">Analysemetadata</h2>
 <p>Om en verdi skal ha graf er template-/sessionmetadata.
 Graph/series-metadata kan blant annet angi:</p>
 <ul>
@@ -172,12 +209,12 @@ Runtimeaksen er read-model-avledet fra den faktiske sessionen; templaten
 skal ikke tvinge et unødvendig stort fast Y-spenn. Frontend itererer
 read-modelen og kjenner ikke graf-ID-ene som domenegren eller beregner
 eget akseområde.</p>
-<h2 id="8-biologisk-progresjon">8. Biologisk progresjon</h2>
+<h2 id="biologisk-progresjon">Biologisk progresjon</h2>
 <p>B1–B6 er generiske ordnede faseplasser. Biologisk overgang er
 sekvensiell: bare neste aktiverte B-fase vurderes som overgangskandidat.
 Historisk replay går kronologisk; en senere fase kan ikke hoppes til
 bare fordi kriteriene ved siste tidspunkt også ville vært oppfylt.</p>
-<h2 id="9-prosesstrinn-og-replay-policy">9. Prosesstrinn og
+<h2 id="prosesstrinn-og-replay-policy">Prosesstrinn og
 replay-policy</h2>
 <p>P1–P15 er generiske ordnede plasser. Ordinære/live overganger er
 operatørbekreftet. Historisk replay kan vurdere neste P-kandidat, men
@@ -187,8 +224,7 @@ eksplisitt tillater
 <p>Kriterium <strong>oppfylt</strong> og prosesstrinn
 <strong>aktivert</strong> er separate fakta og skal presenteres
 separat.</p>
-<h2 id="10-kriteriekorreksjon-og-fravik">10. Kriteriekorreksjon og
-fravik</h2>
+<h2 id="kriteriekorreksjon-og-fravik">Kriteriekorreksjon og fravik</h2>
 <p>Registry eier hva motoren teknisk støtter; templaten eier tillatelsen
 per kriterium.</p>
 <ul>
@@ -206,7 +242,7 @@ tomt notat er ikke en valideringsfeil;</li>
 historikkbevarende fakta og endrer ikke opprinnelig rå vurdering eller
 frozen template.</li>
 </ul>
-<h2 id="11-evalueringshorizon-og-provenance">11. Evalueringshorizon og
+<h2 id="evalueringshorizon-og-provenance">Evalueringshorizon og
 provenance</h2>
 <p>Historisk evaluator bruker persistert importcutoff som øvre horizon;
 live bruker MariaDB-klokken. Freshness, vinduer og observasjonsalder
@@ -217,26 +253,25 @@ faktisk dekning, siste sample og effektive parametere.
 MariaDB-read-model lager ferdig <code>data_window_display</code>,
 <code>actual_display</code>, <code>requirement_display</code> og
 <code>status_display</code>.</p>
-<h2 id="12-overgangsbevis">12. Overgangsbevis</h2>
+<h2 id="overgangsbevis">Overgangsbevis</h2>
 <p>En transition peker på eksakt <code>evaluation_id</code>. Historisk
 presentasjon følger derfor:</p>
 <p><code>transition → evaluation → criteria</code></p>
 <p>Current candidate-evaluering er et separat faktum. «Siste
 evaluated_at» skal ikke brukes som erstatning for overgangens faktiske
 bevis.</p>
-<h2 id="13-recommendation-livsløp">13. Recommendation-livsløp</h2>
+<h2 id="recommendation-livsløp">Recommendation-livsløp</h2>
 <p>Recommendation-status er <code>pending</code>, <code>executed</code>,
 <code>rejected</code> eller <code>superseded</code>. Original
 anbefaling, datagrunnlag og begrunnelse beholdes; operatørens faktiske
 handling er et separat faktum.</p>
-<h2 id="14-publiseringsvalidering">14. Publiseringsvalidering</h2>
+<h2 id="publiseringsvalidering">Publiseringsvalidering</h2>
 <p>Templatepublisering skal avvise registry-inkompatible
 metric/model/input/parameter/freshness-/criterion-kombinasjoner og
 ugyldig operatorpolicy. Publisering skal også validere analyse- og
 replaymetadata. Motoren skal ikke være reparasjonslag for en ugyldig
 publisert template.</p>
-<h2 id="forenklet-biologisk-kriteriemodell">forenklet biologisk
-kriteriemodell</h2>
+<h2 id="biologisk-kriteriemodell">Biologisk kriteriemodell</h2>
 <p>Gjæringsprosenten i runtime er <strong>tilsynelatende utgjæringsgrad
 (apparent attenuation)</strong>. Egen «FG-fremdrift», rate relativt til
 historisk maksimum og absolutt SG-rate er ikke operative domenemetrikker
@@ -270,7 +305,7 @@ fravik kan ikke omgå <code>invalid_configuration</code> eller hoppe over
 en fase. Overgangstid kan ikke settes tidligere enn fravikets
 registrering. Det ruller ikke tilbake allerede registrerte
 overganger.</p>
-<h2 id="målebasert-analyse-i-p24r7">Målebasert analyse i p24r7</h2>
+<h2 id="målebasert-analyse">Målebasert analyse</h2>
 <p>Alle operative analyser bygger på godkjente faktiske målinger. Det er
 ingen regresjonsestimater, foreløpige verdier, følsomhetsbånd eller
 oppskalering av et kort stabilitetsvindu. Manglende data forblir

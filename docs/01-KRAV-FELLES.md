@@ -7,6 +7,21 @@ source_format: markdown
 
 # 01 – Krav: felles system
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normative produkt- og domenekrav. Implementasjonsstatus ligger i dokument 18; målmiljøverifikasjon og åpne forhold ligger i dokument 15.
 
 ## Grunnprinsipper
@@ -120,7 +135,7 @@ Pitchtemperatur er ikke et separat startfelt; første manuelt målte temperatur 
 | REQ-COM-080 | Fastsatt | Sluttarkiv/rapport skal filverifiseres med størrelse og SHA-256 før verified registreres. Bare metadata sendes tilbake til DB; eksportstørrelsen skal ikke være avhengig av max_allowed_packet. Arkiveringsforsøk og terminalt resultat er append-only fakta. |
 | REQ-COM-081 | Fastsatt | Ingen analyseverdi skal anslås mellom manglende målinger. En beregning fra faktiske målinger er tillatt og skal vise kilde og faktisk måletid; manuell og rå Tilt-basis skal være atskilt. |
 
-## P24r10 arkivutveksling
+## Arkivutveksling
 
 | ID | Status | Krav |
 | --- | --- | --- |

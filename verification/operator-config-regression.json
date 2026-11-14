@@ -25,7 +25,7 @@
     "sql/21-system-metadata-seed.sql": "1d489ab949217b3f52720f0299f44ce6d36fc471141b2fb7789672dbb7e79928",
     "sql/22-demo-reference-seed.sql": "e8b4c2f91fc06a4423daa90b72e93ddab74f32fcf503d00d159fe8fd2c0e9daa",
     "sql/23-measurement-source-seed.sql": "7b3362f733ee39fb8573fa19c6c3d5756a29504ec52918cae1b2eca222476096",
-    "sql/24-verification-metadata-seed.sql": "268bfff9444126ae4fb2291f7e12454a469127ed924340f885e775f657128850",
+    "sql/24-verification-metadata-seed.sql": "68ef07c21f20dd77240e2cd6c5685208a7dfe37d6d45f1e15c2c9432657b20fc",
     "sql/26-operator-config-seed.sql": "ba84466ed5aceecc151d4f9593afedd9efdfedd262c8d639f8a0a639de0ce2f2",
     "sql/90-schema-verification.sql": "c5d70bef48cd2927c8ef175bb772b9c87bdc1a45024ff48d3f8b3c7e0ee85444",
     "sql/91-runtime-smoke-test.sql": "bfe0bf785044df156bfc3a6c96261fb9ef449eb4b12d9c9e03ef208738af1304",

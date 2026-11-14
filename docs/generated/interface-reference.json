@@ -1,0 +1,4852 @@
+{
+  "schema_version": "1.0",
+  "generated_from": "contracts/interface-catalog.json + SQL registries/routines + physical flow",
+  "authority": "Inspection only; owners remain the catalogued sources. No target-HA verification claim.",
+  "interfaces": [
+    {
+      "interface_id": "IF-DB-NR",
+      "name": "MariaDB ↔ Node-RED",
+      "authority": [
+        "docs/12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md",
+        "sql/11-runtime-routines.sql",
+        "sql/12-operator-routines.sql",
+        "sql/20-views.sql",
+        "tools/overview_reads.sql",
+        "tools/report_reads.sql"
+      ],
+      "derived_or_captured": [
+        "contracts/read-model-columns.json",
+        "contracts/read-execution-schema.json",
+        "contracts/read-execution-plan.json",
+        "contracts/physical-schema.json"
+      ],
+      "implementation": [
+        "nodered/flows.template.json",
+        "tools/build_read_queries.py"
+      ],
+      "checks": [
+        "tests/verify-read-model-contract.py",
+        "tests/verify-interface-contracts.py",
+        "tests/test-p24r15-live.js",
+        "tests/test-start-control-live.js"
+      ],
+      "semantics": {
+        "charset": "utf8mb4_unicode_ci",
+        "persistent_time": "UTC",
+        "required_absence": "Reject incomplete required data; model legitimate absence; never invent 0.",
+        "receipt": "Committed DB/read-model outcome, not accepted ingress."
+      }
+    },
+    {
+      "interface_id": "IF-NR-HA",
+      "name": "Node-RED ↔ Home Assistant",
+      "authority": [
+        "docs/05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+        "sql/21-system-metadata-seed.sql"
+      ],
+      "derived_or_captured": [
+        "contracts/ha-node-red-contract.json"
+      ],
+      "implementation": [
+        "nodered/flows.template.json",
+        "dashboard/gjaeringsassistent-dashboard.yaml",
+        "dashboard/gjaeringsassistent-card.js"
+      ],
+      "checks": [
+        "tests/verify-ha-contract.py",
+        "tests/verify-interface-contracts.py",
+        "tests/verify-p24r15.py",
+        "tests/test-operator-ui.js"
+      ],
+      "registries": [
+        "ha_entity_registry",
+        "ha_event_registry",
+        "ha_entity_input_bindings",
+        "ha_entity_input_value_mappings",
+        "ha_projection_routes",
+        "ha_projection_fields",
+        "ha_draft_output_bindings",
+        "ha_entity_number_constraints",
+        "start_field_rules",
+        "start_field_pitch_modes"
+      ],
+      "semantics": {
+        "required_absence": "Required fields cannot disappear; declared absence policy governs optional fields.",
+        "input": "Explicit operator input; HA state is not fallback domain data.",
+        "output": "DB-owned values and presentation; no local domain interpretation."
+      }
+    },
+    {
+      "interface_id": "IF-NR-PUBLICATION",
+      "name": "Node-RED → JSON/gzip-publisering",
+      "authority": [
+        "docs/05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md",
+        "contracts/publication-job.schema.json"
+      ],
+      "derived_or_captured": [],
+      "implementation": [
+        "nodered/flows.template.json",
+        "tools/publish_payload.js"
+      ],
+      "checks": [
+        "tests/verify-interface-contracts.py",
+        "tests/test-interface-contracts.js",
+        "tests/test-p24r8.js"
+      ],
+      "job_schema": "contracts/publication-job.schema.json",
+      "pipelines": [
+        {
+          "producer": "p20_overview_result",
+          "staging": "p20_overview_file",
+          "arguments": "p24r8_publication_args",
+          "executor": "p24r8_publication_exec",
+          "success": "p24r8_publication_result",
+          "stderr": "p24r8_publication_stderr"
+        },
+        {
+          "producer": "p20_technical_export_result",
+          "staging": "p20_technical_export_file",
+          "arguments": "p24r8_publication_args",
+          "executor": "p24r8_publication_exec",
+          "success": "p24r8_publication_result",
+          "stderr": "p24r8_publication_stderr"
+        },
+        {
+          "producer": "source_settings_result_v1",
+          "staging": "source_settings_staging_file_v1",
+          "arguments": "source_settings_publication_args_v1",
+          "executor": "source_settings_publish_v1",
+          "success": "p24r8_publication_result",
+          "stderr": "p24r8_publication_stderr"
+        }
+      ],
+      "semantics": {
+        "authority": "Derived transport files only; MariaDB retains domain authority.",
+        "receipt": "JSON/gzip readback precedes success; errors enter Technical event handling.",
+        "stage_path": "Required; source_path is not an alias."
+      }
+    }
+  ],
+  "db_routines": {
+    "ga_store_system_check_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_overall VARCHAR(32), IN p_checks LONGTEXT"
+    },
+    "ga_request_archive_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_session VARCHAR(128), IN p_resume BOOLEAN"
+    },
+    "ga_start_session_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_clone_template_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_source VARCHAR(128),IN p_draft VARCHAR(128),IN p_new_template VARCHAR(128),IN p_new_name VARCHAR(255)"
+    },
+    "ga_store_ingest_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_sid VARCHAR(128),IN p_end DATETIME(3),IN p_threshold INTEGER,IN p_error TEXT,IN p_job LONGTEXT"
+    },
+    "ga_seed_demo_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_sid VARCHAR(128)"
+    },
+    "ga_register_active_report_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_session VARCHAR(128),IN p_operation VARCHAR(128),IN p_path TEXT,IN p_sha CHAR(64)"
+    },
+    "ga_read_ha_draft_projection": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_context VARCHAR(24)"
+    },
+    "ga_select_start_template_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_selected VARCHAR(128)"
+    },
+    "ga_prepare_selected_demo_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_convert_legacy_archive_graphs": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_version VARCHAR(128),IN p_session VARCHAR(128)"
+    },
+    "ga_correct_visit_time_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_kind VARCHAR(32),IN p_target VARCHAR(128),IN p_action VARCHAR(16),IN p_requested DATETIME(3),IN p_operation VARCHAR(128)"
+    },
+    "ga_register_historical_phase_tx": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_kind VARCHAR(32),IN p_owner VARCHAR(128),IN p_started DATETIME(3),IN p_operation VARCHAR(128)"
+    },
+    "ga_read_start_context": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_attempt_id VARCHAR(128),IN p_historical_end DATETIME(3)"
+    },
+    "ga_overview_source_key": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "OUT p_key CHAR(64)"
+    },
+    "ga_drop_read_basis": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_1": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_2": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_3": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_4": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_5": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_6": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis_part_7": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_init_read_basis": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_1": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_2": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_3": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_4": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_5": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_6": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_7": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_8": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis_part_9": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_fill_read_basis": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_session VARCHAR(128)"
+    },
+    "ga_read_overview": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_read_report": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_session VARCHAR(128), IN p_now DATETIME(3)"
+    },
+    "ga_poll_overview": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": ""
+    },
+    "ga_ack_overview": {
+      "source": "sql/11-runtime-routines.sql",
+      "declaration": "IN p_operation CHAR(36), IN p_key CHAR(64), IN p_generated DATETIME(3)"
+    },
+    "ga_read_source_settings": {
+      "source": "sql/12-operator-routines.sql",
+      "declaration": "IN p_operation VARCHAR(128)"
+    },
+    "ga_refresh_sensor_catalog": {
+      "source": "sql/12-operator-routines.sql",
+      "declaration": "IN p_operation VARCHAR(128),IN p_states LONGTEXT"
+    },
+    "ga_freeze_source_configuration": {
+      "source": "sql/12-operator-routines.sql",
+      "declaration": "IN p_session VARCHAR(128),IN p_profile VARCHAR(128),IN p_effective DATETIME(3)"
+    },
+    "ga_save_source_configuration": {
+      "source": "sql/12-operator-routines.sql",
+      "declaration": "IN p_profile VARCHAR(128),IN p_expected BIGINT UNSIGNED,IN p_operation VARCHAR(128),IN p_note TEXT,IN p_fields LONGTEXT"
+    },
+    "ga_record_criterion_exception_tx": {
+      "source": "sql/12-operator-routines.sql",
+      "declaration": "IN p_kind VARCHAR(16),IN p_evaluation VARCHAR(128),IN p_criterion VARCHAR(128),IN p_action VARCHAR(16),IN p_type VARCHAR(32),IN p_confirmed TINYINT,IN p_note TEXT,IN p_operation VARCHAR(128)"
+    }
+  },
+  "node_red_routine_calls": {
+    "ga_ack_overview": [
+      "p24r8_publication_result"
+    ],
+    "ga_clone_template_tx": [
+      "p20_template_clone_query"
+    ],
+    "ga_correct_visit_time_tx": [
+      "p20_bio_time_correction_query"
+    ],
+    "ga_poll_overview": [
+      "p20_overview_query"
+    ],
+    "ga_prepare_selected_demo_tx": [
+      "p20_demo_prepare_query"
+    ],
+    "ga_read_ha_draft_projection": [
+      "p20_sync_draft"
+    ],
+    "ga_read_overview": [
+      "p20_overview_query"
+    ],
+    "ga_read_report": [
+      "p21_session_export_query",
+      "p22_active_report_query"
+    ],
+    "ga_read_source_settings": [
+      "source_settings_command_v1",
+      "source_settings_read_query_v1"
+    ],
+    "ga_read_start_context": [
+      "p20_start_guard"
+    ],
+    "ga_record_criterion_exception_tx": [
+      "p20_process_exception_context_result",
+      "p24_bio_exception_context_result"
+    ],
+    "ga_refresh_sensor_catalog": [
+      "source_settings_catalog_store_v1"
+    ],
+    "ga_register_active_report_tx": [
+      "p22_active_report_register_query"
+    ],
+    "ga_register_historical_phase_tx": [
+      "p24r15_historical_phase_query"
+    ],
+    "ga_request_archive_tx": [
+      "p24_archive_attempt_query"
+    ],
+    "ga_save_source_configuration": [
+      "source_settings_command_v1"
+    ],
+    "ga_seed_demo_tx": [
+      "p20_demo_seed_query"
+    ],
+    "ga_select_start_template_tx": [
+      "p20_template_select"
+    ],
+    "ga_store_ingest_tx": [
+      "p21_live_history_process"
+    ],
+    "ga_store_system_check_tx": [
+      "p20_systemcheck_result"
+    ]
+  },
+  "ha_registries": {
+    "ha_entity_registry": [
+      {
+        "entity_id": "sensor.gjaeringsassistent_aktive_problemer",
+        "config_id": "haec_active_issues_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent aktive problemer",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 1,
+        "runtime_node_id": "ha_active_issues_v1",
+        "bootstrap_node_id": "ha_active_issues_v1",
+        "sort_order": 1,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_aktivt_prosesstrinn",
+        "config_id": "haec_aktiv_prosess_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent aktivt prosesstrinn",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "—",
+        "bootstrap_slot": 2,
+        "runtime_node_id": "ha_aktiv_prosess_v1",
+        "bootstrap_node_id": "ha_aktiv_prosess_v1",
+        "sort_order": 2,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "binary_sensor.gjaeringsassistent_krever_oppmerksomhet",
+        "config_id": "haec_attention_v1",
+        "entity_type": "binary_sensor",
+        "display_name": "Gjæringsassistent krever oppmerksomhet",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "off",
+        "bootstrap_slot": 3,
+        "runtime_node_id": "ha_attention_v1",
+        "bootstrap_node_id": "ha_attention_v1",
+        "sort_order": 3,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_biologisk_fase",
+        "config_id": "haec_bio_fase_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent biologisk fase",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "—",
+        "bootstrap_slot": 4,
+        "runtime_node_id": "ha_bio_fase_v1",
+        "bootstrap_node_id": "ha_bio_fase_v1",
+        "sort_order": 4,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_skann_templater",
+        "config_id": "haec_button_scan_templates_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent skann templater",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_scan_templates_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 5,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_start_gjaering",
+        "config_id": "haec_button_start_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent start gjæring",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_start_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 6,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_start_demo",
+        "config_id": "haec_button_demo_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent start demo",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_demo_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 7,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_kjor_systemkontroll",
+        "config_id": "haec_button_systemcheck_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent kjør systemkontroll",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_systemcheck_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 8,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_datakvalitet",
+        "config_id": "haec_datakvalitet_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent datakvalitet",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "ingen aktiv måling",
+        "bootstrap_slot": 5,
+        "runtime_node_id": "ha_datakvalitet_v1",
+        "bootstrap_node_id": "ha_datakvalitet_v1",
+        "sort_order": 9,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_acetaldehyd",
+        "config_id": "haec_field_acetaldehyde_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent acetaldehyd",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 6,
+        "runtime_node_id": "ha_field_acetaldehyde_v1",
+        "bootstrap_node_id": "ha_field_acetaldehyde_set_v1",
+        "sort_order": 10,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "config_id": "haec_field_airlock_v1",
+        "entity_type": "select",
+        "display_name": "Gjæringsassistent gjærlåsaktivitet",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen synlig",
+        "bootstrap_slot": 7,
+        "runtime_node_id": "ha_field_airlock_v1",
+        "bootstrap_node_id": "ha_field_airlock_set_v1",
+        "sort_order": 11,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_batchnavn",
+        "config_id": "haec_field_batchnavn_v1",
+        "entity_type": "text",
+        "display_name": "Gjæringsassistent batchnavn",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "",
+        "bootstrap_slot": 8,
+        "runtime_node_id": "ha_field_batchnavn_v1",
+        "bootstrap_node_id": "p20_set_batchnavn",
+        "sort_order": 12,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_hydrometer_kalibreringstemperatur",
+        "config_id": "haec_field_calibration_temp_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent hydrometer kalibreringstemperatur",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "20",
+        "bootstrap_slot": 9,
+        "runtime_node_id": "ha_field_calibration_temp_v1",
+        "bootstrap_node_id": "ha_field_calibration_temp_set_v1",
+        "sort_order": 13,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_klarhet",
+        "config_id": "haec_field_clarity_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent klarhet",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 10,
+        "runtime_node_id": "ha_field_clarity_v1",
+        "bootstrap_node_id": "ha_field_clarity_set_v1",
+        "sort_order": 14,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "config_id": "haec_field_control_conclusion_v1",
+        "entity_type": "select",
+        "display_name": "Gjæringsassistent kontroll konklusjon",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Usikker",
+        "bootstrap_slot": 11,
+        "runtime_node_id": "ha_field_control_conclusion_v1",
+        "bootstrap_node_id": "ha_field_control_conclusion_set_v1",
+        "sort_order": 15,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+        "config_id": "haec_field_control_method_v1",
+        "entity_type": "select",
+        "display_name": "Gjæringsassistent kontroll målemetode",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Refraktometer",
+        "bootstrap_slot": 12,
+        "runtime_node_id": "ha_field_control_method_v1",
+        "bootstrap_node_id": "ha_field_control_method_set_v1",
+        "sort_order": 16,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_kontrollnotat",
+        "config_id": "haec_field_control_note_v1",
+        "entity_type": "text",
+        "display_name": "Gjæringsassistent kontrollnotat",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "",
+        "bootstrap_slot": 13,
+        "runtime_node_id": "ha_field_control_note_v1",
+        "bootstrap_node_id": "ha_field_control_note_set_v1",
+        "sort_order": 17,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_malt_sg",
+        "config_id": "haec_field_measured_sg_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent målt SG",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "1.000",
+        "bootstrap_slot": 14,
+        "runtime_node_id": "ha_field_measured_sg_v1",
+        "bootstrap_node_id": "ha_field_measured_sg_set_v1",
+        "sort_order": 18,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_kalibrering",
+        "config_id": "haec_field_cooler_calibration_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent kjølemaskin kalibrering",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 15,
+        "runtime_node_id": "ha_field_cooler_calibration_v1",
+        "bootstrap_node_id": "ha_field_cooler_calibration_set_v1",
+        "sort_order": 19,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_settpunkt",
+        "config_id": "haec_field_cooler_setpoint_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent kjølemaskin settpunkt",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "12",
+        "bootstrap_slot": 16,
+        "runtime_node_id": "ha_field_cooler_setpoint_v1",
+        "bootstrap_node_id": "ha_field_cooler_setpoint_set_v1",
+        "sort_order": 20,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_diacetyl",
+        "config_id": "haec_field_diacetyl_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent diacetyl",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 17,
+        "runtime_node_id": "ha_field_diacetyl_v1",
+        "bootstrap_node_id": "ha_field_diacetyl_set_v1",
+        "sort_order": 21,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_forventet_fg_maks",
+        "config_id": "haec_field_fg_max_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent forventet utgjæring maks",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "84",
+        "bootstrap_slot": 18,
+        "runtime_node_id": "p20_set_fg_max",
+        "bootstrap_node_id": "p20_set_fg_max",
+        "sort_order": 22,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_forventet_fg_min",
+        "config_id": "haec_field_fg_min_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent forventet utgjæring min",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "80",
+        "bootstrap_slot": 19,
+        "runtime_node_id": "p20_set_fg_min",
+        "bootstrap_node_id": "p20_set_fg_min",
+        "sort_order": 23,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_manuell_temperatur",
+        "config_id": "haec_field_manual_temperature_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent manuell temperatur",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "12",
+        "bootstrap_slot": 20,
+        "runtime_node_id": "ha_field_manual_temperature_v1",
+        "bootstrap_node_id": "ha_field_manual_temperature_set_v1",
+        "sort_order": 24,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_oksygenering",
+        "config_id": "haec_field_oxygen_v1",
+        "entity_type": "text",
+        "display_name": "Gjæringsassistent oksygenering",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "",
+        "bootstrap_slot": 21,
+        "runtime_node_id": "ha_field_oxygen_v1",
+        "bootstrap_node_id": "p20_set_oxygen",
+        "sort_order": 25,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_pitchtid",
+        "config_id": "haec_field_pitch_at_v1",
+        "entity_type": "text",
+        "display_name": "Gjæringsassistent pitchtid",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "",
+        "bootstrap_slot": 22,
+        "runtime_node_id": "ha_field_pitch_at_v1",
+        "bootstrap_node_id": "p20_set_pitch_at",
+        "sort_order": 26,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchmodus",
+        "config_id": "haec_field_pitch_mode_v1",
+        "entity_type": "select",
+        "display_name": "Gjæringsassistent pitchmodus",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Tørrgjær",
+        "bootstrap_slot": 23,
+        "runtime_node_id": "ha_field_pitch_mode_v1",
+        "bootstrap_node_id": "p20_set_pitch_mode",
+        "sort_order": 27,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_pitchtemperatur_c",
+        "config_id": "haec_field_pitch_temp_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent pitchtemperatur c",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 0,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "12",
+        "bootstrap_slot": 24,
+        "runtime_node_id": "ha_field_pitch_temp_v1",
+        "bootstrap_node_id": "p20_set_pitch_temp",
+        "sort_order": 28,
+        "description": "Kompatibilitetsentitet; pitchtemperatur avledes fra første manuelt målte temperatur og er ikke separat operatørinput.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+        "config_id": "haec_field_pitch_time_mode_v1",
+        "entity_type": "select",
+        "display_name": "Gjæringsassistent pitchtid modus",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Nå",
+        "bootstrap_slot": 25,
+        "runtime_node_id": "ha_field_pitch_time_mode_v1",
+        "bootstrap_node_id": "p20_set_pitch_time_mode",
+        "sort_order": 29,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_trykk",
+        "config_id": "haec_field_pressure_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent trykk",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 26,
+        "runtime_node_id": "ha_field_pressure_v1",
+        "bootstrap_node_id": "ha_field_pressure_set_v1",
+        "sort_order": 30,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_provetemperatur",
+        "config_id": "haec_field_sample_temp_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent prøvetemperatur",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "20",
+        "bootstrap_slot": 27,
+        "runtime_node_id": "ha_field_sample_temp_v1",
+        "bootstrap_node_id": "ha_field_sample_temp_set_v1",
+        "sort_order": 31,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_minutter",
+        "config_id": "haec_field_settling_minutes_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent utfelling minutter",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 28,
+        "runtime_node_id": "ha_field_settling_minutes_v1",
+        "bootstrap_node_id": "ha_field_settling_minutes_set_v1",
+        "sort_order": 32,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_i_prove",
+        "config_id": "haec_field_settling_yeast_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent utfelling i prøve",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 29,
+        "runtime_node_id": "ha_field_settling_yeast_v1",
+        "bootstrap_node_id": "ha_field_settling_yeast_set_v1",
+        "sort_order": 33,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+        "config_id": "haec_field_slurry_generation_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent slurry generasjon",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 30,
+        "runtime_node_id": "ha_field_slurry_generation_v1",
+        "bootstrap_node_id": "p20_set_slurry_generation",
+        "sort_order": 34,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+        "config_id": "haec_field_slurry_ml_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent slurry volum ml",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 31,
+        "runtime_node_id": "ha_field_slurry_ml_v1",
+        "bootstrap_node_id": "p20_set_slurry_ml",
+        "sort_order": 35,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+        "config_id": "haec_field_slurry_source_v1",
+        "entity_type": "text",
+        "display_name": "Gjæringsassistent slurry kildebatch",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "",
+        "bootstrap_slot": 32,
+        "runtime_node_id": "ha_field_slurry_source_v1",
+        "bootstrap_node_id": "p20_set_slurry_source",
+        "sort_order": 36,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_h2s",
+        "config_id": "haec_field_sulfur_h2s_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent svovel H2S",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 33,
+        "runtime_node_id": "ha_field_sulfur_h2s_v1",
+        "bootstrap_node_id": "ha_field_sulfur_h2s_set_v1",
+        "sort_order": 37,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_so2",
+        "config_id": "haec_field_sulfur_so2_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent svovel SO2",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 34,
+        "runtime_node_id": "ha_field_sulfur_so2_v1",
+        "bootstrap_node_id": "ha_field_sulfur_so2_set_v1",
+        "sort_order": 38,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_template",
+        "config_id": "haec_field_template_v1",
+        "entity_type": "select",
+        "display_name": "Gjæringsassistent template",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Velg template",
+        "bootstrap_slot": 35,
+        "runtime_node_id": "ha_field_template_v1",
+        "bootstrap_node_id": "p20_set_template",
+        "sort_order": 39,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_volum_l",
+        "config_id": "haec_field_volume_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent volum l",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "150",
+        "bootstrap_slot": 36,
+        "runtime_node_id": "ha_field_volume_v1",
+        "bootstrap_node_id": "p20_set_volume",
+        "sort_order": 40,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_vorteraktig_preg",
+        "config_id": "haec_field_wort_like_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent vørteraktig preg",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 37,
+        "runtime_node_id": "ha_field_wort_like_v1",
+        "bootstrap_node_id": "ha_field_wort_like_set_v1",
+        "sort_order": 41,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+        "config_id": "haec_field_yeast_g_v1",
+        "entity_type": "number",
+        "display_name": "Gjæringsassistent gjærmengde g",
+        "direction": "bidirectional",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "200",
+        "bootstrap_slot": 38,
+        "runtime_node_id": "ha_field_yeast_g_v1",
+        "bootstrap_node_id": "p20_set_yeast_g",
+        "sort_order": 42,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_livslop",
+        "config_id": "haec_lifecycle_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent livsløp",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "idle",
+        "bootstrap_slot": 39,
+        "runtime_node_id": "ha_lifecycle_v1",
+        "bootstrap_node_id": "ha_lifecycle_v1",
+        "sort_order": 43,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_malingsalder",
+        "config_id": "haec_maalingsalder_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent målingsalder",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "0",
+        "bootstrap_slot": 40,
+        "runtime_node_id": "ha_maalingsalder_v1",
+        "bootstrap_node_id": "ha_maalingsalder_v1",
+        "sort_order": 44,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_sesjonsstatus",
+        "config_id": "haec_sesjonsstatus_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent sesjonsstatus",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "idle",
+        "bootstrap_slot": 41,
+        "runtime_node_id": "ha_sesjonsstatus_v1",
+        "bootstrap_node_id": "ha_sesjonsstatus_v1",
+        "sort_order": 45,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_siste_maling",
+        "config_id": "haec_siste_maaling_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent siste måling",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "unknown",
+        "bootstrap_slot": 42,
+        "runtime_node_id": "ha_siste_maaling_v1",
+        "bootstrap_node_id": "ha_siste_maaling_v1",
+        "sort_order": 46,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_konfigurasjon",
+        "config_id": "haec_syscheck_config_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll konfigurasjon",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 43,
+        "runtime_node_id": "ha_syscheck_config_v1",
+        "bootstrap_node_id": "ha_syscheck_config_v1",
+        "sort_order": 47,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_database",
+        "config_id": "haec_syscheck_db_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll database",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 44,
+        "runtime_node_id": "ha_syscheck_db_v1",
+        "bootstrap_node_id": "ha_syscheck_db_v1",
+        "sort_order": 48,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_frontendpublisering",
+        "config_id": "haec_syscheck_frontend_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll frontendpublisering",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 45,
+        "runtime_node_id": "ha_syscheck_frontend_v1",
+        "bootstrap_node_id": "ha_syscheck_frontend_v1",
+        "sort_order": 49,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_home_assistant",
+        "config_id": "haec_syscheck_ha_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll Home Assistant",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 46,
+        "runtime_node_id": "ha_syscheck_ha_v1",
+        "bootstrap_node_id": "ha_syscheck_ha_v1",
+        "sort_order": 50,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_sist_kjort",
+        "config_id": "haec_syscheck_last_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll sist kjørt",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "unknown",
+        "bootstrap_slot": 47,
+        "runtime_node_id": "ha_syscheck_last_v1",
+        "bootstrap_node_id": "ha_syscheck_last_v1",
+        "sort_order": 51,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_startstatus",
+        "config_id": "haec_startstatus_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent startstatus",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "runtime",
+        "bootstrap_value": null,
+        "bootstrap_slot": 64,
+        "runtime_node_id": "ha_startstatus_v1",
+        "bootstrap_node_id": "p24_start_status_query",
+        "sort_order": 73,
+        "description": "Operativ oppstartsstatus for historikkimport og overgang til live.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_malekilde",
+        "config_id": "haec_measurement_source_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent målekilde",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 48,
+        "runtime_node_id": "ha_measurement_source_v1",
+        "bootstrap_node_id": "ha_measurement_source_v1",
+        "sort_order": 52,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_node_red",
+        "config_id": "haec_syscheck_nodered_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll Node-RED",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 49,
+        "runtime_node_id": "ha_syscheck_nodered_v1",
+        "bootstrap_node_id": "ha_syscheck_nodered_v1",
+        "sort_order": 53,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_samlet",
+        "config_id": "haec_syscheck_overall_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll samlet",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 50,
+        "runtime_node_id": "ha_syscheck_overall_v1",
+        "bootstrap_node_id": "ha_syscheck_overall_v1",
+        "sort_order": 54,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_runtimefil",
+        "config_id": "haec_syscheck_runtime_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll runtimefil",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 51,
+        "runtime_node_id": "ha_syscheck_runtime_v1",
+        "bootstrap_node_id": "ha_syscheck_runtime_v1",
+        "sort_order": 55,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_skjema",
+        "config_id": "haec_syscheck_schema_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll skjema",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 52,
+        "runtime_node_id": "ha_syscheck_schema_v1",
+        "bootstrap_node_id": "ha_syscheck_schema_v1",
+        "sort_order": 56,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_sesjon",
+        "config_id": "haec_syscheck_session_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll sesjon",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 53,
+        "runtime_node_id": "ha_syscheck_session_v1",
+        "bootstrap_node_id": "ha_syscheck_session_v1",
+        "sort_order": 57,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_tid",
+        "config_id": "haec_syscheck_time_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll tid",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 54,
+        "runtime_node_id": "ha_syscheck_time_v1",
+        "bootstrap_node_id": "ha_syscheck_time_v1",
+        "sort_order": 58,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_skrivbarhet",
+        "config_id": "haec_syscheck_writable_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemkontroll skrivbarhet",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "IKKE KJØRT",
+        "bootstrap_slot": 55,
+        "runtime_node_id": "ha_syscheck_writable_v1",
+        "bootstrap_node_id": "ha_syscheck_writable_v1",
+        "sort_order": 59,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_systemstatus",
+        "config_id": "haec_systemstatus_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent systemstatus",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Initialiserer",
+        "bootstrap_slot": 56,
+        "runtime_node_id": "ha_systemstatus_v1",
+        "bootstrap_node_id": "ha_systemstatus_v1",
+        "sort_order": 60,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_1",
+        "config_id": "haec_tech_event_1_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent driftsmelding 1",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen hendelse",
+        "bootstrap_slot": 57,
+        "runtime_node_id": "ha_tech_event_1_v1",
+        "bootstrap_node_id": "ha_tech_event_1_v1",
+        "sort_order": 61,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_2",
+        "config_id": "haec_tech_event_2_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent driftsmelding 2",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen hendelse",
+        "bootstrap_slot": 58,
+        "runtime_node_id": "ha_tech_event_2_v1",
+        "bootstrap_node_id": "ha_tech_event_2_v1",
+        "sort_order": 62,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_3",
+        "config_id": "haec_tech_event_3_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent driftsmelding 3",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen hendelse",
+        "bootstrap_slot": 59,
+        "runtime_node_id": "ha_tech_event_3_v1",
+        "bootstrap_node_id": "ha_tech_event_3_v1",
+        "sort_order": 63,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_4",
+        "config_id": "haec_tech_event_4_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent driftsmelding 4",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen hendelse",
+        "bootstrap_slot": 60,
+        "runtime_node_id": "ha_tech_event_4_v1",
+        "bootstrap_node_id": "ha_tech_event_4_v1",
+        "sort_order": 64,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_5",
+        "config_id": "haec_tech_event_5_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent driftsmelding 5",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen hendelse",
+        "bootstrap_slot": 61,
+        "runtime_node_id": "ha_tech_event_5_v1",
+        "bootstrap_node_id": "ha_tech_event_5_v1",
+        "sort_order": 65,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_valgt_template",
+        "config_id": "haec_template_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent valgt template",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "Ingen valgt",
+        "bootstrap_slot": 62,
+        "runtime_node_id": "ha_template_v1",
+        "bootstrap_node_id": "ha_template_v1",
+        "sort_order": 66,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_lagre_malinger",
+        "config_id": "haec_button_measurement_save_p19",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent lagre målinger",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_measurement_save_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 67,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "sensor.gjaeringsassistent_korrigert_manuell_sg",
+        "config_id": "haec_corrected_sg_v1",
+        "entity_type": "sensor",
+        "display_name": "Gjæringsassistent korrigert manuell SG",
+        "direction": "nodered_to_home_assistant",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "literal_then_runtime",
+        "bootstrap_value": "unknown",
+        "bootstrap_slot": 63,
+        "runtime_node_id": "ha_corrected_sg_v1",
+        "bootstrap_node_id": "ha_corrected_sg_v1",
+        "sort_order": 68,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_bekreft_neste_prosesstrinn",
+        "config_id": "haec_button_process_next_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent bekreft neste prosesstrinn",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_process_next_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 69,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_tilbake_prosesstrinn",
+        "config_id": "haec_button_process_back_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent tilbake prosesstrinn",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_process_back_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 70,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_avslutt_gjaering",
+        "config_id": "haec_button_end_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent avslutt gjæring",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_end_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 71,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_gjor_klar_ny_gjaering",
+        "config_id": "haec_button_prepare_new_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent gjør klar ny gjæring",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_prepare_new_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 72,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_generer_aktiv_rapport",
+        "config_id": "haec_button_active_report_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent generer aktiv rapport",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_active_report_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 74,
+        "description": "Genererer et verifisert HTML-snapshot av aktiv session uten å endre lifecycle.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "button.gjaeringsassistent_forsok_arkivering_pa_nytt",
+        "config_id": "haec_button_retry_archive_v1",
+        "entity_type": "button",
+        "display_name": "Gjæringsassistent forsøk arkivering på nytt",
+        "direction": "home_assistant_to_nodered",
+        "status": "active",
+        "required": 1,
+        "bootstrap_mode": "registration_only",
+        "bootstrap_value": null,
+        "bootstrap_slot": null,
+        "runtime_node_id": "h_retry_archive_v1",
+        "bootstrap_node_id": null,
+        "sort_order": 1001,
+        "description": "Normativ p21 HA-entitet.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      }
+    ],
+    "ha_event_registry": [
+      {
+        "event_type": "gjaeringsassistent_note_save",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_note_event_v1",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_template_editor_refresh",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_template_editor_refresh_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_template_draft_clone",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_template_clone_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_template_draft_save",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_template_save_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_template_draft_discard",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_template_discard_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_template_admin_select",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p22_template_admin_select_event",
+        "status": "active",
+        "required": 1,
+        "description": "Velger versjon i Templateadministrasjonen uten å endre Start-valg.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_template_lifecycle",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p22_template_lifecycle_event",
+        "status": "active",
+        "required": 1,
+        "description": "Setter publisert templateversjon utgått eller aktiverer en utgått versjon igjen.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_technical_export",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_technical_export_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_measurement_export",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p23_measurement_export_event",
+        "status": "active",
+        "required": 1,
+        "description": "Eksporterer aktiv sessions 5-minutters måledata og registrerte datagap direkte fra MariaDB som CSV.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_timeline_correction",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_bio_time_correction_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_measurement_status",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_measurement_status_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_criterion_correction",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_bio_criterion_correction_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_fermentation_target_correction",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_fg_target_correction_event",
+        "status": "deprecated",
+        "required": 0,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_process_criterion_exception",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p20_process_exception_event",
+        "status": "active",
+        "required": 1,
+        "description": "Parameterisert HA-event",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_verification_uat_result",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p23_verification_uat_event",
+        "status": "active",
+        "required": 1,
+        "description": "Registrerer append-only UAT-resultat mot strukturert verifikasjonsmodell.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_verification_export",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p23_verification_export_event",
+        "status": "active",
+        "required": 1,
+        "description": "Genererer strukturert JSON og lesbar HTML-verifikasjonsrapport fra samme DB-grunnlag.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_biological_criterion_exception",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p24_bio_exception_event",
+        "status": "active",
+        "required": 1,
+        "description": "Biologisk kriteriefravik med bekreftelse og valgfritt notat; rå evaluering beholdes.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_demo_selection",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p24r7_demo_selection_event",
+        "status": "active",
+        "required": 1,
+        "description": "DB-lagret datasett/grafvalg.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_graph_selection",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p24r7_graph_selection_event",
+        "status": "active",
+        "required": 1,
+        "description": "DB-lagret datasett/grafvalg.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_import_historical",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p24r15_historical_start_event",
+        "status": "active",
+        "required": 1,
+        "description": "Oppretter historisk gjæring med fast HA-importgrense",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_register_historical_phase",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p24r15_historical_phase_event",
+        "status": "active",
+        "required": 1,
+        "description": "Etterregistrerer faktisk P/B-start i historisk gjæring",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_archive",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p24_archive_library_event",
+        "status": "active",
+        "required": 1,
+        "description": "SQLite filoverføring, import, eksport og arkivsynlighet",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_set_start_field",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "p26_start_field_event",
+        "status": "active",
+        "required": 1,
+        "description": "Lagrer eksplisitt startfelt i databasekladden, også ved uendret HA-verdi.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "event_type": "gjaeringsassistent_source_settings",
+        "direction": "home_assistant_to_nodered",
+        "event_mode": "parameterized",
+        "listener_node_id": "source_settings_event_v1",
+        "status": "active",
+        "required": 1,
+        "description": "Les, kontroller eller lagre målekilder gjennom DB-kontrakten.",
+        "created_at": "UTC_TIMESTAMP(3)"
+      }
+    ],
+    "ha_entity_input_bindings": [
+      {
+        "entity_id": "text.gjaeringsassistent_batchnavn",
+        "converter_id": "text",
+        "session_field": "batch_name",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_pitchtid",
+        "converter_id": "datetime",
+        "session_field": "pitched_at",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": "pitch_time_mode",
+        "fixed_session_value": "specified",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+        "converter_id": "select",
+        "session_field": "pitch_time_mode",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_volum_l",
+        "converter_id": "number",
+        "session_field": "volume_l",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_pitchtemperatur_c",
+        "converter_id": "number",
+        "session_field": "manual_temperature_c",
+        "measurement_field": null,
+        "mirror_session_field": "pitch_temperature_c",
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchmodus",
+        "converter_id": "select",
+        "session_field": "pitch_mode_id",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+        "converter_id": "number",
+        "session_field": "yeast_amount_g",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+        "converter_id": "number",
+        "session_field": "slurry_volume_ml",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+        "converter_id": "text",
+        "session_field": "slurry_source_batch",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+        "converter_id": "integer",
+        "session_field": "slurry_generation",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_oksygenering",
+        "converter_id": "text",
+        "session_field": "oxygenation_note",
+        "measurement_field": null,
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+        "converter_id": "select",
+        "session_field": "measurement_method_id",
+        "measurement_field": "measurement_method_id",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_malt_sg",
+        "converter_id": "number",
+        "session_field": "measured_sg",
+        "measurement_field": "measured_sg",
+        "mirror_session_field": "og",
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_provetemperatur",
+        "converter_id": "number",
+        "session_field": "sample_temperature_c",
+        "measurement_field": "sample_temperature_c",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_hydrometer_kalibreringstemperatur",
+        "converter_id": "number",
+        "session_field": "calibration_temperature_c",
+        "measurement_field": "calibration_temperature_c",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_manuell_temperatur",
+        "converter_id": "number",
+        "session_field": "manual_temperature_c",
+        "measurement_field": "manual_temperature_c",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_trykk",
+        "converter_id": "number",
+        "session_field": "pressure_bar",
+        "measurement_field": "pressure_bar",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_settpunkt",
+        "converter_id": "number",
+        "session_field": "cooler_setpoint_c",
+        "measurement_field": "cooler_setpoint_c",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_kalibrering",
+        "converter_id": "number",
+        "session_field": "cooler_calibration_offset_c",
+        "measurement_field": "cooler_calibration_offset_c",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "converter_id": "select",
+        "session_field": "airlock_activity",
+        "measurement_field": "airlock_activity",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_acetaldehyd",
+        "converter_id": "integer",
+        "session_field": "acetaldehyde_level",
+        "measurement_field": "acetaldehyde_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_diacetyl",
+        "converter_id": "integer",
+        "session_field": "diacetyl_level",
+        "measurement_field": "diacetyl_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_vorteraktig_preg",
+        "converter_id": "integer",
+        "session_field": "wort_like_level",
+        "measurement_field": "wort_like_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_so2",
+        "converter_id": "integer",
+        "session_field": "sulfur_so2_level",
+        "measurement_field": "sulfur_so2_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_h2s",
+        "converter_id": "integer",
+        "session_field": "sulfur_h2s_level",
+        "measurement_field": "sulfur_h2s_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_klarhet",
+        "converter_id": "integer",
+        "session_field": "clarity_level",
+        "measurement_field": "clarity_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_i_prove",
+        "converter_id": "integer",
+        "session_field": "settling_yeast_level",
+        "measurement_field": "settling_yeast_level",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_minutter",
+        "converter_id": "number",
+        "session_field": "settling_minutes",
+        "measurement_field": "settling_minutes",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "converter_id": "select",
+        "session_field": "user_conclusion",
+        "measurement_field": "user_conclusion",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_kontrollnotat",
+        "converter_id": "text",
+        "session_field": "measurement_note",
+        "measurement_field": "measurement_note",
+        "mirror_session_field": null,
+        "fixed_session_field": null,
+        "fixed_session_value": null,
+        "created_at": "UTC_TIMESTAMP(3)"
+      }
+    ],
+    "ha_entity_input_value_mappings": [
+      {
+        "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+        "ha_value": "Angitt tidspunkt",
+        "database_value": "specified",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+        "ha_value": "Nå",
+        "database_value": "now",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchmodus",
+        "ha_value": "Slurry",
+        "database_value": "slurry",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchmodus",
+        "ha_value": "Tørrgjær",
+        "database_value": "dry",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+        "ha_value": "Hydrometer",
+        "database_value": "hydrometer",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+        "ha_value": "Refraktometer",
+        "database_value": "refractometer",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "ha_value": "Ingen synlig",
+        "database_value": "none",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "ha_value": "Sporadisk",
+        "database_value": "sporadic",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "ha_value": "Lav",
+        "database_value": "low",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "ha_value": "Moderat",
+        "database_value": "moderate",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "ha_value": "Høy",
+        "database_value": "high",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "ha_value": "Svært høy",
+        "database_value": "very_high",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "ha_value": "Klar",
+        "database_value": "ready",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "ha_value": "Ikke klar",
+        "database_value": "not_ready",
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "ha_value": "Usikker",
+        "database_value": "uncertain",
+        "created_at": "UTC_TIMESTAMP(3)"
+      }
+    ],
+    "ha_projection_routes": [
+      {
+        "projection_id": "system_status",
+        "entity_id": "sensor.gjaeringsassistent_systemstatus",
+        "output_slot": 1,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "session_status",
+        "entity_id": "sensor.gjaeringsassistent_sesjonsstatus",
+        "output_slot": 2,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "process_status",
+        "entity_id": "sensor.gjaeringsassistent_aktivt_prosesstrinn",
+        "output_slot": 3,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "biology_status",
+        "entity_id": "sensor.gjaeringsassistent_biologisk_fase",
+        "output_slot": 4,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "lifecycle",
+        "entity_id": "sensor.gjaeringsassistent_livslop",
+        "output_slot": 5,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "template_status",
+        "entity_id": "sensor.gjaeringsassistent_valgt_template",
+        "output_slot": 6,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "corrected_sg",
+        "entity_id": "sensor.gjaeringsassistent_korrigert_manuell_sg",
+        "output_slot": 7,
+        "source_object_id": "view:v_ha_status_payloads",
+        "consumer_node_id": "p24_ha_status_result"
+      },
+      {
+        "projection_id": "start_status",
+        "entity_id": "sensor.gjaeringsassistent_startstatus",
+        "output_slot": 1,
+        "source_object_id": "view:v_ha_start_status_payload",
+        "consumer_node_id": "p24_start_status_result"
+      },
+      {
+        "projection_id": "technical_overall",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_samlet",
+        "output_slot": 1,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_database",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_database",
+        "output_slot": 2,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_schema",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_skjema",
+        "output_slot": 3,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_writable",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_skrivbarhet",
+        "output_slot": 4,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_home_assistant",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_home_assistant",
+        "output_slot": 5,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_session",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_sesjon",
+        "output_slot": 6,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_frontend_publishing",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_frontendpublisering",
+        "output_slot": 7,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_node_red",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_node_red",
+        "output_slot": 8,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_runtime",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_runtimefil",
+        "output_slot": 10,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_configuration",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_konfigurasjon",
+        "output_slot": 11,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_check_time",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_tid",
+        "output_slot": 12,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_last_check",
+        "entity_id": "sensor.gjaeringsassistent_systemkontroll_sist_kjort",
+        "output_slot": 13,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_issues",
+        "entity_id": "sensor.gjaeringsassistent_aktive_problemer",
+        "output_slot": 14,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_event_1",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_1",
+        "output_slot": 15,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_event_2",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_2",
+        "output_slot": 16,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_event_3",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_3",
+        "output_slot": 17,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_event_4",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_4",
+        "output_slot": 18,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_event_5",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_5",
+        "output_slot": 19,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_data_quality",
+        "entity_id": "sensor.gjaeringsassistent_datakvalitet",
+        "output_slot": 20,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_last_measurement",
+        "entity_id": "sensor.gjaeringsassistent_siste_maling",
+        "output_slot": 21,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_measurement_age",
+        "entity_id": "sensor.gjaeringsassistent_malingsalder",
+        "output_slot": 22,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "technical_attention",
+        "entity_id": "binary_sensor.gjaeringsassistent_krever_oppmerksomhet",
+        "output_slot": 23,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_technical_result"
+      },
+      {
+        "projection_id": "event_issues",
+        "entity_id": "sensor.gjaeringsassistent_aktive_problemer",
+        "output_slot": 1,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "event_event_1",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_1",
+        "output_slot": 2,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "event_event_2",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_2",
+        "output_slot": 3,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "event_event_3",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_3",
+        "output_slot": 4,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "event_event_4",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_4",
+        "output_slot": 5,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "event_event_5",
+        "entity_id": "sensor.gjaeringsassistent_driftsmelding_5",
+        "output_slot": 6,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "event_attention",
+        "entity_id": "binary_sensor.gjaeringsassistent_krever_oppmerksomhet",
+        "output_slot": 7,
+        "source_object_id": "view:v_ha_technical_payloads",
+        "consumer_node_id": "p24_ha_event_result"
+      },
+      {
+        "projection_id": "measurement_source",
+        "entity_id": "sensor.gjaeringsassistent_malekilde",
+        "output_slot": 1,
+        "source_object_id": "view:v_measurement_source_ha_projection",
+        "consumer_node_id": "p21_measurement_source_read_result"
+      }
+    ],
+    "ha_projection_fields": [
+      {
+        "projection_id": "system_status",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "system_status",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "system_status",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.lifecycle",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.notes",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.note_count",
+        "value_type": "number",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.availability",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "explicit_status",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "process_status",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "process_status",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "process_status",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "biology_status",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "biology_status",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "biology_status",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "lifecycle",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "lifecycle",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "lifecycle",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "corrected_sg",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "corrected_sg",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "corrected_sg",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.phase",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.message",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.updated_at",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.progress_percent",
+        "value_type": "number",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.availability",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "explicit_status",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.session_id",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.processed_to",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.target_import_end",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.source_started_at",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.session_id",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.archive_status",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.archive_status_display",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.archive_error_message",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.archive_attempt_no",
+        "value_type": "number",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.archive_requested_at",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.can_prepare_new",
+        "value_type": "number",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.prepare_action_display",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.completed_at",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.last_note",
+        "value_type": "object",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.note_operation_id",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "session_status",
+        "field_path": "attributes.note_status",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.availability",
+        "value_type": "object",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.expected_attenuation_display",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.expected_fg_display",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.expected_attenuation_min_percent",
+        "value_type": "number",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.expected_attenuation_max_percent",
+        "value_type": "number",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.expected_fg_min",
+        "value_type": "number",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "template_status",
+        "field_path": "attributes.expected_fg_max",
+        "value_type": "number",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "corrected_sg",
+        "field_path": "attributes.availability",
+        "value_type": "string",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_overall",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_overall",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_overall",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_database",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_database",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_database",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_schema",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_schema",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_schema",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_writable",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_writable",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_writable",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_home_assistant",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_home_assistant",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_home_assistant",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_session",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_session",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_session",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_frontend_publishing",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_frontend_publishing",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_frontend_publishing",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_node_red",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_node_red",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_node_red",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_runtime",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_runtime",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_runtime",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_configuration",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_configuration",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_configuration",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_time",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_time",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_check_time",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_last_check",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_last_check",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_last_check",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_issues",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_issues",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_issues",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_1",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_1",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_1",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_2",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_2",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_2",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_3",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_3",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_3",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_4",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_4",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_4",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_5",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_5",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_5",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_data_quality",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_data_quality",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_data_quality",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_last_measurement",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_last_measurement",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_last_measurement",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_measurement_age",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_measurement_age",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_measurement_age",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_attention",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_attention",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_attention",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_issues",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_issues",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_issues",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_1",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_1",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_1",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_2",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_2",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_2",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_3",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_3",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_3",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_4",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_4",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_4",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_5",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_5",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_5",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_attention",
+        "field_path": "state",
+        "value_type": "scalar",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_attention",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_attention",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_overall",
+        "field_path": "attributes.checks",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_overall",
+        "field_path": "attributes.availability",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_issues",
+        "field_path": "attributes.items",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_issues",
+        "field_path": "attributes.count",
+        "value_type": "number",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_issues",
+        "field_path": "attributes.items",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_issues",
+        "field_path": "attributes.count",
+        "value_type": "number",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_1",
+        "field_path": "attributes.events",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "technical_event_1",
+        "field_path": "attributes.event",
+        "value_type": "object",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_1",
+        "field_path": "attributes.events",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "event_event_1",
+        "field_path": "attributes.event",
+        "value_type": "object",
+        "required": 0,
+        "absence_policy": "omit",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "state",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes",
+        "value_type": "object",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.message",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.source_profile_id",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.name",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.source_type",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.sg_entity_id",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.temperature_entity_id",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.heartbeat_entity_id",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.rssi_entity_id",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.poll_interval_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.gap_threshold_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.session_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.batch_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.lifecycle_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.source_started_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.import_cutoff_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.last_success_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_bucket_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_sample_count_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_sg_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_sg_detail_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_temperature_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_rssi_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.measurement_age_state",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.latest_measurement_state",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.data_quality_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.gap_status_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.gap_started_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.last_error_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.import_counts_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.import_coverage_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.import_summary_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.authority",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.updated_at_display",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "measurement_source",
+        "field_path": "attributes.source",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.start_ready",
+        "value_type": "number",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.start_fields",
+        "value_type": "array",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      },
+      {
+        "projection_id": "start_status",
+        "field_path": "attributes.start_readiness_message",
+        "value_type": "string",
+        "required": 1,
+        "absence_policy": "error",
+        "empty_allowed": 0
+      }
+    ],
+    "ha_draft_output_bindings": [
+      {
+        "output_slot": 1,
+        "entity_id": "text.gjaeringsassistent_batchnavn",
+        "field_name": "batch_name",
+        "converter_id": "text",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "clear"
+      },
+      {
+        "output_slot": 2,
+        "entity_id": "text.gjaeringsassistent_pitchtid",
+        "field_name": "pitched_at",
+        "converter_id": "datetime",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "clear"
+      },
+      {
+        "output_slot": 3,
+        "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+        "field_name": "pitch_time_mode",
+        "converter_id": "select",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 4,
+        "entity_id": "number.gjaeringsassistent_forventet_fg_min",
+        "field_name": "expected_attenuation_min_percent",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 5,
+        "entity_id": "number.gjaeringsassistent_forventet_fg_maks",
+        "field_name": "expected_attenuation_max_percent",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 6,
+        "entity_id": "number.gjaeringsassistent_volum_l",
+        "field_name": "volume_l",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 7,
+        "entity_id": "number.gjaeringsassistent_pitchtemperatur_c",
+        "field_name": "manual_temperature_c",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 8,
+        "entity_id": "select.gjaeringsassistent_pitchmodus",
+        "field_name": "pitch_mode_id",
+        "converter_id": "select",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 9,
+        "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+        "field_name": "yeast_amount_g",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "omit"
+      },
+      {
+        "output_slot": 10,
+        "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+        "field_name": "slurry_volume_ml",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "omit"
+      },
+      {
+        "output_slot": 11,
+        "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+        "field_name": "slurry_source_batch",
+        "converter_id": "text",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "clear"
+      },
+      {
+        "output_slot": 12,
+        "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+        "field_name": "slurry_generation",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "omit"
+      },
+      {
+        "output_slot": 13,
+        "entity_id": "text.gjaeringsassistent_oksygenering",
+        "field_name": "oxygenation_note",
+        "converter_id": "text",
+        "start_enabled": 1,
+        "measurement_enabled": 0,
+        "absence_policy": "clear"
+      },
+      {
+        "output_slot": 14,
+        "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+        "field_name": "measurement_method_id",
+        "converter_id": "select",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 15,
+        "entity_id": "number.gjaeringsassistent_malt_sg",
+        "field_name": "measured_sg",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 16,
+        "entity_id": "number.gjaeringsassistent_provetemperatur",
+        "field_name": "sample_temperature_c",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 17,
+        "entity_id": "number.gjaeringsassistent_hydrometer_kalibreringstemperatur",
+        "field_name": "calibration_temperature_c",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 18,
+        "entity_id": "number.gjaeringsassistent_manuell_temperatur",
+        "field_name": "manual_temperature_c",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 19,
+        "entity_id": "number.gjaeringsassistent_trykk",
+        "field_name": "pressure_bar",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 20,
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_settpunkt",
+        "field_name": "cooler_setpoint_c",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 21,
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_kalibrering",
+        "field_name": "cooler_calibration_offset_c",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 22,
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "field_name": "airlock_activity",
+        "converter_id": "select",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 23,
+        "entity_id": "number.gjaeringsassistent_acetaldehyd",
+        "field_name": "acetaldehyde_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 24,
+        "entity_id": "number.gjaeringsassistent_diacetyl",
+        "field_name": "diacetyl_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 25,
+        "entity_id": "number.gjaeringsassistent_vorteraktig_preg",
+        "field_name": "wort_like_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 26,
+        "entity_id": "number.gjaeringsassistent_svovel_so2",
+        "field_name": "sulfur_so2_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 27,
+        "entity_id": "number.gjaeringsassistent_svovel_h2s",
+        "field_name": "sulfur_h2s_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 28,
+        "entity_id": "number.gjaeringsassistent_klarhet",
+        "field_name": "clarity_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 29,
+        "entity_id": "number.gjaeringsassistent_utfelling_i_prove",
+        "field_name": "settling_yeast_level",
+        "converter_id": "integer",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 30,
+        "entity_id": "number.gjaeringsassistent_utfelling_minutter",
+        "field_name": "settling_minutes",
+        "converter_id": "number",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 31,
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "field_name": "user_conclusion",
+        "converter_id": "select",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "error"
+      },
+      {
+        "output_slot": 32,
+        "entity_id": "text.gjaeringsassistent_kontrollnotat",
+        "field_name": "measurement_note",
+        "converter_id": "text",
+        "start_enabled": 1,
+        "measurement_enabled": 1,
+        "absence_policy": "clear"
+      }
+    ],
+    "ha_entity_number_constraints": [
+      {
+        "entity_id": "number.gjaeringsassistent_acetaldehyd",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_hydrometer_kalibreringstemperatur",
+        "minimum_value": 0,
+        "maximum_value": 30,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_klarhet",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_malt_sg",
+        "minimum_value": 0.98,
+        "maximum_value": 1.2,
+        "step_value": 0.001,
+        "input_mode": "box",
+        "display_decimals": 3,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_kalibrering",
+        "minimum_value": -5,
+        "maximum_value": 5,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_settpunkt",
+        "minimum_value": -5,
+        "maximum_value": 30,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_diacetyl",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_forventet_fg_maks",
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_forventet_fg_min",
+        "minimum_value": 0,
+        "maximum_value": 100,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_manuell_temperatur",
+        "minimum_value": -5,
+        "maximum_value": 30,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_pitchtemperatur_c",
+        "minimum_value": 0,
+        "maximum_value": 30,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_trykk",
+        "minimum_value": -0.2,
+        "maximum_value": 3.0,
+        "step_value": 0.05,
+        "input_mode": "box",
+        "display_decimals": 2,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_provetemperatur",
+        "minimum_value": 0,
+        "maximum_value": 40,
+        "step_value": 0.1,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_minutter",
+        "minimum_value": 0,
+        "maximum_value": 1440,
+        "step_value": 5,
+        "input_mode": "box",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_i_prove",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+        "minimum_value": 0,
+        "maximum_value": 20,
+        "step_value": 1,
+        "input_mode": "box",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+        "minimum_value": 0,
+        "maximum_value": 5000,
+        "step_value": 10,
+        "input_mode": "box",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_h2s",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_so2",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_volum_l",
+        "minimum_value": 1,
+        "maximum_value": 200,
+        "step_value": 0.5,
+        "input_mode": "box",
+        "display_decimals": 1,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_vorteraktig_preg",
+        "minimum_value": 0,
+        "maximum_value": 5,
+        "step_value": 1,
+        "input_mode": "slider",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+        "minimum_value": 0,
+        "maximum_value": 1000,
+        "step_value": 1,
+        "input_mode": "box",
+        "display_decimals": 0,
+        "created_at": "UTC_TIMESTAMP(3)"
+      }
+    ],
+    "start_field_rules": [
+      {
+        "entity_id": "text.gjaeringsassistent_batchnavn",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 1
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_pitchtid",
+        "section_id": "pitch",
+        "required_value": 0,
+        "positive_required": 0,
+        "sort_order": 2
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchtid_modus",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 3
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_volum_l",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 1,
+        "sort_order": 4
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_pitchtemperatur_c",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 5
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_pitchmodus",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 6
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 1,
+        "sort_order": 7
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 1,
+        "sort_order": 8
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 9
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 10
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_oksygenering",
+        "section_id": "pitch",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 11
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_malemetode",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 12
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_malt_sg",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 13
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_provetemperatur",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 14
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_hydrometer_kalibreringstemperatur",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 15
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_manuell_temperatur",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 16
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_trykk",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 17
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_settpunkt",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 18
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_kjolemaskin_kalibrering",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 19
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_gjaerlasaktivitet",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 20
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_acetaldehyd",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 21
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_diacetyl",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 22
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_vorteraktig_preg",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 23
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_so2",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 24
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_svovel_h2s",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 25
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_klarhet",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 26
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_i_prove",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 27
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_utfelling_minutter",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 28
+      },
+      {
+        "entity_id": "select.gjaeringsassistent_kontroll_konklusjon",
+        "section_id": "measurement",
+        "required_value": 1,
+        "positive_required": 0,
+        "sort_order": 29
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_kontrollnotat",
+        "section_id": "measurement",
+        "required_value": 0,
+        "positive_required": 0,
+        "sort_order": 30
+      }
+    ],
+    "start_field_pitch_modes": [
+      {
+        "entity_id": "number.gjaeringsassistent_gjaermengde_g",
+        "pitch_mode_id": "dry"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_volum_ml",
+        "pitch_mode_id": "slurry"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_slurry_kildebatch",
+        "pitch_mode_id": "slurry"
+      },
+      {
+        "entity_id": "number.gjaeringsassistent_slurry_generasjon",
+        "pitch_mode_id": "slurry"
+      },
+      {
+        "entity_id": "text.gjaeringsassistent_oksygenering",
+        "pitch_mode_id": "slurry"
+      }
+    ]
+  },
+  "source_fingerprints": {
+    "contracts/ha-node-red-contract.json": "70e2d1d333bcb1fa72c0d34db2fded628398ca72b97dee350056228935606eae",
+    "contracts/physical-schema.json": "569721c75f12fd3fe7152bc72923dcbeb53926d84c2d122d7e1ba7735777d38e",
+    "contracts/publication-job.schema.json": "82d055f7864612dc8016984df671228ec561d3039ce64c04d457e6cf200d8696",
+    "contracts/read-execution-plan.json": "bf8bfd50dd1f10f8a714c59090c91fe034b42e82aec88431f46f56d9a5b638c9",
+    "contracts/read-execution-schema.json": "9eb51c73f0c861c1a478b3b323af1cfb680f83e6b5412dbd46ffdf57e1bed969",
+    "contracts/read-model-columns.json": "fafb9feecb56f322f4e7143f05e7afbed39b7564cfb0975a2c268f6ae3b622a3",
+    "dashboard/gjaeringsassistent-card.js": "b55078c6e36ff731eb8140a844a760d0aef4f7bcd3350f44fdb16bcc75f51986",
+    "dashboard/gjaeringsassistent-dashboard.yaml": "ff0ffb4a3eaaaa51d917ecb8659f4bd6ae25613769a032aea373ef2b4110f656",
+    "docs/05-FRONTEND-OG-INTEGRASJONSKONTRAKT.md": "5bff414113c1cafab0023c34346bfde664a6096d3f0e88656885412527d85774",
+    "docs/12-OPERASJONS-OG-TRANSAKSJONSKONTRAKT.md": "2095b17070394dc719cecf2e48e56ce910ec1878dd87c752fd7d1fced051bbbc",
+    "nodered/flows.template.json": "14c0675065a2a0352f6c5820d09b6d58e3155da4adfc3ce8f2863e67ad7085f1",
+    "sql/11-runtime-routines.sql": "d095194a17e4889b8769bb9f1f6f73e78a06cf20a3043199078211aa00555bd9",
+    "sql/12-operator-routines.sql": "417bcd0c22912679a280a0511a4409056c61c8f68c96d83c1faf8f5aeb274da3",
+    "sql/20-views.sql": "217c754cb254e54b9f7f82c5ef288494c739f6fa65ec11d3bd14f7c2cb47d38a",
+    "sql/21-system-metadata-seed.sql": "1d489ab949217b3f52720f0299f44ce6d36fc471141b2fb7789672dbb7e79928",
+    "tests/test-interface-contracts.js": "bd496327f63c30f4aa00f21302316c05af92b06b71701152d80df13d050bc95b",
+    "tests/test-operator-ui.js": "c1b742b92ad60bfa4e0d892ace79e48e6514a2bd02a0093362dbc40eb263fc62",
+    "tests/test-p24r15-live.js": "6a531d55374f88973e322368073590c87a4371b378de90dec76094436cb839d8",
+    "tests/test-p24r8.js": "0515470724cf433bb129217a77212138a113012f34888dbfe706d10783a13514",
+    "tests/test-start-control-live.js": "4d0cd6add23536ce1fde357b57464cfe62d08dff784d4a6b72eb902f933f23b1",
+    "tests/verify-ha-contract.py": "c524d6b828794fb14327574ac177c55656abb7bcc02b58b382c0cbb2f26818a0",
+    "tests/verify-interface-contracts.py": "0f817831fedad92597ec3642b3479fff6247d606343f53b3bdc63a450fbcdcb3",
+    "tests/verify-p24r15.py": "9729603084ed72e244ba2f6e589f27ac937b310bb1a7767d05de8696057859d3",
+    "tests/verify-read-model-contract.py": "86b30138be87ec8a893a9c763a8cabecf86ecf7b32f2bad121ffb1526e641cb7",
+    "tools/build_read_queries.py": "716a7688351d502c3b7741398882008478135ddf5007998f61a442c30869e51e",
+    "tools/overview_reads.sql": "ebc7a633e91cbd36c6fc16a239237b69006670b79c0a276a6f27b35bed09bb09",
+    "tools/publish_payload.js": "5a5be5b3660c8844709351f6185e26e926a2034c73582bfbe9426ee49c92b47e",
+    "tools/report_reads.sql": "cdbec5b43d628844a8fadc556caac18ee03a59f111fc1261b657d6470837ceae"
+  }
+}

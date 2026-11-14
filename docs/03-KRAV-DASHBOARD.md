@@ -7,6 +7,21 @@ source_format: markdown
 
 # 03 – Krav: Home Assistant-dashboard
 
+<!-- BEGIN ARCHITECTURE GUARDRAILS -->
+**Gjennomgående ansvarsdeling og arkitektursperrer**
+
+- MariaDB/InnoDB er eneste autoritative persistente sannhetskilde for domenedata, konfigurasjon, regler, parametere og nødvendig vedvarende tilstand. Informasjon lagres der og hentes derfra.
+- HA/frontend viser ferdige DB/read-model-felt og formidler handlinger. Node-RED er generisk motor, orkestrering og transport; HA-state er ikke domenefasit.
+- Ingen oppdiktede verdier, lokale defaults, fallback, reserveberegninger, hardkodede fagregler eller workarounds for manglende/feil grunnlag. Feilen rettes ved den autoritative kilden og skal være synlig.
+- Påkrevde felt kan ikke utelates; reelt fravær modelleres og forklares, aldri som 0. Ingen nødvendig domenestate i flow/global/context, nettleser, HA eller lokale runtimefiler.
+- Registry → template → normalisert frozen session → generisk motor. Sessionens grunnlag, rettigheter og policy er eksplisitte og sporbare.
+- Normaliserte relasjoner, PK/FK/UNIQUE/CHECK og korte transaksjoner håndhever integritet. InnoDB håndterer normal samtidighet; ingen global writer-kø, normal applikasjonslocking eller retry som skjuler modellfeil.
+- Fakta og korreksjoner innen beholdte sesjoner er append-only. Mutable kladder og eksplisitt atomisk sletting av hele gamle sesjoner er særskilt modellerte operasjoner.
+- SG-only; separate B/P-modeller; én operativ sesjon; ingen automatisk fysisk styring. Dashboard og rapport bruker felles autoritativt seriegrunnlag og graftegner uten estimerte målinger.
+
+Flyktig transport, ulagret operatørinput og tegnekoordinater gir ingen adgang til alternativ faglig tilstand. Grunnreglene gjentas bevisst og kontrolleres mot samme kilde; se dokument 14 for begrunnelser.
+<!-- END ARCHITECTURE GUARDRAILS -->
+
 **Rolle:** Normative krav til operatørflaten. Frontend er ren visning/interaction; domeneberegning, fallback og kriterietolkning hører ikke hjemme her.
 
 ![Dashboard-målbilde](figures/FIG-02-DASHBOARD-MAALBILDE.svg)
@@ -187,15 +202,13 @@ SG-rate bruker målte endepunkter i et sammenhengende 24-timersvindu med minst 1
 | REQ-HA-078 | Fastsatt | Over hver analysegraf vises MariaDB-forberedt siste gyldige verdi, enhet og faktisk måletid for hver serie. Manglende grunnlag vises uttrykkelig; siste måling fremstilles ikke som en ny måling nå. |
 | REQ-HA-079 | Fastsatt | Avsluttet gjæring skal vise DB-eid arkivstatus og støtte nytt arkiveringsforsøk uten ny avslutning. Uverifisert sluttarkiv skal fortsatt blokkere Gjør klar for reell gjæring og inngå vedvarende i Systemkontroll. |
 
-## Historikk og grafer i gjeldende release
+## Grafer, visningsvalg og diagnostikk
 
 | ID | Status | Krav |
 |---|---|---|
 | REQ-HA-080 | Fastsatt | Grafene kan sammenligne med et referansedatasett eller en avsluttet gjæring, justert til tid siden pitch og med egne analyseverdier. |
 | REQ-HA-081 | Fastsatt | Grafvisningen kan velge 5/15/60-minutters detaljvisning og hele gjæringen/siste 24 timer/48 timer/7 dager uten å endre lagrede målinger. |
 | REQ-HA-082 | Fastsatt | Avsluttet gjæring forblir synlig under arkivering; nytt forsøk vises når arkiv mangler/feiler, og Gjør klar følger DB-verifisert eksport. |
-
-## P24r8 visning og diagnostikk
 
 | ID | Status | Krav |
 |---|---|---|
@@ -204,34 +217,29 @@ SG-rate bruker målte endepunkter i et sammenhengende 24-timersvindu med minst 1
 | REQ-HA-085 | Aktiv | Analyse skal også vise SG, temperatur og trykk med delt sammenligning. Analyse- og rapportgrafer skal være om lag 40 prosent høyere. |
 | REQ-HA-086 | Aktiv | Teknisk eksport skal tilby kompakt standarddiagnostikk og eksplisitt utvidet diagnostikk med faktisk publisert dashboardgrunnlag; grafvalg og detalj/timeimportens omfang skal følge eksporten. |
 
-## P24r9 grafvalg og gjeldende krav
-
 | ID | Status | Krav |
 |---|---|---|
 | REQ-HA-087 | Aktiv | Graf- og demovalg skal akseptere direkte kommando, payload.data, payload.event og payload.event.data. Det sendte operation_id skal bevares helt til DB-bekreftelse. |
 | REQ-HA-088 | Aktiv | Kravlinjer, kravtekst og oppfylt-markeringer i dashboard/rapport skal følge gjeldende kriterierevisjon. Reset bruker originalparametere, eksplisitt tom grense forblir tom, og korrigert stabilitetsvindu knyttes til rett måleserie. |
 
-## P24r10 arkivutveksling
+## Arkivutveksling og administrasjon
 
 | ID | Status | Krav |
 | --- | --- | --- |
 | REQ-HA-089 | implemented | Template og arkiv tilbyr filvalg, forhåndsvisning, import, eksport og separate system-, egen- og importert-kategorier. Historikk kan skjules fra sammenligning uten sletting. |
-
-## P24r11 arkivvalg
 
 | ID | Status | Krav |
 | --- | --- | --- |
 | REQ-HA-090 | implemented | Arkivkortet ligger øverst i Templatefanen og tilbyr aktiv eksport og bekreftet permanent sletting av historiske sesjoner og ubrukte importerte templates. |
 | REQ-HA-091 | implemented | Ett samlet filvalg leses av backend til en liste etter template-navn. Deretter velges bare template eller template med gjæringsdata. Valg beholdes ved oppdatering; SHA-advarsler vises før import. |
 
-## Historisk import (p24r15)
+## Historisk import
 
 | Krav | Status | Kravtekst |
 | --- | --- | --- |
 | REQ-HA-092 | Aktiv | Det vanlige startbildet skal tilby «Importer avsluttet gjæring» med sluttidspunkt. Angitt «Start fra», template og første måleserie gjenbrukes. B/P har etterregistrering av manglende faktisk fasestart; alle viste varigheter kommer fra DB. |
 
 Velg historisk start i «Start fra» og lagre tidspunktet før import. Fyll de vanlige startmålingene, velg sluttdato/tid og trykk «Importer avsluttet gjæring». Tidsfeltene bruker Europe/Oslo. Etter import vises målekilden HISTORISK. Etterregistrerte målinger lagres først ved sluttgrensen; bruk eksisterende «Korriger tidspunkt for målerunde» for faktisk historisk måletid. Eksisterende P/B-visits korrigeres som før; manglende fase/trinn kan etterregistreres i tidskortet uten å konstruere et automatisk vurderingsbevis.
-
 
 ## Sensoroppsett og eksplisitte måleverdier
 

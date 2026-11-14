@@ -1,0 +1,3052 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb-NO" xml:lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Krav- og beslutningshistorikk – generert leseutgave</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Krav- og beslutningshistorikk – generert
+leseutgave</h1>
+</header>
+<h1 id="krav--og-beslutningshistorikk--generert-leseutgave">Krav- og
+beslutningshistorikk – generert leseutgave</h1>
+<blockquote>
+<p>Avledet fra <a href="../sources/requirements-history.json">den ene
+vedlikeholdte historikkilden</a>. Baseline er dokumentert tekst ved
+angitt commit, ikke en påstått original dialogdato. Gjeldende
+krav/beslutninger finnes i sine faglige dokumenter.</p>
+</blockquote>
+<h2 id="hist-001--documented_baseline">HIST-001 –
+documented_baseline</h2>
+<p>Registrert: 2026-11-14. Kildetype: git_snapshot.</p>
+<p>Preserves all documented statements before the structural revision.
+It does not claim the date or wording of the original chat decision.</p>
+<h3 id="krav-ved-baseline">Krav ved baseline</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Status</th>
+<th>Dokumentert krav</th>
+<th>Opprinnelig kildeposisjon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>REQ-COM-001</td>
+<td>Fastsatt</td>
+<td>Løsningen skal gi råd og status, men aldri styre utstyr
+automatisk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L30">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-002</td>
+<td>Fastsatt</td>
+<td>MariaDB er eneste autoritative persistente sannhetskilde. Node-RED
+er gjæringsmotor/orchestrator og utfører all domeneskriving gjennom den
+sentraliserte MariaDB-grensen. <code>flow.*</code>, skrivbar
+<code>global.*</code>, HA-state og frontendprojeksjoner skal ikke være
+autoritativ applikasjonsstate.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L31">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-003</td>
+<td>Fastsatt</td>
+<td>Første produksjonsversjon skal bruke dokumenterte grenser og tydelig
+merkede faglige tommelfingerregler.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L32">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-004</td>
+<td>Fastsatt</td>
+<td>Historiske batcher skal ikke påvirke anbefalingsmotoren i v1.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L33">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-005</td>
+<td>Fastsatt</td>
+<td>Hver anbefaling skal vise regeltype, kilde, begrunnelse og
+usikkerhet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L34">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-006</td>
+<td>Fastsatt</td>
+<td>En anbefaling har status <code>pending</code>,
+<code>executed</code>, <code>rejected</code> eller
+<code>superseded</code>.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L35">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-007</td>
+<td>Fastsatt</td>
+<td>En ny anbefaling skal kunne erstatte en utdatert anbefaling uten å
+slette historikken.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L36">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-008</td>
+<td>Fastsatt</td>
+<td>Bare én aktiv sesjon tillates. <code>draft</code> er ikke en egen
+persistent livsløpstilstand.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L37">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-009</td>
+<td>Fastsatt</td>
+<td>Session opprettes som del av den samlede Start-operasjonen; det
+finnes ikke en separat før-pitch-opprettelsesflyt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L38">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-010</td>
+<td>Fastsatt</td>
+<td>Pitchtid registreres ved Start og holdes separat fra tidspunktet
+startdata og målesett registreres.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L39">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-011</td>
+<td>Fastsatt</td>
+<td><code>activity_started_at</code> registreres automatisk og kan
+korrigeres manuelt uten å slette originalen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L40">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-012</td>
+<td>Fastsatt</td>
+<td>Sesjonen avsluttes bare manuelt. Eget obligatorisk sluttnotat kreves
+ikke; notater registreres separat mens sesjonen er aktiv.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L41">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-013</td>
+<td>Fastsatt</td>
+<td>Templateidentitet, biologimodell, prosessplan, kriterier, mål og
+actions fryses ved Start som en komplett normalisert session-kopi med
+snapshot-metadata/SHA-256. Ingen JSON-blob er autoritativt
+regelgrunnlag.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L42">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-014</td>
+<td>Fastsatt</td>
+<td>Frosset plan redigeres ikke under aktiv gjæring; faktiske tiltak,
+avvik og timing registreres mot den uendrede planen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L43">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-015</td>
+<td>Fastsatt</td>
+<td>Prosessmodellen har 15 generiske plasser. Gjeldende
+W-34/70/IPL-grunnlag bruker P1–P10 aktivt og P11–P15 som reserve.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L44">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-016</td>
+<td>Fastsatt</td>
+<td>Ordinære/live prosesstrinnoverganger krever manuell
+operatørbekreftelse. Historisk replay kan bare autoetablere et
+prosesstrinn når dette eksplisitt er tillatt i den frosne step-policyen;
+W-34/70 tillater dette bare for P1/P2.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L45">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-017</td>
+<td>Fastsatt</td>
+<td>Aktivt og anbefalt prosesstrinn skal vises separat fra biologisk
+fase.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L46">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-018</td>
+<td>Fastsatt</td>
+<td>Normal framdrift skjer ett trinn om gangen med <code>Neste</code>;
+<code>Hopp over</code> er ikke del av gjeldende operatørkontrakt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L47">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-019</td>
+<td>Fastsatt</td>
+<td>Prosess-tilbakeføring går ett trinn tilbake og krever
+advarsel/bekreftelse, men ingen obligatorisk begrunnelse. Hendelsen og
+resultatet skal logges; eventuell kommentar registreres i generelt
+notatfelt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L48">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-020</td>
+<td>Fastsatt</td>
+<td>Templatebestemte prosesskrav skal advare, men aldri blokkere en
+manuelt bekreftet overgang.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L49">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-021</td>
+<td>Fastsatt</td>
+<td>Automatisk målbare sjekkpunkter og manuelle sensoriske/praktiske
+punkter skal kunne blandes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L50">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-022</td>
+<td>Fastsatt</td>
+<td>Manuell SG før kaldkrasj er standardpunkt; manglende verdi gir bare
+advarsel.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L51">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-023</td>
+<td>Fastsatt</td>
+<td>Manuell SG kan komme fra hydrometer eller alkohol-korrigert
+refraktometer.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L52">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-024</td>
+<td>Fastsatt</td>
+<td>Avvik fra Tilt vises og logges, men Tilt-serien kalibreres ikke
+automatisk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L53">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-025</td>
+<td>Fastsatt</td>
+<td>Maksimal lengde for hvert notatfelt er 255 tegn.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L54">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-026</td>
+<td>Fastsatt</td>
+<td>Startgrunnlaget valideres samlet og fryses atomisk ved Start.
+Korrigering etter Start skal bare skje gjennom eksplisitt støttet
+revisjons-/korrigeringsmekanisme.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L55">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-027</td>
+<td>Utsatt</td>
+<td>Endelig W-34/70-regelsett og terskelverdier fastsettes etter kilde-
+og prototyperevisjon.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L56">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-028</td>
+<td>Fastsatt</td>
+<td>Seks biologiske faser brukes som fast referanseforløp for ren
+tankgjæring med <code>Saccharomyces</code>.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L57">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-029</td>
+<td>Fastsatt</td>
+<td>Biologisk fase oppdateres automatisk etter vedvarende kriterier.
+Registrerte tidsstempler kan korrigeres manuelt uten begrunnelseskrav;
+originalt, manuelt og effektivt tidspunkt bevares sporbar og
+overstyringen kan fjernes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L58">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-030</td>
+<td>Fastsatt</td>
+<td>Brettanomyces, surøl, blandingskultur og flaskekarbonering er
+utenfor omfanget.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L59">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-031</td>
+<td>Fastsatt</td>
+<td>Bare ett prosesstrinn kan være aktivt; parallelle mål og aktiviteter
+ligger i dette trinnet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L60">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-032</td>
+<td>Fastsatt</td>
+<td>Forventet FG-grunnlag hentes fra valgt template og fastsettes før
+Start; det er del av den frosne session-planen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L61">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-033</td>
+<td>Prototype</td>
+<td>Biologisk tid måles fra autoritativ pitch til første bekreftede
+inngang i B6, mens tid i B6 vises separat.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L62">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-034</td>
+<td>Prototype</td>
+<td>B6 heter <code>Stabil utgjæring</code>; betegnelsen påstår ikke
+sensorisk ferdig øl eller utført klarning.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L63">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-036</td>
+<td>Fastsatt</td>
+<td>Bare aktiv sesjon kan registrere prosessdata. <code>idle</code>,
+<code>configured</code>, <code>active</code>, <code>completed</code> er
+gjeldende tekniske livsløpsnavn.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L64">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-037</td>
+<td>Fastsatt</td>
+<td>Grunnmodellen lagrer manuell SG/temperatur, trykk, kjøleverdier,
+gjærlås, notat og templatevalgte sensoriske 0–5-felt uavhengig av
+B/P.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L65">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-038</td>
+<td>Fastsatt</td>
+<td>Diacetyl er én ordinær sensorisk 0–5-verdi; prosesstemplaten avgjør
+eventuell terskel.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L66">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-039</td>
+<td>Fastsatt</td>
+<td>Avslutning skal kunne eksportere den aktuelle sessionens frosne
+templategrunnlag, normaliserte domenedata, relevante logger og manifest.
+Normalisert sessionhistorikk beholdes i MariaDB; eksport er
+arkiv/transport og gate før operativ release av reell session.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L67">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-040</td>
+<td>Fastsatt</td>
+<td>Template kan bare byttes før sesjonsstart og fryses som en
+fullstendig kopi i sesjonen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L68">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-041</td>
+<td>Fastsatt</td>
+<td>Session-ID skal være stabil og filsystemsikker og bygge på
+tidsstempel og sikkert templategrunnlag uten kollisjonsfare.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L69">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-042</td>
+<td>Fastsatt</td>
+<td>Data fra Tilt, manuelle målinger, sensorikk og prosesshandlinger
+skal bare registreres i en aktiv sesjon.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L70">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-043</td>
+<td>Fastsatt</td>
+<td>En uplanlagt Node-RED-/serveromstart skal gjenopprette konfigurert
+eller aktiv session uten ny Start, rekonstruert fra normaliserte
+MariaDB-data. HA-entiteter og frontendprojeksjoner er ikke
+restoreautoritet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L71">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-044</td>
+<td>Fastsatt</td>
+<td>Historikk skal kunne bevares som selvstendige,
+integritetsverifiserte session-eksporter utenfor den operative
+MariaDB-instansen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L72">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-045</td>
+<td>Fastsatt</td>
+<td>Rapport skal kunne genereres underveis og etter avslutning;
+historisk rapport skal kunne bygges fra valgt eksportfil.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L73">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-046</td>
+<td>Fastsatt</td>
+<td><code>Gjør klar for ny gjæring</code> er en egen handling etter
+kvittert avslutning og, for reell gjæring, komplett SQLite-par for
+gjæring/template og HTML-rapport for samme sesjon, filverifisert med
+størrelse og SHA-256. Filfeil vises og logges; manglende, pågående eller
+mislykket eksport blokkerer. Demo er eksplisitt unntatt
+eksportkravet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L74">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-047</td>
+<td>Fastsatt</td>
+<td>Ved <code>Gjør klar</code> skal avsluttet session frigjøres
+operativt med append-only release-faktum. Historiske sessiondata
+beholdes; mutable inputdraft kan nullstilles. Eksportfiler, rapporter og
+teknisk historikk som skal bevares slettes ikke.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L75">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-048</td>
+<td>Fastsatt</td>
+<td>Manuelle grunnobservasjoner lagres atomisk via
+<code>record_observation</code>; Start lagrer første
+SG/temperatur/metode, og ordinære målesett kan inneholde den komplette
+templatevalgte sensoriske målkontrakten.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L76">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-049</td>
+<td>Fastsatt</td>
+<td>Hvert nytt manuelt målesett bekreftes komplett. Manglende eller
+avvikende kriteriegrunnlag kan advare, men operatøren kan fortsatt
+bekrefte en prosessovergang.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L77">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-050</td>
+<td>Fastsatt</td>
+<td>Readiness bestemmes av den generiske templatebestemte
+kriteriemodellen; ingen fast hardkodet AND-/brukerkonklusjonsmodell
+gjelder på tvers av alle trinn.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L78">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-051</td>
+<td>Fastsatt</td>
+<td>Kontrolltypers maksimale alder og ugyldiggjørende endringer skal
+forvaltes per template og kontrolltype.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L79">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-052</td>
+<td>Fastsatt</td>
+<td>Template bestemmer hvilke målinger/sensoriske observasjoner og
+grenser som er relevante. Maltsødme er ikke del av gjeldende målemodell,
+og konkrete terskler skal ikke hardkodes som universelle krav.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L80">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-053</td>
+<td>Fastsatt</td>
+<td>Manglende eller ikke-bestått kontroll gir rød/advarende informasjon,
+men kan overstyres med ett trykk; alle aktive advarsler logges.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L81">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-054</td>
+<td>Fastsatt</td>
+<td>Pakking/tappeklar er ikke eget prosesstrinn i gjeldende modell;
+avslutning er en separat manuell livsløpshandling.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L82">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-055</td>
+<td>Fastsatt</td>
+<td>Standardforløpet bruker P8 som kaldkrasj, P9 som bunnfallsdump og
+P10 som kaldkondisjonering; konkrete inngangskriterier bestemmes av
+templaten.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L83">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-056</td>
+<td>Fastsatt</td>
+<td>Det finnes ingen hardkodet trykk-/vakuumsikringsport; relevante
+trykkkrav må uttrykkes gjennom template/kriterier dersom de
+innføres.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L84">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-057</td>
+<td>Fastsatt</td>
+<td>Kaldkondisjonering inngår i alle støttede gjæringsforløp;
+måltemperatur og varighet bestemmes av templaten.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L85">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-058</td>
+<td>Fastsatt</td>
+<td>Temperaturøkninger kan modelleres som egne prosesstrinn, mens
+biologiske faser fortsatt holdes som separat modell.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L86">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-059</td>
+<td>Prototype</td>
+<td>Før livebruk skal Systemkontroll, omstart,
+sensor-/integrasjonsavbrudd, HA-reconnect, rapport/eksport og minst én
+komplett testgjæring verifiseres i målmiljøet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L87">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-060</td>
+<td>Fastsatt</td>
+<td>Bunnfallsdump inngår som P9 i standardforløpet. Gjærhøsting,
+gjærsortering, overføring og pakking ligger utenfor
+prosessmodellen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L88">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-061</td>
+<td>Fastsatt</td>
+<td>Manuelt målt temperatur og kjølemaskinens settpunkt lagres som
+separate observasjonsverdier.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L89">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-062</td>
+<td>Fastsatt</td>
+<td>Hver brukerinitierte stateful handling skal få en unik operasjons-ID
+og kunne spores til eksplisitt sluttresultat fra samme operasjon, med
+tidspunkt, handling, tilstand før/etter, godtatt/avvist, feltfeil,
+aktive advarsler og teknisk feil. Valideringsavvisning og
+persistens-/integrasjonsfeil skal skilles.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L90">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-063</td>
+<td>Fastsatt</td>
+<td>Systemkontrollen skal, når HA-integrasjonen er migrert, sammenligne
+forventede og faktisk registrerte HA-entity-ID-er og vise mangler og
+mulige suffikskollisjoner.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L91">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-064</td>
+<td>Fastsatt</td>
+<td>Stateful operatørhandlinger skal ha korrelasjons-/operasjons-ID der
+nødvendig for idempotens/sporbarhet og en enkel global 8 s
+dobbelttrykksguard som dekker normal GUI-/read-model-oppdateringstid.
+Sensoringest og tekniske systemkommandoer behandles ikke som
+operatørknappetrykk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L92">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-065</td>
+<td>Fastsatt</td>
+<td>Faglige regler som kan variere mellom templateversjoner skal eies
+deklarativt av registry/template i MariaDB. Node-RED skal ikke hardkode
+fase-, prosesstrinn-, gjærprofil- eller template-spesifikke terskler,
+vinduer, persistenskrav eller freshnessgrenser.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L94">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-066</td>
+<td>Fastsatt</td>
+<td>Hver beregnet metrikk skal ha registrert generisk beregningsmodell,
+deklarerte input og typed parametere. Motoren implementerer
+beregningsmodellene generisk, mens MariaDB bestemmer hvilken modell og
+hvilke verdier som brukes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L95">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-067</td>
+<td>Fastsatt</td>
+<td>Freshness og persistens er separate begreper.
+<code>maximum_age_minutes</code> gjelder alder på datagrunnlaget; krav
+om vedvarende kriterium uttrykkes eksplisitt med
+persistens-/vindusparametere og skal ikke simuleres som maksimal alder
+på en fase/state.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L96">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-068</td>
+<td>Fastsatt</td>
+<td>Automatisk biologisk framdrift er sekvensiell. Motoren vurderer bare
+neste biologiske fase som overgangskandidat; historisk backfill skal
+replayes kronologisk og kan ikke hoppe over en mellomliggende
+B-fase.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L97">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-069</td>
+<td>Fastsatt</td>
+<td>En aktiv sessions regelvurdering skal kunne reproduceres fra
+persisterte domenedata og den frosne normaliserte session-planen. Dersom
+Function-nodekode må tilføre en fagregel som ikke finnes i
+session-planen, er regelen ikke gyldig implementert.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L98">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-070</td>
+<td>Fastsatt</td>
+<td>Publisering av template skal avvise kombinasjoner av metrikk,
+beregningsmodell, kriteriemodell, input, typed parametere og freshness
+som registry ikke tillater. Motoren skal ikke reparere manglende eller
+ugyldig regelgrunnlag med skjulte defaults.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L99">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-071</td>
+<td>Fastsatt</td>
+<td>Operativ observability skal lese det persisterte
+produksjonsgrunnlaget. Teknisk/Systemkontroll skal ikke opprette en
+alternativ live-sensorbane eller være konkurrerende produsent av
+målekildens runtime-status.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L100">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-072</td>
+<td>Fastsatt</td>
+<td>Måledata med åpenbart ugyldig eller utilstrekkelig grunnlag skal
+ikke gjøres autoritative ved normalisering/clamping. Valideringsutfall
+skal være sporbare, mens autoritative tidsserier bare skal inneholde
+godkjent grunnlag.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L102">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-073</td>
+<td>Fastsatt</td>
+<td>Utilstrekkelig målegrunnlag vises som manglende. P24r7 publiserer
+bare ordinære analyseverdier fra faktiske målinger; ingen foreløpige
+verdier, regresjonsestimater, utfylling eller følsomhetsbånd.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L103">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-074</td>
+<td>Fastsatt</td>
+<td>Feil eller mangler skal rettes ved den autoritative kilden.
+Feil/mangler i MariaDB, registry, frozen session, runtimefakta eller
+read-model skal ikke maskeres med fallback, defaultverdi, korreksjon
+eller parallell domenelogikk i Node-RED, Home Assistant eller
+frontend.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L105">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-075</td>
+<td>Fastsatt</td>
+<td>Krav, beslutninger, verifikasjonskrav, tester og deres relasjoner
+skal være strukturerte metadata i MariaDB. Faktiske testkjøringer og
+testresultater skal lagres som egne historiske fakta.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L106">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-076</td>
+<td>Fastsatt</td>
+<td>Verifikasjonsresultater er append-only. En ny TECH/FUNC/UAT-kjøring
+skal opprette nye run/result-fakta og skal ikke overskrive tidligere
+verifikasjonshistorikk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L107">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-077</td>
+<td>Fastsatt</td>
+<td>Verifikasjon skal skille eksplisitt mellom tekniske tester,
+funksjonelle regresjonstester og UAT/målmiljøtest. Testbarhet skal
+bygges inn i løsningen selv om omfanget av faktisk testkjøring tilpasses
+endringens risiko og prototypefasen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L108">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-078</td>
+<td>Fastsatt</td>
+<td>Verifikasjonsdata skal kunne eksporteres som maskinlesbart datasett
+og lesbar HTML-rapport fra samme DB-eide snapshot/read-model uten at
+eksportlaget introduserer alternativ tolkning eller
+statusberegning.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L109">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-079</td>
+<td>Fastsatt</td>
+<td>MariaDB, Node-RED og Home Assistant skal behandles som asynkrone
+moduler som kan være utilgjengelige og komme tilbake i vilkårlig
+rekkefølge. Når avhengigheter blir tilgjengelige skal Node-RED
+idempotent rekonstruere og republisere gjeldende tilstand fra MariaDB
+uten manuell Start, lokal persistent fallback eller duplisert
+domenhistorikk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L110">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-080</td>
+<td>Fastsatt</td>
+<td>Sluttarkiv/rapport skal filverifiseres med størrelse og SHA-256 før
+verified registreres. Bare metadata sendes tilbake til DB;
+eksportstørrelsen skal ikke være avhengig av max_allowed_packet.
+Arkiveringsforsøk og terminalt resultat er append-only fakta.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L120">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-081</td>
+<td>Fastsatt</td>
+<td>Ingen analyseverdi skal anslås mellom manglende målinger. En
+beregning fra faktiske målinger er tillatt og skal vise kilde og faktisk
+måletid; manuell og rå Tilt-basis skal være atskilt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L121">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-COM-082</td>
+<td>implemented</td>
+<td>SQLite er filutveksling; importert historikk normaliseres i MariaDB.
+Motoren bruker ikke et eksternt SQLite-arkiv direkte.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L127">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-COM-083</td>
+<td>implemented</td>
+<td>Gjærings- og template-arkiv har samme session-/eksportprefix og
+valideres som et sett. Begge er SQLite; HTML-rapport beholdes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/01-KRAV-FELLES.md#L128">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-001</td>
+<td>Fastsatt</td>
+<td>Alle stateful operatørhandlinger valideres mot MariaDB-grunnlag før
+skriving.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L24">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-002</td>
+<td>Fastsatt</td>
+<td>Én faglig mutasjon skal være én kort atomisk MariaDB-transaksjon;
+commit eller rollback gjelder hele mutasjonen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L25">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-003</td>
+<td>Fastsatt</td>
+<td>Node-RED-restart skal kunne rekonstruere nødvendig nåtilstand fra
+MariaDB alene.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L26">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-004</td>
+<td>Fastsatt</td>
+<td>HA-entity-ID/config-ID-grensen følger dokument 05 og
+maskinkontrakten.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L27">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-005</td>
+<td>Fastsatt</td>
+<td>Feil i Node-RED/HA-integrasjonen skal inn i normalisert
+<code>technical_events</code> der persistens er mulig.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L28">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-006</td>
+<td>Fastsatt</td>
+<td>Systemkontroll skal skille faktisk teknisk feil fra funksjon som
+bevisst ikke er portert; <code>not_applicable</code> skal ikke gi falsk
+FAIL.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L29">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-007</td>
+<td>Fastsatt</td>
+<td>Ingen JSON-blobber skal brukes som erstatning for normaliserte
+domenedata.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L30">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-008</td>
+<td>Fastsatt</td>
+<td>SG-only gjelder alle aktive grensesnitt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L31">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-009</td>
+<td>Fastsatt</td>
+<td>Runtimehistorikk skal være append-only der ny faglig tilstand kan
+uttrykkes som ny fakta-/revisjonsrad. Historiske runtime-rader skal ikke
+toggles til/fra current.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L32">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-010</td>
+<td>Fastsatt</td>
+<td>Systemet skal ikke innføre applikasjonsstyrt DB-serialisering eller
+eksplisitt locking (<code>SELECT ... FOR UPDATE</code>,
+<code>GET_LOCK</code>) som normal concurrency-mekanisme. InnoDB
+håndterer samtidige readers/writers.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L33">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-011</td>
+<td>Fastsatt</td>
+<td>Datakonsistens skal primært uttrykkes med normalisering,
+PK/FK/UNIQUE/CHECK og idempotente operation-ID-er.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L34">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-012</td>
+<td>Fastsatt</td>
+<td>Rene reads kan kjøre parallelt og kan kortvarig se siste committed
+snapshot. Read-model korrigeres ved neste lesing; dette skal ikke
+kompenseres med global locking.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L35">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-013</td>
+<td>Fastsatt</td>
+<td>Mutable arbeidskladd er tillatt for operatørinput/template-draft,
+men skal være tydelig skilt fra immutable sessionhistorikk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L36">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-014</td>
+<td>Fastsatt</td>
+<td>Ordinær <code>Start gjæring</code> skal bruke valgt <strong>Start
+fra</strong> som opprinnelig pitch-/kildestart og hente tilgjengelig
+SG-, temperatur-, heartbeat- og RSSI-historikk fra DB-konfigurert Home
+Assistant-kilde.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L37">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-015</td>
+<td>Fastsatt</td>
+<td>HA-historikk skal normaliseres til komplette 5-minuttersbøtter i
+<code>measurements_5m</code>; rå HA-state skal ikke bli alternativ
+persistent domenestore.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L38">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-016</td>
+<td>Fastsatt</td>
+<td>Heartbeat-kilden avgjør datadekning. Manglende heartbeat skal gi
+eksplisitt <code>measurement_data_gaps</code>; SG/temperatur skal ikke
+interpoleres over slike gap.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L39">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-017</td>
+<td>Fastsatt</td>
+<td>Etter Start skal samme inkrementelle import fortsette i en
+aktiv-session-styrt femminuttersløyfe fra persisted
+<code>last_import_cutoff_at</code>. Uten aktiv reell session skal ingen
+periodisk HA-history-henting initieres; restart skal kunne hente seg inn
+fra MariaDB-cursor + HA-historikk når aktiv session finnes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L40">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-018</td>
+<td>Fastsatt</td>
+<td>Målekildens entity-ID-er skal ligge i MariaDB
+<code>measurement_source_profiles</code>, ikke hardkodes i
+Node-RED-funksjoner.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L41">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-019</td>
+<td>Fastsatt</td>
+<td>Evaluator skal bruke frosne <code>session_metric_runtime_*</code>,
+<code>session_biology_calculation_*</code> og kriterieparametere som
+deklarativt regelgrunnlag. Metrikk-ID skal ikke brukes som skjult
+domene-switch for å velge fagregel.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L43">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-020</td>
+<td>Fastsatt</td>
+<td>Node-RED implementerer generiske måleberegninger: SG-fall,
+utgjæringsgrad, signert endepunktrate, maks–min-stabilitet og
+state-order. Modellvalg, kilder, terskler og vindusparametere kommer fra
+frozen MariaDB-data. Frontend beregner ingen domenemetrikker.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L44">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-021</td>
+<td>Fastsatt</td>
+<td>En metrikk med <code>freshness_mode=not_applicable</code> skal ikke
+kunne evalueres med <code>maximum_age_minutes</code>; dette skal
+oppdages som ugyldig konfigurasjon ved
+templatevalidering/publisering.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L45">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-022</td>
+<td>Fastsatt</td>
+<td>Ved HA-history-backfill skal biologimotoren evaluere
+5-minuttersgrunnlaget kronologisk, håndheve persistens over faktisk
+sammenhengende datadekning og opprette hvert sekvensielle biologiske
+visit/transition ved det historiske kriteriekryssingstidspunktet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L46">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-023</td>
+<td>Fastsatt</td>
+<td>Persistens skal resettes over registrerte
+<code>measurement_data_gaps</code>; et krav om vedvarende kriterium kan
+ikke oppfylles ved å akkumulere tid på tvers av et dokumentert
+datagap.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L47">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-024</td>
+<td>Fastsatt</td>
+<td><code>sensor.gjaeringsassistent_malekilde</code> skal produseres fra
+én dedikert MariaDB-read-model. Live-ingest og Systemkontroll kan trigge
+refresh/kontroll, men skal ikke publisere egne konkurrerende
+målekildetilstander.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L48">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-025</td>
+<td>Fastsatt</td>
+<td>Uten aktiv reell session skal målekildens operative importstatus
+være <code>IDLE</code> og ingen sensorhistorikk hentes for
+observability. Aktiv reell session uten persistert kildebinding skal
+være feiltilstand, ikke <code>IDLE</code>.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L49">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-026</td>
+<td>Fastsatt</td>
+<td>Ved historisk HA-history/catch-up skal prosesstrinn replayes
+kronologisk og sekvensielt på samme grunnprinsipp som B-faser. Bare
+neste aktive P-kandidat kan opprettes, og vurderingen skal bruke
+målinger, observasjoner og biologisk tilstand som var tilgjengelige ved
+evalueringstidspunktet. Etter catch-up/live er ordinær P-overgang
+fortsatt operatørbekreftet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L50">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-027</td>
+<td>Fastsatt</td>
+<td><code>Start gjæring</code> skal ha sporbar ingress og eksplisitt
+slutt-/feilkvittering. DB-/bindingfeil i Start-kjeden skal nå
+normalisert Technical-pipeline og startstatus; taus bortfall av en
+stateful Start-kommando er ikke tillatt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L51">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-028</td>
+<td>Fastsatt</td>
+<td>Historisk evaluator skal bruke persistert importcutoff som øvre
+evalueringshorizon; live evaluator skal bruke MariaDB-klokken. Node-REDs
+lokale veggklokke skal ikke være fallback for faglig
+freshness/alder.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L52">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-029</td>
+<td>Fastsatt</td>
+<td>Gjennomført B/P-overgang skal presenteres fra transitionens eksakte
+<code>evaluation_id</code>; current candidate evaluation er et separat
+read-model-faktum og skal ikke erstatte historisk overgangsbevis.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L53">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-030</td>
+<td>Fastsatt</td>
+<td>Releasebygging skal kjøre maskinell arkitekturkonformitetskontroll
+for sentrale DB-only-, evalueringshorizon- og read-model-regler.
+Kontrollen er en utviklings-/releaseport og skal ikke legges inn i
+installeren.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L54">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-031</td>
+<td>Fastsatt</td>
+<td>Runtime-/rapportverdier som vises til operatøren skal komme ferdig
+beregnet og ferdig representert fra MariaDB/read-model. Frontend skal
+ikke beregne, korrigere, tolke, formatere eller supplere domenedata med
+fallbackverdier.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L55">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-032</td>
+<td>Fastsatt</td>
+<td>En registrert metrikk skal ha én autoritativ beregningsbane.
+Oversikt, B/P-vurdering og rapport skal lese persistert
+evaluator-/metric-resultat; samme domeneverdi skal ikke beregnes på nytt
+i frontend eller parallell Node-RED read-model.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L56">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-033</td>
+<td>Fastsatt</td>
+<td>Kriterieevaluering skal persistere datagrunnlagets provenance,
+inkludert relevant vindu, sample count, faktisk dekning og siste sample.
+MariaDB-read-model skal produsere ferdig
+<code>data_window_display</code>; frontend skal bare vise feltet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L57">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-034</td>
+<td>Fastsatt</td>
+<td>Aktiv gjæring skal kunne generere en HTML snapshotrapport fra
+MariaDB/read-model uten lifecycle-endring. Rapportverdier skal være de
+samme ferdige displayverdiene som den operative read-modelen
+leverer.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L58">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-035</td>
+<td>Fastsatt</td>
+<td>Målekilde/Tilt-status skal leses fra ett MariaDB-view. Node-RED kan
+normalisere transportformen fra mysql-node, men skal ikke konstruere
+alternativ målekildestatus, timestamps eller domenedisplay.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L59">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-036</td>
+<td>Fastsatt</td>
+<td>Historisk automatisk prosesstrinnsovergang skal være en eksplisitt
+egenskap ved hvert template-prosesstrinn og fryses til session.
+Historisk evaluator kan vurdere alle neste trinn, men kan bare
+persistere overgang når det frosne trinnet eksplisitt tillater historisk
+autoovergang.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L60">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-037</td>
+<td>Fastsatt</td>
+<td>W-34/70 standardtemplaten tillater historisk etablering av P1/P2. P3
+og senere trinn krever operatørbekreftet overgang selv om kriteriene er
+oppfylt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L61">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-038</td>
+<td>Fastsatt</td>
+<td>Historisk HA-import skal sekvensieres som persistér chunk →
+biologisk evaluering → prosessevaluering → neste chunk.
+Evaluator-/recommendation-identiteter skal komme fra MariaDB og ikke
+konstrueres fra Node-RED-klokke.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L62">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-039</td>
+<td>Fastsatt</td>
+<td>Åpent måledatagap skal ha én autoritativ representasjon i
+<code>measurement_data_gaps</code>.
+<code>session_measurement_sources</code> skal ikke cache duplisert
+gapstatus.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L63">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-040</td>
+<td>Fastsatt</td>
+<td>Validering av rå måleprøver skal være metadata-styrt per målekilde
+og fryses til session. Motoren kan implementere registrerte generiske
+valideringsmodeller, men signal-/template-spesifikke grenser skal ikke
+hardkodes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L64">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-041</td>
+<td>Fastsatt</td>
+<td>Ugyldige råprøver skal forkastes før autoritativ
+<code>measurements_5m</code>-lagring; systemet skal ikke clamp-e eller
+erstatte en ugyldig verdi med en oppdiktet plausibel verdi.
+Kvalitetsutfall skal være sporbare separat.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L65">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-042</td>
+<td>Fastsatt</td>
+<td>Autoritativ SG i en godkjent 5-minuttersbøtte skal være robust
+aggregert fra godkjente prøver; W-34/70/Tilt bruker median.
+Min/middel/maks er diagnostikk og skal beregnes fra samme godkjente
+prøvesett.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L66">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-043</td>
+<td>Fastsatt</td>
+<td>Om en beregnet verdi skal ha analyseserie/graf og dens
+presentasjons-/behandlingsregler skal ligge i template/sessionmetadata.
+Motor/frontend skal ikke ha graph-ID-spesifikke regler.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L67">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-044</td>
+<td>Fastsatt</td>
+<td>Analyse publiserer bare verdier som oppfyller frozen minste antall,
+tidsspenn og dekning. Rate beregnes fra målte endepunkter og faktisk
+tid; ingen kortvindu-estimat eller foreløpig publisering.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L68">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-045</td>
+<td>Fastsatt</td>
+<td><code>analysis_series_values</code> er append-only. Ugyldige
+beregnede outputs skal ikke clampes/persisteres som gyldig serie;
+avvisningen skal registreres som analysevalideringsfaktum.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L69">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-046</td>
+<td>Fastsatt</td>
+<td>HA-projeksjoner skal bare eksponere attributtverdier som er gyldige
+i HA-kontrakten. Nullable interne råfelt skal erstattes av DB-eide
+ferdige presentasjonsfelt eller utelates, ikke få
+Node-RED-fallback.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L70">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-047</td>
+<td>Fastsatt</td>
+<td>Gyldighetsdomene for avledede metrics skal være normalisert
+metric-metadata og fryses til template/session. Samme frozen grenser
+skal håndheves før en metric kan brukes av B/P-kriterier og før den kan
+persisteres i analyseserie. Ugyldig output skal gi manglende/ugyldig
+datagrunnlag, aldri overgang eller clampet verdi.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L71">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-048</td>
+<td>Fastsatt</td>
+<td>Node-RED skal registrere UAT-resultater gjennom validert
+MariaDB-operasjon mot aktive <code>UAT</code>-tester; frontend-event er
+bare ingress og er ikke kvittering på lagring.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L73">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-049</td>
+<td>Fastsatt</td>
+<td>Gjeldende test-, verifikasjons- og kravstatus skal utledes i MariaDB
+read-models. Node-RED og frontend skal ikke beregne egen coverage,
+samlet kravstatus eller fallback-status.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L74">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-050</td>
+<td>Fastsatt</td>
+<td>Automatisk releaseverifikasjon skal kunne representeres med stabile
+<code>TEST-TECH-*</code>/<code>TEST-FUNC-*</code>-identiteter og knyttes
+til verifikasjonskrav; målmiljøtest skal bruke
+<code>TEST-UAT-*</code>.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L75">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-051</td>
+<td>Fastsatt</td>
+<td>Verifikasjonseksport skal lese ett konsistent DB-grunnlag med
+metadata, relasjoner, testkjøringer og resultater og produsere JSON og
+HTML uten domenelogikk i renderer.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L76">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-052</td>
+<td>Fastsatt</td>
+<td>Forventet gjæringsresultat skal uttrykkes normativt som templateens
+intervall for tilsynelatende utgjæringsgrad. Forventet FG skal beregnes
+fra faktisk korrigert OG og dette intervallet; operatøren skal ikke
+registrere et uavhengig FG-mål ved Start.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L77">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-053</td>
+<td>Fastsatt</td>
+<td>Operativ gjæringsprosent skal være tilsynelatende utgjæringsgrad.
+Egen FG-fremdriftsprosent, rate relativt til historisk maksimum og
+absolutt SG-rate skal ikke være operative domenemetrikker.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L78">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-054</td>
+<td>Fastsatt</td>
+<td>Målefreshness og generell målekvalitet skal behandles som en felles
+evalueringsforutsetning. Manglende eller foreldet livegrunnlag skal gi
+«kan ikke evalueres»/ufullstendig vurdering, ikke falskt biologisk eller
+prosessuelt kriterium.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L79">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-055</td>
+<td>Fastsatt</td>
+<td>Biologiske kriterier skal bruke et lite forklarbart kjernesett av
+SG-fall, signert SG-rate, tilsynelatende utgjæringsgrad og
+SG-stabilitet. Prosesstrinn skal normalt konsumere ferdig biologisk fase
+og bare legge til operative betingelser; samme biologiske logikk skal
+ikke dupliseres i P-kriterier.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L80">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-056</td>
+<td>Fastsatt</td>
+<td>MAD-validering bruker deklarert støygulv også ved null MAD. B/P og
+Analyse bruker identisk endpoint_rate_v1 fra felles kilde: målt
+SG-forskjell / faktisk tid, ingen regresjon eller følsomhetsbånd.
+Datagap bryter vinduet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L82">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-057</td>
+<td>Fastsatt</td>
+<td>Rå Tilt-utgjæringsgrad bruker faktisk OG og godkjent Tilt-SG uten
+pitch-kalibrering. Manuell utgjæringsgrad bruker faktisk OG og korrigert
+manuell SG. Kildene er separate og velges eksplisitt av
+templatekriteriets metric_id; ingen kildebytte/fallback.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L83">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-058</td>
+<td>Fastsatt</td>
+<td>Aktuelle analyseverdier skal hentes fra siste godkjente analyseserie
+og kontrolleres mot nyere avvisning/freskhet; overgangskriteriers gamle
+snapshots skal ikke presenteres som aktuell rate. Rå Tilt-AA og manuell
+AA har hvert sitt faktiske målegrunnlag og måletid; ingen automatisk
+kildebytte.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L84">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-059</td>
+<td>Fastsatt</td>
+<td>Tomme valgfrie korreksjonsparametere skal lagres eksplisitt som ikke
+angitt, uten konvertering til nulltallet. Hele konfigurasjonen skal
+valideres før transaksjonen. Ved ugyldig kriteriekonfigurasjon skal
+fortsatt beregnbar faktisk verdi og forklarende årsak bevares.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L85">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-060</td>
+<td>Fastsatt</td>
+<td>S-04- og M42-templater skal være egne publiserte normaliserte
+profiler med kjølig hovedgjæring innen produsentområdet, gradvis
+opprydding ved 20 °C og eksplisitte sluttkontroller. 21 dager er
+planleggingsramme, ikke automatisk ferdigregel.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L95">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-061</td>
+<td>Fastsatt</td>
+<td>HA-timesstatistikk lagres append-only med reelle
+min/gjennomsnitt/maks, uten krav om historisk MQTT-heartbeat og uten
+konstruerte medianer/prøveantall.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L101">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-062</td>
+<td>Fastsatt</td>
+<td>Hver Systemkontroll lagrer alle resultater atomisk med unik
+kjøringsidentitet og kontrollerer HA mot et ferskt API-svar.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L102">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-063</td>
+<td>Fastsatt</td>
+<td>Aktiv og avsluttet rapport bruker én generator og inkluderer full
+kronologisk hendelseshistorikk og tilgjengelige timesdata.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L103">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-064</td>
+<td>Fastsatt</td>
+<td>Datasett- og sammenligningsvalg persisteres i MariaDB; den valgte
+demoidentiteten fryses ved Start.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L104">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-065</td>
+<td>Aktiv</td>
+<td>Graftransport skal dele presentasjonsmetadata, bruke kompakt JSON og
+tilby verifisert gzip. Punktutvalg skjer i DB og bevarer
+første/siste/min/maks og segmentgrenser. Lagring/analyser beholder
+femminuttersoppløsning; standard visningsintervall er 30 minutter.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L110">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-066</td>
+<td>Aktiv</td>
+<td>HA-timesstatistikk hentes ved første historiske import og ved
+DB-målt etterslep på minst én time. Vanlig frisk femminuttersimport
+henter detaljhistorikk. En uløst statistikkfeil gir nytt historisk
+forsøk; gjenoppretting registreres bare når en slik feil faktisk er
+aktiv.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L116">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-067</td>
+<td>implemented</td>
+<td>Import av gjæring og tilhørende template skjer atomisk med ny lokal
+identitet og historisk frigivelse. Feil ruller tilbake hele importen;
+aktiv gjæring og måleskriving påvirkes ikke.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L122">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-068</td>
+<td>implemented</td>
+<td>Importert template får alltid en egen unik ID og kildeproveniens;
+den sammenlignes, dedupliseres eller flettes ikke med eksisterende
+templates. Redigering krever egen kopi.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L123">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-069</td>
+<td>implemented</td>
+<td>Startstatus rekonstrueres fra MariaDB ved demo, import, avslutning,
+klargjøring og omstart. Systemkontroll skal oppdage vedvarende
+motstridende HA-status.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L129">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-070</td>
+<td>implemented</td>
+<td>Hele historiske sesjoner kan slettes atomisk med alle tilhørende
+data. Aktiv sesjon er beskyttet; gjeldende sammenligningsvalg
+nullstilles ved sletting. Append-only gjelder innenfor beholdte
+sesjoner.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L130">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-071</td>
+<td>implemented</td>
+<td>Aktiv eksport produserer et merket konsistent øyeblikksbilde av
+gjæring, template og felles HTML-rapport uten å avslutte sesjonen. Begge
+SQLite-filer får SHA-256-sidefil.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L131">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-072</td>
+<td>implemented</td>
+<td>Manglende, uleselig eller feil ekstern SHA gir synlig advarsel uten
+å blokkere import. SQLite-integritet, skjema, eksportpar og
+transportkontrollsum valideres fortsatt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L132">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-073</td>
+<td>Aktiv</td>
+<td>En historisk HA-sesjon har fra-tid fra gjeldende pitchrevisjon og en
+eksplisitt slutt i session_history_windows. Importen stopper ved
+sluttgrensen, også etter omstart. Sluttgrensen valideres i DB og
+avgrenser lagring; ingen normal live-import planlegges etter
+fullføring.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L138">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-074</td>
+<td>Aktiv</td>
+<td>Effektiv P/B-slutt er neste visits gjeldende start innen samme
+tidslinje. Siste visit avgrenses av DB-eid sesjonsklokke. MariaDB
+beregner datoer og varighet for dashboard og rapport; korreksjon
+beholder tidligere revisjoner.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L139">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-075</td>
+<td>Aktiv</td>
+<td>Historiske vurderinger, grafakser og manuelle registreringer bruker
+den historiske horisonten, ikke dagens klokke. Måle-/hendelsestid og
+faktisk registreringstid bevares separat. Manglende data og delvis
+ubrukelig timesstatistikk skal ikke fylles ut med estimater.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L140">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-076</td>
+<td>Aktiv</td>
+<td>Klassifisering av målekildestatus eies av normalisert MariaDB-policy
+og read-model. Ukjent statuspolicy eller manglende påkrevd
+kontrollgrunnlag skal være synlig feil, uten lokal Node-RED-liste eller
+fallback.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L149">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-077</td>
+<td>Aktiv</td>
+<td>Ferdig behandlet importperiode skal skilles fra faktisk datadekning.
+Antall og tidsgrenser for ordinære femminuttersmålinger og
+timesstatistikk samt registrerte rådatagap utledes i DB. Timesstatistikk
+skal ikke fremstilles som ordinært B/P-grunnlag.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L150">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-078</td>
+<td>Aktiv</td>
+<td>Forbigående HA-publiseringsbrudd journalføres uten rekursiv
+publisering av feilen. Nytt forsøk leser ferske DB-projeksjoner, aldri
+en lokal domenekø. Et konkret publiseringsproblem lukkes først etter
+vellykket utgang fra den berørte HA-noden. Ugyldig payload skal fortsatt
+være feil.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L151">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-MOTOR-079</td>
+<td>Aktiv</td>
+<td>Sensorbindinger normaliseres per signal, enhet og
+konfigurasjonsrevisjon i MariaDB, og fryses per reell sesjon. Livebytte
+trer i kraft ved en DB-bestemt femminuttersgrense; tidligere bindinger
+og målinger beholdes. Historisk import endres ikke retroaktivt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L157">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-MOTOR-080</td>
+<td>Aktiv</td>
+<td>Trykk er manuelt til en kompatibel HA-sensor er valgt. Sensortrykk
+omregnes fra deklarert enhet til bar med DB-eide koeffisienter og
+grenser. Fravær av valgfritt trykk skal ikke blokkere SG/temperatur.
+B/P-fravik lagres i en felles kort DB-transaksjon med gjeldende
+evaluering, kriterierevisjon og eksplisitt bekreftelse.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/02-KRAV-MOTOR-OG-INTEGRASJON.md#L158">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-001</td>
+<td>Fastsatt</td>
+<td>Løsningen bruker flow-opprettede HA-entiteter og eget Lovelace-kort;
+ingen HA-package kreves.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L45">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-002</td>
+<td>Fastsatt</td>
+<td>Biologisk fase, biologisk kandidat, aktivt prosesstrinn og anbefalt
+prosesstrinn skal være tydelig adskilt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L46">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-003</td>
+<td>Fastsatt</td>
+<td>Hovedgrafen åpner med hele aktive forløpet fra pitch til nå.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L47">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-004</td>
+<td>Fastsatt</td>
+<td>SG vises som den autoritative validerte 5-minuttersserien med
+tydelig min–maks-bånd fra samme godkjente prøvesett. Båndet skal
+synliggjøre målespredning, ikke skjules av unødvendig stor Y-akse.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L48">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-005</td>
+<td>Prototype</td>
+<td>SG, temperatur og trykk vises som tre vertikalt stablede,
+synkroniserte grafer med samme tidsutstrekning.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L49">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-006</td>
+<td>Fastsatt</td>
+<td>Datagap skal være visuelt synlige og kurver skal brytes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L50">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-007</td>
+<td>Fastsatt</td>
+<td>Historiske forløp skal ha egen sammenligningsvisning.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L51">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-008</td>
+<td>Fastsatt</td>
+<td>Historisk tidsanker skal kunne velges mellom pitch og registrert
+aktivitet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L52">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-009</td>
+<td>Fastsatt</td>
+<td>Dashboardet viser alarm/status, men v1 sender ikke direkte
+varsler.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L53">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-010</td>
+<td>Fastsatt</td>
+<td>Skjemadata registreres i flow-opprettede HA-entiteter og lagres
+samlet med én knapp.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L54">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-011</td>
+<td>Fastsatt</td>
+<td>Node-RED-motoren validerer operatørgrunnlaget mot MariaDB og
+persisterer atomiske domeneoperasjoner i MariaDB. HA/dashboard er
+operatør-/presentasjonslag og skal ikke være alternativ domenemotor
+eller sannhetskilde.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L55">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-012</td>
+<td>Prototype</td>
+<td>Custom-kortet skal hente en eksplisitt read-model som er avledet fra
+kvitterte MariaDB-data via Node-RED. Transportformatet kan utvikles
+videre, men frontendprojeksjonen er aldri persistent autoritet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L56">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-013</td>
+<td>Fastsatt</td>
+<td>Historisk sammenligning skal lese eksplisitt valgt eksport
+read-only, justere tidsforløp etter lagrede ankere og aldri aktivere
+eller endre den historiske sesjonen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L57">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-014</td>
+<td>Fastsatt</td>
+<td>Node-RED-status eksponeres som direkte HA-entiteter via
+WebSocket-integrasjonen, ikke via MQTT Discovery.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L58">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-015</td>
+<td>Fastsatt</td>
+<td>Gjæringsmotoren skal ikke bruke MQTT Discovery for sine
+HA-statusentiteter. Sensoringest kan bruke relevant transport, mens
+operatør-/statusentiteter opprettes av Node-RED gjennom HA
+WebSocket-integrasjonen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L59">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-016</td>
+<td>Prototype</td>
+<td>Statuslaget omfatter system/sesjon, biologisk
+fase/kandidat/sikkerhet, aktiv/anbefalt prosess, tilsynelatende
+utgjæringsgrad, SG-hastighet, datakvalitet, målingsalder, anbefaling og
+alarm.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L60">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-017</td>
+<td>Fastsatt</td>
+<td>Biologiske faser og prosesstrinn vises i separate visninger;
+førstesiden viser bare en kompakt biologisk tidslinje.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L61">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-018</td>
+<td>Fastsatt</td>
+<td>Tidskorrigering for biologiske faser bruker valgt registrering og
+dato/tid, uten begrunnelseskrav. Originalt, manuelt og effektivt
+tidspunkt skal kunne vises og overstyringen kunne fjernes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L62">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-019</td>
+<td>Fastsatt</td>
+<td>Dashboardets målstruktur har åtte faner: <code>Gjæring</code>,
+<code>Biologi</code>, <code>Prosesstrinn</code>, <code>Analyse</code>,
+<code>Måleresultater</code>, <code>Template</code>,
+<code>Verifikasjon</code> og <code>Teknisk</code>.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L63">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-020</td>
+<td>Prototype</td>
+<td>Biologivisningen viser total tid til stabil utgjæring, tid i aktiv
+fase, forventet intervall og faktisk varighet per fase.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L64">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-021</td>
+<td>Prototype</td>
+<td><code>Gjæring</code> skal prioritere oversikt og normalt kreve lite
+eller ingen vertikal scrolling på bred skjerm.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L65">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-022</td>
+<td>Fastsatt</td>
+<td>Dashboardet skal ikke referere til entiteter som ikke opprettes av
+flowen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L66">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-023</td>
+<td>Prototype</td>
+<td>Gjæring- og prosessvisningen viser biologisk utløser, beredskap og
+estimert mulig start for neste prosesstrinn.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L67">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-024</td>
+<td>Fastsatt</td>
+<td>Manuelle observasjoner registreres som komplette målesett; første
+sett inngår i Start. Prosess-readiness og kaldkrasjvurdering vises under
+<code>Prosesstrinn</code>.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L68">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-025</td>
+<td>Prototype</td>
+<td><code>Start demo</code> er en flow-opprettet HA-knapp, og demo
+lastes ikke automatisk.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L69">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-026</td>
+<td>Fastsatt</td>
+<td>Før sessionstart skal dashboardet støtte templatevalg, startdata,
+første komplette målesett og historisk rapport uten å vise misvisende
+aktive-session-kontroller.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L70">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-027</td>
+<td>Fastsatt</td>
+<td>Måleresultater bruker tre kolonner på bred skjerm; målehistorikk
+bruker full bredde.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L71">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-028</td>
+<td>Prototype</td>
+<td>Prosesstrinn viser planlagt anker/mål mot faktisk start og
+varighet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L72">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-029</td>
+<td>Fastsatt</td>
+<td>I <code>sections</code>-visninger skal bredde settes på det ytre
+<code>conditional</code>-kortet; kort i Gjæring, Biologi og Prosesstrinn
+skal ha <code>grid_options.columns: full</code> og stables
+vertikalt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L73">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-030</td>
+<td>Fastsatt</td>
+<td><code>Gjæring</code> skal vise én relevant livsløpsflate om gangen:
+templatevalg, konfigurert start, aktiv sesjon eller avsluttet
+sesjon.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L74">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-031</td>
+<td>Fastsatt</td>
+<td><code>Måleresultater</code> skal vise tekstlig betydning for valgt
+0–5-nivå for hver sensoriske parameter.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L75">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-032</td>
+<td>Fastsatt</td>
+<td>Prosessport og kaldkrasjvurdering skal ligge under
+<code>Prosesstrinn</code>, ikke under målingsskjemaet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L76">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-033</td>
+<td>Fastsatt</td>
+<td>Trykk, kjølemaskinens settpunkt og kjølemaskinens kalibreringsverdi
+skal kunne registreres i observasjonsfanen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L77">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-034</td>
+<td>Fastsatt</td>
+<td>Teknisk-fanen skal vise systemkontroll, runtime, datakvalitet, siste
+måling, målingsalder og oppmerksomhetsstatus.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L78">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-035</td>
+<td>Fastsatt</td>
+<td>Dashboardet skal bruke korte visningsnavn; prefikset
+«Gjæringsassistent» skal ikke gjentas i hver rad.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L79">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-036</td>
+<td>Fastsatt målkrav</td>
+<td>Templatefanen skal være grafisk og administrere/redigere
+normaliserte template-data gjennom Node-RED-motorens
+MariaDB-operasjoner, ikke et JSON-tre. Registry skal styre tilgjengelige
+metrics/modeller/parametere, og valideringsfeil skal vises konkret ved
+relevant felt og samlet før publisering.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L80">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-037</td>
+<td>Fastsatt</td>
+<td>Skjulte livsløpskort skal ikke etterlate misvisende tomme
+kontrollflater; brukeren skal se hvorfor en handling ikke er
+tilgjengelig.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L81">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-038</td>
+<td>Fastsatt</td>
+<td>Graf-/hendelsesmarkører skal vise faktiske observasjoner,
+anbefalinger og utførte prosesshandlinger med tidspunkt. Frozen plan
+endres ikke underveis.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L82">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-039</td>
+<td>Prototype</td>
+<td>Dashboardet prioriteres for stor skjerm. Måle- og prosesskort kan
+være brede selv om mobilvisningen blir lengre.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L83">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-040</td>
+<td>Fastsatt</td>
+<td>Manuell SG vises som diamant ved korrigert verdi, med tynn linje til
+Tilt-verdien på samme observasjonsrunde.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L84">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-041</td>
+<td>Fastsatt</td>
+<td>Manuell temperatur vises ved målt temperatur, kjølesettpunkt som
+firkant på stiplet observasjonskurve og trykk som punkt ved målt
+bar.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L85">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-042</td>
+<td>Fastsatt</td>
+<td>Sensorikk og kommentarer uten naturlig Y-verdi vises i et smalt
+hendelsesspor under grafene.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L86">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-043</td>
+<td>Fastsatt</td>
+<td>Prosesstart vises med mørk stiplet linje gjennom alle tre grafer og
+P-flagg i to høyder når markørene ligger tett. Tooltip viser trinn,
+tidspunkt, inngangsvilkår og advarsler.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L87">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-044</td>
+<td>Fastsatt</td>
+<td>Biologiske faser vises som tydelige, vekslende bakgrunnsfelt gjennom
+grafstakken med fasegrense og B1–B6 i SG-grafen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L88">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-045</td>
+<td>Fastsatt</td>
+<td>Biologitabellen viser regel, parameter, aktuell verdi, terskel,
+vedvarende tid, datakvalitet, status, venteforklaring, kilde, regeltype
+og usikkerhet.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L89">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-046</td>
+<td>Fastsatt</td>
+<td>Prosesstrinnkortet leser kontrollport, vilkår, vurdering og tillatte
+handlinger fra en MariaDB-avledet read-model publisert via Node-RED og
+skal ikke være avhengig av hardkodede status-entity-ID-er for å kunne
+tegnes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L90">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-047</td>
+<td>Fastsatt</td>
+<td><code>Måleresultater</code> skal ha en tydelig
+<code>Lagre målinger</code>-handling som lagrer ett komplett atomisk
+målesett; ved valideringsfeil beholdes alle inndata.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L91">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-048</td>
+<td>Fastsatt</td>
+<td>Prosesstrinnoversikten skal minst ha kolonnene <code>P</code>,
+<code>Status</code> og <code>Prosesstrinn</code>, og dessuten vise
+inngangsvilkår, vurdering, målverdier for temperatur/trykk, faktisk
+start og faktisk varighet uten at disse blandes sammen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L92">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-049</td>
+<td>Fastsatt</td>
+<td>Kortet for utløser/kontrollport/manuell overgang skal vise hva som
+utløser vurderingen, hvilke kriterier som er oppfylt/venter/advarer, og
+hvilke manuelle handlinger som er tillatt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L93">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-050</td>
+<td>Fastsatt</td>
+<td><code>Vurdering av neste prosesstrinn</code> skal vise anbefalt
+neste trinn og anbefalte temperatur-/trykkmål med begrunnelse og
+datagrunnlag.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L94">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-051</td>
+<td>Fastsatt</td>
+<td><code>Teknisk</code> skal ha en samlet strøm/logg for tekniske feil
+og avvik fra ulike deler av systemet, med tidspunkt, kilde, alvorlighet,
+melding og relevant kontekst. Denne fungerer som en lesbar teknisk
+hendelses-/debugflate og er separat fra aktiv oppmerksomhetsstatus.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L95">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-052</td>
+<td>Fastsatt</td>
+<td>Før Start skal <code>Gjæring</code> samle templatevalg,
+startgrunnlag og første målesett i samme livsløpsflate. Første målesett
+skal ligge nederst i Start-flaten, og alternative tetthetsskalaer skal
+ikke introduseres; hele brukerflaten er SG-basert.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L96">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-053</td>
+<td>Fastsatt</td>
+<td>Ved aktiv session skal <code>Gjæring</code> tilby eksplisitt
+<strong>Avslutt gjæring</strong>. Etter kvittert avslutning skal en egen
+<code>completed</code>-flate vises og nye gjæringsmålinger være
+utilgjengelige.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L97">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-054</td>
+<td>Fastsatt</td>
+<td>Completed-flaten skal tilby <strong>Gjør klar for ny
+gjæring</strong>. Reell session skal vise/svare på eksportgaten; demo
+kan frigjøres uten eksport.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L98">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-055</td>
+<td>Fastsatt</td>
+<td>Kriterietabellene i Biologi og Prosesstrinn skal vise
+<strong>Datavindu</strong> som kompakt beskrivelse av faktisk
+vurderingsgrunnlag. <code>window_median_range</code> viser vinduslengde
+og antall datapunkter; <code>stability_window</code> viser vinduslengde,
+faktisk tidsdekning og antall datapunkter. Rå timestamp skal ikke brukes
+som erstatning for datavindu.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L99">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-056</td>
+<td>Fastsatt</td>
+<td>En akseptert operatørkommando skal ha enkel global
+gjentakelsesbeskyttelse i 8 sekunder slik at nytt klikk ikke sendes mens
+GUI/read-model normalt rekker å oppdatere. Beskyttelsen er flyktig
+UI/runtime-tilstand og erstatter ikke
+<code>operation_id</code>/DB-constraints.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L100">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-057</td>
+<td>Fastsatt</td>
+<td>Kriteriestatus skal skille faktisk <code>Konfigurasjonsfeil</code>
+fra <code>Mangler grunnlag</code>, <code>For lite grunnlag</code>,
+<code>Foreldet</code>, <code>Ikke oppfylt</code>, <code>Oppfylt</code>
+og <code>Ikke vurdert</code>. Frontend skal bruke persistert
+evaluatorstatus, ikke utlede alle <code>valid=0</code> som
+konfigurasjonsfeil.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L101">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-058</td>
+<td>Fastsatt</td>
+<td>Aktiv kriteriekorreksjon og registrert kriteriefravik skal være
+tydelig visuelt markert direkte ved kriteriet. Markeringen skal ikke
+erstatte eller farge om selve oppfylt/ikke-oppfylt-statusen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L102">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-059</td>
+<td>Fastsatt</td>
+<td>Målehistorikken skal vise persistente SG-, temperatur-, prosess- og
+sensorikkfakta eksplisitt, inkludert nærmeste Tilt-SG og ΔSG for manuell
+korrigert SG når et tidsmessig relevant Tilt-punkt finnes. Horisontal
+scrolling er tillatt fremfor sammenslåtte kryptiske kolonner.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L103">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-060</td>
+<td>Fastsatt</td>
+<td>Fanen <strong>Analyse</strong> skal ligge mellom Prosesstrinn og
+Måleresultater og tegne de analysene den aktive sessionens metadata
+deklarerer. Grafene viser den avledede verdien selv; label, forklaring,
+enhet, serie, B/P-markører, kriterieterskler og gap-policy leveres fra
+DB-read-model. Under hver graf skal de B-/P-trinnene som bruker analysen
+vises med kriterium, rolle, krav og tidspunkt kravet først ble oppfylt.
+Samme requirements-read-model skal drive både
+terskellinjer/oppfyllelsesmarkører og tabellen. Frontend skal ikke
+kjenne W-34/70s graf-ID-er eller beregne analysen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L104">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-061</td>
+<td>Fastsatt</td>
+<td>Template-fanen skal ha et komplett templatebibliotek med lifecycle
+<code>draft/published/retired</code>, statusfilter, åpning av
+eksisterende versjoner, ny draft/ny template, publisering, forkasting,
+retire og reaktivering. Template-administrasjonens valgte versjon skal
+være MariaDB-persistet og uavhengig av Start-valget og aktiv session.
+Publisering skal ikke implisitt endre Start-valget.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L105">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-062</td>
+<td>Fastsatt</td>
+<td>Dashboardet skal ha egen <code>Verifikasjon</code>-fane som viser
+DB-eid status for krav → verifikasjonskrav → test/resultat og kan
+filtrere TECH/FUNC/UAT.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L151">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-063</td>
+<td>Fastsatt</td>
+<td>Teknisk-fanen skal vise et kompakt verifikasjonssammendrag med siste
+DB-eide status og lenke/henvisning til detaljfanen.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L152">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-064</td>
+<td>Fastsatt</td>
+<td>UAT skal kunne registreres fra Verifikasjon-fanen med
+<code>pass/fail/blocked/not_run</code>, operatørnavn, notat og eventuell
+evidensreferanse. Registreringen skal gi ny DB-kvittert append-only
+resultatrad.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L153">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-065</td>
+<td>Fastsatt</td>
+<td>Verifikasjon-fanen skal kunne bestille eksport av strukturert JSON
+og lesbar HTML-rapport. Frontend skal bare bestille og vise
+DB/read-model-resultatet, ikke beregne rapportinnhold.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L154">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-066</td>
+<td>Fastsatt</td>
+<td>Startflaten skal vise templateens forventede utgjæringsområde og
+FG-området som er beregnet fra faktisk OG som read-only informasjon.
+Operatøren skal ikke måtte beregne eller skrive inn forventet FG.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L155">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-067</td>
+<td>Fastsatt</td>
+<td>Analyse-grafer skal bruke DB-eide aksemetadata for vertikal
+minimum/maksimum/tick-intervall og DB-eid
+<code>+dag · dato</code>-merking horisontalt. Grafbeskrivelsen skal
+forklare hva verdien måler, hvordan den tolkes og hvorfor den er
+relevant.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L156">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-068</td>
+<td>Fastsatt</td>
+<td>Alle tidsseriegrafer i Gjæring og Analyse skal bruke
+MariaDB/read-model-eid dynamisk Y-akse beregnet fra faktisk min/maks
+samt relevante mål-/kriteriegrenser. Aksen skal ha liten normal
+tegnemargin og skal ikke få kunstig minimumsspenn for å skjule
+variasjon.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L157">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-069</td>
+<td>Fastsatt</td>
+<td>Analyse viser ingen estimerte min–maks-/følsomhetsbånd. Målt
+variasjon kan vises som faktisk spredning i Gjæringsfanens rådatagrafer.
+Graphpolicy fryses i MariaDB.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L158">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-070</td>
+<td>Fastsatt</td>
+<td>Analysegrafer viser kun ordinære verdier fra godkjente målinger.
+Manglende grunnlag er synlig; ingen foreløpig kurve, utfylling eller
+interpolasjon over datagap.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L159">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-071</td>
+<td>Fastsatt</td>
+<td>SG-rate vises med DB-eid nedre Y-grense 0 og automatisk øvre grense.
+Negative målebaserte rater beholdes i databasen og i siste-verdi-feltet;
+de erstattes ikke med absoluttverdi eller null.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L160">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-072</td>
+<td>Fastsatt</td>
+<td>Kriteriekorreksjon og kriteriefravik skal følge p22-arbeidsformen.
+Notat er valgfritt og tomt notat skal ikke avvise handlingen;
+korreksjon/fravik skal vises separat fra kriteriets faktiske
+<code>met/not_met</code>-status.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L161">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-073</td>
+<td>Fastsatt</td>
+<td>Teknisk-fanen skal tilby separat <strong>Eksporter måledata</strong>
+for aktiv session. Eksporten bygges fra MariaDB og omfatter
+sessiongrunnlag, 5-minuttersmålinger med min/middel/median/maks der
+tilgjengelig samt registrerte datagap.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L162">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-074</td>
+<td>Fastsatt</td>
+<td>Manuelle utgjæringskontroller vises som separate punkter i samme
+graf som rå Tilt-serien, med faktisk måletid. Punktserie bindes ikke
+sammen til en oppdiktet kontinuerlig manuell kurve.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L177">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-075</td>
+<td>Fastsatt</td>
+<td>Dashboard, aktiv rapport og sluttrapport bruker samme DB-eide
+horisontale tidsakse fra effektivt pitchtidspunkt. Før første beregnbare
+verdi vises en tom graf med akse. Datagap bryter linjer og bånd.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L178">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-076</td>
+<td>Fastsatt</td>
+<td>Aktiv gjæring skal samle batch/gjær, volum/OG, effektiv pitch og
+varigheter, B/P-status, rå Tilt-SG, én aktuell utgjæringsgrad, estimert
+ABV nå, fersk 24-timersrate, 24/48-timersstabilitet og neste
+prosesstrinn med årsak/vurderingstid. Verdier og basis leveres av
+read-model; rapporthandlinger ligger nederst.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L184">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-077</td>
+<td>Fastsatt</td>
+<td>SG-stabilitet har generelle 24-/48-timerskurver på faktiske
+sammenhengende målinger. Verdien er maks–min i SG-poeng, uten bånd,
+kortvindu-oppskalering eller faseanker. Minste tidsdekning og dynamiske
+akser eies av DB.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L185">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-078</td>
+<td>Fastsatt</td>
+<td>Over hver analysegraf vises MariaDB-forberedt siste gyldige verdi,
+enhet og faktisk måletid for hver serie. Manglende grunnlag vises
+uttrykkelig; siste måling fremstilles ikke som en ny måling nå.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L187">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-079</td>
+<td>Fastsatt</td>
+<td>Avsluttet gjæring skal vise DB-eid arkivstatus og støtte nytt
+arkiveringsforsøk uten ny avslutning. Uverifisert sluttarkiv skal
+fortsatt blokkere Gjør klar for reell gjæring og inngå vedvarende i
+Systemkontroll.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L188">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-080</td>
+<td>Fastsatt</td>
+<td>Grafene kan sammenligne med et referansedatasett eller en avsluttet
+gjæring, justert til tid siden pitch og med egne analyseverdier.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L194">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-081</td>
+<td>Fastsatt</td>
+<td>Grafvisningen kan velge 5/15/60-minutters detaljvisning og hele
+gjæringen/siste 24 timer/48 timer/7 dager uten å endre lagrede
+målinger.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L195">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-082</td>
+<td>Fastsatt</td>
+<td>Avsluttet gjæring forblir synlig under arkivering; nytt forsøk vises
+når arkiv mangler/feiler, og Gjør klar følger DB-verifisert
+eksport.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L196">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-083</td>
+<td>Aktiv</td>
+<td>Gjæringskortet skal vise DB-eid målekildetekst direkte, og
+synliggjøre feil ved lasting/tegning.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L202">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-084</td>
+<td>Aktiv</td>
+<td>Graf- og demovalg skal nå DB med operation_id. Grafvalg skal
+bekreftes med akkurat sendt operation_id; periodisk refresh skal ikke
+tegne om et ventende valg.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L203">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-085</td>
+<td>Aktiv</td>
+<td>Analyse skal også vise SG, temperatur og trykk med delt
+sammenligning. Analyse- og rapportgrafer skal være om lag 40 prosent
+høyere.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L204">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-086</td>
+<td>Aktiv</td>
+<td>Teknisk eksport skal tilby kompakt standarddiagnostikk og eksplisitt
+utvidet diagnostikk med faktisk publisert dashboardgrunnlag; grafvalg og
+detalj/timeimportens omfang skal følge eksporten.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L205">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-087</td>
+<td>Aktiv</td>
+<td>Graf- og demovalg skal akseptere direkte kommando, payload.data,
+payload.event og payload.event.data. Det sendte operation_id skal
+bevares helt til DB-bekreftelse.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L211">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-088</td>
+<td>Aktiv</td>
+<td>Kravlinjer, kravtekst og oppfylt-markeringer i dashboard/rapport
+skal følge gjeldende kriterierevisjon. Reset bruker originalparametere,
+eksplisitt tom grense forblir tom, og korrigert stabilitetsvindu knyttes
+til rett måleserie.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L212">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-089</td>
+<td>implemented</td>
+<td>Template og arkiv tilbyr filvalg, forhåndsvisning, import, eksport
+og separate system-, egen- og importert-kategorier. Historikk kan
+skjules fra sammenligning uten sletting.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L218">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-090</td>
+<td>implemented</td>
+<td>Arkivkortet ligger øverst i Templatefanen og tilbyr aktiv eksport og
+bekreftet permanent sletting av historiske sesjoner og ubrukte
+importerte templates.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L224">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-091</td>
+<td>implemented</td>
+<td>Ett samlet filvalg leses av backend til en liste etter
+template-navn. Deretter velges bare template eller template med
+gjæringsdata. Valg beholdes ved oppdatering; SHA-advarsler vises før
+import.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L225">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-092</td>
+<td>Aktiv</td>
+<td>Det vanlige startbildet skal tilby «Importer avsluttet gjæring» med
+sluttidspunkt. Angitt «Start fra», template og første måleserie
+gjenbrukes. B/P har etterregistrering av manglende faktisk fasestart;
+alle viste varigheter kommer fra DB.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L231">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-093</td>
+<td>Aktiv</td>
+<td>Sensoriske 0–5-felt vises som heltallsslidere fra DB-metadata. Ikke
+registrert skal skilles fra registrert 0. Manuell temperatur vises med
+én desimal; lagret presisjon beholdes.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L240">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-HA-094</td>
+<td>Aktiv</td>
+<td>Målekilder og sensorer plasseres øverst i Teknisk, med DB-kvittert
+les/kontroller/lagre, HA-valg og sist kontrollerte verdier. Startbildet
+viser et kompakt kildesammendrag. Pågående redigering overskrives ikke
+ved bakgrunnsoppdatering.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L241">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-HA-095</td>
+<td>Aktiv</td>
+<td>Teknisk Kilde viser DB-registrert komponentnavn; rå
+node-/rutineidentitet bevares i detaljer/eksport. Prosesstrinn og
+Biologi tilbyr samme kriteriekorreksjon og tillatte kriterieavvik fra
+frozen grunnlag.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/03-KRAV-DASHBOARD.md#L242">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-INST-001</td>
+<td>Fastsatt</td>
+<td>Gjeldende dokumentasjon skal bygges som del av samme releasebygg som
+kode/SQL/kontrakter. Generert HTML er artefakt, ikke separat
+vedlikeholdt sannhetskilde.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L38">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-INST-002</td>
+<td>Fastsatt</td>
+<td>Ordinær releasepakke skal ikke inneholde komplett historisk
+p19-dokumentasjon. Historikk beholdes bare når den uttrykkelig
+dokumenterer forlatte løsninger eller funksjonelle referanser som
+fortsatt er relevante.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L39">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-INST-003</td>
+<td>Fastsatt</td>
+<td>Releaseporten skal bevare testbarhet og relevante
+regresjons-/arkitekturkontroller, men skal ikke feile på kunstige
+minimumstall for dokumenter, REQ, DEC eller OPEN.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L40">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-INST-004</td>
+<td>Fastsatt</td>
+<td>Etter vellykket releaseport skal strukturerte release-testresultater
+kunne følge pakken og importeres som verifikasjonsfakta ved
+installasjon.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L41">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-INST-005</td>
+<td>Fastsatt</td>
+<td>Før databaseendring eller endring av Node-RED-flow skal installeren
+lese faktisk MariaDB-serverversjon og avvise avvik fra den eksakte
+verifiserte versjonen i BUILD-INFO.json. Avvisning og observert versjon
+skal fremgå av installasjonsrapporten.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L42">kilde</a></td>
+</tr>
+<tr class="odd">
+<td>REQ-INST-006</td>
+<td>Fastsatt</td>
+<td>Eksisterende sesjoner, målinger, korreksjoner, templates, kladder,
+innstillinger og registrerte testresultater skal bevares ved
+oppgradering. Ukjent kildeversjon/struktur avvises før mutasjon.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L43">kilde</a></td>
+</tr>
+<tr class="even">
+<td>REQ-INST-007</td>
+<td>Fastsatt</td>
+<td>Oppgraderingsmanifest, kilde-/målversjon, migreringsavtrykk, privat
+verifisert backup og faktisk installasjonsutfall skal være sporbare.
+Samme målversjon kan reinstallere filer uten å kjøre migreringen på
+nytt.</td>
+<td><a
+href="https://github.com/stboee/gjaeringsassistent/blob/a69a78394a3997705152d1253f68ceef3be85a6f/docs/04-KRAV-INSTALLER.md#L44">kilde</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="beslutninger-ved-baseline">Beslutninger ved baseline</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Beslutning</th>
+<th>Begrunnelse</th>
+<th>Konsekvens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DEC-GA-001</td>
+<td>MariaDB/InnoDB er eneste persistente authority.</td>
+<td>Én sannhetskilde reduserer divergens og restartproblemer.</td>
+<td>Domenestate i flow/global/HA/frontend/runtimefiler er ikke
+tillatt.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-002</td>
+<td>Node-RED er generisk gjæringsmotor/orchestrator; HA er
+operatørflate.</td>
+<td>Tydelig ansvarsdeling.</td>
+<td>HA skal ikke være domenemotor.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-003</td>
+<td><code>p18-r5</code> er funksjonell/designmessig referanse, ikke
+teknisk baseline.</td>
+<td>Verdifull funksjon/UX skal kunne sammenlignes uten å gjeninnføre
+svak implementasjon.</td>
+<td>SQLite/writer-kø/lokal runtime-state fra referansen kopieres
+ikke.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-004</td>
+<td>Normaliserte domenedata foretrekkes fremfor generiske
+JSON-event/state-blobs.</td>
+<td>Integritet, sporing og DB-validering.</td>
+<td>JSON brukes som transport/eksport/read-model, ikke autoritativ
+runtime.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-005</td>
+<td>Tetthet er SG-only.</td>
+<td>Én entydig domenekontrakt.</td>
+<td>Ingen Brix i GUI, template, runtime, rapport, docs eller
+tester.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-007</td>
+<td>E2E-/måltest går gjennom den reelle
+operatør-/integrasjonsgrensen.</td>
+<td>Direkte DB/inject kan gi falsk trygghet.</td>
+<td>Direkte tester kan være unit/integration, men ikke kalles
+operatør-E2E.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-008</td>
+<td>HA-semantikk dokumenteres i 05; eksakte maskinmetadata eies av
+MariaDB-registre.</td>
+<td>Unngå parallelle entity/event-lister.</td>
+<td>Generert kontrakt er avledet inspeksjon.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-009</td>
+<td>Teknisk er operativ observability, ikke bare PASS/FAIL.</td>
+<td>Sporadiske runtimefeil må finnes igjen.</td>
+<td>Technical Events, aktive issues, målekilde og Systemkontroll vises
+samlet.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-010</td>
+<td><code>Tilbake</code> krever advarsel/bekreftelse, ikke obligatorisk
+begrunnelse.</td>
+<td>Operatørflyten skal ikke blokkeres unødig.</td>
+<td>Kommentar kan registreres som generelt notat.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-011</td>
+<td>Publiserte defaults/regler skal være eksplisitte; motor/frontend
+skal ikke gjette fallback.</td>
+<td>Skjulte defaults gjør vurderinger irreproduserbare.</td>
+<td>Manglende grunnlag er synlig feil/status.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-012</td>
+<td>Runtimehistorikk innenfor hver beholdt sesjon er append-only der ny
+tilstand kan uttrykkes som nytt faktum/revision. Hele historiske
+sesjoner kan slettes eksplisitt.</td>
+<td>Audit og reproduksjon.</td>
+<td>Current state utledes i views.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-013</td>
+<td>Draft-tabeller er eksplisitte mutable arbeidsflater.</td>
+<td>Redigering trenger mutabilitet uten å omskrive historikk.</td>
+<td><code>session_setup_draft</code>,
+<code>measurement_input_draft</code>, template-draft skilles fra
+journal.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-014</td>
+<td>Ingen generell writer-kø eller eksplisitt DB-locking som
+normalmekanisme.</td>
+<td>InnoDB håndterer concurrency; applikasjonslocking øker
+kompleksitet.</td>
+<td>Modell/constraints/transaksjon revurderes før locking innføres.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-015</td>
+<td>PK/FK/UNIQUE/CHECK, operation-ID og korte transaksjoner er primær
+konsistensmekanisme.</td>
+<td>Konsistens bør ligge nær data.</td>
+<td>Applikasjonen bygger på DB-integritet.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-016</td>
+<td>Kortvarig stale read er akseptabelt.</td>
+<td>Normal MVCC/snapshot-adferd trenger ikke global serialisering.</td>
+<td>Neste read-model-refresh viser siste commit.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-017</td>
+<td>Deadlock analyseres som modell/SQL-symptom, ikke maskeres med
+generell retry.</td>
+<td>Retry kan skjule strukturelle feil.</td>
+<td>Konkret årsak må forstås før tiltak.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-018</td>
+<td>Funksjonell verdi prioriteres; teknisk arbeid gjøres når robust
+funksjon krever det.</td>
+<td>Prototypearbeidet skal ikke bli infrastrukturprosjekt.</td>
+<td>Teknisk kompleksitet må begrunnes av konkret behov.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-019</td>
+<td>Runtime-/valideringsmetadata har én autoritativ kilde.</td>
+<td>Metadata-duplisering gir drift.</td>
+<td>HA-metadata og funksjon↔︎informasjon-lineage modelleres i
+MariaDB.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-020</td>
+<td>Ordinær Start omfatter history catch-up og overgang til kontinuerlig
+5-minuttersimport.</td>
+<td>Én sammenhengende måleprosess.</td>
+<td>Ingen separat «live-start»-modus.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-021</td>
+<td><code>Start fra</code> er opprinnelig pitch-/importstart; senere
+pitchkorreksjon omskriver ikke måletimestamps.</td>
+<td>Historiske målepunkter må beholde faktisk tid.</td>
+<td>Effektiv pitchreferanse kan revideres separat.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-022</td>
+<td>Eksterne Tilt entity-ID-er eies av
+<code>measurement_source_profiles</code>.</td>
+<td>Sensorbinding er konfigurasjon.</td>
+<td>Node-RED Function-kode hardkoder ikke entity-ID-er.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-023</td>
+<td>Heartbeat er autoritativt datadekningssignal.</td>
+<td>Uendret SG/temperatur betyr ikke kommunikasjonsbrudd.</td>
+<td>Gap bygges fra heartbeat og persisteres i
+<code>measurement_data_gaps</code>.</td>
+</tr>
+<tr class="odd">
+<td>ADR-GA-024</td>
+<td>Registry, template, frozen session og motor har separate
+ansvar.</td>
+<td>Fagregler må være deklarative/reproduserbare.</td>
+<td>Registry definerer vokabular; template velger; Start fryser; motor
+utfører generiske modeller.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-025</td>
+<td>Metric-ID alene skal ikke gi skjult beregningssemantikk.</td>
+<td>Navn er ikke fagregel.</td>
+<td>Beregningsmodell/input/parametere er eksplisitte metadata.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-026</td>
+<td>Freshness og persistens/stabilitet er separate begreper.</td>
+<td>De beskriver ulike egenskaper.</td>
+<td>Maks alder skal ikke brukes som skjult persistensregel.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-027</td>
+<td>Biologisk progresjon er sekvensiell; datagap bryter nødvendig
+kontinuitet.</td>
+<td>Hindrer historiske hopp og falsk persistens.</td>
+<td>Bare neste B-kandidat vurderes.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-028</td>
+<td>Målekildestatus har én MariaDB-read-model/produsent.</td>
+<td>Konkurrerende produsenter ga stale/motstridende status.</td>
+<td>Ingest/Systemkontroll trigger refresh, men lager ikke alternativ
+status.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-029</td>
+<td>HA-inputbinding/verdimapping eies av MariaDB.</td>
+<td>Entity→domene-felt skal ikke ligge som lokal Function-tabell.</td>
+<td>Manglende binding/mapping er konfigurasjonsfeil.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-030</td>
+<td>Frontend er ren visning/interaksjon av ferdige domenefelt.</td>
+<td>GUI-workarounds skjuler kildedefekter.</td>
+<td>Ingen domeneberegning/fallback/formatregler i frontend.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-031</td>
+<td>En metric har én autoritativ beregningsbane.</td>
+<td>Parallelle formler gir mismatch.</td>
+<td>Overview/B/P/report/Analyse leser persistert
+resultat/read-model.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-032</td>
+<td>DB/read-model-feil skal være synlig og rettes ved kilden.</td>
+<td>Fail-visible gir bedre arkitektur enn skjult fallback.</td>
+<td>GUI/Node-RED skal ikke maskere feil med lokal workaround.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-033</td>
+<td>Ugyldige råmålinger forkastes før autoritativ domenelagring; de
+clampes ikke.</td>
+<td>Korrigerte oppdiktede data forurenser analysegrunnlaget.</td>
+<td>Kvalitetsutfall logges separat.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-034</td>
+<td>Analysevisualisering og behandlingsregler er
+datamodell/template-metadata.</td>
+<td>Nye grafer skal ikke kreve spesialmotor/frontend.</td>
+<td>Graph/series/warm-up/gap/markerpolicy fryses til session.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-035</td>
+<td>Utilstrekkelig minste beregningsgrunnlag gir ingen verdi; p24r7
+krever ordinært faktisk grunnlag.</td>
+<td>Unngå oppdiktede tall.</td>
+<td>Status, datagrunnlag og stil leveres fra read-model; ordinære krav
+beholdes.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-036</td>
+<td>Uncaught teknisk feilfangst er et generelt flow-safety-net.</td>
+<td>Nye noder skal ikke falle utenfor «søppelbøtta».</td>
+<td>Technical Event-writer/fangstsløyfe skjermes mot rekursjon.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-037</td>
+<td>Gyldighetsdomene for avledede metrics er domenemetadata og håndheves
+før B/P og Analyse.</td>
+<td>Urimelige derived values skal ikke drive overganger eller
+grafer.</td>
+<td>Output utenfor frozen domene avvises, ikke clampes.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-038</td>
+<td>Historisk P-autoovergang er per-step frozen policy.</td>
+<td>Historikk kan rekonstrueres uten å late som fysisk operatørhandling
+er utført.</td>
+<td>W-34/70 kan autoetablere P1/P2; P3+ krever operatørtransition.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-039</td>
+<td>Rapport/Gjæring/Analyse bruker autoritative datagap og samme
+domeneseriegrunnlag.</td>
+<td>Linje gjennom manglende data skaper oppdiktet visuell
+informasjon.</td>
+<td>Renderer bryter kurver ved persisterte gap.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-040</td>
+<td>Normativ dokumentasjon skal beskrive gjeldende sannhet;
+releasehistorikk holdes separat og maskinmetadata genereres fra
+kilder.</td>
+<td>Historikk i kravdokumenter gjorde dem stale og vanskelige å
+validere.</td>
+<td>Markdown er kilde; HTML/JSON/traceability genereres og
+releasekontrolleres.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-041</td>
+<td>Templateadministrasjon er uavhengig av runtime/session.</td>
+<td>Frozen sessionplan gjør senere templatearbeid trygt.</td>
+<td>Aktiv eller completed session blokkerer ikke templatebibliotek,
+draft eller publisering.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-042</td>
+<td>Template lifecycle er <code>draft/published/retired</code>, og
+<code>retired</code> er reversibel.</td>
+<td>En versjon kan tas ut av Start-utvalget uten å slette historikk
+eller tvinge ny versjon.</td>
+<td>Retired versjon kan reaktiveres; publisert/retired faginnhold er
+immutable.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-043</td>
+<td>Template-fanens administrasjonsvalg og Start-fanens templatevalg er
+separate MariaDB-fakta.</td>
+<td>Inspeksjon/redigering skal ikke utilsiktet endre hvilken prosess
+neste gjæring starter med.</td>
+<td>Publisering/åpning i Template-fanen endrer ikke
+<code>session_setup_draft</code>; Start kan kun velge
+<code>published</code>.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-044</td>
+<td>Verifikasjon modelleres som strukturerte relasjoner i MariaDB.</td>
+<td>Krav, verifikasjon og resultater må kunne inspiseres og analyseres
+uten tekstsøk.</td>
+<td>Metadata og faktiske resultater skilles; read-models utleder
+status.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-045</td>
+<td>TECH, FUNC og UAT er separate verifikasjonsklasser.</td>
+<td>Teknisk integritet, domeneregresjon og målmiljøbruk har ulike
+testegenskaper.</td>
+<td>Testtype og metode er eksplisitt metadata; én type erstatter ikke de
+andre.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-046</td>
+<td>Høy testbarhet beholdes selv når hele testpakken ikke kjøres ved
+hver prototypeendring.</td>
+<td>Testarkitektur har verdi, men prototypearbeidet skal ikke styres av
+testprosess.</td>
+<td>Testomfang tilpasses risiko; etablerte regresjonstester
+bevares.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-047</td>
+<td>UAT-resultater er append-only verifikasjonsfakta og kan registreres
+fra dashboardet.</td>
+<td>Målmiljøerfaring skal være synlig og analyserbar sammen med
+krav/testmetadata.</td>
+<td>Ny UAT gir ny run/result; tidligere observasjoner overskrives
+ikke.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-048</td>
+<td>JSON-eksport og HTML-verifikasjonsrapport produseres fra samme
+DB-grunnlag.</td>
+<td>Maskinanalyse og menneskelesing skal beskrive samme snapshot.</td>
+<td>Rapportgeneratoren presenterer; den beregner ikke alternativ
+verifikasjonsstatus.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-049</td>
+<td>Komplett p19-dokumentasjon distribueres ikke i p23-release.</td>
+<td>Historisk teknisk arkitektur kan forveksles med gjeldende
+løsning.</td>
+<td>Bare eksplisitte baseline-/forlatt-løsning-referanser beholdes.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-050</td>
+<td>Separat FastAPI/backend-lag og tidligere
+SQLite-/writer-kø-arkitektur er forlatte løsninger og skal ikke
+gjeninnføres som workaround.</td>
+<td>De økte kompleksitet og ga flere sannhetskilder/concurrencyproblemer
+uten funksjonell gevinst.</td>
+<td>Gjeldende p24 er Node-RED ↔︎ MariaDB direkte med
+InnoDB/constraints/transaksjoner og DB-eide read-models.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-051</td>
+<td>B/P og detaljbasert Analyse bruker samme målebaserte modell;
+historiske timeverdier er separat grafgrunnlag.</td>
+<td>Samme beregningsgrunnlag og terskler.</td>
+<td>Ordinære verdier og datagrunnlag persisteres append-only;
+utilstrekkelig grunnlag gir fravær.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-052</td>
+<td>Bånd er størrelsens metadata, ikke en universell grafregel.</td>
+<td>Et bånd må ha konkret fysisk/statistisk betydning.</td>
+<td>P24r7-AA/rate/stabilitet har ingen estimert bånd. Oversiktsgrafer
+kan vise faktisk min/maks-spredning fra samme godkjente prøvesett.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-053</td>
+<td>Biologisk fase endres gjennom kriterievurdering.</td>
+<td>En fase skal kunne forklares fra sitt grunnlag.</td>
+<td>Direkte fasesetter fjernes; korreksjon/fravik er egne append-only
+fakta.</td>
+</tr>
+<tr class="odd">
+<td>DEC-GA-054</td>
+<td>Modellens tillatte kriterieparametere er korrigerbare og fravik
+tillatt som standard.</td>
+<td>Operatøren trenger konsistent håndtering på B og P.</td>
+<td>Editor kan deaktivere rettigheter; Start fryser policyen.</td>
+</tr>
+<tr class="even">
+<td>DEC-GA-055</td>
+<td>Alle gjæringsgrafer starter ved effektiv pitch.</td>
+<td>Sammenlignbar oppstart og synlig ventetid.</td>
+<td>DB/read-model leverer felles X-akse til dashboard og rapporter.</td>
+</tr>
+<tr class="odd">
+<td>DEC-P24R6-001</td>
+<td>Målebasert Analyse og filverifisert eksport</td>
+<td>Manglende pitchhistorikk og store SQL-pakker blokkerte bruk</td>
+<td>Separate rå/manuelle AA-kilder, målt endepunktrate, ordinære
+vinduer, metadata-only eksportregistrering og append-only retry.</td>
+</tr>
+<tr class="even">
+<td>DEC-P24R8-TRANSPORT</td>
+<td>Felles presentasjonsordbok og komprimert publisering</td>
+<td>Gjentatt metadata var hovedårsaken til store filer.</td>
+<td>Ingen råmålinger slettes ved transportkomprimering; DB styrer utvalg
+og verdier.</td>
+</tr>
+<tr class="odd">
+<td>DEC-P24R9-CURRENT</td>
+<td>Importbehov og gjeldende grafkrav utledes i MariaDB.</td>
+<td>Gjentatt statistikkhenting og gamle kravlinjer ga misvisende
+visning.</td>
+<td>Normal live-import henter detaljdata; parameterkorreksjon/reset og
+oppfylt-markører følger DB-revisjonen. Tidligere målinger og
+evalueringer beholdes.</td>
+</tr>
+<tr class="even">
+<td>DEC-P24R10-ARCHIVES</td>
+<td>Gjærings- og originaltemplate-arkiv er et sammenhørende
+SQLite-par.</td>
+<td>Filer skal være søkbare og kunne importeres uten å sende store
+JSON-pakker til DB.</td>
+<td>All runtime authority og all sammenligning ligger fortsatt i
+MariaDB.</td>
+</tr>
+<tr class="odd">
+<td>DEC-P24R10-IMPORT</td>
+<td>Importert original får ny identitet og egen kategori; historisk
+import frigir sesjonen atomisk.</td>
+<td>Kilden skal ikke blandes med eksisterende templates eller aktiv
+gjæring.</td>
+<td>Import er tillatt under gjæring; feil ruller tilbake hele settet og
+redigering krever egen kopi.</td>
+</tr>
+<tr class="even">
+<td>DEC-P24R11-DELETE</td>
+<td>Append-only gjelder innholdet i hver beholdt sesjon, ikke hele
+databasen.</td>
+<td>Gamle sesjoner skal kunne ryddes etter eksport eller
+sammenligning.</td>
+<td>Eksplisitt sletting av hele sesjonen i én transaksjon, med
+aktivbeskyttelse og referansekontroll for templates.</td>
+</tr>
+<tr class="odd">
+<td>DEC-P24R11-SNAPSHOT</td>
+<td>Alle eksportfiler for en sesjon bygger på ett konsistent
+MariaDB-snapshot.</td>
+<td>Aktiv drift skal kunne fortsette mens arkivet lages.</td>
+<td>SQLite-par, HTML og SHA-filer deler prefix; aktivt øyeblikksbilde
+merkes med tidspunkt.</td>
+</tr>
+<tr class="even">
+<td>DEC-P24R11-SHA</td>
+<td>Eksterne SHA-filer er en valgfri kontroll med advarsel.</td>
+<td>Gamle eller flyttede arkiver skal fortsatt kunne importeres.</td>
+<td>Manglende/feil SHA blokkerer ikke import; intern integritet og
+faktisk overføring valideres obligatorisk.</td>
+</tr>
+<tr class="odd">
+<td>DEC-RELEASE-001</td>
+<td>Datoversjon ÅÅÅÅ.MM.DD-N, v-prefiks på tag og kort
+releasebeskrivelse.</td>
+<td>Entydig publiseringsdag og identitet uten prototype-serier.</td>
+<td>Løpenummer starter på 1 hver publiseringsdag; prosjektversjon
+samordnes i leveranse- og runtime-metadata.</td>
+</tr>
+<tr class="even">
+<td>DEC-WORK-001</td>
+<td>Avklaring i chat, «start», implementering og relevante kontroller;
+direkte commit på main.</td>
+<td>Dagens avtalte prosjektarbeidsmåte.</td>
+<td>Issues/PR og den gamle Chat→Work-handoff-prosessen videreføres
+ikke.</td>
+</tr>
+<tr class="odd">
+<td>DEC-PROD-001</td>
+<td>Installasjon bevarer eksisterende data; verifiserte migreringer
+erstatter prototype-reset.</td>
+<td>Brukeren tar løsningen i ordinær drift.</td>
+<td>Førstegangsseeding kjøres bare på tom database. Privat backup før
+oppgradering; ukjent kilde avvises. Erstatter tidligere DEC-GA-006.</td>
+</tr>
+<tr class="even">
+<td>DEC-START-001</td>
+<td>Startfelt, mangler og startklarstatus eies av databasekladden og
+DB-registre.</td>
+<td>Gamle HA-tall kunne skjule NULL etter nytt templatevalg.</td>
+<td>Generisk DB-basert skjema sender eksplisitte feltkommandoer; ingen
+HA-fallback eller null-til-nulltall. Startforsøk lagrer observerte felt
+og DB-avvisning.</td>
+</tr>
+<tr class="odd">
+<td>DEC-SOURCES-001</td>
+<td>DB-eide reviderte signalbindinger, fryst per sesjon og virkning fra
+neste DB-bøttegrense ved livebytte.</td>
+<td>Kildebytter må være sporbare uten å omskrive tidligere data.</td>
+<td>HA-katalog er kontrollert teknisk snapshot; NR transporterer.
+Valgfritt overtrykk bruker DB-deklarert enhet/konvertering og er manuelt
+før valg.</td>
+</tr>
+<tr class="even">
+<td>DEC-OPERATOR-001</td>
+<td>Feltkontroll og desimaler følger DB-registeret; B/P-avvik bruker
+samme autoritative transaksjon.</td>
+<td>Synlig verdi, mangler og tillatte handlinger må stemme med DB.</td>
+<td>Slider har eksplisitt ikke registrert og registrert 0. Kildenavn er
+lesbare mens rå identitet bevares.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hist-002--owner_clarification">HIST-002 –
+owner_clarification</h2>
+<p>Registrert: 2026-11-14. Kildetype: current_conversation.</p>
+<p>Kildeplassering: Gjæringsassistent: dokumentrevisjon, før brukerens
+«start»</p>
+<ul>
+<li>God dokumentasjon skal bevares og mangelfull dokumentasjon
+suppleres.</li>
+<li>Kravgrunnlaget fra dialogene skal bevares med historikk ett
+sted.</li>
+<li>Ansvarsdeling HA/Node-RED/MariaDB og reglene mot oppdiktede
+verdier/defaults/workarounds skal gjentas bevisst.</li>
+<li>Strukturerte grensesnittkontrakter inngår i revisjonen og skal være
+oppdaterte og brukes.</li>
+</ul>
+<h2 id="hist-003--retrieved_context">HIST-003 – retrieved_context</h2>
+<p>Registrert: 2026-11-14. Kildetype: personal_context_summary.</p>
+<p>Retrieved summaries are supporting provenance, not verbatim
+transcripts. Labels c1/c3/c4/c5 are retrieval-local; original stable
+chat IDs were not supplied. No original requirement creation dates are
+asserted.</p>
+<ul>
+<li>Rapportert dato 2026-09-26T23:06:25Z: MariaDB er valgt; Node-RED er
+motor; DB eneste sannhet, InnoDB/FK/transaksjoner.</li>
+<li>Rapportert dato 2026-09-28T14:23:44Z: Fysiske HA-noder ligger i
+flow; forventet identitet, type, retning, required, bootstrap,
+dokumentasjon og kontroll eies av MariaDB-register.</li>
+<li>Rapportert dato 2026-09-29T18:58:05Z: Frontend viser ferdig innhold
+fra DB/read-model uten fagberegning, tolkning, korrigering eller
+fallback.</li>
+<li>Rapportert dato 2026-09-29T19:06:47Z: Ingen nødvendig
+domenepersistens i flow/global/context/cache/runtime/HA-state eller
+erstatning av manglende DB-data med defaults og workarounds.</li>
+<li>Rapportert dato 2026-10-01T19:11:11Z: MariaDB er eneste autoritative
+persistente sannhetskilde; feil/mangler rettes i DB uten oppdiktede
+verdier/defaults/fallback/workarounds.</li>
+</ul>
+</body>
+</html>
